@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "walki-client",
+    "slug": "walki-client",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "walki-client"
+}
