@@ -1,11 +1,14 @@
 {
   "expo": {
-    "name": "walki-client",
-    "slug": "walki-client",
+    "name": "walki",
+    "slug": "walki",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#eee"
+    }
   },
-  "name": "walki-client"
+  "name": "walki"
 }
