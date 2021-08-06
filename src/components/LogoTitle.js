@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import headerLogo from "../assets/images/logo.png";
+import headerLogo from "../../assets/images/logo.png";
 
 const ImageStyle = styled.Image`
   width: 100px;

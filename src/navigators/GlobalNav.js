@@ -1,13 +1,12 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
-import Home from "../screens/pages/Home";
+import Home from "../screens/home";
 import LogoTitle from "../components/LogoTitle";
-import OnBoarding from "../screens/pages/onBoarding";
+import OnBoarding from "../screens/onBoarding";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,

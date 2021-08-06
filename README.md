@@ -8,3 +8,4 @@ react-native-appearance
 react-navigation/native
 react-navigation/stack
 @apollo/client graphql
+react-native-web-swiper --save
