@@ -8,6 +8,7 @@ import Home from "../screens/home";
 import LogoTitle from "../components/LogoTitle";
 import OnBoarding from "../screens/onBoarding";
 import CoachSelect from "../screens/coachSelect";
+import { Platform } from "react-native";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -17,7 +18,9 @@ const Stack = createStackNavigator();
 const GlobalNav = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={TransitionScreenOptions}>
+      <Stack.Navigator
+        screenOptions={Platform.OS === "android" && TransitionScreenOptions}
+      >
         <Stack.Screen
           name="OnBoarding"
           options={{
@@ -28,7 +31,10 @@ const GlobalNav = () => {
         <Stack.Screen
           name="CoachSelect"
           options={{
+            headerBackTitleVisible: false,
+            headerBackTitleStyle: { color: "black" },
             headerTitle: (props) => <LogoTitle {...props} />,
+
             headerStyle: {
               backgroundColor: "transparent",
               elevation: 0, // android

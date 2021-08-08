@@ -30,8 +30,8 @@ const HomeSwiper = () => {
             <View>
               <Header>코치와 함께 {"\n"}러닝해보세요!</Header>
               <Desc>토키와 부키가 당신의 데일리 러닝을 {"\n"}도와줘요!</Desc>
-              <SlideImg source={onboarding01} resizeMode="contain" />
             </View>
+            <SlideImg source={onboarding01} resizeMode="contain" />
           </SlideBox>
         </SlideContainer>
         <SlideContainer>
@@ -42,8 +42,8 @@ const HomeSwiper = () => {
                 매일 챌린지를 달성하다보면 {"\n"}어느새 러닝이 습관으로 자리잡아
                 있을거예요!
               </Desc>
-              <SlideImg source={onboarding02} resizeMode="contain" />
             </View>
+            <SlideImg source={onboarding02} resizeMode="contain" />
           </SlideBox>
         </SlideContainer>
         <SlideContainer>
@@ -85,13 +85,12 @@ const SlideContainer = styled.View`
 
 const SlideBox = styled.View`
   flex: 0.8;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 const SlideImg = styled.Image`
   width: 100%;
   height: 332px;
-  margin: 30px 0;
 `;
 
 export default HomeSwiper;
