@@ -34,7 +34,6 @@ const GlobalNav = () => {
             headerBackTitleVisible: false,
             headerBackTitleStyle: { color: "black" },
             headerTitle: (props) => <LogoTitle {...props} />,
-
             headerStyle: {
               backgroundColor: "transparent",
               elevation: 0, // android
