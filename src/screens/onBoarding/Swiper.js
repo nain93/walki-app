@@ -89,6 +89,7 @@ const SlideBox = styled.View`
 `;
 
 const SlideImg = styled.Image`
+  opacity: 1;
   width: 100%;
   height: 332px;
 `;

@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image } from "react-native";
 import styled from "styled-components";
 import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
+import {
+  KakaoOAuthToken,
+  KakaoProfile,
+  getProfile as getKakaoProfile,
+  login,
+  logout,
+  unlink,
+} from "@react-native-seoul/kakao-login";
 
 const LoginButton = ({ navigation }) => {
-  const handleKakaoLogin = () => {
+  const [result, setResult] = useState("");
+
+  const handleKakaoLogin = async () => {
+    // const token = await login();
+
+    // setResult(JSON.stringify(token.accessToken));
+    // refreshToken;
+
     navigation.navigate("CoachSelect");
   };
 

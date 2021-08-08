@@ -10,5 +10,6 @@ react-navigation/stack
 @apollo/client graphql
 react-native-web-swiper --save
 @react-native-seoul/kakao-login
+react-native-vector-icons
 
 npx expo-optimize
