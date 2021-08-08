@@ -9,3 +9,6 @@ react-navigation/native
 react-navigation/stack
 @apollo/client graphql
 react-native-web-swiper --save
+@react-native-seoul/kakao-login
+
+npx expo-optimize

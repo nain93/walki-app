@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HeaderText = styled.Text`
   font-weight: 700;
-  font-size: 24px;
+  font-size: 30px;
   margin: 10px;
 `;
 

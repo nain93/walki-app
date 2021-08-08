@@ -7,6 +7,7 @@ import {
 import Home from "../screens/home";
 import LogoTitle from "../components/LogoTitle";
 import OnBoarding from "../screens/onBoarding";
+import CoachSelect from "../screens/coachSelect";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -23,6 +24,18 @@ const GlobalNav = () => {
             headerShown: false,
           }}
           component={OnBoarding}
+        />
+        <Stack.Screen
+          name="CoachSelect"
+          options={{
+            headerTitle: (props) => <LogoTitle {...props} />,
+            headerStyle: {
+              backgroundColor: "transparent",
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          }}
+          component={CoachSelect}
         />
         <Stack.Screen
           name="Home"

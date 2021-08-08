@@ -7,3 +7,5 @@ apply from: file("../node_modules/@react-native-community/cli-platform-android/n
 applyNativeModulesSettingsGradle(settings)
 
 include ':app'
+include ':react-native-seoul-kakao-login'
+project(':react-native-seoul-kakao-login').projectDir = new File(rootProject.projectDir,'../node_modules/@react-native-seoul/kakao-login/android')

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">walki-client</string>
+    <string name="kakao_app_key">526b6c2b9e557fa37f7a04ede96db3c0</string>
 </resources>
