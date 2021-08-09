@@ -10,6 +10,7 @@ import {
   logout,
   unlink,
 } from "@react-native-seoul/kakao-login";
+import { Caption, H4Text } from "../../styles/theme";
 
 const LoginButton = ({ navigation }) => {
   const [result, setResult] = useState("");
@@ -53,15 +54,12 @@ const KakaoButton = styled.TouchableOpacity`
   height: 54px;
 `;
 
-const KakaoText = styled.Text`
+const KakaoText = styled(H4Text)`
   margin-left: 5px;
-  font-size: 16px;
-  font-weight: 700;
 `;
 
-const KakaoDesc = styled.Text`
+const KakaoDesc = styled(Caption)`
   color: #bdbdbd;
-  font-size: 10px;
   text-align: center;
   margin: 10px 0;
 `;

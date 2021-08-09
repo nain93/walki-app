@@ -1,9 +1,53 @@
 import styled from "styled-components";
 
-export const HeaderText = styled.Text`
+export const Setting = styled.Text`
+  font-size: 64px;
   font-weight: 700;
+`;
+
+export const HomeText = styled.Text`
+  font-size: 54px;
+  font-weight: 700;
+`;
+
+export const H1Text = styled.Text`
   font-size: 30px;
-  margin: 10px;
+  font-weight: 700;
+`;
+
+export const H2Text = styled.Text`
+  font-size: 24px;
+  font-weight: 700;
+`;
+
+export const H3Text = styled.Text`
+  font-size: 18px;
+  font-weight: 700;
+`;
+
+export const H4Text = styled.Text`
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+export const Body1Text = styled.Text`
+  font-size: 16px;
+  font-weight: 400;
+`;
+
+export const Body2Text = styled.Text`
+  font-size: 14px;
+  font-weight: 600;
+`;
+
+export const Body3Text = styled.Text`
+  font-size: 14px;
+  font-weight: 400;
+`;
+
+export const Caption = styled.Text`
+  font-size: 12px;
+  font-weight: 400;
 `;
 
 const grayScale = {

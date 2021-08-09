@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import Swiper from "react-native-web-swiper";
-import { HeaderText, theme } from "../../styles/theme";
-import { Button, TouchableOpacity } from "react-native";
+import { Body1Text, H1Text, theme } from "../../styles/theme";
+import { TouchableOpacity } from "react-native";
 import LeftArrow from "react-native-vector-icons/AntDesign";
 import TokiBookiSelect from "./TokiBookiSelect";
 
@@ -13,6 +13,7 @@ const CoachSwiper = ({ navigation: { goBack } }) => {
     <Container>
       <Swiper
         ref={swiperRef}
+        gesturesEnabled={() => false}
         controlsProps={{
           dotsPos: "top-right",
           nextPos: false,
@@ -74,13 +75,12 @@ const Container = styled.View`
   flex: 1;
 `;
 
-const Header = styled(HeaderText)`
+const Header = styled(H1Text)`
   margin: 20px 0;
 `;
 
-const Desc = styled.Text`
+const Desc = styled(Body1Text)`
   margin-bottom: 50px;
-  font-size: 16px;
   color: ${theme.TextColor};
 `;
 

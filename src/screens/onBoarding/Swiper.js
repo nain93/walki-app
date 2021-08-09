@@ -4,7 +4,7 @@ import Swiper from "react-native-web-swiper";
 import onboarding01 from "../../../assets/images/img01.png";
 import onboarding02 from "../../../assets/images/img02.png";
 import onboarding03 from "../../../assets/images/img03.png";
-import { HeaderText, theme } from "../../styles/theme";
+import { Body1Text, H1Text, theme } from "../../styles/theme";
 import { View } from "react-native";
 
 const HomeSwiper = () => {
@@ -64,13 +64,12 @@ const Container = styled.View`
   flex: 1;
 `;
 
-const Header = styled(HeaderText)`
-  margin: 20px 30px;
+const Header = styled(H1Text)`
+  margin: 30px;
 `;
 
-const Desc = styled.Text`
+const Desc = styled(Body1Text)`
   margin: 0 30px;
-  font-size: 16px;
   color: ${theme.TextColor};
 `;
 

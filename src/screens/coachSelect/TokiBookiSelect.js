@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { theme } from "../../styles/theme";
+import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme";
 import { View, Text } from "react-native";
 import { useState } from "react/cjs/react.development";
 import tokiImg from "../../../assets/images/toki_character.png";
 import bookiImg from "../../../assets/images/booki_character.png";
+import NextButton from "./NextButton";
 
 const TokiBookiSelect = ({ swiperRef }) => {
   const [coachSelect, setCoachSelect] = useState("");
@@ -17,6 +18,10 @@ const TokiBookiSelect = ({ swiperRef }) => {
     setCoachSelect("booki");
   };
 
+  const handleGoToNext = () => {
+    swiperRef?.current.goToNext();
+  };
+
   return (
     <>
       <View>
@@ -25,9 +30,7 @@ const TokiBookiSelect = ({ swiperRef }) => {
             <TokiBookiImg source={tokiImg} resizeMode="contain" />
             <TitleBox>
               <TokiTitle selected={coachSelect === "toki"}>토키 코치</TokiTitle>
-              <Text style={{ color: theme.grayScale.gray3 }}>
-                뛰기와 스피드를 즐긴다면?
-              </Text>
+              <Desc>뛰기와 스피드를 즐긴다면?</Desc>
             </TitleBox>
           </Wrapper>
         </TokiBox>
@@ -42,37 +45,15 @@ const TokiBookiSelect = ({ swiperRef }) => {
               <BookiTitle selected={coachSelect === "booki"}>
                 부키 코치
               </BookiTitle>
-              <Text style={{ color: theme.grayScale.gray3 }}>
-                걷기와 여유를 즐긴다면?
-              </Text>
+              <Desc>걷기와 여유를 즐긴다면?</Desc>
             </TitleBox>
           </Wrapper>
         </BookiBox>
       </View>
-      <NextButton
-        disabled={!coachSelect}
-        onPress={() => swiperRef?.current.goToNext()}
-      >
-        <NextText>다음</NextText>
-      </NextButton>
+      <NextButton handleGoToNext={handleGoToNext} coachSelect={coachSelect} />
     </>
   );
 };
-
-const NextButton = styled.TouchableOpacity`
-  width: 100%;
-  height: 54px;
-  background-color: ${theme.grayScale.black};
-  color: ${theme.grayScale.white};
-  border-radius: 8px;
-  justify-content: center;
-  opacity: ${(props) => (props.disabled ? "0.3" : "1")};
-`;
-
-const NextText = styled.Text`
-  color: ${theme.grayScale.white};
-  text-align: center;
-`;
 
 const TokiBookiStyle = styled.TouchableOpacity`
   width: 100%;
@@ -109,10 +90,12 @@ const TitleBox = styled.View`
   width: 60%;
 `;
 
-const NameTitle = styled.Text`
-  font-size: 18px;
-  font-weight: 700;
+const NameTitle = styled(H3Text)`
   margin-bottom: 10px;
+`;
+
+const Desc = styled(Body3Text)`
+  color: ${theme.grayScale.gray3};
 `;
 
 const TokiTitle = styled(NameTitle)`
