@@ -1,19 +1,45 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import Swiper from "react-native-web-swiper";
 import { HeaderText, theme } from "../../styles/theme";
-import TokiBooki from "./TokiBooki";
+import { Button, TouchableOpacity } from "react-native";
+import LeftArrow from "react-native-vector-icons/AntDesign";
+import TokiBookiSelect from "./TokiBookiSelect";
 
-const CoachSwiper = () => {
+const CoachSwiper = ({ navigation: { goBack } }) => {
+  const swiperRef = useRef(null);
+
   return (
     <Container>
       <Swiper
+        ref={swiperRef}
         controlsProps={{
           dotsPos: "top-right",
-          nextPos: "top-left",
-          prevPos: false,
-          nextTitleStyle: { display: "none" },
-          prevTitleStyle: { display: "none" },
+          nextPos: false,
+          prevPos: "top-left",
+          firstPrevElement: () => {
+            return (
+              <TouchableOpacity onPress={() => goBack()}>
+                <LeftArrow
+                  name="left"
+                  size={30}
+                  color={theme.grayScale.black}
+                />
+              </TouchableOpacity>
+            );
+          },
+          PrevComponent: () => {
+            return (
+              <TouchableOpacity onPress={() => swiperRef?.current.goToPrev()}>
+                <LeftArrow
+                  name="left"
+                  size={30}
+                  color={theme.grayScale.black}
+                />
+              </TouchableOpacity>
+            );
+          },
+
           dotActiveStyle: {
             backgroundColor: theme.toki.color.main,
           },
@@ -24,7 +50,7 @@ const CoachSwiper = () => {
           <Desc>
             나의 걷기 패턴에 맞는 코치를 선택하고 {"\n"}서비스를 이용해보세요
           </Desc>
-          <TokiBooki />
+          <TokiBookiSelect swiperRef={swiperRef} />
         </SlideContainer>
         <SlideContainer>
           <Header>오늘의 챌린지 세우기</Header>
@@ -49,11 +75,11 @@ const Container = styled.View`
 `;
 
 const Header = styled(HeaderText)`
-  margin: 20px 30px;
+  margin: 20px 0;
 `;
 
 const Desc = styled.Text`
-  margin: 0 30px;
+  margin-bottom: 50px;
   font-size: 16px;
   color: ${theme.TextColor};
 `;
@@ -61,6 +87,7 @@ const Desc = styled.Text`
 const SlideContainer = styled.View`
   flex: 1;
   text-align: left;
+  margin: 0 30px;
   justify-content: center;
 `;
 

@@ -62,7 +62,6 @@ const HomeSwiper = () => {
 
 const Container = styled.View`
   flex: 1;
-  margin-top: 80px;
 `;
 
 const Header = styled(HeaderText)`
