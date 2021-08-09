@@ -20,9 +20,6 @@ const HomeSwiper = () => {
           dotActiveStyle: {
             backgroundColor: theme.toki.color.main,
           },
-          dotsWrapperStyle: {
-            marginTop: 150,
-          },
         }}
       >
         <SlideContainer>
@@ -65,6 +62,7 @@ const HomeSwiper = () => {
 
 const Container = styled.View`
   flex: 1;
+  margin-top: 80px;
 `;
 
 const Header = styled(HeaderText)`
@@ -74,12 +72,12 @@ const Header = styled(HeaderText)`
 const Desc = styled.Text`
   margin: 0 30px;
   font-size: 16px;
-  opacity: 0.5;
+  color: ${theme.TextColor};
 `;
 
 const SlideContainer = styled.View`
   flex: 1;
-  justify-content: flex-end;
+  justify-content: center;
   text-align: left;
 `;
 
@@ -92,6 +90,7 @@ const SlideImg = styled.Image`
   opacity: 1;
   width: 100%;
   height: 332px;
+  margin-top: 50px;
 `;
 
 export default HomeSwiper;

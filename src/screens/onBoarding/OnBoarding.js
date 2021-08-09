@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import LoginButton from "./LoginButton";
-import Swiper from "./Swiper";
+import HomeSwiper from "./Swiper";
 
 const OnBoarding = ({ navigation }) => {
   return (
     <Container>
-      <Swiper />
+      <HomeSwiper />
       <LoginButton navigation={navigation} />
     </Container>
   );

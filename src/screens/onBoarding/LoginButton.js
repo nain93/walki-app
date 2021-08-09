@@ -15,10 +15,10 @@ const LoginButton = ({ navigation }) => {
   const [result, setResult] = useState("");
 
   const handleKakaoLogin = async () => {
-    // const token = await login();
+    const token = await login();
 
-    // setResult(JSON.stringify(token.accessToken));
-    // refreshToken;
+    setResult(JSON.stringify(token.accessToken));
+    refreshToken;
 
     navigation.navigate("CoachSelect");
   };

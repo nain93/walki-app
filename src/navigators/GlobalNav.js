@@ -9,7 +9,6 @@ import LogoTitle from "../components/LogoTitle";
 import OnBoarding from "../screens/onBoarding";
 import CoachSelect from "../screens/coachSelect";
 import { Platform } from "react-native";
-import LeftArrowIcon from "react-native-vector-icons/AntDesign";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -32,16 +31,7 @@ const GlobalNav = () => {
         <Stack.Screen
           name="CoachSelect"
           options={{
-            headerBackTitleVisible: false,
-            headerTitle: "",
-            headerBackImage: () => (
-              <LeftArrowIcon name="left" size={24} color="black" />
-            ),
-            headerStyle: {
-              backgroundColor: "white",
-              elevation: 0, // android
-              shadowOpacity: 0, //ios
-            },
+            headerShown: false,
           }}
           component={CoachSelect}
         />

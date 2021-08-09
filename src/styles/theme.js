@@ -14,8 +14,11 @@ const grayScale = {
   gray4: "#bdbdbd",
   gray5: "#e0e0e0",
   gray6: "#f2f2f2",
+  gray7: "#f7f7f7",
   white: "#ffffff",
 };
+
+const TextColor = "#999999";
 
 const toki = {
   color: {
@@ -29,7 +32,6 @@ const toki = {
       main: "#51b5ff",
       sub: "#8ec9f5",
     },
-    ...grayScale,
   },
 };
 
@@ -45,11 +47,12 @@ const booki = {
       main: "#51b5ff",
       sub: "#8ec9f5",
     },
-    ...grayScale,
   },
 };
 
 export const theme = {
   toki,
   booki,
+  grayScale,
+  TextColor,
 };

@@ -1,18 +1,19 @@
 import React from "react";
-import { View, Text } from "react-native";
 import styled from "styled-components";
-
-const Container = styled.View`
-  flex: 1;
-  background-color: white;
-`;
+import CoachSwiper from "./Swiper";
 
 const CoachSelect = () => {
   return (
     <Container>
-      <Text>CoachSelect</Text>
+      <CoachSwiper />
     </Container>
   );
 };
+
+const Container = styled.View`
+  flex: 1;
+  background-color: white;
+  padding: 20px 30px;
+`;
 
 export default CoachSelect;
