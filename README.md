@@ -1,5 +1,6 @@
 ## Getting started
-yarn (npm install -g yarn  | yarn이 설치되지 않았을 경우)
+yarn 
+yarn이 설치되지 않았을 경우 -> npm install -g yarn
 
 ### Expo
 expo start
