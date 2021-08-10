@@ -7,6 +7,7 @@ expo start
 
 #### expo 에뮬레이터 실행
 ![image](https://user-images.githubusercontent.com/73378472/128910402-63a7e85f-1d51-40a3-8761-fcc08bef55c5.png)
+
 xcode(iOS) or Android studio 설치후 에뮬레이터 실행 후 Run on iOS simulator or Android 클릭
 
 맥에서 xcode 실행 안될시
