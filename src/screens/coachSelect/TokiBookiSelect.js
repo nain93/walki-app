@@ -1,21 +1,24 @@
 import React from "react";
 import styled from "styled-components";
-import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme";
-import { View, Text } from "react-native";
+import { Body3Text, H3Text, theme } from "../../styles/theme";
+import { View } from "react-native";
 import { useState } from "react/cjs/react.development";
 import tokiImg from "../../../assets/images/toki_character.png";
 import bookiImg from "../../../assets/images/booki_character.png";
-import NextButton from "./NextButton";
+import NextButton from "../../components/NextButton";
+import { coachVar } from "../../../apollo";
 
 const TokiBookiSelect = ({ swiperRef }) => {
   const [coachSelect, setCoachSelect] = useState("");
 
   const handleTokiSelect = () => {
     setCoachSelect("toki");
+    coachVar("toki");
   };
 
   const handleBookiSelect = () => {
     setCoachSelect("booki");
+    coachVar("booki");
   };
 
   const handleGoToNext = () => {
@@ -35,7 +38,6 @@ const TokiBookiSelect = ({ swiperRef }) => {
           </Wrapper>
         </TokiBox>
         <BookiBox
-          style={{ marginBottom: 100 }}
           selected={coachSelect === "booki"}
           onPress={handleBookiSelect}
         >
@@ -50,7 +52,11 @@ const TokiBookiSelect = ({ swiperRef }) => {
           </Wrapper>
         </BookiBox>
       </View>
-      <NextButton handleGoToNext={handleGoToNext} coachSelect={coachSelect} />
+      <NextButton
+        handleGoToNext={handleGoToNext}
+        disabled={!coachSelect}
+        btnBackColor={theme.grayScale.black}
+      />
     </>
   );
 };
@@ -72,6 +78,7 @@ const TokiBox = styled(TokiBookiStyle)`
 const BookiBox = styled(TokiBookiStyle)`
   border: ${(props) =>
     props.selected ? `2px solid ${theme.booki.color.main}` : "none"};
+  margin-bottom: 100px;
 `;
 
 const Wrapper = styled.View`

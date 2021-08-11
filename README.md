@@ -11,5 +11,7 @@ react-navigation/stack
 react-native-web-swiper --save
 @react-native-seoul/kakao-login
 react-native-vector-icons
+react-hook-form
+@hookform/error-message
 
 npx expo-optimize
