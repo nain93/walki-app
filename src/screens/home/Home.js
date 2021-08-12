@@ -1,12 +1,16 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React from "react"
+import { View, Text } from "react-native"
+import styled from "styled-components"
+import Icon from "react-native-vector-icons/Ionicons"
 
 const Home = () => {
-  return (
-    <View>
-      <Text>Home</Text>
-    </View>
-  );
-};
+  return <View></View>
+}
 
-export default Home;
+const Container = styled.View`
+  width: 100%;
+  align-items: center;
+  padding: 15px 30px;
+`
+
+export default Home
