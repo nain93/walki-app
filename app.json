@@ -3,9 +3,7 @@
     "name": "walki",
     "slug": "walki",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "cover",
@@ -18,8 +16,7 @@
     "android": {
       "package": "com.bside.walki",
       "versionCode": 1
-    },
-    "description": ""
+    }
   },
   "name": "walki"
 }

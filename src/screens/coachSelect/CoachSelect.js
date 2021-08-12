@@ -1,19 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import { theme } from "../../styles/theme";
 import CoachSwiper from "./Swiper";
 
-const CoachSelect = () => {
+const CoachSelect = ({ navigation }) => {
   return (
     <Container>
-      <CoachSwiper />
+      <CoachSwiper navigation={navigation} />
     </Container>
   );
 };
 
 const Container = styled.View`
   flex: 1;
-  background-color: white;
-  padding: 20px 30px;
+  background-color: ${theme.grayScale.white};
+  padding-top: 60px;
 `;
 
 export default CoachSelect;

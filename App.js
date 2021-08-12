@@ -5,8 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Asset } from "expo-asset";
 import GlobalNav from "./src/navigators/GlobalNav";
 import splash from "./assets/images/splash.png";
-import { AppearanceProvider } from "react-native-appearance";
-import { Appearance } from "react-native";
+import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import { ApolloProvider } from "@apollo/client";
 import client, { isLoggedInVar, tokenVar } from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -32,6 +31,8 @@ export default function App() {
     return preloadAssets();
   };
 
+  let colorScheme = useColorScheme();
+
   if (loading) {
     return (
       <AppLoading
@@ -41,8 +42,6 @@ export default function App() {
       />
     );
   }
-
-  const subscription = Appearance.addChangeListener(({ colorScheme }) => {});
 
   return (
     <ApolloProvider client={client}>
