@@ -27,7 +27,7 @@ export const H3Text = styled.Text`
 
 export const H4Text = styled.Text`
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
 `;
 
 export const Body1Text = styled.Text`
@@ -76,6 +76,10 @@ const toki = {
       main: "#51b5ff",
       sub: "#8ec9f5",
     },
+    primary: {
+      tap: "rgba(242,39,100,0.6)",
+      disable: "rgba(242,39,100,0.3)",
+    },
   },
 };
 
@@ -90,6 +94,10 @@ const booki = {
     chart: {
       main: "#51b5ff",
       sub: "#8ec9f5",
+    },
+    primary: {
+      tap: "rgba(138,209,10,0.6)",
+      disable: "rgba(138,209,10,0.3)",
     },
   },
 };

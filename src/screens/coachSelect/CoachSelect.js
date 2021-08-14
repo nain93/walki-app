@@ -13,7 +13,6 @@ const CoachSelect = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${theme.grayScale.white};
   padding-top: 60px;
 `;
 

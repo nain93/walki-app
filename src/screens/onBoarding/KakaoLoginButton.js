@@ -13,7 +13,7 @@ import {
 import { Caption, H4Text } from "../../styles/theme";
 import { gql, useMutation } from "@apollo/client";
 
-const LoginButton = ({ navigation }) => {
+const KakaoLoginButton = ({ navigation }) => {
   const [result, setResult] = useState("");
 
   const SIGN_UP_MUTATION = gql`
@@ -84,4 +84,4 @@ const KakaoDesc = styled(Caption)`
   margin: 10px 0;
 `;
 
-export default LoginButton;
+export default KakaoLoginButton;

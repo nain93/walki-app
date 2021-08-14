@@ -6,8 +6,9 @@ import { TouchableOpacity, View } from "react-native";
 import LeftArrow from "react-native-vector-icons/AntDesign";
 import TokiBookiSelect from "./TokiBookiSelect";
 import ChallengeSetting from "./ChallengeSetting";
+import HeaderForm from "../../components/HeaderForm";
 
-const CoachSwiper = ({ navigation: { goBack } }) => {
+const CoachSwiper = ({ navigation }) => {
   const swiperRef = useRef(null);
 
   return (
@@ -19,17 +20,17 @@ const CoachSwiper = ({ navigation: { goBack } }) => {
           dotsPos: "top-right",
           nextPos: false,
           prevPos: "top-left",
-          firstPrevElement: () => {
-            return (
-              <TouchableOpacity onPress={() => goBack()}>
-                <LeftArrow
-                  name="left"
-                  size={30}
-                  color={theme.grayScale.black}
-                />
-              </TouchableOpacity>
-            );
-          },
+          // firstPrevElement: () => {
+          //   return (
+          //     <TouchableOpacity onPress={() => navigation.goBack()}>
+          //       <LeftArrow
+          //         name="left"
+          //         size={30}
+          //         color={theme.grayScale.black}
+          //       />
+          //     </TouchableOpacity>
+          //   );
+          // },
           PrevComponent: () => {
             return (
               <TouchableOpacity onPress={() => swiperRef?.current.goToPrev()}>
@@ -48,13 +49,14 @@ const CoachSwiper = ({ navigation: { goBack } }) => {
         }}
       >
         <SlideContainer>
-          <View>
-            <Header>나의 걷기를 도와줄 {"\n"}코치를 선택해주세요!</Header>
-            <Desc>
-              나의 걷기 패턴에 맞는 코치를 선택하고 {"\n"}서비스를 이용해보세요
-            </Desc>
-          </View>
-          <TokiBookiSelect swiperRef={swiperRef} />
+          <HeaderForm
+            headerChildren={"나의 걷기를 도와줄 \n코치를 선택해주세요!"}
+            descChildren={
+              "나의 걷기 패턴에 맞는 코치를 선택하고 \n서비스를 이용해보세요"
+            }
+            align="left"
+          />
+          <TokiBookiSelect swiperRef={swiperRef} navigation={navigation} />
         </SlideContainer>
 
         <SlideContainer>

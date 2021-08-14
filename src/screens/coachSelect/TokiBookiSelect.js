@@ -5,24 +5,25 @@ import { View } from "react-native";
 import { useState } from "react/cjs/react.development";
 import tokiImg from "../../../assets/images/toki_character.png";
 import bookiImg from "../../../assets/images/booki_character.png";
-import NextButton from "../../components/NextButton";
-import { coachVar } from "../../../apollo";
+import LongButton from "../../components/LongButton";
+import { coachColorVar } from "../../../apollo";
 
-const TokiBookiSelect = ({ swiperRef }) => {
+const TokiBookiSelect = ({ navigation, swiperRef }) => {
   const [coachSelect, setCoachSelect] = useState("");
 
   const handleTokiSelect = () => {
     setCoachSelect("toki");
-    coachVar("toki");
+    coachColorVar({ ...theme.toki });
   };
 
   const handleBookiSelect = () => {
     setCoachSelect("booki");
-    coachVar("booki");
+    coachColorVar({ ...theme.booki });
   };
 
   const handleGoToNext = () => {
-    swiperRef?.current.goToNext();
+    // swiperRef?.current.goToNext();
+    navigation.navigate("BeforeStart");
   };
 
   return (
@@ -52,11 +53,13 @@ const TokiBookiSelect = ({ swiperRef }) => {
           </Wrapper>
         </BookiBox>
       </View>
-      <NextButton
+      <LongButton
         handleGoToNext={handleGoToNext}
         disabled={!coachSelect}
         btnBackColor={theme.grayScale.black}
-      />
+      >
+        선택 완료
+      </LongButton>
     </>
   );
 };
