@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 import Swiper from "react-native-web-swiper";
 import { Body1Text, H1Text, theme } from "../../styles/theme";
-import { TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import LeftArrow from "react-native-vector-icons/AntDesign";
 import TokiBookiSelect from "./TokiBookiSelect";
 import ChallengeSetting from "./ChallengeSetting";
@@ -13,7 +13,7 @@ const CoachSwiper = ({ navigation }) => {
 
   return (
     <Container>
-      <Swiper
+      {/* <Swiper
         ref={swiperRef}
         gesturesEnabled={() => false}
         controlsProps={{
@@ -78,29 +78,24 @@ const CoachSwiper = ({ navigation }) => {
             </Desc>
           </View>
         </SlideContainer>
-      </Swiper>
+      </Swiper> */}
+      <HeaderForm
+        headerChildren={"나의 걷기를 도와줄 \n코치를 선택해주세요!"}
+        descChildren={
+          "나의 걷기 패턴에 맞는 코치를 선택하고 \n서비스를 이용해보세요"
+        }
+        align="left"
+      />
+      <TokiBookiSelect navigation={navigation} />
     </Container>
   );
 };
 
 const Container = styled.View`
   flex: 1;
-`;
-
-const Header = styled(H1Text)`
-  margin: 20px 0;
-`;
-
-const Desc = styled(Body1Text)`
-  color: ${theme.TextColor};
-`;
-
-const SlideContainer = styled.View`
-  flex: 1;
-  text-align: left;
-  margin: 0 30px;
-  padding: 40px 0;
-  justify-content: space-between;
+  padding: 10px 30px;
+  padding-top: 30px;
+  justify-content: space-around;
 `;
 
 export default CoachSwiper;

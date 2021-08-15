@@ -27,22 +27,25 @@ const KakaoLoginButton = ({ navigation }) => {
   const [signUpMutation, { loading }] = useMutation(SIGN_UP_MUTATION);
 
   // refreshToken?
-  const handleKakaoLogin = async () => {
-    // const token = await login();
-    // const { accessToken } = token;
+  // const handleKakaoLogin = async () => {
+  //   const token = await login();
+  //   const { accessToken } = token;
 
-    // setResult(token.accessToken);
-    // if (!loading) {
-    //   signUpMutation({
-    //     variables: {
-    //       social: KAKAO,
-    //       token: 0,
-    //     },
-    //   });
-    // }
+  //   setResult(token.accessToken);
+  //   if (!loading) {
+  //     signUpMutation({
+  //       variables: {
+  //         social: KAKAO,
+  //         token: 0,
+  //       },
+  //     });
+  //   }
 
-    navigation.navigate("CoachSelect");
-  };
+  //   navigation.navigate("CoachSelect");
+  // };
+
+  const handleKakaoLogin = () =>
+    navigation.reset({ routes: [{ name: "CoachSelect" }] });
 
   return (
     <Container>

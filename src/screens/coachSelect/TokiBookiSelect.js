@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Body3Text, H3Text, theme } from "../../styles/theme";
 import { View } from "react-native";
-import { useState } from "react/cjs/react.development";
 import tokiImg from "../../../assets/images/toki_character.png";
 import bookiImg from "../../../assets/images/booki_character.png";
 import LongButton from "../../components/LongButton";
 import { coachColorVar } from "../../../apollo";
 
-const TokiBookiSelect = ({ navigation, swiperRef }) => {
+const TokiBookiSelect = ({ navigation }) => {
   const [coachSelect, setCoachSelect] = useState("");
 
   const handleTokiSelect = () => {
@@ -27,7 +26,7 @@ const TokiBookiSelect = ({ navigation, swiperRef }) => {
   };
 
   return (
-    <>
+    <Container>
       <View>
         <TokiBox selected={coachSelect === "toki"} onPress={handleTokiSelect}>
           <Wrapper>
@@ -60,9 +59,11 @@ const TokiBookiSelect = ({ navigation, swiperRef }) => {
       >
         선택 완료
       </LongButton>
-    </>
+    </Container>
   );
 };
+
+const Container = styled.View``;
 
 const TokiBookiStyle = styled.TouchableOpacity`
   width: 100%;

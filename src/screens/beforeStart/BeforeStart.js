@@ -8,8 +8,9 @@ import { coachColorVar } from "../../../apollo";
 import { Body1Text, H4Text } from "../../styles/theme";
 import LongButton from "../../components/LongButton";
 
-const BeforeStart = () => {
-  const handleGoToNext = () => {};
+const BeforeStart = ({ navigation }) => {
+  const handleGoToNext = () => navigation.navigate("Home");
+  // * reset으로 넘겨야됨?
 
   return (
     <Container>
@@ -22,7 +23,7 @@ const BeforeStart = () => {
       />
       <AlertSection>
         <AlertBox>
-          <IconBox color={coachColorVar()?.color?.primary?.tap}>
+          <IconBox color={coachColorVar().color.primary.tap}>
             <Icon source={notification} resizeMode="center" />
           </IconBox>
           <IconText>
@@ -31,7 +32,7 @@ const BeforeStart = () => {
           </IconText>
         </AlertBox>
         <AlertBox>
-          <IconBox color={coachColorVar()?.color?.primary?.tap}>
+          <IconBox color={coachColorVar().color.primary.tap}>
             <Icon source={location} resizeMode="center" />
           </IconBox>
           <IconText>
@@ -40,7 +41,7 @@ const BeforeStart = () => {
           </IconText>
         </AlertBox>
         <AlertBox>
-          <IconBox color={coachColorVar()?.color?.primary?.tap}>
+          <IconBox color={coachColorVar().color.primary.tap}>
             <Icon source={heart} resizeMode="center" />
           </IconBox>
           <IconText>
@@ -52,7 +53,7 @@ const BeforeStart = () => {
       <LongButton
         handleGoToNext={handleGoToNext}
         disabled={false}
-        btnBackColor={coachColorVar()?.color?.main}
+        btnBackColor={coachColorVar().color.main}
       >
         확인
       </LongButton>
