@@ -11,7 +11,7 @@ const Home = () => {
   const [ready, setReady] = useState(true)
 
   const [weather, setWeather] = useState({
-    temp: 0,
+    temp: 1,
     condition: "",
   })
 
