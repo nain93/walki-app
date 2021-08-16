@@ -53,5 +53,8 @@ react-native-web-swiper --save
 react-native-vector-icons
 react-hook-form
 @hookform/error-message
+axios
+expo-location
+react-native-vector-icons
 
 npx expo-optimize
