@@ -7,6 +7,8 @@ import Loading from "../../components/Loading"
 import WeatherLogo from "../../../assets/icons/sun.png"
 import SpaceLogo from "../../../assets/icons/bar.png"
 
+import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme"
+
 const Home = () => {
   const [state, setState] = useState([])
   const [cateState, setCateState] = useState([])
@@ -18,6 +20,7 @@ const Home = () => {
   })
 
   const Location = "강남구"
+  const percentage = 66
 
   const [currentDate, setcurrentDate] = useState("")
   const [currentTime, setcurrentTime] = useState("")
@@ -92,7 +95,11 @@ const Home = () => {
         </WeatherStatus>
       </TopStatus>
       <MiddleStatus></MiddleStatus>
-      <BottomStatus></BottomStatus>
+      <BottomStatus>
+        <GoalContainer>
+          <GoalText>오늘의 목표를 세워보세요!</GoalText>
+        </GoalContainer>
+      </BottomStatus>
     </Container>
   )
 }
@@ -101,6 +108,21 @@ const Container = styled.SafeAreaView`
   align-items: center;
   width: 100%;
   height: 100%;
+`
+
+const GoalContainer = styled.TouchableOpacity`
+  width: 300px;
+  height: 54px;
+  justify-content: center;
+  align-items: center;
+  color: ${theme.grayScale.white};
+  background-color: ${theme.toki.color.main};
+  border-radius: 8px;
+`
+
+const GoalText = styled(H4Text)`
+  color: ${theme.grayScale.white};
+  text-align: center;
 `
 
 const TopStatus = styled.View`
@@ -199,9 +221,8 @@ const BottomStatus = styled.View`
   height: 20%;
   align-items: flex-start;
   justify-content: flex-start;
-  padding-left: 15px;
-  padding-right: 1px;
-  padding-top: 15px;
+  padding-left: 65px;
+  padding-top: 35px;
   flex-direction: row;
 `
 
