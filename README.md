@@ -56,7 +56,7 @@ react-hook-form
 axios
 expo-location
 react-native-vector-icons
-react-circular-progressbar
+react-native-progress-circle
 
 
 npx expo-optimize
