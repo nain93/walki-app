@@ -56,5 +56,6 @@ react-hook-form
 axios
 expo-location
 react-native-vector-icons
+react-native-svg-charts
 
 npx expo-optimize
