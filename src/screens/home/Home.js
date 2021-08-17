@@ -92,6 +92,7 @@ const Home = () => {
         </WeatherStatus>
       </TopStatus>
       <MiddleStatus></MiddleStatus>
+      <BottomStatus></BottomStatus>
     </Container>
   )
 }
