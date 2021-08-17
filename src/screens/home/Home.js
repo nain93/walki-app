@@ -7,9 +7,17 @@ import Loading from "../../components/Loading"
 import WeatherLogo from "../../../assets/icons/sun.png"
 import SpaceLogo from "../../../assets/icons/bar.png"
 
+import ProgressCircle from "react-native-progress-circle"
 import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme"
 
-const Home = () => {
+const Home = ({
+  percent,
+  radius,
+  borderWidth,
+  color,
+  shadowColor,
+  bgColor,
+}) => {
   const [state, setState] = useState([])
   const [cateState, setCateState] = useState([])
   const [ready, setReady] = useState(true)
@@ -94,7 +102,14 @@ const Home = () => {
           </WeatherSpace>
         </WeatherStatus>
       </TopStatus>
-      <MiddleStatus></MiddleStatus>
+      <MiddleStatus>
+        <GoalProgressBar>
+          percent={30}
+          radius={50}
+          borderWidth={8}
+          color="#3399FF" shadowColor="#999" bgColor="#fff"
+        </GoalProgressBar>
+      </MiddleStatus>
       <BottomStatus>
         <GoalContainer>
           <GoalText>오늘의 목표를 세워보세요!</GoalText>
@@ -108,6 +123,9 @@ const Container = styled.SafeAreaView`
   align-items: center;
   width: 100%;
   height: 100%;
+`
+const GoalProgressBar = styled(ProgressCircle)`
+  height: 100px;
 `
 
 const GoalContainer = styled.TouchableOpacity`
