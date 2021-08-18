@@ -19,6 +19,7 @@ import EditName from "../screens/setting/EditName";
 import LeftIcon from "react-native-vector-icons/AntDesign";
 import { isLoggedInVar } from "../../apollo";
 import AlertSetting from "../screens/setting/AlertSetting";
+import TabNavigator from "./TabNav";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -138,7 +139,13 @@ const GlobalNav = () => {
           })}
           component={AlertSetting}
         />
+
         <Stack.Screen
+          name="TabNavigator"
+          component={TabNavigator}
+          options={{ gestureEnabled: false, headerShown: false }}
+        />
+        {/* <Stack.Screen
           name="Home"
           options={{
             title: "",
@@ -151,7 +158,7 @@ const GlobalNav = () => {
             },
           }}
           component={Home}
-        />
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
