@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Image, Text } from "react-native";
+import React from "react";
+import { Image } from "react-native";
 import styled from "styled-components";
 import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
 import {
@@ -11,11 +11,10 @@ import {
   unlink,
 } from "@react-native-seoul/kakao-login";
 import { Caption, H4Text } from "../../styles/theme";
-import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
+import { logUserIn } from "../../../apollo";
 
 const KakaoLoginButton = ({ navigation }) => {
-  const [result, setResult] = useState("");
-
   const SIGN_IN_QUERY = gql`
     query signIn($social: Social!, $token: String!) {
       signIn(social: $social, token: $token) {
@@ -24,44 +23,31 @@ const KakaoLoginButton = ({ navigation }) => {
     }
   `;
 
-  // const [signUpMutation, { loading }] = useMutation(SIGN_UP_MUTATION);
-  const [signInQuery, { loading, data, error }] = useLazyQuery(SIGN_IN_QUERY);
-
   const onCompleted = (data) => {
     const {
       signIn: { accessToken },
     } = data;
-    console.log(accessToken, "token");
-    // if (accessToken) {
-    //   navigation.navigate("LogIn", {
-    //     email,
-    //     password,
-    //   });
-    // }
+    if (accessToken) {
+      logUserIn(accessToken);
+    }
   };
+
+  // const [signUpMutation, { loading }] = useMutation(SIGN_UP_MUTATION);
+  const { loading, data, error } = useQuery(SIGN_IN_QUERY, {
+    onCompleted,
+    variables: {
+      social: "APPLE",
+      token: "5",
+    },
+  });
 
   // refreshToken?
   const handleKakaoLogin = () => {
     // const token = await login();
     // const { accessToken } = token;
     // setResult(token.accessToken);
-
-    signInQuery({
-      variables: {
-        social: "APPLE",
-        token: "5",
-      },
-    });
-
-    console.log(data, "data");
-    if (error) {
-      console.log(error, "error");
-    }
-    // navigation.reset({ routes: [{ name: "CoachSelect" }] });
+    navigation.reset({ routes: [{ name: "CoachSelect" }] });
   };
-
-  // const handleKakaoLogin = () =>
-  //   navigation.reset({ routes: [{ name: "CoachSelect" }] });
 
   return (
     <Container>

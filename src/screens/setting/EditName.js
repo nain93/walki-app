@@ -1,12 +1,31 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { View, Text, TextInput } from "react-native";
 import styled from "styled-components";
 import LongButton from "../../components/LongButton";
 import { H2Text, theme } from "../../styles/theme";
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
+import { gql, useMutation } from "@apollo/client";
 
-const EditName = () => {
+const EditName = ({
+  navigation,
+  route: {
+    params: { name },
+  },
+}) => {
+  const PUT_MEMBER = gql`
+    mutation putMember($member: MemberInput) {
+      putMember(member: $member) {
+        name
+      }
+    }
+  `;
+
+  const [putMemberMutation, { loading, data, error }] = useMutation(
+    PUT_MEMBER,
+    {
+      onCompleted: (data) => {},
+    }
+  );
   const dismissKeyBoard = () => {
     Keyboard.dismiss();
   };
@@ -19,13 +38,26 @@ const EditName = () => {
     watch,
   } = useForm({
     defaultValues: {
-      name: "구남규",
+      name,
     },
   });
 
+  const inputWatch = watch("name");
+  const newName = getValues("name");
+
   const handleGoToNext = () => {
-    const data = getValues("name");
-    console.log(data);
+    if (inputWatch === name) {
+      return;
+    }
+    putMemberMutation({
+      variables: {
+        member: {
+          name: newName,
+        },
+      },
+    });
+    navigation.goBack();
+    // * 변경후 다시 설정화면으로?
   };
 
   return (
@@ -33,13 +65,13 @@ const EditName = () => {
       <Container>
         <HeaderTitle>이름 변경</HeaderTitle>
         <NameInput
-          defaultValue="구남규"
+          defaultValue={name}
           onChangeText={(text) => setValue("name", text)}
           onSubmitEditing={handleSubmit(handleGoToNext)}
         />
         <LongButton
           handleGoToNext={handleGoToNext}
-          disabled={getValues("name") === "구남규"}
+          disabled={inputWatch === name}
           btnBackColor={theme.toki.color.main}
         >
           변경하기
@@ -68,11 +100,6 @@ const NameInput = styled.TextInput`
   margin: 10px 0;
   border: 1px solid ${theme.grayScale.gray5};
   padding: 0 10px;
-`;
-
-const NameChange = styled.TouchableOpacity`
-  position: absolute;
-  right: 10px;
 `;
 
 export default EditName;

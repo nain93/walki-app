@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import profileImg from "../../../assets/images/profile.png";
 import { Body1Text, Body3Text, theme } from "../../styles/theme";
+import { gql, useQuery } from "@apollo/client";
+import { useEffect } from "react";
 
 const Profile = ({ navigation }) => {
-  const handleGoToEditName = () => navigation.navigate("EditName");
+  const [userData, setUserData] = useState({
+    name: "",
+    profileImage: "",
+  });
+  const GET_MEMBER = gql`
+    query getMember {
+      getMember {
+        name
+        profileImage
+      }
+    }
+  `;
+
+  const onCompleted = (data) => {
+    const { getMember } = data;
+    setUserData({
+      ...getMember,
+    });
+  };
+
+  const { data, loading, error } = useQuery(GET_MEMBER, {
+    onCompleted,
+  });
+  const { name, profileImage } = userData;
 
   return (
     <Container>
@@ -13,9 +38,15 @@ const Profile = ({ navigation }) => {
       <Name>이름</Name>
       <NameInputBox>
         <NameInput>
-          <Body3Text>구남규</Body3Text>
+          <Body3Text>{name}</Body3Text>
         </NameInput>
-        <NameChange onPress={handleGoToEditName}>
+        <NameChange
+          onPress={() =>
+            navigation.navigate("EditName", {
+              name,
+            })
+          }
+        >
           <ChangeText>변경</ChangeText>
         </NameChange>
       </NameInputBox>

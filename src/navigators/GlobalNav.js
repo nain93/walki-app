@@ -17,6 +17,8 @@ import closeIcon from "../../assets/icons/close.png";
 import { useNavigation } from "@react-navigation/native";
 import EditName from "../screens/setting/EditName";
 import LeftIcon from "react-native-vector-icons/AntDesign";
+import { isLoggedInVar } from "../../apollo";
+import AlertSetting from "../screens/setting/AlertSetting";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -46,13 +48,16 @@ const GlobalNav = () => {
           { cardStyle: { backgroundColor: theme.grayScale.white } }
         )}
       >
-        <Stack.Screen
-          name="OnBoarding"
-          options={{
-            headerShown: false,
-          }}
-          component={OnBoarding}
-        />
+        {!isLoggedInVar && (
+          <Stack.Screen
+            name="OnBoarding"
+            options={{
+              headerShown: false,
+            }}
+            component={OnBoarding}
+          />
+        )}
+
         <Stack.Screen
           name="CoachSelect"
           options={{
@@ -66,31 +71,6 @@ const GlobalNav = () => {
             headerShown: false,
           }}
           component={BeforeStart}
-        />
-        <Stack.Screen
-          name="EditName"
-          options={({ navigation }) => ({
-            title: "",
-            headerLeft: () => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                  style={{ marginLeft: 30 }}
-                >
-                  <LeftIcon name="left" size={24} />
-                </TouchableOpacity>
-              );
-            },
-
-            headerStyle: {
-              backgroundColor: "transparent",
-              elevation: 0, // android
-              shadowOpacity: 0, //ios
-            },
-          })}
-          component={EditName}
         />
         <Stack.Screen
           name="SettingScreen"
@@ -107,6 +87,56 @@ const GlobalNav = () => {
             },
           }}
           component={SettingScreen}
+        />
+        <Stack.Screen
+          name="EditName"
+          options={({ navigation }) => ({
+            title: "",
+            headerLeft: () => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                  style={{ marginLeft: 20 }}
+                >
+                  <LeftIcon name="left" size={24} />
+                </TouchableOpacity>
+              );
+            },
+
+            headerStyle: {
+              backgroundColor: "transparent",
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          })}
+          component={EditName}
+        />
+        <Stack.Screen
+          name="AlertSetting"
+          options={({ navigation }) => ({
+            title: "",
+            headerLeft: () => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                  style={{ marginLeft: 20 }}
+                >
+                  <LeftIcon name="left" size={24} />
+                </TouchableOpacity>
+              );
+            },
+
+            headerStyle: {
+              backgroundColor: "transparent",
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          })}
+          component={AlertSetting}
         />
         <Stack.Screen
           name="Home"
