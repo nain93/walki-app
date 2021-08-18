@@ -4,7 +4,7 @@ import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack"
-import Home from "../screens/home"
+import Home from "../screens/home/Home"
 import LogoTitle from "../components/LogoTitle"
 import OnBoarding from "../screens/onBoarding"
 import CoachSelect from "../screens/coachSelect"

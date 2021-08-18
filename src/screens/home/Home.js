@@ -7,17 +7,14 @@ import Loading from "../../components/Loading"
 import WeatherLogo from "../../../assets/icons/sun.png"
 import SpaceLogo from "../../../assets/icons/bar.png"
 
-import ProgressCircle from "react-native-progress-circle"
+import tokiImg from "../../../assets/images/toki_character.png"
+import bookiImg from "../../../assets/images/booki_character.png"
+
+import { CircularProgress } from "react-native-svg-circular-progress"
+
 import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme"
 
-const Home = ({
-  percent,
-  radius,
-  borderWidth,
-  color,
-  shadowColor,
-  bgColor,
-}) => {
+const Home = ({}) => {
   const [state, setState] = useState([])
   const [cateState, setCateState] = useState([])
   const [ready, setReady] = useState(true)
@@ -103,12 +100,19 @@ const Home = ({
         </WeatherStatus>
       </TopStatus>
       <MiddleStatus>
-        <GoalProgressBar>
-          percent={30}
-          radius={50}
-          borderWidth={8}
-          color="#3399FF" shadowColor="#999" bgColor="#fff"
-        </GoalProgressBar>
+        <GoalBox>
+          <ProgressGoal>
+            <CircularProgress
+              percentage={percentage}
+              donutColor={theme.toki.color.main}
+              size={300}
+              progressWidth={140}>
+              <CharacterBox>
+                <CharacetrImage source={tokiImg} resizeMode="contain" />
+              </CharacterBox>
+            </CircularProgress>
+          </ProgressGoal>
+        </GoalBox>
       </MiddleStatus>
       <BottomStatus>
         <GoalContainer>
@@ -118,14 +122,34 @@ const Home = ({
     </Container>
   )
 }
+const ProgressGoal = styled(CircularProgress)`
+  width: 100px;
+  height: 100px;
+`
+
+const GoalBox = styled.View`
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+`
+
+const CharacterBox = styled.View`
+  width: 100px;
+  height: 100px;
+`
+
+const CharacetrImage = styled.Image`
+  width: 96px;
+  height: 111px;
+`
+
+const GoalStep = styled.Text``
 
 const Container = styled.SafeAreaView`
   align-items: center;
   width: 100%;
   height: 100%;
-`
-const GoalProgressBar = styled(ProgressCircle)`
-  height: 100px;
 `
 
 const GoalContainer = styled.TouchableOpacity`

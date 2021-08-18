@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 const SettingIcon = styled(Icon)`
   width: 100%;
-  padding: 15px 180px;
+  padding: 20px 185px;
   margin-right: auto;
 `
 
@@ -15,9 +15,12 @@ const ImageStyle = styled.Image`
 `
 
 const View = styled.View`
-  width: 380px;
+  width: 100%;
   height: 60px;
   flex-direction: row;
+  padding-left: 15px;
+  border-radius: 15px;
+  border-width: 3px;
 `
 
 function LogoTitle() {
