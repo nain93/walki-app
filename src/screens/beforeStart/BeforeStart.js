@@ -9,7 +9,7 @@ import { Body1Text, H4Text } from "../../styles/theme";
 import LongButton from "../../components/LongButton";
 
 const BeforeStart = ({ navigation }) => {
-  const handleGoToNext = () => navigation.navigate("Home");
+  const handleGoToNext = () => navigation.navigate("TabNavigator");
   // * reset으로 넘겨야됨?
 
   return (

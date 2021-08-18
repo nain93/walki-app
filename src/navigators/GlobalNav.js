@@ -1,5 +1,5 @@
-import React from "react"
-import { NavigationContainer } from "@react-navigation/native"
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
   TransitionPresets,
@@ -17,17 +17,14 @@ import closeIcon from "../../assets/icons/close.png";
 import { useNavigation } from "@react-navigation/native";
 import EditName from "../screens/setting/EditName";
 import LeftIcon from "react-native-vector-icons/AntDesign";
-import Home from "../screens/home/Home"
-import LogoTitle from "../components/LogoTitle"
-import OnBoarding from "../screens/onBoarding"
-import CoachSelect from "../screens/coachSelect"
-import { Platform } from "react-native"
-import TabNavigator from "./TabNav"
+import { isLoggedInVar } from "../../apollo";
+import AlertSetting from "../screens/setting/AlertSetting";
+import TabNavigator from "./TabNav";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
-}
-const Stack = createStackNavigator()
+};
+const Stack = createStackNavigator();
 
 const CloseIcon = () => {
   const navigation = useNavigation();
@@ -52,57 +49,29 @@ const GlobalNav = () => {
           { cardStyle: { backgroundColor: theme.grayScale.white } }
         )}
       >
+        {!isLoggedInVar && (
+          <Stack.Screen
+            name="OnBoarding"
+            options={{
+              headerShown: false,
+            }}
+            component={OnBoarding}
+          />
+        )}
 
-        <Stack.Screen
-          name="TabNavigator"
-          component={TabNavigator}
-          options={{ gestureEnabled: false }}
-        />
-        {/* <Stack.Screen
-          name="OnBoarding"
-          options={{
-            headerShown: false,
-          }}
-          component={OnBoarding}
-        />
         <Stack.Screen
           name="CoachSelect"
           options={{
             headerShown: false,
           }}
           component={CoachSelect}
-        /> */}
+        />
         <Stack.Screen
           name="BeforeStart"
           options={{
             headerShown: false,
           }}
           component={BeforeStart}
-        />
-        <Stack.Screen
-          name="EditName"
-          options={({ navigation }) => ({
-            title: "",
-            headerLeft: () => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                  style={{ marginLeft: 30 }}
-                >
-                  <LeftIcon name="left" size={24} />
-                </TouchableOpacity>
-              );
-            },
-
-            headerStyle: {
-              backgroundColor: "transparent",
-              elevation: 0, // android
-              shadowOpacity: 0, //ios
-            },
-          })}
-          component={EditName}
         />
         <Stack.Screen
           name="SettingScreen"
@@ -121,6 +90,62 @@ const GlobalNav = () => {
           component={SettingScreen}
         />
         <Stack.Screen
+          name="EditName"
+          options={({ navigation }) => ({
+            title: "",
+            headerLeft: () => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                  style={{ marginLeft: 20 }}
+                >
+                  <LeftIcon name="left" size={24} />
+                </TouchableOpacity>
+              );
+            },
+
+            headerStyle: {
+              backgroundColor: "transparent",
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          })}
+          component={EditName}
+        />
+        <Stack.Screen
+          name="AlertSetting"
+          options={({ navigation }) => ({
+            title: "",
+            headerLeft: () => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                  style={{ marginLeft: 20 }}
+                >
+                  <LeftIcon name="left" size={24} />
+                </TouchableOpacity>
+              );
+            },
+
+            headerStyle: {
+              backgroundColor: "transparent",
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          })}
+          component={AlertSetting}
+        />
+
+        <Stack.Screen
+          name="TabNavigator"
+          component={TabNavigator}
+          options={{ gestureEnabled: false, headerShown: false }}
+        />
+        {/* <Stack.Screen
           name="Home"
           options={{
             title: "",
@@ -133,10 +158,10 @@ const GlobalNav = () => {
             },
           }}
           component={Home}
-        />
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
-  )
-}
+  );
+};
 
-export default GlobalNav
+export default GlobalNav;

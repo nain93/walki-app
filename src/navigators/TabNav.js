@@ -1,28 +1,30 @@
-import React from "react"
+import React from "react";
 
-import { Platform } from "react-native"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { Platform } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import Home from "../screens/home/Home"
-import ranking from "../screens/ranking/ranking"
-import report from "../screens/report/report"
+import Home from "../screens/home/Home";
+import ranking from "../screens/ranking/ranking";
+import report from "../screens/report/report";
 
-import { Ionicons } from "@expo/vector-icons"
+import { Ionicons } from "@expo/vector-icons";
+import LogoTitle from "../components/LogoTitle";
+import SettingLogoTitle from "../components/SettingLogoTitle";
 
-const Tabs = createBottomTabNavigator()
+const Tabs = createBottomTabNavigator();
 
 const TabNavigator = () => {
   return (
     <Tabs.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
-          let iconName = Platform.OS === "ios" ? "ios-" : "md-"
+          let iconName = Platform.OS === "ios" ? "ios-" : "md-";
           if (route.name === "홈") {
-            iconName += "home"
+            iconName += "home";
           } else if (route.name === "리포트") {
-            iconName += "person-outline"
+            iconName += "person-outline";
           } else if (route.name === "전체랭킹") {
-            iconName += "person-outline"
+            iconName += "person-outline";
           }
           return (
             <Ionicons
@@ -30,7 +32,7 @@ const TabNavigator = () => {
               color={focused ? "#F22764" : "lightgrey"}
               size={26}
             />
-          )
+          );
         },
       })}
       tabBarOptions={{
@@ -47,12 +49,26 @@ const TabNavigator = () => {
           borderTopWidth: 1,
           borderColor: "black",
         },
-      }}>
-      <Tabs.Screen name="홈" component={Home} />
+      }}
+    >
+      <Tabs.Screen
+        name="홈"
+        options={{
+          headerTitle: () => null,
+          headerLeft: (props) => <LogoTitle {...props} />,
+          headerRight: (props) => <SettingLogoTitle {...props} />,
+          headerStyle: {
+            backgroundColor: "transparent",
+            elevation: 0, // android
+            shadowOpacity: 0, //ios
+          },
+        }}
+        component={Home}
+      />
       <Tabs.Screen name="리포트" component={ranking} />
       <Tabs.Screen name="전체랭킹" component={report} />
     </Tabs.Navigator>
-  )
-}
+  );
+};
 
-export default TabNavigator
+export default TabNavigator;

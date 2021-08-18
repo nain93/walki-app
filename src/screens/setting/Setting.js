@@ -5,10 +5,10 @@ import setting from "../../../assets/icons/setting.png";
 import document from "../../../assets/icons/document.png";
 import { Body1Text, theme } from "../../styles/theme";
 
-const Setting = () => {
+const Setting = ({ navigation }) => {
   return (
     <Container>
-      <SettingBox onPress={() => {}}>
+      <SettingBox onPress={() => navigation.navigate("AlertSetting")}>
         <SettingImg
           source={notification}
           resizeMode="contain"

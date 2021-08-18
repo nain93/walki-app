@@ -12,7 +12,7 @@ const SettingScreen = ({ navigation }) => {
       <KeyboardAwareScrollView>
         <Container>
           <Profile navigation={navigation} />
-          <Setting />
+          <Setting navigation={navigation} />
           <Others />
         </Container>
       </KeyboardAwareScrollView>
