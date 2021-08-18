@@ -9,6 +9,7 @@ import LogoTitle from "../components/LogoTitle"
 import OnBoarding from "../screens/onBoarding"
 import CoachSelect from "../screens/coachSelect"
 import { Platform } from "react-native"
+import TabNavigator from "./TabNav"
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -20,6 +21,11 @@ const GlobalNav = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={Platform.OS === "android" && TransitionScreenOptions}>
+        <Stack.Screen
+          name="TabNavigator"
+          component={TabNavigator}
+          options={{ gestureEnabled: false }}
+        />
         {/* <Stack.Screen
           name="OnBoarding"
           options={{
