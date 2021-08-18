@@ -1,16 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { coachVar } from "../../apollo";
 import { H4Text, theme } from "../styles/theme";
 
-const NextButton = ({ handleGoToNext, disabled, btnBackColor }) => {
+const LongButton = ({ handleGoToNext, disabled, btnBackColor, children }) => {
   return (
     <Container
       disabled={disabled}
       onPress={handleGoToNext}
       btnBackColor={btnBackColor}
     >
-      <NextText>다음</NextText>
+      <NextText>{children}</NextText>
     </Container>
   );
 };
@@ -30,4 +29,4 @@ const NextText = styled(H4Text)`
   text-align: center;
 `;
 
-export default NextButton;
+export default LongButton;

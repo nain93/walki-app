@@ -6,6 +6,7 @@ import onboarding02 from "../../../assets/images/img02.png";
 import onboarding03 from "../../../assets/images/img03.png";
 import { Body1Text, H1Text, theme } from "../../styles/theme";
 import { View } from "react-native";
+import HeaderForm from "../../components/HeaderForm";
 
 const HomeSwiper = () => {
   return (
@@ -24,34 +25,35 @@ const HomeSwiper = () => {
       >
         <SlideContainer>
           <SlideBox>
-            <View>
-              <Header>코치와 함께 {"\n"}러닝해보세요!</Header>
-              <Desc>토키와 부키가 당신의 데일리 러닝을 {"\n"}도와줘요!</Desc>
-            </View>
+            <HeaderForm
+              headerChildren={"코치와 함께 \n러닝해보세요!"}
+              descChildren={"토키와 부키가 당신의 데일리 러닝을 \n도와줘요!"}
+              align="left"
+            />
             <SlideImg source={onboarding01} resizeMode="contain" />
           </SlideBox>
         </SlideContainer>
         <SlideContainer>
           <SlideBox>
-            <View>
-              <Header>챌린지를 생성하고 {"\n"}달성해보세요!</Header>
-              <Desc>
-                매일 챌린지를 달성하다보면 {"\n"}어느새 러닝이 습관으로 자리잡아
-                있을거예요!
-              </Desc>
-            </View>
+            <HeaderForm
+              headerChildren={"챌린지를 생성하고 \n달성해보세요!"}
+              descChildren={
+                "매일 챌린지를 달성하다보면 \n어느새 러닝이 습관으로 자리잡아 있을거예요!"
+              }
+              align="left"
+            />
             <SlideImg source={onboarding02} resizeMode="contain" />
           </SlideBox>
         </SlideContainer>
         <SlideContainer>
           <SlideBox>
-            <View>
-              <Header>메달을 차지해보세요!</Header>
-              <Desc>
-                오늘 메달을 차지하지 못해도 낙심하지마세요! {"\n"}매일 기회가
-                주어져요!
-              </Desc>
-            </View>
+            <HeaderForm
+              headerChildren={"메달을 차지해보세요!"}
+              descChildren={
+                "오늘 메달을 차지하지 못해도 낙심하지마세요! \n매일 기회가 주어져요!"
+              }
+              align="left"
+            />
             <SlideImg source={onboarding03} resizeMode="contain" />
           </SlideBox>
         </SlideContainer>
@@ -64,15 +66,6 @@ const Container = styled.View`
   flex: 1;
 `;
 
-const Header = styled(H1Text)`
-  margin: 30px;
-`;
-
-const Desc = styled(Body1Text)`
-  margin: 0 30px;
-  color: ${theme.TextColor};
-`;
-
 const SlideContainer = styled.View`
   flex: 1;
   justify-content: center;
@@ -82,6 +75,7 @@ const SlideContainer = styled.View`
 const SlideBox = styled.View`
   flex: 0.8;
   justify-content: space-around;
+  padding: 0 30px;
 `;
 
 const SlideImg = styled.Image`

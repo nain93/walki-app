@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { theme } from "../../styles/theme";
-import CoachSwiper from "./Swiper";
+import CoachSwiper from "./CoachSwiper";
 
 const CoachSelect = ({ navigation }) => {
   return (
@@ -13,8 +12,6 @@ const CoachSelect = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${theme.grayScale.white};
-  padding-top: 60px;
 `;
 
 export default CoachSelect;

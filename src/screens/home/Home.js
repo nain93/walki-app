@@ -4,6 +4,7 @@ import styled from "styled-components"
 import * as Location from "expo-location"
 import axios from "axios"
 import Loading from "../../components/Loading"
+
 import WeatherLogo from "../../../assets/icons/sun.png"
 import SpaceLogo from "../../../assets/icons/bar.png"
 
@@ -21,6 +22,7 @@ const Home = ({}) => {
   const [ready, setReady] = useState(true)
 
   const [weather, setWeather] = useState({
+
     temp: 1,
     condition: "맑음",
   })
@@ -38,6 +40,7 @@ const Home = ({}) => {
     var hours = new Date().getHours()
     var min = new Date().getMinutes()
     var sec = new Date().getSeconds()
+
     setcurrentDate(month + "월" + " " + date + "일")
     setcurrentTime(hours + ":" + min + "PM")
     setTimeout(() => {
@@ -54,6 +57,7 @@ const Home = ({}) => {
       const locationData = await Location.getCurrentPositionAsync()
       const latitude = locationData["coords"]["latitude"]
       const longitude = locationData["coords"]["longitude"]
+
       // const API_KEY = "cfc258c75e1da2149c33daffd07a911d"
       const API_KEY = "5f45ba75e045a8cb44f05067fb179d01"
       const result = await axios.get(
@@ -77,6 +81,7 @@ const Home = ({}) => {
   return ready ? (
     <Loading />
   ) : (
+
     <Container>
       <TopStatus>
         <TimeStatus>

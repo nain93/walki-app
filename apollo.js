@@ -9,7 +9,7 @@ import { setContext } from "@apollo/client/link/context";
 
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
-export const coachVar = makeVar("");
+export const coachColorVar = makeVar({});
 
 const TOKEN = "token";
 
@@ -26,14 +26,14 @@ export const logUserOut = async () => {
 };
 
 const httpLink = createHttpLink({
-  uri: "http://api-walki-dev.ap-northeast-2.elasticbeanstalk.com/gui",
+  uri: "http://api-walki-dev.ap-northeast-2.elasticbeanstalk.com/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: tokenVar(),
+      Authorization: `Bearer ${tokenVar()}`,
     },
   };
 });

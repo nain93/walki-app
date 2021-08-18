@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import NextButton from "../../components/NextButton";
+import LongButton from "../../components/LongButton";
 import { Body1Text, theme } from "../../styles/theme";
-import { coachVar } from "../../../apollo";
+import { coachColorVar } from "../../../apollo";
 
 const ChallengeSetting = ({ swiperRef }) => {
   const walkRef = useRef();
@@ -48,13 +48,13 @@ const ChallengeSetting = ({ swiperRef }) => {
         <WalkiText>걸음</WalkiText>
       </InputBox>
 
-      <NextButton
+      <LongButton
         handleGoToNext={handleSubmit(handleGoToNext)}
         disabled={inputWatch < 200}
-        btnBackColor={
-          coachVar() === "toki" ? theme.toki.color.main : theme.booki.color.main
-        }
-      />
+        btnBackColor={coachColorVar()?.color?.main}
+      >
+        선택 완료
+      </LongButton>
     </>
   );
 };
