@@ -10,6 +10,7 @@ import SpaceLogo from "../../../assets/icons/bar.png"
 import tokiImg from "../../../assets/images/toki_character.png"
 import bookiImg from "../../../assets/images/booki_character.png"
 import Modal from "react-native-modalbox"
+import Slider from "react-native-slider"
 
 import { CircularProgress } from "react-native-svg-circular-progress"
 
