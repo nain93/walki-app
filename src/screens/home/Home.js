@@ -91,7 +91,9 @@ const Home = ({}) => {
             </CurrentTemperature>
             <CurrentLocation>{Location}</CurrentLocation>
           </LocationSpace>
-          <BarImage source={SpaceLogo} resizeMode={"contain"}></BarImage>
+          <BarSpace>
+            <BarImage source={SpaceLogo} resizeMode={"contain"}></BarImage>
+          </BarSpace>
           <WeatherSpace>
             <WeatherImage
               source={WeatherLogo}
@@ -175,7 +177,7 @@ const TopStatus = styled.View`
   justify-content: flex-start;
   padding-left: 15px;
   padding-right: 1px;
-  padding-top: 15px;
+  padding-top: 35px;
   flex-direction: row;
 `
 
@@ -188,6 +190,7 @@ const WeatherStatus = styled.View`
   width: 60%;
   height: 100%;
   flex-direction: row;
+  padding-left: 50px;
 `
 const LocationSpace = styled.View`
   width: 30%;
@@ -198,6 +201,15 @@ const WeatherSpace = styled.View`
   width: 30%;
   align-items: center;
   justify-content: center;
+`
+
+const BarSpace = styled.View`
+  width: 10%;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 40px;
+  padding-left: 30px;
+  padding-right: 10px;
 `
 const CurrentDate = styled.Text`
   width: 100px;
@@ -240,7 +252,7 @@ const CurrentLocation = styled.Text`
 const WeatherImage = styled.Image`
   width: 100px;
   height: 50px;
-  padding-top: 50px;
+  padding-top: 40px;
   align-items: center;
   justify-content: center;
 `
@@ -248,6 +260,8 @@ const WeatherImage = styled.Image`
 const BarImage = styled.Image`
   width: 50px;
   height: 50px;
+  align-items: center;
+  justify-content: center;
 `
 const MiddleStatus = styled.View`
   width: 100%;
