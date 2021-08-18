@@ -8,11 +8,15 @@ import Setting from "./Setting";
 
 const SettingScreen = ({ navigation }) => {
   return (
-    <Container>
-      <Profile navigation={navigation} />
-      <Setting />
-      <Others />
-    </Container>
+    <TouchableWithoutFeedback>
+      <KeyboardAwareScrollView>
+        <Container>
+          <Profile navigation={navigation} />
+          <Setting />
+          <Others />
+        </Container>
+      </KeyboardAwareScrollView>
+    </TouchableWithoutFeedback>
   );
 };
 

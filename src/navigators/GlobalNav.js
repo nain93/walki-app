@@ -69,15 +69,15 @@ const GlobalNav = () => {
         />
         <Stack.Screen
           name="EditName"
-          options={{
+          options={({ navigation }) => ({
             title: "",
-
-            headerLeft: ({ navigation }) => {
+            headerLeft: () => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    console.log(navigation);
+                    navigation.goBack();
                   }}
+                  style={{ marginLeft: 30 }}
                 >
                   <LeftIcon name="left" size={24} />
                 </TouchableOpacity>
@@ -89,7 +89,7 @@ const GlobalNav = () => {
               elevation: 0, // android
               shadowOpacity: 0, //ios
             },
-          }}
+          })}
           component={EditName}
         />
         <Stack.Screen

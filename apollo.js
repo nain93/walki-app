@@ -26,14 +26,14 @@ export const logUserOut = async () => {
 };
 
 const httpLink = createHttpLink({
-  uri: "http://api-walki-dev.ap-northeast-2.elasticbeanstalk.com/gui",
+  uri: "http://api-walki-dev.ap-northeast-2.elasticbeanstalk.com/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: tokenVar(),
+      Authorization: `Bearer ${tokenVar()}`,
     },
   };
 });

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { H4Text, theme } from "../styles/theme";
 
-const NextButton = ({ handleGoToNext, disabled, btnBackColor, children }) => {
+const LongButton = ({ handleGoToNext, disabled, btnBackColor, children }) => {
   return (
     <Container
       disabled={disabled}
@@ -29,4 +29,4 @@ const NextText = styled(H4Text)`
   text-align: center;
 `;
 
-export default NextButton;
+export default LongButton;
