@@ -1,5 +1,5 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React from "react"
+import { NavigationContainer } from "@react-navigation/native"
 import {
   createStackNavigator,
   TransitionPresets,
@@ -17,11 +17,17 @@ import closeIcon from "../../assets/icons/close.png";
 import { useNavigation } from "@react-navigation/native";
 import EditName from "../screens/setting/EditName";
 import LeftIcon from "react-native-vector-icons/AntDesign";
+import Home from "../screens/home/Home"
+import LogoTitle from "../components/LogoTitle"
+import OnBoarding from "../screens/onBoarding"
+import CoachSelect from "../screens/coachSelect"
+import { Platform } from "react-native"
+import TabNavigator from "./TabNav"
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
-};
-const Stack = createStackNavigator();
+}
+const Stack = createStackNavigator()
 
 const CloseIcon = () => {
   const navigation = useNavigation();
@@ -46,7 +52,13 @@ const GlobalNav = () => {
           { cardStyle: { backgroundColor: theme.grayScale.white } }
         )}
       >
+
         <Stack.Screen
+          name="TabNavigator"
+          component={TabNavigator}
+          options={{ gestureEnabled: false }}
+        />
+        {/* <Stack.Screen
           name="OnBoarding"
           options={{
             headerShown: false,
@@ -59,7 +71,7 @@ const GlobalNav = () => {
             headerShown: false,
           }}
           component={CoachSelect}
-        />
+        /> */}
         <Stack.Screen
           name="BeforeStart"
           options={{
@@ -124,7 +136,7 @@ const GlobalNav = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-};
+  )
+}
 
-export default GlobalNav;
+export default GlobalNav

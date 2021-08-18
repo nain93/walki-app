@@ -56,6 +56,12 @@ react-native-web-swiper --save
 react-native-vector-icons
 react-hook-form
 @hookform/error-message
+
 react-native-keyboard-aware-scroll-view
+axios
+expo-location
+react-native-vector-icons
+react-native-progress-circle
+
 
 npx expo-optimize
