@@ -1,10 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { H4Text, theme } from "../../styles/theme";
+import { coachVar } from "../../apollo";
+import { H4Text, theme } from "../styles/theme";
 
-const NextButton = ({ handleGoToNext, coachSelect }) => {
+const NextButton = ({ handleGoToNext, disabled, btnBackColor }) => {
   return (
-    <Container disabled={!coachSelect} onPress={handleGoToNext}>
+    <Container
+      disabled={disabled}
+      onPress={handleGoToNext}
+      btnBackColor={btnBackColor}
+    >
       <NextText>다음</NextText>
     </Container>
   );
@@ -13,7 +18,7 @@ const NextButton = ({ handleGoToNext, coachSelect }) => {
 const Container = styled.TouchableOpacity`
   width: 100%;
   height: 54px;
-  background-color: ${theme.grayScale.black};
+  background-color: ${(props) => String(props.btnBackColor)};
   color: ${theme.grayScale.white};
   border-radius: 8px;
   justify-content: center;

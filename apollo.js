@@ -9,6 +9,7 @@ import { setContext } from "@apollo/client/link/context";
 
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
+export const coachVar = makeVar("");
 
 const TOKEN = "token";
 

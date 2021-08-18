@@ -11,15 +11,35 @@ import {
   unlink,
 } from "@react-native-seoul/kakao-login";
 import { Caption, H4Text } from "../../styles/theme";
+import { gql, useMutation } from "@apollo/client";
 
 const LoginButton = ({ navigation }) => {
   const [result, setResult] = useState("");
 
+  const SIGN_UP_MUTATION = gql`
+    mutation signUp($social: Social!, $token: String!) {
+      signUp(social: $social, token: $token) {
+        scalar
+      }
+    }
+  `;
+
+  const [signUpMutation, { loading }] = useMutation(SIGN_UP_MUTATION);
+
+  // refreshToken?
   const handleKakaoLogin = async () => {
     // const token = await login();
+    // const { accessToken } = token;
 
-    // setResult(JSON.stringify(token.accessToken));
-    // refreshToken;
+    // setResult(token.accessToken);
+    // if (!loading) {
+    //   signUpMutation({
+    //     variables: {
+    //       social: KAKAO,
+    //       token: 0,
+    //     },
+    //   });
+    // }
 
     navigation.navigate("CoachSelect");
   };
