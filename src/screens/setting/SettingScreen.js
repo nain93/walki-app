@@ -9,7 +9,7 @@ import Setting from "./Setting";
 const SettingScreen = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback>
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
         <Container>
           <Profile navigation={navigation} />
           <Setting navigation={navigation} />

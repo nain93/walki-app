@@ -4,14 +4,11 @@ import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
-import Home from "../screens/home";
 import { Image, Platform, TouchableOpacity } from "react-native";
 import OnBoarding from "../screens/onBoarding";
 import CoachSelect from "../screens/coachSelect";
 import BeforeStart from "../screens/beforeStart";
 import { theme } from "../styles/theme";
-import LogoTitle from "../components/LogoTitle";
-import SettingLogoTitle from "../components/SettingLogoTitle";
 import SettingScreen from "../screens/setting";
 import closeIcon from "../../assets/icons/close.png";
 import { useNavigation } from "@react-navigation/native";
@@ -82,7 +79,7 @@ const GlobalNav = () => {
             headerLeft: () => null,
             headerRight: (props) => <CloseIcon {...props} />,
             headerStyle: {
-              backgroundColor: "transparent",
+              backgroundColor: theme.grayScale.white,
               elevation: 0, // android
               shadowOpacity: 0, //ios
             },
@@ -107,7 +104,7 @@ const GlobalNav = () => {
             },
 
             headerStyle: {
-              backgroundColor: "transparent",
+              backgroundColor: theme.grayScale.white,
               elevation: 0, // android
               shadowOpacity: 0, //ios
             },
@@ -132,7 +129,7 @@ const GlobalNav = () => {
             },
 
             headerStyle: {
-              backgroundColor: "transparent",
+              backgroundColor: theme.grayScale.white,
               elevation: 0, // android
               shadowOpacity: 0, //ios
             },
@@ -145,20 +142,6 @@ const GlobalNav = () => {
           component={TabNavigator}
           options={{ gestureEnabled: false, headerShown: false }}
         />
-        {/* <Stack.Screen
-          name="Home"
-          options={{
-            title: "",
-            headerLeft: (props) => <LogoTitle {...props} />,
-            headerRight: (props) => <SettingLogoTitle {...props} />,
-            headerStyle: {
-              backgroundColor: "transparent",
-              elevation: 0, // android
-              shadowOpacity: 0, //ios
-            },
-          }}
-          component={Home}
-        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

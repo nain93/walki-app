@@ -28,6 +28,7 @@ const Container = styled.View`
   flex: 0.4;
   justify-content: space-around;
   padding: 30px;
+  padding-top: 20px;
   border-bottom-color: ${theme.grayScale.gray7};
 `;
 
