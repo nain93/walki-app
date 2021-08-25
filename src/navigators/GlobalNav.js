@@ -46,7 +46,7 @@ const GlobalNav = () => {
           { cardStyle: { backgroundColor: theme.grayScale.white } }
         )}
       >
-        {!isLoggedInVar && (
+        {!isLoggedInVar() && (
           <Stack.Screen
             name="OnBoarding"
             options={{

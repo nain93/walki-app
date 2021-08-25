@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import profileImg from "../../../assets/images/profile.png";
 import { Body1Text, Body3Text, theme } from "../../styles/theme";
 import { gql, useQuery } from "@apollo/client";
-import { useEffect } from "react";
+import { CommonActions, useFocusEffect } from "@react-navigation/native";
+import { userName } from "../../../apollo";
 
 const Profile = ({ navigation }) => {
   const [userData, setUserData] = useState({
     name: "",
     profileImage: "",
   });
+
   const GET_MEMBER = gql`
     query getMember {
       getMember {
@@ -21,20 +23,28 @@ const Profile = ({ navigation }) => {
 
   const onCompleted = (data) => {
     const { getMember } = data;
-    setUserData({
+    userName({
       ...getMember,
     });
+    // setUserData({
+    //   ...getMember,
+    // });
   };
 
-  const { data, loading, error } = useQuery(GET_MEMBER, {
+  const { data, loading, error, refetch } = useQuery(GET_MEMBER, {
     onCompleted,
   });
-  const { name, profileImage } = userData;
+  const { name, profileImage } = userName();
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [])
+  );
 
   return (
     <Container>
       <ProfileImg source={profileImg} resizeMode="contain" />
-
       <Name>이름</Name>
       <NameInputBox>
         <NameInput>

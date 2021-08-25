@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { logUserOut } from "../../../apollo";
 import upload from "../../../assets/icons/upload.png";
 import { Body1Text, theme } from "../../styles/theme";
 
@@ -14,7 +15,7 @@ const Others = () => {
         />
         <SettingText>이 앱 공유하기</SettingText>
       </SettingBox>
-      <SettingBox>
+      <SettingBox onPress={() => logUserOut()}>
         <SettingText>로그아웃</SettingText>
       </SettingBox>
       <SettingBox style={{ borderBottomWidth: 0 }}>

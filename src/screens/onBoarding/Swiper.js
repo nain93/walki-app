@@ -4,8 +4,7 @@ import Swiper from "react-native-web-swiper";
 import onboarding01 from "../../../assets/images/img01.png";
 import onboarding02 from "../../../assets/images/img02.png";
 import onboarding03 from "../../../assets/images/img03.png";
-import { Body1Text, H1Text, theme } from "../../styles/theme";
-import { View } from "react-native";
+import { theme } from "../../styles/theme";
 import HeaderForm from "../../components/HeaderForm";
 
 const HomeSwiper = () => {

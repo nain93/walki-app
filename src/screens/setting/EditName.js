@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import LongButton from "../../components/LongButton";
 import { H2Text, theme } from "../../styles/theme";
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import { gql, useMutation } from "@apollo/client";
+import { CommonActions } from "@react-navigation/native";
+import { userName } from "../../../apollo";
 
 const EditName = ({
   navigation,
@@ -19,16 +21,6 @@ const EditName = ({
       }
     }
   `;
-
-  const [putMemberMutation, { loading, data, error }] = useMutation(
-    PUT_MEMBER,
-    {
-      onCompleted: (data) => {},
-    }
-  );
-  const dismissKeyBoard = () => {
-    Keyboard.dismiss();
-  };
   const {
     register,
     handleSubmit,
@@ -41,23 +33,41 @@ const EditName = ({
       name,
     },
   });
-
   const inputWatch = watch("name");
   const newName = getValues("name");
+
+  const [putMemberMutation, { loading, data, error }] = useMutation(
+    PUT_MEMBER,
+    {
+      onCompleted: (data) => {
+        if (!loading) {
+          userName({
+            name: data.putMember.name,
+            profileImage: "",
+          });
+        }
+      },
+    }
+  );
+
+  const dismissKeyBoard = () => {
+    Keyboard.dismiss();
+  };
 
   const handleGoToNext = () => {
     if (inputWatch === name) {
       return;
     }
-    putMemberMutation({
-      variables: {
-        member: {
-          name: newName,
+    if (!loading) {
+      putMemberMutation({
+        variables: {
+          member: {
+            name: newName,
+          },
         },
-      },
-    });
-    navigation.goBack();
-    // * 변경후 다시 설정화면으로?
+      });
+      navigation.goBack();
+    }
   };
 
   return (
