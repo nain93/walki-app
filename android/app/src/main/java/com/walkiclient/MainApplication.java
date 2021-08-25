@@ -21,8 +21,10 @@ import org.unimodules.core.interfaces.Package;
 import org.unimodules.core.interfaces.SingletonModule;
 import expo.modules.updates.UpdatesController;
 
+
 import com.facebook.react.bridge.JSIModulePackage;
 import com.swmansion.reanimated.ReanimatedJSIModulePackage;
+import com.zoontek.rnpermissions.RNPermissionsPackage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -42,9 +44,12 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
+      
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
+     
       return packages;
+      
     }
 
     @Override
@@ -75,6 +80,7 @@ public class MainApplication extends Application implements ReactApplication {
       }
     }
   };
+  
 
   @Override
   public ReactNativeHost getReactNativeHost() {
@@ -102,6 +108,8 @@ public class MainApplication extends Application implements ReactApplication {
    */
   private static void initializeFlipper(
       Context context, ReactInstanceManager reactInstanceManager) {
+        
+
     if (BuildConfig.DEBUG) {
       try {
         /*

@@ -11,7 +11,7 @@ import {
   unlink,
 } from "@react-native-seoul/kakao-login";
 import { Caption, H4Text } from "../../styles/theme";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { logUserIn } from "../../../apollo";
 
 const KakaoLoginButton = ({ navigation }) => {
@@ -33,19 +33,24 @@ const KakaoLoginButton = ({ navigation }) => {
   };
 
   // const [signUpMutation, { loading }] = useMutation(SIGN_UP_MUTATION);
-  const { loading, data, error } = useQuery(SIGN_IN_QUERY, {
-    onCompleted,
-    variables: {
-      social: "APPLE",
-      token: "5",
-    },
-  });
+  const [signUpMutation, { loading, data, error }] = useLazyQuery(
+    SIGN_IN_QUERY,
+    {
+      onCompleted,
+    }
+  );
 
   // refreshToken?
   const handleKakaoLogin = () => {
     // const token = await login();
     // const { accessToken } = token;
     // setResult(token.accessToken);
+    signUpMutation({
+      variables: {
+        social: "APPLE",
+        token: "4",
+      },
+    });
     navigation.reset({ routes: [{ name: "CoachSelect" }] });
   };
 

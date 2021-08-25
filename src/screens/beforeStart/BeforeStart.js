@@ -31,6 +31,7 @@ const BeforeStart = ({ navigation }) => {
             (선택)
           </IconText>
         </AlertBox>
+
         <AlertBox>
           <IconBox color={coachColorVar().color.primary.tap}>
             <Icon source={location} resizeMode="center" />
