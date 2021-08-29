@@ -1,5 +1,5 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, ActivityIndicator } from "react-native";
 import styled from "styled-components";
 import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
 import {
@@ -15,6 +15,12 @@ import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { logUserIn } from "../../../apollo";
 
 const KakaoLoginButton = ({ navigation }) => {
+  const SIGN_UP_MUTATION = gql`
+    mutation signUp($social: Social!, $token: String!) {
+      signUp(social: $social, token: $token)
+    }
+  `;
+
   const SIGN_IN_QUERY = gql`
     query signIn($social: Social!, $token: String!) {
       signIn(social: $social, token: $token) {
@@ -22,43 +28,57 @@ const KakaoLoginButton = ({ navigation }) => {
       }
     }
   `;
-
   const onCompleted = (data) => {
     const {
       signIn: { accessToken },
     } = data;
     if (accessToken) {
       logUserIn(accessToken);
+      navigation.reset({ routes: [{ name: "CoachSelect" }] });
     }
   };
 
-  // const [signUpMutation, { loading }] = useMutation(SIGN_UP_MUTATION);
-  const [signUpMutation, { loading, data, error }] = useLazyQuery(
-    SIGN_IN_QUERY,
-    {
-      onCompleted,
-    }
-  );
+  const [signInQuery, { loading }] = useLazyQuery(SIGN_IN_QUERY, {
+    onCompleted,
+  });
+
+  const [signUpMutation] = useMutation(SIGN_UP_MUTATION, {
+    onError: (error) => {
+      if (error.message.includes("이미 가입된 유저")) {
+        navigation.reset({ routes: [{ name: "CoachSelect" }] });
+      }
+    },
+  });
 
   // refreshToken?
-  const handleKakaoLogin = () => {
-    // const token = await login();
-    // const { accessToken } = token;
-    // setResult(token.accessToken);
+  const handleKakaoLogin = async () => {
+    const token = await login();
+    const { accessToken } = token;
     signUpMutation({
       variables: {
-        social: "APPLE",
-        token: "4",
+        social: "KAKAO",
+        token: accessToken,
       },
     });
-    navigation.reset({ routes: [{ name: "CoachSelect" }] });
+    signInQuery({
+      variables: {
+        social: "KAKAO",
+        token: accessToken,
+      },
+    });
   };
 
   return (
     <Container>
       <KakaoButton onPress={handleKakaoLogin}>
-        <Image source={kakaoLogo} />
-        <KakaoText>카카오로 시작하기</KakaoText>
+        {loading ? (
+          <ActivityIndicator color="black" />
+        ) : (
+          <>
+            <Image source={kakaoLogo} />
+            <KakaoText>카카오로 시작하기</KakaoText>
+          </>
+        )}
       </KakaoButton>
       <KakaoDesc>
         walki의 이용약관 과 개인정보처리방침을 읽고 이해했으며 {"\n"}그에
