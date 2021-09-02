@@ -10,7 +10,7 @@ import { setContext } from "@apollo/client/link/context";
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
 export const coachColorVar = makeVar({});
-export const userName = makeVar({});
+export const userNameVar = makeVar({});
 
 const TOKEN = "token";
 
@@ -23,6 +23,7 @@ export const logUserIn = async (token) => {
 export const logUserOut = async () => {
   await AsyncStorage.removeItem(TOKEN);
   isLoggedInVar(false);
+  userNameVar({});
   tokenVar("");
 };
 

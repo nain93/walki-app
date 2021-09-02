@@ -1,17 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import profileImg from "../../../assets/images/profile.png";
+import noProfileImg from "../../../assets/images/profile.png";
 import { Body1Text, Body3Text, theme } from "../../styles/theme";
-import { gql, useQuery } from "@apollo/client";
-import { CommonActions, useFocusEffect } from "@react-navigation/native";
-import { userName } from "../../../apollo";
+import { gql, useQuery, useReactiveVar } from "@apollo/client";
+import { userNameVar } from "../../../apollo";
 
 const Profile = ({ navigation }) => {
-  const [userData, setUserData] = useState({
-    name: "",
-    profileImage: "",
-  });
-
   const GET_MEMBER = gql`
     query getMember {
       getMember {
@@ -23,37 +17,33 @@ const Profile = ({ navigation }) => {
 
   const onCompleted = (data) => {
     const { getMember } = data;
-    userName({
+    userNameVar({
       ...getMember,
     });
-    // setUserData({
-    //   ...getMember,
-    // });
   };
+  const userName = useReactiveVar(userNameVar);
 
-  const { data, loading, error, refetch } = useQuery(GET_MEMBER, {
+  const { data, loading, error } = useQuery(GET_MEMBER, {
     onCompleted,
   });
-  const { name, profileImage } = userName();
-
-  useFocusEffect(
-    useCallback(() => {
-      refetch();
-    }, [])
-  );
+  const { name, profileImage } = userName;
 
   return (
     <Container>
-      <ProfileImg source={profileImg} resizeMode="contain" />
+      <ProfileImg
+        source={profileImage ? { uri: profileImage } : noProfileImg}
+        resizeMode="cover"
+      />
       <Name>이름</Name>
       <NameInputBox>
         <NameInput>
-          <Body3Text>{name}</Body3Text>
+          <Body3Text>{name ? name : "이름을 설정해 주세요"}</Body3Text>
         </NameInput>
         <NameChange
           onPress={() =>
             navigation.navigate("EditName", {
               name,
+              profileImage,
             })
           }
         >
@@ -73,6 +63,7 @@ const ProfileImg = styled.Image`
   width: 100px;
   height: 100px;
   margin: 10px 0;
+  border-radius: 50px;
 `;
 
 const NameInputBox = styled.View`

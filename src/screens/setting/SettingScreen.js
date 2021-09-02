@@ -13,7 +13,7 @@ const SettingScreen = ({ navigation }) => {
         <Container>
           <Profile navigation={navigation} />
           <Setting navigation={navigation} />
-          <Others />
+          <Others navigation={navigation} />
         </Container>
       </KeyboardAwareScrollView>
     </TouchableWithoutFeedback>
