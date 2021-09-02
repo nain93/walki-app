@@ -17,6 +17,9 @@ const HomeSwiper = () => {
           prevPos: false,
           nextTitleStyle: { display: "none" },
           prevTitleStyle: { display: "none" },
+          dotsWrapperStyle: {
+            marginTop: 20,
+          },
           dotActiveStyle: {
             backgroundColor: theme.toki.color.main,
           },
@@ -47,7 +50,7 @@ const HomeSwiper = () => {
         <SlideContainer>
           <SlideBox>
             <HeaderForm
-              headerChildren={"메달을 차지해보세요!"}
+              headerChildren={"메달을 \n차지해보세요!"}
               descChildren={
                 "오늘 메달을 차지하지 못해도 낙심하지마세요! \n매일 기회가 주어져요!"
               }

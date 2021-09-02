@@ -13,13 +13,15 @@ const HeaderForm = ({ headerChildren, descChildren, align }) => {
 };
 
 const Header = styled(H1Text)`
-  margin: 30px 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
   text-align: ${(props) => props.align};
 `;
 
 const Desc = styled(Body1Text)`
   color: ${theme.TextColor};
   text-align: ${(props) => props.align};
+  margin-bottom: 20px;
 `;
 
 export default HeaderForm;

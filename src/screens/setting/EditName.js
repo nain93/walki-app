@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { gql, useMutation } from "@apollo/client";
-import { userNameVar } from "../../../apollo";
+import { coachColorVar, userNameVar } from "../../../apollo";
 import deleteIcon from "../../../assets/icons/delete.png";
 
 const EditName = ({
@@ -101,7 +101,7 @@ const EditName = ({
         <LongButton
           handleGoToNext={handleGoToNext}
           disabled={inputWatch === name || inputWatch === ""}
-          btnBackColor={theme.toki.color.main}
+          btnBackColor={coachColorVar().color.main}
         >
           {loading ? <ActivityIndicator color="white" /> : "변경하기"}
         </LongButton>

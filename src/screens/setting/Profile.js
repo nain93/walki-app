@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import noProfileImg from "../../../assets/images/profile.png";
+import noProfileTokiImg from "../../../assets/images/noprofile_toki.png";
+import noProfileBookiImg from "../../../assets/images/noprofile_booki.png";
 import { Body1Text, Body3Text, theme } from "../../styles/theme";
 import { gql, useQuery, useReactiveVar } from "@apollo/client";
-import { userNameVar } from "../../../apollo";
+import { coachColorVar, userNameVar } from "../../../apollo";
 
 const Profile = ({ navigation }) => {
   const GET_MEMBER = gql`
@@ -27,11 +28,18 @@ const Profile = ({ navigation }) => {
     onCompleted,
   });
   const { name, profileImage } = userName;
+  const coachColor = useReactiveVar(coachColorVar);
 
   return (
     <Container>
       <ProfileImg
-        source={profileImage ? { uri: profileImage } : noProfileImg}
+        source={
+          profileImage
+            ? { uri: profileImage }
+            : coachColorVar().coach === "toki"
+            ? noProfileTokiImg
+            : noProfileBookiImg
+        }
         resizeMode="cover"
       />
       <Name>이름</Name>
@@ -47,7 +55,7 @@ const Profile = ({ navigation }) => {
             })
           }
         >
-          <ChangeText>변경</ChangeText>
+          <ChangeText coachColor={coachColor}>변경</ChangeText>
         </NameChange>
       </NameInputBox>
     </Container>
@@ -94,7 +102,7 @@ const NameChange = styled.TouchableOpacity`
 `;
 
 const ChangeText = styled(Body1Text)`
-  color: ${theme.toki.color.main};
+  color: ${(props) => props.coachColor.color.main};
 `;
 
 export default Profile;

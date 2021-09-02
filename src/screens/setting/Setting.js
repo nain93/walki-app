@@ -4,8 +4,11 @@ import notification from "../../../assets/icons/notification.png";
 import setting from "../../../assets/icons/setting.png";
 import document from "../../../assets/icons/document.png";
 import { Body1Text, theme } from "../../styles/theme";
+import { coachColorVar } from "../../../apollo";
+import { useReactiveVar } from "@apollo/client";
 
 const Setting = ({ navigation }) => {
+  const coachColor = useReactiveVar(coachColorVar);
   return (
     <Container>
       <SettingBox onPress={() => navigation.navigate("AlertSetting")}>
@@ -15,9 +18,7 @@ const Setting = ({ navigation }) => {
           style={{ tintColor: theme.grayScale.gray4 }}
         />
         <SettingText>응원 알림 설정</SettingText>
-        <AlertSetting onPress={() => {}}>
-          <AlertSettingText>설정</AlertSettingText>
-        </AlertSetting>
+        <AlertSettingText coachColor={coachColor}>설정</AlertSettingText>
       </SettingBox>
       <SettingBox>
         <SettingImg source={setting} resizeMode="contain" />
@@ -56,13 +57,10 @@ const SettingImg = styled.Image`
   margin-right: 10px;
 `;
 
-const AlertSetting = styled.TouchableOpacity`
+const AlertSettingText = styled(Body1Text)`
+  color: ${(props) => props.coachColor.color.main};
   position: absolute;
   right: 10px;
-`;
-
-const AlertSettingText = styled(Body1Text)`
-  color: ${theme.toki.color.main};
 `;
 
 export default Setting;

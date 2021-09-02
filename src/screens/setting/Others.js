@@ -1,7 +1,6 @@
-import { useReactiveVar } from "@apollo/client";
 import React from "react";
 import styled from "styled-components";
-import { logUserOut, userNameVar } from "../../../apollo";
+import { logUserOut } from "../../../apollo";
 import upload from "../../../assets/icons/upload.png";
 import { Body1Text, theme } from "../../styles/theme";
 
@@ -17,8 +16,8 @@ const Others = ({ navigation }) => {
         <SettingText>이 앱 공유하기</SettingText>
       </SettingBox>
       <SettingBox
-        onPress={() => {
-          logUserOut();
+        onPress={async () => {
+          await logUserOut();
           navigation.navigate("OnBoarding");
         }}
       >

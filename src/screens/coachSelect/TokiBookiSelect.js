@@ -12,12 +12,12 @@ const TokiBookiSelect = ({ navigation }) => {
 
   const handleTokiSelect = () => {
     setCoachSelect("toki");
-    coachColorVar({ ...theme.toki });
+    coachColorVar({ coach: "toki", ...theme.toki });
   };
 
   const handleBookiSelect = () => {
     setCoachSelect("booki");
-    coachColorVar({ ...theme.booki });
+    coachColorVar({ coach: "booki", ...theme.booki });
   };
 
   const handleGoToNext = () => {
