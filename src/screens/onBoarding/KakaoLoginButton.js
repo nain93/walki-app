@@ -34,7 +34,6 @@ const KakaoLoginButton = ({ navigation }) => {
     } = data;
     if (accessToken) {
       logUserIn(accessToken);
-      navigation.reset({ routes: [{ name: "CoachSelect" }] });
     }
   };
 
@@ -45,7 +44,7 @@ const KakaoLoginButton = ({ navigation }) => {
   const [signUpMutation] = useMutation(SIGN_UP_MUTATION, {
     onError: (error) => {
       if (error.message.includes("이미 가입된 유저")) {
-        navigation.reset({ routes: [{ name: "CoachSelect" }] });
+        // * 가입된 유저가 로그인화면 접근했을때 에러 처리 로직
       }
     },
   });
@@ -66,6 +65,7 @@ const KakaoLoginButton = ({ navigation }) => {
         token: accessToken,
       },
     });
+    navigation.reset({ routes: [{ name: "CoachSelect" }] });
   };
 
   return (
