@@ -9,8 +9,29 @@ import { setContext } from "@apollo/client/link/context";
 
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
-export const coachColorVar = makeVar({});
-export const userNameVar = makeVar({});
+export const coachColorVar = makeVar({
+  coach: "",
+  color: {
+    main: "",
+    sub: "",
+    character: {
+      main: "",
+      sub: "",
+    },
+    chart: {
+      main: "",
+      sub: "",
+    },
+    primary: {
+      tap: "",
+      disable: "",
+    },
+  },
+});
+export const userNameVar = makeVar({
+  name: "",
+  profileImage: "",
+});
 
 const TOKEN = "token";
 

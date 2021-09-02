@@ -65,6 +65,7 @@ const grayScale = {
 const TextColor = "#999999";
 
 const toki = {
+  coach: "toki",
   color: {
     main: "#f22764",
     sub: "#f8638b",
@@ -84,6 +85,7 @@ const toki = {
 };
 
 const booki = {
+  coach: "booki",
   color: {
     main: "#8ad10a",
     sub: "#ade051",

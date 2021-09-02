@@ -10,13 +10,14 @@ import CoachSelect from "../screens/coachSelect";
 import BeforeStart from "../screens/beforeStart";
 import { theme } from "../styles/theme";
 import SettingScreen from "../screens/setting";
-import closeIcon from "../../assets/icons/close.png";
 import { useNavigation } from "@react-navigation/native";
 import EditName from "../screens/setting/EditName";
-import LeftIcon from "react-native-vector-icons/AntDesign";
-import { isLoggedInVar } from "../../apollo";
 import AlertSetting from "../screens/setting/AlertSetting";
 import TabNavigator from "./TabNav";
+import LeftIcon from "react-native-vector-icons/AntDesign";
+import closeIcon from "../../assets/icons/close.png";
+import { useReactiveVar } from "@apollo/client";
+import { isLoggedInVar } from "../../apollo";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -37,6 +38,7 @@ const CloseIcon = () => {
 };
 
 const GlobalNav = () => {
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -46,7 +48,7 @@ const GlobalNav = () => {
           { cardStyle: { backgroundColor: theme.grayScale.white } }
         )}
       >
-        {!isLoggedInVar() && (
+        {!isLoggedIn && (
           <Stack.Screen
             name="OnBoarding"
             options={{
@@ -113,27 +115,16 @@ const GlobalNav = () => {
         />
         <Stack.Screen
           name="AlertSetting"
-          options={({ navigation }) => ({
+          options={{
             title: "",
-            headerLeft: () => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                  style={{ marginLeft: 20 }}
-                >
-                  <LeftIcon name="left" size={24} />
-                </TouchableOpacity>
-              );
-            },
-
+            headerLeft: () => null,
+            headerRight: (props) => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
               shadowOpacity: 0, //ios
             },
-          })}
+          }}
           component={AlertSetting}
         />
 

@@ -1,50 +1,143 @@
-import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
-import { Pedometer } from "expo-sensors";
-import { request, PERMISSIONS, check } from "react-native-permissions";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Pressable,
+  Button,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+import styled from "styled-components";
+import HeaderForm from "../../components/HeaderForm";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { theme } from "../../styles/theme";
+import { coachColorVar } from "../../../apollo";
+import { useReactiveVar } from "@apollo/client";
+import LongButton from "../../components/LongButton";
 
-const AlertSetting = () => {
-  const [steps, setSteps] = useState({
-    isPedometerAvailable: "checking",
-    pastStepCount: 0,
-    currentStepCount: 0,
+const AlertSetting = ({ navigation }) => {
+  const coachColor = useReactiveVar(coachColorVar);
+  const [timePick, setTimePick] = useState({
+    ampm: "오전",
+    hour: "12",
+    time: "00",
   });
-  const checkSettingsAsync = async () => {
-    const { status } = await Pedometer.requestPermissionsAsync();
+
+  const handleGoToNext = () => {
+    navigation.goBack();
   };
 
-  const able = async () => {
-    const isAble = await Pedometer.isAvailableAsync();
-    setSteps((steps) => ({
-      ...steps,
-      isPedometerAvailable: isAble,
-    }));
+  const handleAfterSetting = () => {
+    navigation.goBack();
   };
 
-  const getSteps = () => {
-    Pedometer.watchStepCount((result) =>
-      setSteps((steps) => ({
-        ...steps,
-        currentStepCount: result.steps,
-      }))
-    );
-  };
-  useEffect(() => {
-    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
-      if (granted) {
-        console.log(granted);
-        getSteps();
-      }
-    });
-  }, []);
-
-  const { currentStepCount, isPedometerAvailable } = steps;
-
+  const { ampm, hour, time } = timePick;
   return (
-    <View>
-      <Text>{currentStepCount}</Text>
-    </View>
+    <Container>
+      <HeaderForm
+        headerChildren={"응원 알림 설정"}
+        descChildren={
+          "당신을 응원하기 위해 토키가 매일 알림을 \n보내드려요! 시간은 나중에 변경할 수 있어요."
+        }
+        align="left"
+      />
+      <TimePickerWrap>
+        <AmPmWrap>
+          <AmPmBtn
+            current={ampm === "오전"}
+            onPress={() =>
+              setTimePick({
+                ...timePick,
+                ampm: "오전",
+              })
+            }
+          >
+            <AmPmText current={ampm === "오전"}>오전</AmPmText>
+          </AmPmBtn>
+          <AmPmBtn
+            current={ampm === "오후"}
+            onPress={() =>
+              setTimePick({
+                ...timePick,
+                ampm: "오후",
+              })
+            }
+          >
+            <AmPmText current={ampm === "오후"}>오후</AmPmText>
+          </AmPmBtn>
+        </AmPmWrap>
+        <TimeWrap coachColor={coachColor}>
+          <TextInput keyboardType="number-pad">12</TextInput>
+          <Text>:</Text>
+          <TextInput
+            keyboardType="number-pad"
+            style={{ color: coachColor.color.main }}
+          >
+            00
+          </TextInput>
+        </TimeWrap>
+      </TimePickerWrap>
+      <View>
+        <LongButton
+          handleGoToNext={handleGoToNext}
+          disabled={false}
+          btnBackColor={coachColor.color.main}
+        >
+          설정
+        </LongButton>
+        <AfterSettingBtn onPress={handleAfterSetting}>
+          <AfterSettingText>나중에 설정할래요</AfterSettingText>
+        </AfterSettingBtn>
+      </View>
+    </Container>
   );
 };
 
+const Container = styled.View`
+  flex: 1;
+  padding: 0 30px;
+  justify-content: space-around;
+`;
+
+const TimePickerWrap = styled.View`
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const AmPmWrap = styled.View`
+  flex-direction: row;
+  margin: 0 10px;
+`;
+
+const AmPmBtn = styled.TouchableOpacity`
+  background-color: ${(props) =>
+    props.current ? theme.grayScale.gray2 : theme.grayScale.gray6};
+  padding: 10px 15px;
+  border-radius: 4px;
+`;
+
+const AmPmText = styled.Text`
+  color: ${(props) =>
+    props.current ? theme.grayScale.white : theme.grayScale.gray3};
+`;
+
+const TimeWrap = styled.View`
+  flex-direction: row;
+  align-items: center;
+  border: 2px solid ${(props) => props.coachColor.color.main};
+  border-radius: 4px;
+  margin: 0 10px;
+  padding: 0 10px;
+`;
+
+const AfterSettingBtn = styled.TouchableOpacity`
+  align-items: center;
+  margin-top: 10px;
+`;
+
+const AfterSettingText = styled.Text`
+  color: ${theme.grayScale.gray4};
+
+  text-decoration: underline;
+`;
 export default AlertSetting;
