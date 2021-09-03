@@ -39,29 +39,3 @@ yarn ios
 yarn android
 
 이후 에뮬레이터나 usb 연결 후 테스트 할 수 있습니다
-
-## 사용 라이브러리
-
-styled-components
-expo-app-loading
-expo-font
-expo-asset
-react-native-appearance
-@react-native-async-storage/async-storage
-react-navigation/native
-react-navigation/stack
-@apollo/client graphql
-react-native-web-swiper --save
-@react-native-seoul/kakao-login
-react-native-vector-icons
-react-hook-form
-@hookform/error-message
-
-react-native-keyboard-aware-scroll-view
-axios
-expo-location
-react-native-vector-icons
-react-native-progress-circle
-
-
-npx expo-optimize
