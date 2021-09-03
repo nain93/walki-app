@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { logUserOut } from "../../../apollo";
 import upload from "../../../assets/icons/upload.png";
+import DeletelModal from "../../components/DeletelModal";
 import { Body1Text, theme } from "../../styles/theme";
 
 const Others = ({ navigation }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleDeleteModal = () => {
+    setModalOpen(!modalOpen);
+  };
   return (
     <Container>
       <SettingBox onPress={() => {}}>
@@ -23,9 +28,10 @@ const Others = ({ navigation }) => {
       >
         <SettingText>로그아웃</SettingText>
       </SettingBox>
-      <SettingBox style={{ borderBottomWidth: 0 }}>
+      <SettingBox style={{ borderBottomWidth: 0 }} onPress={handleDeleteModal}>
         <SettingText>탈퇴하기</SettingText>
       </SettingBox>
+      <DeletelModal open={modalOpen} setOpen={setModalOpen} />
     </Container>
   );
 };

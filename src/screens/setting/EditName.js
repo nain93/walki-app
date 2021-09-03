@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import LongButton from "../../components/LongButton";
@@ -9,10 +9,13 @@ import {
   ActivityIndicator,
   Image,
   TouchableOpacity,
+  Text,
 } from "react-native";
 import { gql, useMutation } from "@apollo/client";
 import { coachColorVar, userNameVar } from "../../../apollo";
 import deleteIcon from "../../../assets/icons/delete.png";
+
+const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
 
 const EditName = ({
   navigation,
@@ -27,21 +30,14 @@ const EditName = ({
       }
     }
   `;
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    getValues,
-    watch,
-  } = useForm({
+  const { register, handleSubmit, setValue, getValues, watch } = useForm({
     defaultValues: {
       name,
     },
   });
   const inputWatch = watch("name");
   const newName = getValues("name");
-  const [nameValue, setNameValue] = useState(name);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const [putMemberMutation, { loading, data, error }] = useMutation(
     PUT_MEMBER,
@@ -79,6 +75,41 @@ const EditName = ({
     setValue("name", "");
   };
 
+  useEffect(() => {
+    register("name", {
+      required: true,
+      minLength: 3,
+    });
+    register("name", {
+      required: true,
+      maxLength: 8,
+    });
+    register("name", {
+      required: true,
+      pattern: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/,
+    });
+  }, [register]);
+
+  useEffect(() => {
+    if (newName.length < 3) {
+      setErrorMessage("최소 3글자 이상 입력해야합니다.");
+      return;
+    }
+    if (newName.length > 8) {
+      setErrorMessage("최대 8글자 까지 가능합니다.");
+      return;
+    }
+    if (/\s/g.test(newName)) {
+      setErrorMessage("띄어쓰기 입력은 불가능합니다");
+      return;
+    }
+    if (!regex.test(newName)) {
+      setErrorMessage("특수문자 입력은 불가능합니다");
+      return;
+    }
+    setErrorMessage("");
+  }, [newName]);
+
   return (
     <TouchableWithoutFeedback onPress={dismissKeyBoard}>
       <Container>
@@ -97,10 +128,13 @@ const EditName = ({
             />
           </TouchableOpacity>
         </NameInputWrap>
-
+        <Text style={{ color: "red" }}>{errorMessage}</Text>
+        <ErrorText>
+          {`한글 및 영문, 숫자만 사용 가능하며 \n최대 8글자까지만 등록 가능합니다`}
+        </ErrorText>
         <LongButton
-          handleGoToNext={handleGoToNext}
-          disabled={inputWatch === name || inputWatch === ""}
+          handleGoToNext={handleSubmit(handleGoToNext)}
+          disabled={errorMessage}
           btnBackColor={coachColorVar().color.main}
         >
           {loading ? <ActivityIndicator color="white" /> : "변경하기"}
@@ -135,6 +169,11 @@ const NameInputWrap = styled.View`
 
 const NameInput = styled.TextInput`
   width: 80%;
+`;
+
+const ErrorText = styled.Text`
+  color: black;
+  margin-bottom: 15px;
 `;
 
 export default EditName;

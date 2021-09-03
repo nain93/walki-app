@@ -4,11 +4,14 @@ import notification from "../../../assets/icons/notification.png";
 import setting from "../../../assets/icons/setting.png";
 import document from "../../../assets/icons/document.png";
 import { Body1Text, theme } from "../../styles/theme";
-import { coachColorVar } from "../../../apollo";
+import { alertTimeVar, coachColorVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
 
 const Setting = ({ navigation }) => {
+  const alertTime = useReactiveVar(alertTimeVar);
+  const { ampm, hour, min } = alertTime;
   const coachColor = useReactiveVar(coachColorVar);
+
   return (
     <Container>
       <SettingBox onPress={() => navigation.navigate("AlertSetting")}>
@@ -18,7 +21,9 @@ const Setting = ({ navigation }) => {
           style={{ tintColor: theme.grayScale.gray4 }}
         />
         <SettingText>응원 알림 설정</SettingText>
-        <AlertSettingText coachColor={coachColor}>설정</AlertSettingText>
+        <AlertSettingText coachColor={coachColor}>
+          {ampm ? `${ampm} ${hour}:${min}` : "설정"}
+        </AlertSettingText>
       </SettingBox>
       <SettingBox>
         <SettingImg source={setting} resizeMode="contain" />
@@ -61,6 +66,7 @@ const AlertSettingText = styled(Body1Text)`
   color: ${(props) => props.coachColor.color.main};
   position: absolute;
   right: 10px;
+  align-items: center;
 `;
 
 export default Setting;

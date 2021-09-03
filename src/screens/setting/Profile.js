@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import noProfileTokiImg from "../../../assets/images/noprofile_toki.png";
 import noProfileBookiImg from "../../../assets/images/noprofile_booki.png";

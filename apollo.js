@@ -32,6 +32,11 @@ export const userNameVar = makeVar({
   name: "",
   profileImage: "",
 });
+export const alertTimeVar = makeVar({
+  ampm: "",
+  hour: "",
+  min: "",
+});
 
 const TOKEN = "token";
 

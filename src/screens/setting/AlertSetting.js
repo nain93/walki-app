@@ -11,7 +11,7 @@ import styled from "styled-components";
 import HeaderForm from "../../components/HeaderForm";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { theme } from "../../styles/theme";
-import { coachColorVar } from "../../../apollo";
+import { alertTimeVar, coachColorVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import LongButton from "../../components/LongButton";
 
@@ -20,10 +20,13 @@ const AlertSetting = ({ navigation }) => {
   const [timePick, setTimePick] = useState({
     ampm: "오전",
     hour: "12",
-    time: "00",
+    min: "00",
   });
 
   const handleGoToNext = () => {
+    alertTimeVar({
+      ...timePick,
+    });
     navigation.goBack();
   };
 
@@ -31,7 +34,20 @@ const AlertSetting = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const { ampm, hour, time } = timePick;
+  const handleHourChange = (text) => {
+    setTimePick({
+      ...timePick,
+      hour: text.replace(/[^0-9]/g, ""),
+    });
+  };
+  const handleMinChange = (text) => {
+    setTimePick({
+      ...timePick,
+      min: text.replace(/[^0-9]/g, ""),
+    });
+  };
+
+  const { ampm, hour, min } = timePick;
   return (
     <Container>
       <HeaderForm
@@ -67,10 +83,20 @@ const AlertSetting = ({ navigation }) => {
           </AmPmBtn>
         </AmPmWrap>
         <TimeWrap coachColor={coachColor}>
-          <TextInput keyboardType="number-pad">12</TextInput>
+          <TextInput
+            defaultValue={"12"}
+            maxLength={2}
+            onChangeText={(text) => handleHourChange(text)}
+            keyboardType="numeric"
+          >
+            12
+          </TextInput>
           <Text>:</Text>
           <TextInput
-            keyboardType="number-pad"
+            defaultValue={"00"}
+            maxLength={2}
+            onChangeText={(text) => handleMinChange(text)}
+            keyboardType="numeric"
             style={{ color: coachColor.color.main }}
           >
             00
@@ -80,7 +106,12 @@ const AlertSetting = ({ navigation }) => {
       <View>
         <LongButton
           handleGoToNext={handleGoToNext}
-          disabled={false}
+          disabled={
+            Number(hour) > 12 ||
+            Number(hour) < 0 ||
+            Number(min) > 59 ||
+            Number(min) < 0
+          }
           btnBackColor={coachColor.color.main}
         >
           설정

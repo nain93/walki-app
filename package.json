@@ -35,6 +35,7 @@
     "react-native-appearance": "~0.3.3",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
+    "react-native-modal": "^13.0.0",
     "react-native-modalbox": "^2.0.2",
     "react-native-permissions": "^3.0.5",
     "react-native-progress-circle": "^2.1.0",

@@ -11,7 +11,7 @@ import {
   unlink,
 } from "@react-native-seoul/kakao-login";
 import { Caption, H4Text } from "../../styles/theme";
-import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { logUserIn } from "../../../apollo";
 
 const KakaoLoginButton = ({ navigation }) => {
@@ -53,6 +53,7 @@ const KakaoLoginButton = ({ navigation }) => {
   const handleKakaoLogin = async () => {
     const token = await login();
     const { accessToken } = token;
+    console.log(accessToken, "accessToken");
     signUpMutation({
       variables: {
         social: "KAKAO",
