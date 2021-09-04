@@ -4,31 +4,28 @@ import styled from "styled-components"
 import * as Location from "expo-location"
 import axios from "axios"
 import Loading from "../../components/Loading"
-
 import WeatherLogo from "../../../assets/icons/sun.png"
 import SpaceLogo from "../../../assets/icons/bar.png"
-
 import tokiImg from "../../../assets/images/toki_character.png"
-import bookiImg from "../../../assets/images/booki_character.png"
-import Modal from "react-native-modalbox"
-
+import buki from "../../../assets/images/character/buki.png"
 import { CircularProgress } from "react-native-svg-circular-progress"
-
 import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme"
+import LongButton from "../../components/LongButton"
+import { coachColorVar } from "../../../apollo"
 
-const Home = ({}) => {
+const Home = ({ navigation }) => {
   const [state, setState] = useState([])
   const [cateState, setCateState] = useState([])
   const [ready, setReady] = useState(true)
-
+  const [character, setCharacter] = useState("")
   const [weather, setWeather] = useState({
-
     temp: 1,
     condition: "맑음",
   })
 
   const Location = "강남구"
   const percentage = 66
+  const color = coachColorVar().color.main
 
   const [currentDate, setcurrentDate] = useState("")
   const [currentTime, setcurrentTime] = useState("")
@@ -36,10 +33,8 @@ const Home = ({}) => {
   useEffect(() => {
     var date = new Date().getDate()
     var month = new Date().getMonth() + 1
-    var year = new Date().getFullYear()
     var hours = new Date().getHours()
     var min = new Date().getMinutes()
-    var sec = new Date().getSeconds()
 
     setcurrentDate(month + "월" + " " + date + "일")
     setcurrentTime(hours + ":" + min + "PM")
@@ -50,6 +45,11 @@ const Home = ({}) => {
       setReady(false)
     }, 1000)
   }, [])
+
+  const handleGoToNext = () => {
+    // swiperRef?.current.goToNext();
+    navigation.navigate("ChallengeSetting")
+  }
 
   const getLocation = async () => {
     try {
@@ -81,7 +81,6 @@ const Home = ({}) => {
   return ready ? (
     <Loading />
   ) : (
-
     <Container>
       <TopStatus>
         <TimeStatus>
@@ -112,24 +111,28 @@ const Home = ({}) => {
           <ProgressGoal>
             <CircularProgress
               percentage={percentage}
-              donutColor={theme.toki.color.main}
+              donutColor={color}
               size={300}
               progressWidth={140}>
               <CharacterBox>
-                <CharacetrImage source={tokiImg} resizeMode="contain" />
+                <CharacetrImage
+                  source={coachColorVar().coach === "toki" ? tokiImg : buki}
+                  resizeMode="contain"
+                />
               </CharacterBox>
             </CircularProgress>
           </ProgressGoal>
         </GoalBox>
       </MiddleStatus>
       <BottomStatus>
-        <GoalContainer>
-          <GoalText>오늘의 목표를 세워보세요!</GoalText>
-        </GoalContainer>
+        <LongButton handleGoToNext={handleGoToNext} btnBackColor={color}>
+          오늘의 목표를 세워보세요!
+        </LongButton>
       </BottomStatus>
     </Container>
   )
 }
+
 const ProgressGoal = styled(CircularProgress)`
   width: 100px;
   height: 100px;
@@ -227,7 +230,7 @@ const CurrentTime = styled.Text`
   width: 130px;
   height: 40px;
   font-weight: bold;
-  font-size: 36px;
+  font-size: 30px;
 `
 
 const CurrentWeather = styled.Text`
@@ -279,11 +282,10 @@ const MiddleStatus = styled.View`
   flex-direction: row;
 `
 const BottomStatus = styled.View`
-  width: 100%;
+  width: 80%;
   height: 20%;
   align-items: flex-start;
   justify-content: flex-start;
-  padding-left: 65px;
   padding-top: 35px;
   flex-direction: row;
 `
