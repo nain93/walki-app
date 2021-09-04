@@ -1,15 +1,7 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  Button,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { View, Text, TextInput } from "react-native";
 import styled from "styled-components";
 import HeaderForm from "../../components/HeaderForm";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { theme } from "../../styles/theme";
 import { alertTimeVar, coachColorVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
@@ -84,7 +76,6 @@ const AlertSetting = ({ navigation }) => {
         </AmPmWrap>
         <TimeWrap coachColor={coachColor}>
           <TextInput
-            defaultValue={"12"}
             maxLength={2}
             onChangeText={(text) => handleHourChange(text)}
             keyboardType="numeric"
@@ -93,7 +84,6 @@ const AlertSetting = ({ navigation }) => {
           </TextInput>
           <Text>:</Text>
           <TextInput
-            defaultValue={"00"}
             maxLength={2}
             onChangeText={(text) => handleMinChange(text)}
             keyboardType="numeric"
