@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Platform, Container, Image } from "react-native"
+import { Platform,  Image } from "react-native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
 import Home from "../screens/home/Home"
@@ -11,10 +11,12 @@ import LogoTitle from "../components/LogoTitle"
 import SettingLogoTitle from "../components/SettingLogoTitle"
 import { coachColorVar } from "../../apollo"
 import { useReactiveVar } from "@apollo/client"
-import Star from "../../assets/icons/Star.png"
-import home1 from "../../assets/icons/home1.png"
-import message from "../../assets/icons/message.png"
-import styled from "styled-components"
+import activehome from "../../assets/icons/activehome.png"
+import inactivehome from "../../assets/icons/inactivehome.png"
+import inactivestar from "../../assets/icons/inactivestar.png"
+import activestar from "../../assets/icons/activestar.png"
+import activemessage from "../../assets/icons/activemessage.png"
+import inactivemessage from "../../assets/icons/inactivemessage.png"
 
 const Tabs = createBottomTabNavigator()
 
@@ -48,12 +50,11 @@ const TabNavigator = () => {
             shadowOpacity: 0, //ios
           },
           tabBarLabel: "홈",
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Image
-              style={{ width: 30 }}
+              style={{ width: 30, tintColor: color }}
               resizeMode="contain"
-              source={focused ? home1 : Star}
-              tintColor={color}
+              source={focused ? activehome : inactivehome}
             />
           ),
         }}
@@ -63,12 +64,11 @@ const TabNavigator = () => {
         name="리포트"
         component={ranking}
         options={{
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Image
-              style={{ width: 30 }}
+              style={{ width: 30 , tintColor:color}}
               resizeMode="contain"
-              source={focused ? Star : Star}
-              tintColor={color}
+              source={focused ? activestar : inactivestar}
             />
           ),
         }}
@@ -77,12 +77,11 @@ const TabNavigator = () => {
         name="전체랭킹"
         component={report}
         options={{
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Image
-              style={{ width: 30 }}
+              style={{ width: 30 , tintColor:color}}
               resizeMode="contain"
-              source={focused ? message : message}
-              tintColor={color}
+              source={focused ? activemessage : inactivemessage}
             />
           ),
         }}
