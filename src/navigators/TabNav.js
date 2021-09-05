@@ -19,6 +19,7 @@ import activemessage from "../../assets/icons/activemessage.png";
 import inactivemessage from "../../assets/icons/inactivemessage.png";
 import { theme } from "../styles/theme";
 
+
 const Tabs = createBottomTabNavigator();
 
 const TabNavigator = () => {

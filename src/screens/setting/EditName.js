@@ -134,7 +134,7 @@ const EditName = ({
         </ErrorText>
         <LongButton
           handleGoToNext={handleSubmit(handleGoToNext)}
-          disabled={errorMessage}
+          disabled={errorMessage || inputWatch === name}
           btnBackColor={coachColorVar().color.main}
         >
           {loading ? <ActivityIndicator color="white" /> : "변경하기"}
