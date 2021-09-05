@@ -13,7 +13,6 @@ const HeaderForm = ({ headerChildren, descChildren, align }) => {
 };
 
 const Header = styled(H1Text)`
-  margin-top: 20px;
   margin-bottom: 20px;
   text-align: ${(props) => props.align};
 `;

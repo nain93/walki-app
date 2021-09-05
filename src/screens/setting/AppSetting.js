@@ -16,69 +16,75 @@ const AppSetting = ({ navigation }) => {
   const { gray1, gray2, gray3, gray6 } = theme.grayScale;
   return (
     <Container>
-      <H1Text>앱설정</H1Text>
-      <View>
-        <SettingWrap>
-          <Body1Text style={{ color: gray2 }}>푸시설정</Body1Text>
-          <TouchableOpacity onPress={handleOnOfPush}>
-            <Text style={{ color: gray1 }}>{onOfPush ? "ON" : "OFF"}</Text>
-          </TouchableOpacity>
-        </SettingWrap>
-        <SettingWrap
-          style={{
-            borderBottomWidth: 1,
-            borderBottomColor: gray6,
-            paddingTop: 20,
-            paddingBottom: 20,
-          }}
-        >
-          <Body3Text
+      <Wrap>
+        <H1Text>앱설정</H1Text>
+        <View>
+          <SettingWrap>
+            <Body1Text style={{ color: gray2 }}>푸시설정</Body1Text>
+            <TouchableOpacity onPress={handleOnOfPush}>
+              <Text style={{ color: gray1 }}>{onOfPush ? "ON" : "OFF"}</Text>
+            </TouchableOpacity>
+          </SettingWrap>
+          <SettingWrap
             style={{
-              color: gray3,
+              borderBottomWidth: 1,
+              borderBottomColor: gray6,
+              paddingTop: 20,
+              paddingBottom: 20,
             }}
           >
-            {`푸시 알림에 대한 설정은 ‘휴대폰 설정 > walkie > 알림’ \n에서 변경할 수 있습니다.`}
-          </Body3Text>
-        </SettingWrap>
+            <Body3Text
+              style={{
+                color: gray3,
+              }}
+            >
+              {`푸시 알림에 대한 설정은 ‘휴대폰 설정 > walkie > 알림’ \n에서 변경할 수 있습니다.`}
+            </Body3Text>
+          </SettingWrap>
 
-        <SettingWrap
-          style={{
-            borderBottomWidth: 1,
-            borderBottomColor: gray6,
-            paddingTop: 20,
-            paddingBottom: 20,
-          }}
-        >
-          <Body1Text style={{ color: gray2 }}>내 운동 정보 사용</Body1Text>
-          <TouchableOpacity onPress={handleOnOfInfo}>
-            <Text style={{ color: gray1 }}>{onOfInfo ? "ON" : "OFF"}</Text>
+          <SettingWrap
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: gray6,
+              paddingTop: 20,
+              paddingBottom: 20,
+            }}
+          >
+            <Body1Text style={{ color: gray2 }}>내 운동 정보 사용</Body1Text>
+            <TouchableOpacity onPress={handleOnOfInfo}>
+              <Text style={{ color: gray1 }}>{onOfInfo ? "ON" : "OFF"}</Text>
+            </TouchableOpacity>
+          </SettingWrap>
+          <TouchableOpacity
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: gray6,
+              paddingTop: 20,
+              paddingBottom: 20,
+            }}
+            onPress={() => navigation.navigate("OpenSource")}
+          >
+            <Body1Text style={{ color: gray2 }}>오픈소스 라이센스</Body1Text>
           </TouchableOpacity>
-        </SettingWrap>
-        <TouchableOpacity
-          style={{
-            borderBottomWidth: 1,
-            borderBottomColor: gray6,
-            paddingTop: 20,
-            paddingBottom: 20,
-          }}
-          onPress={() => navigation.navigate("OpenSource")}
-        >
-          <Body1Text style={{ color: gray2 }}>오픈소스 라이센스</Body1Text>
-        </TouchableOpacity>
-      </View>
+        </View>
 
-      <SettingWrap style={{ marginTop: 10 }}>
-        <Body1Text style={{ color: gray1 }}>버전</Body1Text>
-        <Text style={{ color: gray3 }}>1.0.0</Text>
-      </SettingWrap>
+        <SettingWrap style={{ marginTop: 10 }}>
+          <Body1Text style={{ color: gray1 }}>버전</Body1Text>
+          <Text style={{ color: gray3 }}>1.0.0</Text>
+        </SettingWrap>
+      </Wrap>
     </Container>
   );
 };
 
 const Container = styled.View`
-  padding: 30px;
+  padding: 0 30px;
+  flex: 1;
+`;
+
+const Wrap = styled.View`
+  justify-content: space-around;
   flex: 0.6;
-  justify-content: space-between;
 `;
 
 const SettingWrap = styled.View`

@@ -83,7 +83,6 @@ const SlideImg = styled.Image`
   opacity: 1;
   width: 100%;
   height: 332px;
-  margin-top: 30px;
 `;
 
 export default HomeSwiper;

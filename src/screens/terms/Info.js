@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import styled from "styled-components";
+import { theme } from "../../styles/theme";
 
 const Info = () => {
   return (
@@ -10,7 +11,7 @@ const Info = () => {
         paddingBottom: 30,
       }}
     >
-      <Text>
+      <Text style={{ color: theme.grayScale.gray2 }}>
         {`walki는 개인정보보호법에 따라 이용자의 개인정보를 보호하고 이와 관련한 고충을 원활하게 처리할 수 있도록 다음과 같이 개인정보 처리방침을 수립·공개합니다. walki 개인정보 처리방침을 개정하는 경우 웹사이트 공지사항(또는 개별공지)을 통하여 공지할 것입니다.
 
 **제1조(개인정보의 처리 목적)**

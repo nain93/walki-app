@@ -69,7 +69,13 @@ const AlertSetting = ({ navigation }) => {
   const { ampm, hour, min } = timePick;
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={{
+        flex: 1,
+        paddingLeft: 30,
+        paddingBottom: 30,
+        paddingTop: 30,
+        paddingRight: 30,
+      }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={100}
     >
@@ -149,7 +155,6 @@ const AlertSetting = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  padding: 30px;
   justify-content: space-between;
 `;
 
