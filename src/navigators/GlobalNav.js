@@ -21,7 +21,9 @@ import { isLoggedInVar } from "../../apollo";
 import ChallengeSetting from "../screens/coachSelect/ChallengeSetting";
 import AppSetting from "../screens/setting/AppSetting";
 import OpenSource from "../screens/setting/OpenSource";
-import TermsCheck from "../screens/setting/TermsCheck";
+import Service from "../screens/terms/Service";
+import Info from "../screens/terms/Info";
+import TermsCheck from "../screens/terms/TermsCheck";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -61,7 +63,6 @@ const GlobalNav = () => {
             component={OnBoarding}
           />
         )}
-
         <Stack.Screen
           name="CoachSelect"
           options={{
@@ -178,22 +179,14 @@ const GlobalNav = () => {
           })}
           component={OpenSource}
         />
+        {/* 이용약관 */}
         <Stack.Screen
           name="TermsCheck"
           options={({ navigation }) => ({
+            headerTitleAlign: "center",
             title: "약관확인",
-            headerLeft: () => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                  style={{ marginLeft: 20 }}
-                >
-                  <LeftIcon name="left" size={24} />
-                </TouchableOpacity>
-              );
-            },
+            headerLeft: () => null,
+            headerRight: (props) => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -202,7 +195,36 @@ const GlobalNav = () => {
           })}
           component={TermsCheck}
         />
-
+        <Stack.Screen
+          name="Service"
+          options={{
+            headerTitleAlign: "center",
+            title: "서비스 이용약관",
+            headerLeft: () => null,
+            headerRight: (props) => <CloseIcon {...props} />,
+            headerStyle: {
+              backgroundColor: theme.grayScale.white,
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          }}
+          component={Service}
+        />
+        <Stack.Screen
+          name="Info"
+          options={{
+            headerTitleAlign: "center",
+            title: "개인정보 처리방침",
+            headerLeft: () => null,
+            headerRight: (props) => <CloseIcon {...props} />,
+            headerStyle: {
+              backgroundColor: theme.grayScale.white,
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          }}
+          component={Info}
+        />
         <Stack.Screen
           name="ChallengeSetting"
           options={{

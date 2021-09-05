@@ -65,11 +65,6 @@ const AppSetting = ({ navigation }) => {
         >
           <Body1Text style={{ color: gray2 }}>오픈소스 라이센스</Body1Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("TermsCheck")}>
-          <Body1Text style={{ color: gray2, paddingTop: 20 }}>
-            약관확인
-          </Body1Text>
-        </TouchableOpacity>
       </View>
 
       <SettingWrap style={{ marginTop: 10 }}>
@@ -81,9 +76,9 @@ const AppSetting = ({ navigation }) => {
 };
 
 const Container = styled.View`
-  padding: 0 30px;
+  padding: 30px;
   flex: 0.6;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const SettingWrap = styled.View`

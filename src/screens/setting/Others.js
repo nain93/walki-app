@@ -23,7 +23,7 @@ const Others = ({ navigation }) => {
       <SettingBox
         onPress={async () => {
           await logUserOut();
-          navigation.navigate("OnBoarding");
+          navigation.reset({ routes: [{ name: "OnBoarding" }] });
         }}
       >
         <SettingText>로그아웃</SettingText>

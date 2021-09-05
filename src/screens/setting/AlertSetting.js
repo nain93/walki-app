@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import styled from "styled-components";
 import HeaderForm from "../../components/HeaderForm";
 import { theme } from "../../styles/theme";
@@ -62,80 +68,82 @@ const AlertSetting = ({ navigation }) => {
 
   const { ampm, hour, min } = timePick;
   return (
-    <TouchableWithoutFeedback>
-      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
-        <Container>
-          <HeaderForm
-            headerChildren={"응원 알림 설정"}
-            descChildren={
-              "당신을 응원하기 위해 토키가 매일 알림을 \n보내드려요! 시간은 나중에 변경할 수 있어요."
-            }
-            align="left"
-          />
-          <TimePickerWrap>
-            <AmPmWrap>
-              <AmPmBtn
-                current={ampm === "오전"}
-                onPress={() =>
-                  setTimePick({
-                    ...timePick,
-                    ampm: "오전",
-                  })
-                }
-              >
-                <AmPmText current={ampm === "오전"}>오전</AmPmText>
-              </AmPmBtn>
-              <AmPmBtn
-                current={ampm === "오후"}
-                onPress={() =>
-                  setTimePick({
-                    ...timePick,
-                    ampm: "오후",
-                  })
-                }
-              >
-                <AmPmText current={ampm === "오후"}>오후</AmPmText>
-              </AmPmBtn>
-            </AmPmWrap>
-            <TimeWrap coachColor={coachColor}>
-              <TextInput
-                maxLength={2}
-                onChangeText={(text) => handleHourChange(text)}
-                keyboardType="numeric"
-              >
-                12
-              </TextInput>
-              <Text>:</Text>
-              <TextInput
-                maxLength={2}
-                onChangeText={(text) => handleMinChange(text)}
-                keyboardType="numeric"
-                style={{ color: coachColor.color.main }}
-              >
-                00
-              </TextInput>
-            </TimeWrap>
-          </TimePickerWrap>
-          <View>
-            <LongButton
-              handleGoToNext={handleGoToNext}
-              disabled={
-                Number(hour) > 12 ||
-                Number(hour) < 0 ||
-                Number(min) > 59 ||
-                Number(min) < 0
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={100}
+    >
+      <Container>
+        <HeaderForm
+          headerChildren={"응원 알림 설정"}
+          descChildren={
+            "당신을 응원하기 위해 토키가 매일 알림을 \n보내드려요! 시간은 나중에 변경할 수 있어요."
+          }
+          align="left"
+        />
+        <TimePickerWrap>
+          <AmPmWrap>
+            <AmPmBtn
+              current={ampm === "오전"}
+              onPress={() =>
+                setTimePick({
+                  ...timePick,
+                  ampm: "오전",
+                })
               }
-              btnBackColor={coachColor.color.main}
             >
-              설정
-            </LongButton>
-            <AfterSettingBtn onPress={handleAfterSetting}>
-              <AfterSettingText>나중에 설정할래요</AfterSettingText>
-            </AfterSettingBtn>
-          </View>
-        </Container>
-      </KeyboardAwareScrollView>
-    </TouchableWithoutFeedback>
+              <AmPmText current={ampm === "오전"}>오전</AmPmText>
+            </AmPmBtn>
+            <AmPmBtn
+              current={ampm === "오후"}
+              onPress={() =>
+                setTimePick({
+                  ...timePick,
+                  ampm: "오후",
+                })
+              }
+            >
+              <AmPmText current={ampm === "오후"}>오후</AmPmText>
+            </AmPmBtn>
+          </AmPmWrap>
+          <TimeWrap coachColor={coachColor}>
+            <TextInput
+              maxLength={2}
+              onChangeText={(text) => handleHourChange(text)}
+              keyboardType="numeric"
+            >
+              12
+            </TextInput>
+            <Text>:</Text>
+            <TextInput
+              maxLength={2}
+              onChangeText={(text) => handleMinChange(text)}
+              keyboardType="numeric"
+              style={{ color: coachColor.color.main }}
+            >
+              00
+            </TextInput>
+          </TimeWrap>
+        </TimePickerWrap>
+        <View>
+          <LongButton
+            handleGoToNext={handleGoToNext}
+            disabled={
+              Number(hour) > 12 ||
+              Number(hour) < 0 ||
+              Number(min) > 59 ||
+              Number(min) < 0
+            }
+            btnBackColor={coachColor.color.main}
+          >
+            설정
+          </LongButton>
+          <AfterSettingBtn onPress={handleAfterSetting}>
+            <AfterSettingText>나중에 설정할래요</AfterSettingText>
+          </AfterSettingBtn>
+        </View>
+      </Container>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -183,7 +191,7 @@ const AfterSettingBtn = styled.TouchableOpacity`
 
 const AfterSettingText = styled.Text`
   color: ${theme.grayScale.gray4};
-
   text-decoration: underline;
+  text-decoration-color: ${theme.grayScale.gray4};
 `;
 export default AlertSetting;

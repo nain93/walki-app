@@ -1,12 +1,17 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
+import styled from "styled-components";
 
 const OpenSource = () => {
   return (
-    <View>
+    <Container>
       <Text>OpenSource</Text>
-    </View>
+    </Container>
   );
 };
+
+const Container = styled.View`
+  padding: 30px;
+`;
 
 export default OpenSource;
