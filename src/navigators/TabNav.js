@@ -17,6 +17,8 @@ import inactivestar from "../../assets/icons/inactivestar.png";
 import activestar from "../../assets/icons/activestar.png";
 import activemessage from "../../assets/icons/activemessage.png";
 import inactivemessage from "../../assets/icons/inactivemessage.png";
+import { theme } from "../styles/theme";
+
 
 const Tabs = createBottomTabNavigator();
 
@@ -26,7 +28,7 @@ const TabNavigator = () => {
     <Tabs.Navigator
       screenOptions={{
         tabBarActiveTintColor: tabColor.color.main,
-        tabBarInactiveTintColor: "gray",
+        tabBarInactiveTintColor: theme.grayScale.gray3,
         tabBarLabelStyle: {
           fontSize: 12,
         },
