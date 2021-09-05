@@ -41,8 +41,7 @@ const Setting = ({ navigation }) => {
 const Container = styled.View`
   flex: 0.4;
   justify-content: space-around;
-  padding: 30px;
-  border-bottom-width: 1px;
+  padding: 0 30px;
   border-bottom-color: ${theme.grayScale.gray7};
 `;
 

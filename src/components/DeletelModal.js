@@ -17,8 +17,6 @@ const DeletelModal = ({ open, setOpen }) => {
 
   return (
     <Container>
-      <Button title="Show modal" onPress={toggleModal} />
-
       <Modal isVisible={open} style={{ alignItems: "center" }}>
         <ModalContainer>
           <Image
@@ -49,6 +47,7 @@ const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
+  position: absolute;
 `;
 
 const ModalContainer = styled.View`

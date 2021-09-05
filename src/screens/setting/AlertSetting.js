@@ -76,7 +76,7 @@ const AlertSetting = ({ navigation }) => {
         paddingTop: 30,
         paddingRight: 30,
       }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={"height"}
       keyboardVerticalOffset={100}
     >
       <Container>

@@ -39,8 +39,7 @@ const Others = ({ navigation }) => {
 const Container = styled.View`
   flex: 0.4;
   justify-content: space-around;
-  padding: 30px;
-  padding-top: 20px;
+  padding: 0 30px;
   border-bottom-color: ${theme.grayScale.gray7};
 `;
 
@@ -48,9 +47,8 @@ const SettingBox = styled.TouchableOpacity`
   flex-direction: row;
   border-bottom-width: 1px;
   border-bottom-color: ${theme.grayScale.gray7};
-  height: 60px;
   align-items: center;
-  padding: 0 10px;
+  padding: 20px 10px;
 `;
 
 const SettingText = styled(Body1Text)``;
