@@ -342,6 +342,8 @@ PODS:
     - React-jsi (= 0.63.4)
   - RNCAsyncStorage (1.15.5):
     - React-Core
+  - RNCPushNotificationIOS (1.10.0):
+    - React-Core
   - RNGestureHandler (1.10.3):
     - React-Core
   - RNPermissions (3.0.5):
@@ -439,6 +441,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -554,6 +557,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNPermissions:
@@ -633,6 +638,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RNCAsyncStorage: 56a3355a10b5d660c48c6e37325ac85ebfd09885
+  RNCPushNotificationIOS: 5ee247e594d0b5df3cd7be74b51035a0d91807eb
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNPermissions: 7043bacbf928eae25808275cfe73799b8f618911
   RNReanimated: d9da990fc90123f4ffbfdda93d00fc15174863a8
@@ -647,4 +653,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: bacfaec23ac13801381bbc65c4f8e7e12a258dbc
 
-COCOAPODS: 1.11.0.rc.1
+COCOAPODS: 1.10.2
