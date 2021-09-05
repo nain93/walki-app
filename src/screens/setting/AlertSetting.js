@@ -6,6 +6,8 @@ import { theme } from "../../styles/theme";
 import { alertTimeVar, coachColorVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import LongButton from "../../components/LongButton";
+import { TouchableWithoutFeedback, Keyboard } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const AlertSetting = ({ navigation }) => {
   const coachColor = useReactiveVar(coachColorVar);
