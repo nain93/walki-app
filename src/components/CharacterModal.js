@@ -1,40 +1,39 @@
 import React from "react";
-import { Text, Button, Image } from "react-native";
+import { Image, Text } from "react-native";
 import Modal from "react-native-modal";
-import tokiFail from "../../assets/images/toki_fail.png";
-import bookiFail from "../../assets/images/buki_fail.png";
 import styled from "styled-components";
-import { Body1Text, H2Text, theme } from "../styles/theme";
+import { theme } from "../styles/theme";
 import { coachColorVar } from "../../apollo";
 
-const DeletelModal = ({ open, setOpen }) => {
-  const toggleModal = () => {
-    setOpen(!open);
-  };
-  const handleDeleteAccount = () => {
-    //todo 회원 탈퇴 로직
-  };
-
+const CharacterModal = ({
+  open,
+  tokiImg,
+  bukiImg,
+  children,
+  handleModal,
+  handleOkayBtn,
+  okayText,
+}) => {
   return (
     <Container>
       <Modal isVisible={open} style={{ alignItems: "center" }}>
-        <ModalContainer>
-          <Image
-            source={coachColorVar().coach === "toki" ? tokiFail : bookiFail}
-            resizeMode="contain"
-            style={{ width: 100, height: 116 }}
-          />
-          <H2Text>정말 탈퇴할거에요?</H2Text>
-          <Body1Text style={{ color: theme.TextColor }}>
-            쌓여왔던 운동 기록이 사라져요.
-          </Body1Text>
-
+        <ModalContainer tokiImg={tokiImg}>
+          {tokiImg ? (
+            <Image
+              source={coachColorVar().coach === "toki" ? tokiImg : bukiImg}
+              resizeMode="contain"
+              style={{ width: 100, height: 116 }}
+            />
+          ) : (
+            <></>
+          )}
+          {children}
           <BtnWrap>
-            <CancelBtn onPress={toggleModal}>
+            <CancelBtn onPress={handleModal}>
               <Text>취소</Text>
             </CancelBtn>
-            <OkayBtn onPress={handleDeleteAccount}>
-              <OkayBtnText>탈퇴하기</OkayBtnText>
+            <OkayBtn onPress={handleOkayBtn}>
+              <OkayBtnText>{okayText}</OkayBtnText>
             </OkayBtn>
           </BtnWrap>
         </ModalContainer>
@@ -51,7 +50,7 @@ const Container = styled.View`
 `;
 
 const ModalContainer = styled.View`
-  flex: 0.4;
+  flex: ${(props) => (props.tokiImg ? 0.4 : 0.3)};
   border-radius: 16px;
   background-color: ${theme.grayScale.white};
   width: 326px;
@@ -89,4 +88,4 @@ const OkayBtnText = styled.Text`
   color: ${theme.grayScale.white};
 `;
 
-export default DeletelModal;
+export default CharacterModal;

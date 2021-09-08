@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
   TextInput,
   KeyboardAvoidingView,
-  Platform,
+  Button,
 } from "react-native";
 import styled from "styled-components";
 import HeaderForm from "../../components/HeaderForm";
@@ -12,41 +12,118 @@ import { theme } from "../../styles/theme";
 import { alertTimeVar, coachColorVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import LongButton from "../../components/LongButton";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import { TouchableWithoutFeedback, Keyboard } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
+import * as Location from "expo-location";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const AlertSetting = ({ navigation }) => {
-  const coachColor = useReactiveVar(coachColorVar);
-  // const [permissions, setPermissions] = useState({});
-
-  // const onRemoteNotification = (notification) => {
-  //   const isClicked = notification.getActionIdentifier();
-
-  //   if (isClicked) {
-  //     // Navigate user to another screen
-  //     console.log("isClicked");
-  //   } else {
-  //     console.log("do something");
-  //     // Do something else with push notification
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   PushNotificationIOS.addEventListener("notification", onRemoteNotification);
-  // });
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState(false);
   const [timePick, setTimePick] = useState({
     ampm: "오전",
-    hour: "12",
-    min: "00",
+    hour: 12,
+    minute: 0,
   });
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  const { ampm, hour, minute } = timePick;
 
-  const handleGoToNext = () => {
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+  async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "You've got mail! 📬",
+        body: "Here is the notification body",
+        data: { data: "goes here" },
+      },
+      trigger: { seconds: 2 },
+    });
+  }
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Constants.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      console.log(existingStatus, "existingStatus");
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    return token;
+  }
+  const coachColor = useReactiveVar(coachColorVar);
+  const logNextTriggerDate = async () => {
+    try {
+      const nextTriggerDate = await Notifications.getNextTriggerDateAsync({
+        hour,
+        minute,
+      });
+      console.log(
+        nextTriggerDate === null
+          ? "No next trigger date"
+          : new Date(nextTriggerDate)
+      );
+    } catch (e) {
+      console.warn(`Couldn't have calculated next trigger date: ${e}`);
+    }
+  };
+  const handleGoToNext = async () => {
+    await logNextTriggerDate();
+
     alertTimeVar({
       ...timePick,
     });
     // todo: 푸쉬 알람 허용 및 시간 설정
-    navigation.goBack();
+    // navigation.goBack();
   };
 
   const handleAfterSetting = () => {
@@ -56,17 +133,16 @@ const AlertSetting = ({ navigation }) => {
   const handleHourChange = (text) => {
     setTimePick({
       ...timePick,
-      hour: text.replace(/[^0-9]/g, ""),
+      hour: Number(text.replace(/[^0-9]/g, "")),
     });
   };
   const handleMinChange = (text) => {
     setTimePick({
       ...timePick,
-      min: text.replace(/[^0-9]/g, ""),
+      minute: Number(text.replace(/[^0-9]/g, "")),
     });
   };
 
-  const { ampm, hour, min } = timePick;
   return (
     <KeyboardAvoidingView
       style={{
@@ -137,8 +213,8 @@ const AlertSetting = ({ navigation }) => {
             disabled={
               Number(hour) > 12 ||
               Number(hour) < 0 ||
-              Number(min) > 59 ||
-              Number(min) < 0
+              Number(minute) > 59 ||
+              Number(minute) < 0
             }
             btnBackColor={coachColor.color.main}
           >
