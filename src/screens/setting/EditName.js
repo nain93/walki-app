@@ -128,13 +128,13 @@ const EditName = ({
             />
           </TouchableOpacity>
         </NameInputWrap>
-        <Text style={{ color: "red" }}>{errorMessage}</Text>
-        <ErrorText>
+        {errorMessage ? <ErrorText>{errorMessage}</ErrorText> : <></>}
+        <AlertText>
           {`한글 및 영문, 숫자만 사용 가능하며 \n최대 8글자까지만 등록 가능합니다`}
-        </ErrorText>
+        </AlertText>
         <LongButton
           handleGoToNext={handleSubmit(handleGoToNext)}
-          disabled={errorMessage}
+          disabled={errorMessage || inputWatch === name}
           btnBackColor={coachColorVar().color.main}
         >
           {loading ? <ActivityIndicator color="white" /> : "변경하기"}
@@ -172,7 +172,16 @@ const NameInput = styled.TextInput`
 `;
 
 const ErrorText = styled.Text`
+  color: red;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 15px;
+`;
+
+const AlertText = styled.Text`
   color: black;
+  text-align: left;
+  width: 100%;
   margin-bottom: 15px;
 `;
 

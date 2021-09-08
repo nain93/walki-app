@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "8268635624",
+    "project_id": "walki-4d436",
+    "storage_bucket": "walki-4d436.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8268635624:android:da0df3f35d2a97c0b2985d",
+        "android_client_info": {
+          "package_name": "com.walkiclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8268635624-3kltd4be5cdcfpqna3n4f7rus5neh32c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbBN-Lv8hRRmuCBP_bO8B7y1rKFUEx8-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8268635624-3kltd4be5cdcfpqna3n4f7rus5neh32c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
