@@ -71,7 +71,6 @@ const KakaoLoginButton = ({ navigation }) => {
 
   return (
     <Container>
-      {console.log(data)}
       <KakaoButton onPress={handleKakaoLogin}>
         {loading ? (
           <ActivityIndicator color="black" />

@@ -13,11 +13,7 @@ const DeleteUser = ({ handleDeleteModal, deleteModalOpen, navigation }) => {
     }
   `;
 
-  const [deleteUserMutation] = useMutation(DELETE_USER_MUTATION, {
-    onCompleted: (data) => {
-      console.log(data, "data");
-    },
-  });
+  const [deleteUserMutation] = useMutation(DELETE_USER_MUTATION);
 
   const handleOkayBtn = async () => {
     deleteUserMutation();
