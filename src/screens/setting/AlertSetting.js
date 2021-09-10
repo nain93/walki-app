@@ -1,129 +1,54 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  KeyboardAvoidingView,
-  Button,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, TextInput, KeyboardAvoidingView } from "react-native";
 import styled from "styled-components";
 import HeaderForm from "../../components/HeaderForm";
 import { theme } from "../../styles/theme";
 import { alertTimeVar, coachColorVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import LongButton from "../../components/LongButton";
-import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
-import * as Location from "expo-location";
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+import PushNotification from "react-native-push-notification";
 
 const AlertSetting = ({ navigation }) => {
-  const [expoPushToken, setExpoPushToken] = useState("");
-  const [notification, setNotification] = useState(false);
+  const coachColor = useReactiveVar(coachColorVar);
+  const alertTime = useReactiveVar(alertTimeVar);
+
   const [timePick, setTimePick] = useState({
-    ampm: "오전",
-    hour: 12,
-    minute: 0,
+    ampm: alertTime.ampm ? alertTime.ampm : "오전",
+    hour: alertTime.hour ? alertTime.hour : 12,
+    minute: alertTime.minute ? alertTime.minute : 0,
   });
-  const notificationListener = useRef();
-  const responseListener = useRef();
   const { ampm, hour, minute } = timePick;
 
-  useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    );
+  let nextHour = new Date();
 
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
-
-    return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      );
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "You've got mail! 📬",
-        body: "Here is the notification body",
-        data: { data: "goes here" },
-      },
-      trigger: { seconds: 2 },
-    });
-  }
-  async function registerForPushNotificationsAsync() {
-    let token;
-    if (Constants.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      console.log(existingStatus, "existingStatus");
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        alert("Failed to get push token for push notification!");
-        return;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
-    } else {
-      alert("Must use physical device for Push Notifications");
-    }
-
-    if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
-
-    return token;
-  }
-  const coachColor = useReactiveVar(coachColorVar);
-  const logNextTriggerDate = async () => {
-    try {
-      const nextTriggerDate = await Notifications.getNextTriggerDateAsync({
-        hour,
-        minute,
-      });
-      console.log(
-        nextTriggerDate === null
-          ? "No next trigger date"
-          : new Date(nextTriggerDate)
-      );
-    } catch (e) {
-      console.warn(`Couldn't have calculated next trigger date: ${e}`);
-    }
-  };
   const handleGoToNext = async () => {
-    await logNextTriggerDate();
+    PushNotification.cancelAllLocalNotifications();
+    if (ampm === "오후") {
+      nextHour.setHours(hour + 12, minute, 0);
+    }
+    if (ampm === "오전") {
+      nextHour.setHours(hour, minute, 0);
+    }
 
+    handleChangeState();
     alertTimeVar({
       ...timePick,
     });
+    // AppState.addEventListener("change", handleChangeState);
+    // return () => AppState.removeEventListener("change", handleChangeState);
     // todo: 푸쉬 알람 허용 및 시간 설정
-    // navigation.goBack();
+    navigation.goBack();
+  };
+
+  const handleChangeState = () => {
+    PushNotification.localNotificationSchedule({
+      channelId: "default",
+      message: "My Notification Message",
+      date: nextHour,
+      allowWhileIdle: true,
+      repeatType: "day",
+    });
   };
 
   const handleAfterSetting = () => {
@@ -190,11 +115,11 @@ const AlertSetting = ({ navigation }) => {
           </AmPmWrap>
           <TimeWrap coachColor={coachColor}>
             <TextInput
-              maxLength={2}
+              maxLength={1}
               onChangeText={(text) => handleHourChange(text)}
               keyboardType="numeric"
             >
-              12
+              {hour}
             </TextInput>
             <Text>:</Text>
             <TextInput
@@ -203,7 +128,7 @@ const AlertSetting = ({ navigation }) => {
               keyboardType="numeric"
               style={{ color: coachColor.color.main }}
             >
-              00
+              {minute}
             </TextInput>
           </TimeWrap>
         </TimePickerWrap>
