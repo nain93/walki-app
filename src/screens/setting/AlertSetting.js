@@ -20,10 +20,12 @@ const AlertSetting = ({ navigation }) => {
   });
   const { ampm, hour, minute } = timePick;
 
-  let nextHour = new Date();
+  let nextHour;
 
   const handleGoToNext = async () => {
     PushNotification.cancelAllLocalNotifications();
+    nextHour = new Date();
+    nextHour.setDate(nextHour.getDate() + 1);
     if (ampm === "오후") {
       nextHour.setHours(hour + 12, minute, 0);
     }
@@ -115,7 +117,7 @@ const AlertSetting = ({ navigation }) => {
           </AmPmWrap>
           <TimeWrap coachColor={coachColor}>
             <TextInput
-              maxLength={1}
+              maxLength={2}
               onChangeText={(text) => handleHourChange(text)}
               keyboardType="numeric"
             >
