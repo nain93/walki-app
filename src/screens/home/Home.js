@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react"
-import { View, Text } from "react-native"
+import { View, Text, TouchableOpacity } from "react-native"
 import styled from "styled-components"
 import * as Location from "expo-location"
 import axios from "axios"
 import Loading from "../../components/Loading"
 import WeatherLogo from "../../../assets/icons/sun.png"
 import SpaceLogo from "../../../assets/icons/bar.png"
-import tokiImg from "../../../assets/images/toki_character.png"
-import buki from "../../../assets/images/character/buki.png"
+import toki_default from "../../../assets/images/character/toki_hi.png"
+import buki_default from "../../../assets/images/character/buki.png"
+import toki_walking from "../../../assets/images/character/toki_walking.png"
+import buki_walking from "../../../assets/images/character/buki_walking.png"
 import { CircularProgress } from "react-native-svg-circular-progress"
 import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme"
 import LongButton from "../../components/LongButton"
 import { coachColorVar } from "../../../apollo"
+import BlurOverlay, {
+  closeOverlay,
+  openOverlay,
+} from "react-native-blur-overlay"
 
 const Home = ({ navigation }) => {
   const [state, setState] = useState([])
@@ -51,6 +57,30 @@ const Home = ({ navigation }) => {
     navigation.navigate("ChallengeSetting")
   }
 
+  const instructions = Platform.select({
+    ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
+    android:
+      "Double tap R on your keyboard to reload,\n" +
+      "Shake or press menu button for dev menu",
+  })
+  const renderBlurChilds = () => {
+    return (
+      <View>
+        <Text
+          style={{
+            fontSize: 50,
+            fontWeight: "bold",
+            color: coachColorVar().color.main,
+            alignItems: "center",
+            marginLeft: 45,
+          }}>
+          0{"\n"}
+        </Text>
+
+        <Text>{"\n"}목표를 설정해 주세요</Text>
+      </View>
+    )
+  }
   const getLocation = async () => {
     try {
       await Location.requestForegroundPermissionsAsync()
@@ -116,14 +146,48 @@ const Home = ({ navigation }) => {
               progressWidth={140}>
               <CharacterBox>
                 <CharacetrImage
-                  source={coachColorVar().coach === "toki" ? tokiImg : buki}
+                  // default, walking, fail, completed
+                  // coach.append walking해줄까
+                  source={
+                    coachColorVar().coach === "toki"
+                      ? toki_default
+                      : buki_default
+                  }
                   resizeMode="contain"
                 />
               </CharacterBox>
+              <TouchableOpacity
+                onPress={() => {
+                  openOverlay()
+                }}
+                style={{
+                  width: "50%",
+                  height: 36,
+                  backgroundColor: "#FFF",
+                  borderRadius: 4,
+                  margin: 16,
+                }}
+              />
+              <BlurOverlay
+                radius={260}
+                downsampling={4}
+                brightness={-450}
+                onPress={() => {
+                  closeOverlay()
+                }}
+                customStyles={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                blurStyle="dark"
+                children={renderBlurChilds()}
+              />
             </CircularProgress>
           </ProgressGoal>
         </GoalBox>
       </MiddleStatus>
+      <CheerText>오늘도 함께 달려봐요!</CheerText>
+
       <BottomStatus>
         <LongButton handleGoToNext={handleGoToNext} btnBackColor={color}>
           오늘의 목표를 세워보세요!
@@ -133,9 +197,14 @@ const Home = ({ navigation }) => {
   )
 }
 
+const blurgoal = styled.Text`
+  font-size: 25;
+  font-weight: 700;
+  color: ${coachColorVar().color.main};
+`
 const ProgressGoal = styled(CircularProgress)`
-  width: 100px;
-  height: 100px;
+  width: 292px;
+  height: 292px;
 `
 
 const GoalBox = styled.View`
@@ -146,16 +215,18 @@ const GoalBox = styled.View`
 `
 
 const CharacterBox = styled.View`
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 192px;
 `
 
 const CharacetrImage = styled.Image`
-  width: 96px;
-  height: 111px;
+  width: 120px;
+  height: 192px;
 `
 
-const GoalStep = styled.Text``
+const CheerText = styled.Text`
+  font-size: 16px;
+`
 
 const Container = styled.SafeAreaView`
   align-items: center;
@@ -286,7 +357,7 @@ const BottomStatus = styled.View`
   height: 20%;
   align-items: flex-start;
   justify-content: flex-start;
-  padding-top: 35px;
+  padding-top: 30px;
   flex-direction: row;
 `
 

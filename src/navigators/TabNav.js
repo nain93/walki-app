@@ -52,7 +52,7 @@ const TabNavigator = () => {
             <Image
               style={{ width: 30 }}
               resizeMode="contain"
-              source={focused ? home1 : Star}
+              source={focused ? home1 : home1}
               tintColor={color}
             />
           ),
