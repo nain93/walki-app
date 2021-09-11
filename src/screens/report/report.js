@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useRef, useCallback } from "react"
+import React from "react";
+import { View, Text } from "react-native";
 
-import { StyleSheet, Text, View } from "react-native"
-
-export default function report() {
+const Report = () => {
   return (
     <View>
-      <Text>...</Text>
+      <Text>Report</Text>
     </View>
-  )
-}
+  );
+};
+
+export default Report;

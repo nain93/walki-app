@@ -66,8 +66,7 @@ const Container = styled.View`
   flex: 1;
   justify-content: space-around;
   align-items: center;
-  padding: 10px 30px;
-  padding-top: 30px;
+  padding: 30px;
 `;
 
 const AlertSection = styled.View`

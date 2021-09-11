@@ -5,6 +5,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Others from "./Others";
 import Profile from "./Profile";
 import Setting from "./Setting";
+import { theme } from "../../styles/theme";
 
 const SettingScreen = ({ navigation }) => {
   return (
@@ -13,6 +14,7 @@ const SettingScreen = ({ navigation }) => {
         <Container>
           <Profile navigation={navigation} />
           <Setting navigation={navigation} />
+          <Line />
           <Others navigation={navigation} />
         </Container>
       </KeyboardAwareScrollView>
@@ -22,7 +24,12 @@ const SettingScreen = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  justify-content: center;
+  justify-content: space-around;
+`;
+
+const Line = styled.View`
+  border-bottom-width: 1px;
+  border-bottom-color: ${theme.grayScale.gray7};
 `;
 
 export default SettingScreen;

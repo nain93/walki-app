@@ -9,7 +9,7 @@ import { useReactiveVar } from "@apollo/client";
 
 const Setting = ({ navigation }) => {
   const alertTime = useReactiveVar(alertTimeVar);
-  const { ampm, hour, min } = alertTime;
+  const { ampm, hour, minute } = alertTime;
   const coachColor = useReactiveVar(coachColorVar);
 
   return (
@@ -22,16 +22,19 @@ const Setting = ({ navigation }) => {
         />
         <SettingText>응원 알림 설정</SettingText>
         <AlertSettingText coachColor={coachColor}>
-          {ampm ? `${ampm} ${hour}:${min}` : "설정"}
+          {ampm ? `${ampm} ${hour}:${minute}` : "설정"}
         </AlertSettingText>
       </SettingBox>
-      <SettingBox>
+      <SettingBox onPress={() => navigation.navigate("AppSetting")}>
         <SettingImg source={setting} resizeMode="contain" />
         <SettingText>앱 설정</SettingText>
       </SettingBox>
-      <SettingBox style={{ borderBottomWidth: 0 }}>
+      <SettingBox
+        style={{ borderBottomWidth: 0 }}
+        onPress={() => navigation.navigate("TermsCheck")}
+      >
         <SettingImg source={document} resizeMode="contain" />
-        <SettingText>앱 정보</SettingText>
+        <SettingText>약관확인</SettingText>
       </SettingBox>
     </Container>
   );
@@ -40,8 +43,7 @@ const Setting = ({ navigation }) => {
 const Container = styled.View`
   flex: 0.4;
   justify-content: space-around;
-  padding: 30px;
-  border-bottom-width: 1px;
+  padding: 0 30px;
   border-bottom-color: ${theme.grayScale.gray7};
 `;
 

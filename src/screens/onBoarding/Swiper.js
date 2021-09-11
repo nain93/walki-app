@@ -64,7 +64,7 @@ const HomeSwiper = () => {
   );
 };
 
-const Container = styled.View`
+const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
@@ -75,7 +75,6 @@ const SlideContainer = styled.View`
 `;
 
 const SlideBox = styled.View`
-  flex: 0.8;
   justify-content: space-around;
   padding: 0 30px;
 `;
@@ -84,7 +83,6 @@ const SlideImg = styled.Image`
   opacity: 1;
   width: 100%;
   height: 332px;
-  margin-top: 50px;
 `;
 
 export default HomeSwiper;
