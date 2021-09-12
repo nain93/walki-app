@@ -1,7 +1,4 @@
 rootProject.name = 'walkiclient'
-include ':react-native-blur-overlay'
-project(':react-native-blur-overlay').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-blur-overlay/android')
-
 
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'
 includeUnimodulesProjects()
