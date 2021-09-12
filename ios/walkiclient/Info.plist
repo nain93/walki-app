@@ -18,12 +18,24 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakao526b6c2b9e557fa37f7a04ede96db3c0</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>KAKAO_APP_KEY</key>
 	<string>526b6c2b9e557fa37f7a04ede96db3c0</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>kakao526b6c2b9e557fa37f7a04ede96db3c0</string>
 		<string>kakaokompassauth</string>
 		<string>storykompassauth</string>
 		<string>kakaolink</string>
