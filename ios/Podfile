@@ -18,4 +18,6 @@ target 'walkiclient' do
   #     flipper_post_install(installer)
   #   end
   # end
+  pod 'SajjadBlurOverlay', :path => '../node_modules/react-native-blur-overlay'
+
 end
