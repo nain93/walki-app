@@ -4,8 +4,8 @@ import { Platform, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Home from "../screens/home/Home";
-import ranking from "../screens/ranking/ranking";
-import report from "../screens/report/report";
+import Ranking from "../screens/ranking";
+import Report from "../screens/report";
 
 import LogoTitle from "../components/LogoTitle";
 import SettingLogoTitle from "../components/SettingLogoTitle";
@@ -18,7 +18,6 @@ import activestar from "../../assets/icons/activestar.png";
 import activemessage from "../../assets/icons/activemessage.png";
 import inactivemessage from "../../assets/icons/inactivemessage.png";
 import { theme } from "../styles/theme";
-
 
 const Tabs = createBottomTabNavigator();
 
@@ -65,7 +64,7 @@ const TabNavigator = () => {
       />
       <Tabs.Screen
         name="리포트"
-        component={ranking}
+        component={Report}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <Image
@@ -78,7 +77,7 @@ const TabNavigator = () => {
       />
       <Tabs.Screen
         name="전체랭킹"
-        component={report}
+        component={Ranking}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <Image

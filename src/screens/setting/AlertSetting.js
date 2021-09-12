@@ -1,52 +1,56 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, TextInput, KeyboardAvoidingView } from "react-native";
 import styled from "styled-components";
 import HeaderForm from "../../components/HeaderForm";
 import { theme } from "../../styles/theme";
 import { alertTimeVar, coachColorVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import LongButton from "../../components/LongButton";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import { TouchableWithoutFeedback, Keyboard } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+import PushNotification from "react-native-push-notification";
 
 const AlertSetting = ({ navigation }) => {
   const coachColor = useReactiveVar(coachColorVar);
-  // const [permissions, setPermissions] = useState({});
+  const alertTime = useReactiveVar(alertTimeVar);
 
-  // const onRemoteNotification = (notification) => {
-  //   const isClicked = notification.getActionIdentifier();
-
-  //   if (isClicked) {
-  //     // Navigate user to another screen
-  //     console.log("isClicked");
-  //   } else {
-  //     console.log("do something");
-  //     // Do something else with push notification
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   PushNotificationIOS.addEventListener("notification", onRemoteNotification);
-  // });
   const [timePick, setTimePick] = useState({
-    ampm: "오전",
-    hour: "12",
-    min: "00",
+    ampm: alertTime.ampm ? alertTime.ampm : "오전",
+    hour: alertTime.hour ? alertTime.hour : 12,
+    minute: alertTime.minute ? alertTime.minute : 0,
   });
+  const { ampm, hour, minute } = timePick;
 
-  const handleGoToNext = () => {
+  let nextHour;
+
+  const handleGoToNext = async () => {
+    PushNotification.cancelAllLocalNotifications();
+    nextHour = new Date();
+    nextHour.setDate(nextHour.getDate() + 1);
+    if (ampm === "오후") {
+      nextHour.setHours(hour + 12, minute, 0);
+    }
+    if (ampm === "오전") {
+      nextHour.setHours(hour, minute, 0);
+    }
+
+    handleChangeState();
     alertTimeVar({
       ...timePick,
     });
+    // AppState.addEventListener("change", handleChangeState);
+    // return () => AppState.removeEventListener("change", handleChangeState);
     // todo: 푸쉬 알람 허용 및 시간 설정
     navigation.goBack();
+  };
+
+  const handleChangeState = () => {
+    PushNotification.localNotificationSchedule({
+      channelId: "default",
+      message: "My Notification Message",
+      date: nextHour,
+      allowWhileIdle: true,
+      repeatType: "day",
+    });
   };
 
   const handleAfterSetting = () => {
@@ -56,17 +60,16 @@ const AlertSetting = ({ navigation }) => {
   const handleHourChange = (text) => {
     setTimePick({
       ...timePick,
-      hour: text.replace(/[^0-9]/g, ""),
+      hour: Number(text.replace(/[^0-9]/g, "")),
     });
   };
   const handleMinChange = (text) => {
     setTimePick({
       ...timePick,
-      min: text.replace(/[^0-9]/g, ""),
+      minute: Number(text.replace(/[^0-9]/g, "")),
     });
   };
 
-  const { ampm, hour, min } = timePick;
   return (
     <KeyboardAvoidingView
       style={{
@@ -118,7 +121,7 @@ const AlertSetting = ({ navigation }) => {
               onChangeText={(text) => handleHourChange(text)}
               keyboardType="numeric"
             >
-              12
+              {hour}
             </TextInput>
             <Text>:</Text>
             <TextInput
@@ -127,7 +130,7 @@ const AlertSetting = ({ navigation }) => {
               keyboardType="numeric"
               style={{ color: coachColor.color.main }}
             >
-              00
+              {minute}
             </TextInput>
           </TimeWrap>
         </TimePickerWrap>
@@ -137,8 +140,8 @@ const AlertSetting = ({ navigation }) => {
             disabled={
               Number(hour) > 12 ||
               Number(hour) < 0 ||
-              Number(min) > 59 ||
-              Number(min) < 0
+              Number(minute) > 59 ||
+              Number(minute) < 0
             }
             btnBackColor={coachColor.color.main}
           >

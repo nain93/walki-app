@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useRef, useCallback } from "react"
+import React from "react";
+import { View, Text } from "react-native";
 
-import { StyleSheet, Text, View } from "react-native"
-
-export default function ranking() {
+const Ranking = () => {
   return (
     <View>
-      <Text>...</Text>
+      <Text>Ranking</Text>
     </View>
-  )
-}
+  );
+};
+
+export default Ranking;

@@ -42,7 +42,7 @@ const KakaoLoginButton = ({ navigation }) => {
     onCompleted,
   });
 
-  const [signUpMutation] = useMutation(SIGN_UP_MUTATION, {
+  const [signUpMutation, data] = useMutation(SIGN_UP_MUTATION, {
     onError: (error) => {
       if (error.message.includes("이미 가입된 유저")) {
         // * 가입된 유저가 로그인화면 접근했을때 에러 처리 로직
@@ -54,7 +54,6 @@ const KakaoLoginButton = ({ navigation }) => {
   const handleKakaoLogin = async () => {
     const token = await login();
     const { accessToken } = token;
-    console.log(accessToken, "accessToken");
     signUpMutation({
       variables: {
         social: "KAKAO",
