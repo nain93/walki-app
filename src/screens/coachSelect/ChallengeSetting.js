@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import styled from "styled-components"
 import LongButton from "../../components/LongButton"
@@ -22,8 +22,11 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
       walkingNum: 200,
     },
   })
-  const inputWatch = watch("walkingNum")
 
+  const [status, setStatus] = useState("")
+  const inputWatch = watch("walkingNum")
+  // const walkStatus = walk
+  // const coachStatus = coachColorVar().coach
   const handleGoToNext = () => {
     if (inputWatch < 200) {
       return
@@ -41,6 +44,7 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
       }
     }
   `
+  const []
   const [putChallengeMutation, { data }] = useMutation(PUT_CHALLENGE, {
     onCompleted: data => {
       console.log(data, "data")
@@ -69,6 +73,7 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
     //     stepGoal: inputWatch,
     //   },
     // })
+    // coachStatus.concat(walkStatus)
   }
 
   return (
@@ -101,6 +106,7 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
           <LongButton
             handleGoToNext={handleSubmit(handleGoToNext)}
             disabled={inputWatch < 200}
+            // characterStatus={setStatus("walk")}
             btnBackColor={coachColorVar()?.color?.main}>
             저장
           </LongButton>

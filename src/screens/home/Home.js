@@ -19,6 +19,8 @@ import BlurOverlay, {
   openOverlay,
 } from "react-native-blur-overlay"
 
+import { request, PERMISSIONS, check } from "react-native-permissions"
+
 const Home = ({ navigation }) => {
   const [state, setState] = useState([])
   const [cateState, setCateState] = useState([])
@@ -29,6 +31,31 @@ const Home = ({ navigation }) => {
     condition: "맑음",
   })
 
+  const getSteps = () => {
+    Pedometer.watchStepCount(result =>
+      setSteps(steps => ({
+        ...steps,
+        currentStepCount: result.steps,
+      }))
+    )
+  }
+  const [steps, setSteps] = useState({
+    isPedometerAvailable: "checking",
+    pastStepCount: 0,
+    currentStepCount: 0,
+  })
+
+  useEffect(() => {
+    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then(granted => {
+      if (granted) {
+        console.log(granted)
+        getSteps()
+      }
+    })
+  }, [])
+
+  const { currentStepCount, isPedometerAvailable } = steps
+
   const Location = "강남구"
   const percentage = 66
   const color = coachColorVar().color.main
@@ -37,11 +64,11 @@ const Home = ({ navigation }) => {
   const [currentTime, setcurrentTime] = useState("")
 
   useEffect(() => {
-    var date = new Date().getDate()
-    var month = new Date().getMonth() + 1
-    var hours = new Date().getHours()
-    var min = new Date().getMinutes()
-
+    let date = new Date().getDate()
+    let month = new Date().getMonth() + 1
+    let hours = new Date().getHours()
+    let min = new Date().getMinutes()
+    console.log(hours)
     setcurrentDate(month + "월" + " " + date + "일")
     setcurrentTime(hours + ":" + min + "PM")
     setTimeout(() => {
@@ -74,7 +101,8 @@ const Home = ({ navigation }) => {
             alignItems: "center",
             marginLeft: 45,
           }}>
-          0{"\n"}
+          {currentStepCount}
+          {"\n"}
         </Text>
 
         <Text>{"\n"}목표를 설정해 주세요</Text>
