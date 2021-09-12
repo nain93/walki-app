@@ -18,6 +18,7 @@ const DeleteUser = ({ handleDeleteModal, deleteModalOpen, navigation }) => {
   const handleOkayBtn = async () => {
     deleteUserMutation();
     await logUserOut();
+    handleDeleteModal();
     navigation.reset({ routes: [{ name: "OnBoarding" }] });
   };
 
