@@ -44,7 +44,7 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
       }
     }
   `
-  const []
+
   const [putChallengeMutation, { data }] = useMutation(PUT_CHALLENGE, {
     onCompleted: data => {
       console.log(data, "data")
