@@ -51,6 +51,7 @@ const SettingBox = styled.TouchableOpacity`
   border-bottom-color: ${theme.grayScale.gray7};
   height: 60px;
   align-items: center;
+  flex: 1;
   padding: 0 10px;
 `;
 

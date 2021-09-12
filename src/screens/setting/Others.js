@@ -48,7 +48,8 @@ const SettingBox = styled.TouchableOpacity`
   border-bottom-width: 1px;
   border-bottom-color: ${theme.grayScale.gray7};
   align-items: center;
-  padding: 20px 10px;
+  flex: 1;
+  padding: 0 10px;
 `;
 
 const SettingText = styled(Body1Text)``;
