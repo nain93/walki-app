@@ -6,23 +6,53 @@ import { theme } from "../../styles/theme";
 import { alertTimeVar, coachColorVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import LongButton from "../../components/LongButton";
-
 import PushNotification from "react-native-push-notification";
+
+PushNotification.configure({
+  onRegister: function (token) {
+    // console.log("TOKEN:", token);
+  },
+
+  onNotification: function (notification) {
+    console.log("NOTIFICATION:", notification);
+
+    // notification.finish(PushNotificationIOS.FetchResult.NoData);
+  },
+
+  onAction: function (notification) {
+    console.log("ACTION:", notification.action);
+    console.log("NOTIFICATION:", notification);
+  },
+
+  onRegistrationError: function (err) {
+    console.error(err.message, err);
+  },
+
+  permissions: {
+    alert: true,
+    badge: true,
+    sound: true,
+  },
+
+  popInitialNotification: true,
+
+  requestPermissions: true,
+});
 
 const AlertSetting = ({ navigation }) => {
   const coachColor = useReactiveVar(coachColorVar);
   const alertTime = useReactiveVar(alertTimeVar);
 
   const [timePick, setTimePick] = useState({
-    ampm: alertTime.ampm ? alertTime.ampm : "오전",
-    hour: alertTime.hour ? alertTime.hour : 12,
-    minute: alertTime.minute ? alertTime.minute : 0,
+    ampm: "오전",
+    hour: 12,
+    minute: 0,
   });
   const { ampm, hour, minute } = timePick;
 
-  let nextHour;
-
   const handleGoToNext = async () => {
+    let nextHour;
+    PushNotification.setApplicationIconBadgeNumber(0);
     PushNotification.cancelAllLocalNotifications();
     nextHour = new Date();
     nextHour.setDate(nextHour.getDate() + 1);
@@ -33,7 +63,7 @@ const AlertSetting = ({ navigation }) => {
       nextHour.setHours(hour, minute, 0);
     }
 
-    handleChangeState();
+    handleChangeState(nextHour);
     alertTimeVar({
       ...timePick,
     });
@@ -43,9 +73,11 @@ const AlertSetting = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const handleChangeState = () => {
+  const handleChangeState = (nextHour) => {
+    console.log(new Date(Date.now()), "nextHour");
     PushNotification.localNotificationSchedule({
       channelId: "default",
+      title: "My Title",
       message: "My Notification Message",
       date: nextHour,
       allowWhileIdle: true,
@@ -60,13 +92,13 @@ const AlertSetting = ({ navigation }) => {
   const handleHourChange = (text) => {
     setTimePick({
       ...timePick,
-      hour: Number(text.replace(/[^0-9]/g, "")),
+      hour: Number(text.replace(/[^0-9]/g, "")), // todo 숫자만
     });
   };
   const handleMinChange = (text) => {
     setTimePick({
       ...timePick,
-      minute: Number(text.replace(/[^0-9]/g, "")),
+      minute: Number(text.replace(/[^0-9]/g, "")), // todo 숫자만
     });
   };
 
@@ -117,21 +149,20 @@ const AlertSetting = ({ navigation }) => {
           </AmPmWrap>
           <TimeWrap coachColor={coachColor}>
             <TextInput
+              defaultValue="12"
+              style={{ color: theme.grayScale.black }}
               maxLength={2}
               onChangeText={(text) => handleHourChange(text)}
               keyboardType="numeric"
-            >
-              {hour}
-            </TextInput>
+            />
             <Text>:</Text>
             <TextInput
+              defaultValue="00"
+              style={{ color: coachColor.color.main }}
               maxLength={2}
               onChangeText={(text) => handleMinChange(text)}
               keyboardType="numeric"
-              style={{ color: coachColor.color.main }}
-            >
-              {minute}
-            </TextInput>
+            />
           </TimeWrap>
         </TimePickerWrap>
         <View>
