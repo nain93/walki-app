@@ -68,7 +68,7 @@ const toki = {
   coach: "toki",
   color: {
     main: "#f22764",
-    sub: "#f8638b",
+    sub: "#f750a0",
     character: {
       main: "#f2aacb",
       sub: "#ffcfe5",

@@ -22,7 +22,11 @@ const Setting = ({ navigation }) => {
         />
         <SettingText>응원 알림 설정</SettingText>
         <AlertSettingText coachColor={coachColor}>
-          {ampm ? `${ampm} ${hour}:${minute}` : "설정"}
+          {ampm
+            ? `${ampm} ${hour < 10 ? `0${hour}` : hour}:${
+                minute < 10 ? `0${minute}` : minute
+              }`
+            : "설정"}
         </AlertSettingText>
       </SettingBox>
       <SettingBox onPress={() => navigation.navigate("AppSetting")}>

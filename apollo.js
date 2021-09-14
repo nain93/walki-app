@@ -3,12 +3,12 @@ import {
   createHttpLink,
   InMemoryCache,
   makeVar,
-} from "@apollo/client"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { setContext } from "@apollo/client/link/context"
+} from "@apollo/client";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setContext } from "@apollo/client/link/context";
 
-export const isLoggedInVar = makeVar(false)
-export const tokenVar = makeVar("")
+export const isLoggedInVar = makeVar(false);
+export const tokenVar = makeVar("");
 export const coachColorVar = makeVar({
   coach: "",
   color: {
@@ -27,41 +27,41 @@ export const coachColorVar = makeVar({
       disable: "",
     },
   },
-})
+});
 export const userNameVar = makeVar({
   name: "",
   profileImage: "",
-})
+});
 export const alertTimeVar = makeVar({
   ampm: "",
   hour: 0,
   minute: 0,
-})
+});
 
 export const stepVar = makeVar({
   step: "",
-})
+});
 
-const TOKEN = "token"
+const TOKEN = "token";
 
-export const logUserIn = async token => {
-  await AsyncStorage.setItem(TOKEN, token)
-  isLoggedInVar(true)
-  tokenVar(token)
-}
+export const logUserIn = async (token) => {
+  await AsyncStorage.setItem(TOKEN, token);
+  isLoggedInVar(true);
+  tokenVar(token);
+};
 
 export const logUserOut = async () => {
-  await AsyncStorage.removeItem(TOKEN)
-  isLoggedInVar(false)
-  userNameVar({})
-  tokenVar("")
-}
+  await AsyncStorage.removeItem(TOKEN);
+  isLoggedInVar(false);
+  userNameVar({});
+  tokenVar("");
+};
 
-export const ChallengeStart = stepVar({})
+export const ChallengeStart = stepVar({});
 
 const httpLink = createHttpLink({
   uri: "http://api-walki-dev.ap-northeast-2.elasticbeanstalk.com/graphql",
-})
+});
 
 const authLink = setContext((_, { headers }) => {
   return {
@@ -69,12 +69,12 @@ const authLink = setContext((_, { headers }) => {
       ...headers,
       Authorization: `Bearer ${tokenVar()}`,
     },
-  }
-})
+  };
+});
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-})
+});
 
-export default client
+export default client;
