@@ -31,11 +31,13 @@ yarn start 이후
 
 #### iOS (맥에서만 가능)
 
-npx pod install
+yarn
+npx pod-install
 yarn ios
 
 #### Android
 
+yarn
 yarn android
 
 이후 에뮬레이터나 usb 연결 후 테스트 할 수 있습니다

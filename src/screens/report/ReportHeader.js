@@ -1,35 +1,68 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import styled from "styled-components";
 import { coachColorVar } from "../../../apollo";
 import { Body1Text, Caption, theme } from "../../styles/theme";
 import * as Progress from "react-native-progress";
 
 const ReportHeader = () => {
-  const coachColor = coachColorVar();
   return (
-    <Container coachColor={coachColor.color.sub}>
+    <Container coachColor={coachColorVar().color.report}>
       <Body1Text style={{ color: "white" }}>
-        이번달도 {coachColor.coach === "toki" ? "토키" : "부키"}와 함께 목표를
-        이뤄봐요!
+        이번달도 {coachColorVar().coach === "toki" ? "토키" : "부키"}와 함께
+        목표를 이뤄봐요!
       </Body1Text>
       <ReportInfoWrap>
         <View>
           <ReportInfo>
             <ReportText>걸음수</ReportText>
-            <ReportNum style={{ color: "#ffed4b" }}>
-              90,000 / 300,000 걸음
-            </ReportNum>
+            <CationView style={{ color: "#ffed4b" }}>
+              <ReportNum style={{ color: "#ffed4b" }}>
+                90,000 / 300,000
+              </ReportNum>
+              <Caption> 걸음</Caption>
+            </CationView>
           </ReportInfo>
           <ReportInfo>
             <ReportText>달성률</ReportText>
-            <ReportNum style={{ color: "#a2d8ff" }}>70 / 100 % </ReportNum>
+            <CationView
+              style={{
+                color: coachColorVar().coach === "toki" ? "#a2d8ff" : "#C8E8FF",
+              }}
+            >
+              <ReportNum
+                style={{
+                  color:
+                    coachColorVar().coach === "toki" ? "#a2d8ff" : "#C8E8FF",
+                }}
+              >
+                70 / 100
+              </ReportNum>
+              <Caption> %</Caption>
+            </CationView>
           </ReportInfo>
           <ReportInfo>
             <ReportText>달성일 수</ReportText>
-            <ReportNum style={{ color: theme.booki.color.main }}>
-              15 / 20 일
-            </ReportNum>
+            <CationView
+              style={{
+                color:
+                  coachColorVar().coach === "toki"
+                    ? theme.booki.color.main
+                    : theme.toki.color.main,
+              }}
+            >
+              <ReportNum
+                style={{
+                  color:
+                    coachColorVar().coach === "toki"
+                      ? theme.booki.color.main
+                      : theme.toki.color.main,
+                }}
+              >
+                15 / 20
+              </ReportNum>
+              <Caption> 일</Caption>
+            </CationView>
           </ReportInfo>
         </View>
         <View
@@ -47,7 +80,7 @@ const ReportHeader = () => {
             progress={0.3}
             borderWidth={0}
             thickness={13}
-            color={"#ffed4b"}
+            color={"#FFED4B"}
             unfilledColor={"rgba(255,255,255,0.1)"}
           />
           <Progress.Circle
@@ -60,7 +93,7 @@ const ReportHeader = () => {
             progress={0.7}
             borderWidth={0}
             thickness={13}
-            color={"#a2d8ff"}
+            color={"#6BBEFB"}
             unfilledColor={"rgba(255,255,255,0.1)"}
           />
           <Progress.Circle
@@ -73,7 +106,11 @@ const ReportHeader = () => {
             progress={0.6}
             borderWidth={0}
             thickness={13}
-            color={theme.booki.color.main}
+            color={
+              coachColorVar().coach === "toki"
+                ? theme.booki.color.main
+                : theme.toki.color.main
+            }
             unfilledColor={"rgba(255,255,255,0.1)"}
           />
         </View>
@@ -83,19 +120,25 @@ const ReportHeader = () => {
 };
 
 const Container = styled.View`
-  flex: 0.4;
-  padding: 30px;
+  flex: 0.8;
+  padding: 0 30px;
   justify-content: space-around;
   background-color: ${(props) => props.coachColor};
 `;
 
 const ReportInfoWrap = styled.View`
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 `;
 
 const ReportText = styled(Caption)`
   color: ${theme.grayScale.white};
+`;
+
+const CationView = styled(Caption)`
+  flex-direction: row;
+  align-items: center;
 `;
 
 const ReportInfo = styled.View`

@@ -17,13 +17,13 @@ import inactivestar from "../../assets/icons/inactivestar.png";
 import activestar from "../../assets/icons/activestar.png";
 import activemessage from "../../assets/icons/activemessage.png";
 import inactivemessage from "../../assets/icons/inactivemessage.png";
+import setting from "../../assets/icons/setting.png";
+import bookMark from "../../assets/icons/bookmark.png";
 import { theme } from "../styles/theme";
-import { color } from "react-native-reanimated";
 
 const Tabs = createBottomTabNavigator();
 
 const TabNavigator = () => {
-  const coachColor = coachColorVar();
   const tabColor = useReactiveVar(coachColorVar);
   return (
     <Tabs.Navigator
@@ -34,7 +34,6 @@ const TabNavigator = () => {
         tabBarActiveTintColor: tabColor.color.main,
         tabBarInactiveTintColor: theme.grayScale.gray3,
         tabBarStyle: {
-          borderRadius: 16,
           height: 68,
           paddingTop: 10,
           paddingBottom: 10,
@@ -49,7 +48,9 @@ const TabNavigator = () => {
         options={{
           headerTitle: () => null,
           headerLeft: (props) => <LogoTitle {...props} />,
-          headerRight: (props) => <SettingLogoTitle {...props} />,
+          headerRight: (props) => (
+            <SettingLogoTitle settingIcon={bookMark} {...props} />
+          ),
           headerStyle: {
             backgroundColor: "#f3f3f3",
             elevation: 0, // android
@@ -78,9 +79,11 @@ const TabNavigator = () => {
             fontWeight: "700",
           },
           headerLeft: () => null,
-          headerRight: (props) => <SettingLogoTitle {...props} />,
+          headerRight: (props) => (
+            <SettingLogoTitle settingIcon={setting} {...props} />
+          ),
           headerStyle: {
-            backgroundColor: coachColor.color.sub,
+            backgroundColor: coachColorVar().color.report,
             elevation: 0, // android
             shadowOpacity: 0, //ios
           },
@@ -88,7 +91,7 @@ const TabNavigator = () => {
             <Image
               style={{ width: 30, tintColor: color }}
               resizeMode="contain"
-              source={focused ? activestar : inactivestar}
+              source={focused ? activemessage : inactivemessage}
             />
           ),
         }}
@@ -97,11 +100,27 @@ const TabNavigator = () => {
         name="전체랭킹"
         component={Ranking}
         options={{
+          headerTitleAlign: "center",
+          headerTitle: "랭킹",
+          headerTitleStyle: {
+            color: theme.grayScale.white,
+            fontSize: 16,
+            fontWeight: "700",
+          },
+          headerLeft: () => null,
+          headerRight: (props) => (
+            <SettingLogoTitle settingIcon={setting} {...props} />
+          ),
+          headerStyle: {
+            backgroundColor: coachColorVar().color.report,
+            elevation: 0, // android
+            shadowOpacity: 0, //ios
+          },
           tabBarIcon: ({ color, focused }) => (
             <Image
               style={{ width: 30, tintColor: color }}
               resizeMode="contain"
-              source={focused ? activemessage : inactivemessage}
+              source={focused ? activestar : inactivestar}
             />
           ),
         }}

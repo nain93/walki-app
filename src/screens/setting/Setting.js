@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import notification from "../../../assets/icons/notification.png";
-import setting from "../../../assets/icons/setting.png";
+import bookMark from "../../../assets/icons/bookmark.png";
 import document from "../../../assets/icons/document.png";
 import { Body1Text, theme } from "../../styles/theme";
 import { alertTimeVar, coachColorVar } from "../../../apollo";
@@ -30,7 +30,7 @@ const Setting = ({ navigation }) => {
         </AlertSettingText>
       </SettingBox>
       <SettingBox onPress={() => navigation.navigate("AppSetting")}>
-        <SettingImg source={setting} resizeMode="contain" />
+        <SettingImg source={bookMark} resizeMode="contain" />
         <SettingText>앱 설정</SettingText>
       </SettingBox>
       <SettingBox
