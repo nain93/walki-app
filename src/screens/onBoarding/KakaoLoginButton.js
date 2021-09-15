@@ -1,7 +1,12 @@
 import React from "react";
-import { Image, ActivityIndicator, Text, View } from "react-native";
+import {
+  Image,
+  ActivityIndicator,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import styled from "styled-components";
-import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
 import {
   KakaoOAuthToken,
   KakaoProfile,
@@ -10,10 +15,10 @@ import {
   logout,
   unlink,
 } from "@react-native-seoul/kakao-login";
+import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
 import { Caption, H4Text, theme } from "../../styles/theme";
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { logUserIn } from "../../../apollo";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const KakaoLoginButton = ({ navigation }) => {
   const SIGN_UP_MUTATION = gql`
@@ -38,7 +43,7 @@ const KakaoLoginButton = ({ navigation }) => {
     }
   };
 
-  const [signInQuery, { loading }] = useQuery(SIGN_IN_QUERY, {
+  const [signInQuery, { loading }] = useLazyQuery(SIGN_IN_QUERY, {
     onCompleted,
   });
 
@@ -54,13 +59,13 @@ const KakaoLoginButton = ({ navigation }) => {
   const handleKakaoLogin = async () => {
     const token = await login();
     const { accessToken } = token;
-    await signUpMutation({
+    signUpMutation({
       variables: {
         social: "KAKAO",
         token: accessToken,
       },
     });
-    await signInQuery({
+    signInQuery({
       variables: {
         social: "KAKAO",
         token: accessToken,

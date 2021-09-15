@@ -26,12 +26,15 @@ const Profile = ({ navigation }) => {
 
   const { data, loading, error } = useQuery(GET_MEMBER, {
     onCompleted,
+    onError: (e) => {
+      console.log(e);
+    },
   });
   const { name, profileImage } = userName;
-  const coachColor = useReactiveVar(coachColorVar);
 
   return (
     <Container>
+      {console.log(name, profileImage)}
       <ProfileImg
         source={
           profileImage
@@ -55,7 +58,7 @@ const Profile = ({ navigation }) => {
             })
           }
         >
-          <ChangeText coachColor={coachColor}>변경</ChangeText>
+          <ChangeText coachColor={coachColorVar().color.main}>변경</ChangeText>
         </NameChange>
       </NameInputBox>
     </Container>
@@ -102,7 +105,7 @@ const NameChange = styled.TouchableOpacity`
 `;
 
 const ChangeText = styled(Body1Text)`
-  color: ${(props) => props.coachColor.color.main};
+  color: ${(props) => props.coachColor};
 `;
 
 export default Profile;

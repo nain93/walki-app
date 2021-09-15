@@ -23,7 +23,6 @@ import OpenSource from "../screens/setting/OpenSource";
 import Service from "../screens/terms/Service";
 import Info from "../screens/terms/Info";
 import TermsCheck from "../screens/terms/TermsCheck";
-import Permission from "../common/Permission";
 import CloseIcon from "../components/CloseIcon";
 
 const TransitionScreenOptions = {
@@ -170,7 +169,7 @@ const GlobalNav = () => {
         {/* 이용약관 */}
         <Stack.Screen
           name="TermsCheck"
-          options={({ navigation }) => ({
+          options={{
             headerTitleAlign: "center",
             title: "약관확인",
             headerLeft: () => null,
@@ -180,7 +179,7 @@ const GlobalNav = () => {
               elevation: 0, // android
               shadowOpacity: 0, //ios
             },
-          })}
+          }}
           component={TermsCheck}
         />
         <Stack.Screen

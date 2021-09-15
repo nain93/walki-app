@@ -14,6 +14,7 @@ export const coachColorVar = makeVar({
   color: {
     main: "",
     sub: "",
+    report: "",
     character: {
       main: "",
       sub: "",

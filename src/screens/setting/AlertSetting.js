@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { View, Text, TextInput, KeyboardAvoidingView } from "react-native";
 import styled from "styled-components";
 import HeaderForm from "../../components/HeaderForm";
@@ -48,6 +48,12 @@ const AlertSetting = ({ navigation }) => {
     hour: 12,
     minute: 0,
   });
+  const InputRef = useRef();
+
+  useEffect(() => {
+    InputRef?.current?.focus();
+  }, []);
+
   const { ampm, hour, minute } = timePick;
 
   const handleGoToNext = async () => {
@@ -74,7 +80,6 @@ const AlertSetting = ({ navigation }) => {
   };
 
   const handleChangeState = (nextHour) => {
-    console.log(new Date(Date.now()), "nextHour");
     PushNotification.localNotificationSchedule({
       channelId: "default",
       title: "My Title",
@@ -149,6 +154,7 @@ const AlertSetting = ({ navigation }) => {
           </AmPmWrap>
           <TimeWrap coachColor={coachColor}>
             <TextInput
+              ref={InputRef}
               defaultValue="12"
               style={{ color: theme.grayScale.black }}
               maxLength={2}
