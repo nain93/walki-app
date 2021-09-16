@@ -34,7 +34,6 @@ const Profile = ({ navigation }) => {
 
   return (
     <Container>
-      {console.log(name, profileImage)}
       <ProfileImg
         source={
           profileImage
