@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FlatList, Image, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { coachColorVar, userNameVar } from "../../../apollo";
@@ -7,10 +7,6 @@ import ClickedItem from "./reportItems/ClickedItem";
 import AddItem from "./reportItems/AddItem";
 import { useQuery, gql, useReactiveVar } from "@apollo/client";
 import info from "../../../assets/icons/info.png";
-import {
-  KakaoProfile,
-  getProfile as getKakaoProfile,
-} from "@react-native-seoul/kakao-login";
 
 const DATA = [
   {
@@ -124,7 +120,7 @@ const ReportMain = () => {
       }
     }
   `;
-  const { data } = useQuery(GET_REPORT, {
+  const {} = useQuery(GET_REPORT, {
     variables: {
       yearMonth: {
         year: 2021,
@@ -139,17 +135,33 @@ const ReportMain = () => {
     },
   });
 
+  const GET_MEMBER = gql`
+    query getMember {
+      getMember {
+        name
+        profileImage
+      }
+    }
+  `;
+  const onCompleted = (data) => {
+    const { getMember } = data;
+    userNameVar({
+      ...getMember,
+    });
+  };
+
+  const {} = useQuery(GET_MEMBER, {
+    onCompleted,
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
+  const userName = useReactiveVar(userNameVar);
+
   const editedUserName = useReactiveVar(userNameVar);
-  const [userName, setUserName] = useState("");
   const [selectedId, setSelectedId] = useState([]);
 
-  useEffect(() => {
-    const getProfile = async () => {
-      const profile = await getKakaoProfile();
-      setUserName(profile.nickname);
-    };
-    getProfile();
-  }, []);
   const handleItemClick = (index) => {
     // const res = DATA.map((item) => ({
     //   ...item,
@@ -187,7 +199,7 @@ const ReportMain = () => {
     <Container>
       <NameTitle>
         <Text style={{ color: coachColorVar().color.sub }}>
-          {editedUserName.name ? editedUserName.name : userName}
+          {userName.name}
         </Text>
         <Text> 님의 데일리 챌린지 히스토리</Text>
         <TouchableOpacity>
