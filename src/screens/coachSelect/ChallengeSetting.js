@@ -32,7 +32,7 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
       return
     }
     swiperRef?.current.goToNext()
-    navigation.navigate("TabNavigator")
+    navigation.navigate("HomeWalking")
   }
 
   const PUT_CHALLENGE = gql`
