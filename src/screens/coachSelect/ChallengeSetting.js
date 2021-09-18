@@ -22,6 +22,14 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
       walkingNum: 200,
     },
   })
+  function getToday() {
+    let date = new Date()
+    let year = date.getFullYear()
+    let month = ("0" + (1 + date.getMonth())).slice(-2)
+    let day = ("0" + date.getDate()).slice(-2)
+
+    return year + "-" + month + "-" + day
+  }
 
   const [status, setStatus] = useState("")
   const inputWatch = watch("walkingNum")
@@ -51,17 +59,15 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
     },
   })
 
-  useEffect(() => {
-    putChallengeMutation({
-      variables: {
-        challenge: {
-          step: 100,
-          stepGoal: 200,
-          challengeDate: "2021-02-11",
-        },
+  putChallengeMutation({
+    variables: {
+      challenge: {
+        step: 100,
+        stepGoal: 200,
+        challengeDate: getToday(),
       },
-    })
-  }, [])
+    },
+  })
 
   const defaultWalking = () => {
     //  hometabbutton > 색 black으로, 문자 오늘은 그말할래요로..Longbutton 어떡하지..?
@@ -98,7 +104,9 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
         </InputBox>
         <LongBox>
           <LongButton
-            handleGoToNext={handleSubmit(handleGoToNext)}
+            handleGoToNext={
+              (handleSubmit(handleGoToNext), putChallengeMutation())
+            }
             disabled={inputWatch < 200}
             // characterStatus={setStatus("walk")}
             btnBackColor={coachColorVar()?.color?.main}>
