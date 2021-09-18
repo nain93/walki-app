@@ -1,10 +1,10 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import styled from "styled-components";
-import setting from "../../assets/icons/setting.png";
+
 import { useNavigation } from "@react-navigation/native";
 
-const SettingLogoTitle = () => {
+const SettingLogoTitle = ({ settingIcon }) => {
   const navigation = useNavigation();
   const handleGoSetting = () => {
     navigation.navigate("SettingScreen");
@@ -12,7 +12,7 @@ const SettingLogoTitle = () => {
 
   return (
     <TouchableOpacity onPress={handleGoSetting}>
-      <SettingLogo source={setting} resizeMode="contain" />
+      <SettingLogo source={settingIcon} resizeMode="contain" />
     </TouchableOpacity>
   );
 };

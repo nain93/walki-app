@@ -16,6 +16,7 @@ import LongButton from "../../components/LongButton";
 import { coachColorVar } from "../../../apollo";
 
 import { request, PERMISSIONS, check } from "react-native-permissions";
+import { Pedometer } from "expo-sensors";
 
 const Home = ({ navigation }) => {
   const [state, setState] = useState([]);
@@ -214,6 +215,7 @@ const Container = styled.SafeAreaView`
   align-items: center;
   width: 100%;
   height: 100%;
+  background-color: #f3f3f3;
 `;
 
 const GoalContainer = styled.TouchableOpacity`
