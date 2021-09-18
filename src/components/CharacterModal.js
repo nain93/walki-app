@@ -16,7 +16,15 @@ const CharacterModal = ({
 }) => {
   return (
     <Container>
-      <Modal isVisible={open} style={{ alignItems: "center" }}>
+      <Modal
+        isVisible={open}
+        style={{ alignItems: "center" }}
+        hideModalContentWhileAnimating={true}
+        animationIn="fadeIn"
+        animationOut="fadeOut"
+        onBackButtonPress={handleModal}
+        backdropTransitionOutTiming={0}
+      >
         <ModalContainer tokiImg={tokiImg}>
           {tokiImg ? (
             <Image
