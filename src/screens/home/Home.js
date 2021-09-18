@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import { View, Text, TouchableOpacity } from "react-native"
+import { Animated, TouchableOpacity } from "react-native"
 import styled from "styled-components"
 import * as Location from "expo-location"
 import axios from "axios"
@@ -14,7 +14,7 @@ import { CircularProgress } from "react-native-svg-circular-progress"
 import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme"
 import LongButton from "../../components/LongButton"
 import { coachColorVar } from "../../../apollo"
-
+import { Pedometer } from "expo-sensors"
 import { request, PERMISSIONS, check } from "react-native-permissions"
 
 const Home = ({ navigation }) => {
@@ -41,12 +41,20 @@ const Home = ({ navigation }) => {
     currentStepCount: 0,
   })
 
+  useEffect(() => {
+    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then(granted => {
+      if (granted) {
+        console.log(granted)
+        getSteps()
+      }
+    })
+  }, [])
+
   const { currentStepCount, isPedometerAvailable } = steps
 
   const Location = "강남구"
-  const percentage = 66
+  const percentage = 0
   const color = coachColorVar().color.main
-
   const [currentDate, setcurrentDate] = useState("")
   const [currentTime, setcurrentTime] = useState("")
 
@@ -77,11 +85,31 @@ const Home = ({ navigation }) => {
     navigation.navigate("ChallengeSetting")
   }
 
-  const fadeAnim = useRef(new Animated.Value(0)).current
-  const handlepress = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 5000,
+  const fadetext = useRef(new Animated.Value(0)).current
+  const fadeimage = useRef(new Animated.Value(0.8)).current
+
+  const handlepressup = () => {
+    Animated.timing(fadetext, {
+      toValue: 0.8,
+      duration: 500,
+      useNativeDriver: true,
+    }).start()
+    Animated.timing(fadeimage, {
+      toValue: 0.2,
+      duration: 500,
+      useNativeDriver: true,
+    }).start()
+  }
+  const handlepressdown = () => {
+    Animated.timing(fadetext, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start()
+    Animated.timing(fadeimage, {
+      toValue: 0.8,
+      duration: 500,
+      useNativeDriver: true,
     }).start()
   }
 
@@ -142,6 +170,7 @@ const Home = ({ navigation }) => {
       </TopStatus>
       <MiddleStatus>
         <GoalBox>
+          {/* <MiddleBox onpress={handlepressup}> */}
           <ProgressGoal>
             <CircularProgress
               percentage={percentage}
@@ -149,53 +178,66 @@ const Home = ({ navigation }) => {
               size={300}
               progressWidth={140}>
               <CharacterBox>
-                <CharacetrImage
-                  source={
-                    coachColorVar().coach === "toki"
-                      ? toki_default
-                      : buki_default
-                  }
-                  resizeMode="contain"
-                />
+                <Animated.View style={[{ opacity: fadeimage }]}>
+                  <CharacetrImage
+                    source={
+                      coachColorVar().coach === "toki"
+                        ? toki_default
+                        : buki_default
+                    }
+                    resizeMode="contain"
+                  />
+                </Animated.View>
               </CharacterBox>
-              <BlurgoalBox
-                onpress={handlepress}
-                style={[{ opacity: fadeAnim }]}>
-                <Blurgoal>
-                  {currentStepCount}
-                  {"\n"}
-                </Blurgoal>
-                <GoalText>목표를 설정해주세요</GoalText>
-              </BlurgoalBox>
+              <Animated.View
+                style={[{ opacity: fadetext, position: "absolute" }]}>
+                <BlurgoalBox onpress={handlepressdown => handlepressup}>
+                  <Blurgoal coachColorVar={coachColorVar().color.main}>
+                    {currentStepCount}
+                    {"\n"}
+                  </Blurgoal>
+
+                  <GoalText>목표를 설정해주세요</GoalText>
+                </BlurgoalBox>
+              </Animated.View>
             </CircularProgress>
           </ProgressGoal>
+          {/* </MiddleBox> */}
         </GoalBox>
       </MiddleStatus>
       <CheerText>오늘도 함께 달려봐요!</CheerText>
 
       <BottomStatus>
-        <LongButton handleGoToNext={handleGoToNext} btnBackColor={color}>
+        <LongButton handleGoToNext={handlepressup} btnBackColor={color}>
           오늘의 목표를 세워보세요!
+        </LongButton>
+        <LongButton handleGoToNext={handlepressdown} btnBackColor={color}>
+          test
         </LongButton>
       </BottomStatus>
     </Container>
   )
 }
 
-const BlurgoalBox = styled.TouchableOpacity`
-  height: "100%";
-  width: "100%";
+const MiddleBox = styled.TouchableOpacity`
+  width: 100%;
+  height: 100%;
   justify-content: center;
   align-items: center;
 `
+const BlurgoalBox = styled.TouchableOpacity`
+  height: 10%;
+  width: 100%;
+  align-items: center;
+`
 const Blurgoal = styled.Text`
-  font-size: 25;
+  font-size: 52px;
   font-weight: 700;
-  color: ${coachColorVar().color.main};
+  color: ${props => props.coachColorVar};
 `
 const ProgressGoal = styled(CircularProgress)`
-  width: 292px;
-  height: 292px;
+  width: 2px;
+  height: 2px;
 `
 
 const GoalBox = styled.View`

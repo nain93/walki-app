@@ -63,13 +63,6 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
     })
   }, [])
 
-  const defaultWalking = () => {
-    //  hometabbutton > 색 black으로, 문자 오늘은 그말할래요로..Longbutton 어떡하지..?
-    //  CharacterImage 변경
-    // coachcolorvar.coach (toki_walk, buki_walk)
-    // coachStatus.concat(walkStatus)
-  }
-
   return (
     <>
       <Container>
