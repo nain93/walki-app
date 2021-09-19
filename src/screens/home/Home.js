@@ -221,25 +221,20 @@ const Home = ({ navigation }) => {
   );
 };
 
-const MiddleBox = styled.TouchableOpacity`
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-`;
 const BlurgoalBox = styled.TouchableOpacity`
   height: 10%;
   width: 100%;
   align-items: center;
 `;
+
 const Blurgoal = styled.Text`
-  font-size: 52px;
+  font-size: 25px;
   font-weight: 700;
   color: ${(props) => props.coachColorVar};
 `;
 const ProgressGoal = styled(CircularProgress)`
-  width: 2px;
-  height: 2px;
+  width: 292px;
+  height: 292px;
 `;
 
 const GoalBox = styled.View`
