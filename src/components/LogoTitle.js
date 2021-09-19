@@ -1,12 +1,6 @@
-import React from "react"
-import styled from "styled-components"
-import headerLogo from "../../assets/images/logo.png"
-import Icon from "react-native-vector-icons/Ionicons"
-
-const SettingIcon = styled(Icon)`
-  width: 60%;
-  padding-left: 200px;
-`
+import React from "react";
+import styled from "styled-components";
+import headerLogo from "../../assets/images/logo.png";
 
 function LogoTitle() {
   return <ImageStyle source={headerLogo} resizeMode="contain" />;

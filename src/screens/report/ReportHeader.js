@@ -5,7 +5,13 @@ import { coachColorVar } from "../../../apollo";
 import { Body1Text, Caption, theme } from "../../styles/theme";
 import * as Progress from "react-native-progress";
 
-const ReportHeader = () => {
+const date = new Date();
+const month = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+
+const ReportHeader = ({ stepTotal }) => {
+  const { stepGoal, stepAchievement, challengeGoal, challengeAchievement } =
+    stepTotal;
+
   return (
     <Container coachColor={coachColorVar().color.report}>
       <Body1Text style={{ color: "white" }}>
@@ -18,7 +24,7 @@ const ReportHeader = () => {
             <ReportText>걸음수</ReportText>
             <CationView style={{ color: "#ffed4b" }}>
               <ReportNum style={{ color: "#ffed4b" }}>
-                90,000 / 300,000
+                {stepAchievement} / {stepGoal}
               </ReportNum>
               <Caption> 걸음</Caption>
             </CationView>
@@ -36,7 +42,8 @@ const ReportHeader = () => {
                     coachColorVar().coach === "toki" ? "#a2d8ff" : "#C8E8FF",
                 }}
               >
-                70 / 100
+                {stepAchievement === 0 ? 0 : (stepAchievement * 100) / stepGoal}{" "}
+                / 100
               </ReportNum>
               <Caption> %</Caption>
             </CationView>
@@ -59,7 +66,7 @@ const ReportHeader = () => {
                       : theme.toki.color.main,
                 }}
               >
-                15 / 20
+                {challengeAchievement} / {challengeGoal}
               </ReportNum>
               <Caption> 일</Caption>
             </CationView>
@@ -77,7 +84,11 @@ const ReportHeader = () => {
               width: 120,
             }}
             size={120}
-            progress={0.3}
+            progress={
+              stepAchievement === 0
+                ? 0
+                : (stepAchievement * 100) / stepGoal / 100
+            }
             borderWidth={0}
             thickness={13}
             color={"#FFED4B"}
@@ -90,7 +101,11 @@ const ReportHeader = () => {
               width: 105,
             }}
             size={90}
-            progress={0.7}
+            progress={
+              challengeAchievement === 0
+                ? 0
+                : (challengeAchievement * 100) / month / 100
+            }
             borderWidth={0}
             thickness={13}
             color={"#6BBEFB"}
@@ -103,7 +118,11 @@ const ReportHeader = () => {
               width: 90,
             }}
             size={60}
-            progress={0.6}
+            progress={
+              challengeAchievement === 0
+                ? 0
+                : (challengeAchievement * 100) / challengeGoal / 100
+            }
             borderWidth={0}
             thickness={13}
             color={

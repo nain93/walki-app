@@ -4,7 +4,10 @@ import { coachColorVar } from "../../../../apollo";
 import { ListItem } from "../../../styles/reportTheme";
 import { theme } from "../../../styles/theme";
 
-const Item = ({ day, step, stepGoal, onPress }) => {
+const Item = ({ day, step, stepGoal, onPress, opacity }) => {
+  if (opacity) {
+    return <ListItem />;
+  }
   return (
     <ListItem
       onPress={onPress}

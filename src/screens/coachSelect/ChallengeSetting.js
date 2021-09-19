@@ -8,7 +8,7 @@ import { useReactiveVar } from "@apollo/client";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { stepVar } from "../../../apollo";
 import { KeyboardAvoidingView } from "react-native";
-const ChallengeSetting = ({ swiperRef, navigation }) => {
+const ChallengeSetting = ({ navigation }) => {
   const walkRef = useRef();
   const coachColor = useReactiveVar(coachColorVar);
   const {
@@ -23,19 +23,18 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
       walkingNum: 200,
     },
   });
+  function getToday() {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = ("0" + (1 + date.getMonth())).slice(-2);
+    let day = ("0" + date.getDate()).slice(-2);
 
-  const [status, setStatus] = useState("");
+    return year + "-" + month + "-" + day;
+  }
+
   const inputWatch = watch("walkingNum");
   // const walkStatus = walk
   // const coachStatus = coachColorVar().coach
-  const handleGoToNext = () => {
-    if (inputWatch < 200) {
-      return;
-    }
-    swiperRef?.current.goToNext()
-    navigation.navigate("HomeWalking")
-  }
-
 
   const PUT_CHALLENGE = gql`
     mutation putChallenge($challenge: ChallengeInput) {
@@ -62,6 +61,9 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
   });
 
   const handlePutChallenge = () => {
+    if (inputWatch < 200) {
+      return;
+    }
     putChallengeMutation({
       variables: {
         challenge: {
@@ -71,6 +73,10 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
         },
       },
     });
+    stepVar({
+      step: inputWatch,
+    });
+    navigation.navigate("TabNavigator");
   };
 
   useEffect(() => {
@@ -80,7 +86,6 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
   useEffect(() => {
     register("walkingNum", { required: true });
   }, []);
-
 
   const defaultWalking = () => {
     //  hometabbutton > 색 black으로, 문자 오늘은 그말할래요로..Longbutton 어떡하지..?
@@ -112,7 +117,7 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
             keyboardType="number-pad"
             defaultValue="200"
             onChangeText={(text) => setValue("walkingNum", text)}
-            onSubmitEditing={handleSubmit(handleGoToNext)}
+            onSubmitEditing={handleSubmit(handlePutChallenge)}
             caretHidden={true}
             returnKeyType="next"
           />
@@ -120,11 +125,7 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
         </InputBox>
         <LongBox>
           <LongButton
-            handleGoToNext={() => {
-              handleSubmit(handleGoToNext);
-              handlePutChallenge();
-              navigation.navigate("TabNavigator");
-            }}
+            handleGoToNext={handleSubmit(handlePutChallenge)}
             disabled={inputWatch < 200}
             // characterStatus={setStatus("walk")}
             btnBackColor={coachColorVar()?.color?.main}

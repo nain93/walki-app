@@ -9,7 +9,10 @@ import tokiFail from "../../../../assets/images/report/toki_fail_head.png";
 import bukiGood from "../../../../assets/images/report/buki_good_head.png";
 import bukiFail from "../../../../assets/images/report/buki_fail_head.png";
 
-const ClickedItem = ({ step, stepGoal, onPress }) => {
+const ClickedItem = ({ step, stepGoal, onPress, opacity }) => {
+  if (opacity) {
+    return <ListItem />;
+  }
   return (
     <ListItem
       onPress={onPress}

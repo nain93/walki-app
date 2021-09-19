@@ -66,12 +66,7 @@ const Home = ({ navigation }) => {
     console.log(hours);
     setcurrentDate(month + "월" + " " + date + "일");
     setcurrentTime(hours + ":" + min + "PM");
-    setTimeout(() => {
-      setState();
-      setCateState();
-      getLocation();
-      setReady(false);
-    }, 1000);
+    getLocation();
     request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
       if (granted) {
         console.log(granted);
@@ -137,6 +132,8 @@ const Home = ({ navigation }) => {
       });
     } catch (error) {
       // Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?")
+    } finally {
+      setReady(false);
     }
   };
   return ready ? (
@@ -224,25 +221,20 @@ const Home = ({ navigation }) => {
   );
 };
 
-const MiddleBox = styled.TouchableOpacity`
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-`;
 const BlurgoalBox = styled.TouchableOpacity`
   height: 10%;
   width: 100%;
   align-items: center;
 `;
+
 const Blurgoal = styled.Text`
-  font-size: 52px;
+  font-size: 25px;
   font-weight: 700;
   color: ${(props) => props.coachColorVar};
 `;
 const ProgressGoal = styled(CircularProgress)`
-  width: 2px;
-  height: 2px;
+  width: 292px;
+  height: 292px;
 `;
 
 const GoalBox = styled.View`

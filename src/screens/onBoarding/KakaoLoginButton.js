@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Image,
-  ActivityIndicator,
-  Text,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { Image, ActivityIndicator, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import {
   KakaoOAuthToken,
@@ -39,6 +33,7 @@ const KakaoLoginButton = ({ navigation }) => {
       signIn: { accessToken },
     } = data;
     if (accessToken) {
+      console.log(accessToken, "accessToken");
       logUserIn(accessToken);
     }
   };
