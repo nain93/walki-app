@@ -81,6 +81,12 @@ import com.android.build.OutputFile
 project.ext.react = [
     enableHermes: (findProperty('expo.jsEngine') ?: "jsc") == "hermes",
 ]
+project.ext.envConfigFiles = [
+        debug: ".env",
+        releasestaging: ".env",
+        release: ".env"
+]
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 apply from: "../../node_modules/react-native/react.gradle"
@@ -165,6 +171,10 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+        releaseStaging {
+            initWith release
+            matchingFallbacks = ['release']
         }
     }
 

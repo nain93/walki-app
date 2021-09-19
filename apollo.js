@@ -6,6 +6,7 @@ import {
 } from "@apollo/client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setContext } from "@apollo/client/link/context";
+import Config from "react-native-config";
 
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
@@ -61,7 +62,7 @@ export const logUserOut = async () => {
 export const ChallengeStart = stepVar({});
 
 const httpLink = createHttpLink({
-  uri: "http://api-walki-dev.ap-northeast-2.elasticbeanstalk.com/graphql",
+  uri: Config.BACKEND_URL,
 });
 
 const authLink = setContext((_, { headers }) => {
