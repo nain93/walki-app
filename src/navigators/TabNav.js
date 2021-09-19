@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -20,10 +20,37 @@ import inactivemessage from "../../assets/icons/inactivemessage.png";
 import setting from "../../assets/icons/setting.png";
 import bookMark from "../../assets/icons/bookmark.png";
 import { theme } from "../styles/theme";
+import { Picker } from "@react-native-picker/picker";
 
 const Tabs = createBottomTabNavigator();
+const date = new Date();
+const month = date.getMonth() + 1;
+const year = date.getFullYear();
+
+const Pick = ({ selectedMonth, setSelectedMonth }) => {
+  return (
+    <Picker
+      selectedValue={selectedMonth ? selectedMonth : String(month)}
+      onValueChange={(itemValue, itemIndex) => setSelectedMonth(itemValue)}
+      style={{ height: 50, width: 200, color: "white" }}
+      mode={"dropdown"}
+      dropdownIconColor="white"
+    >
+      <Picker.Item
+        label={`${year}년 ${month - 1}월 리포트`}
+        value={`${month - 1}`}
+      />
+      <Picker.Item label={`${year}년 ${month}월 리포트`} value={`${month}`} />
+      <Picker.Item
+        label={`${year}년 ${month + 1}월 리포트`}
+        value={`${month + 1}`}
+      />
+    </Picker>
+  );
+};
 
 const TabNavigator = () => {
+  const [selectedMonth, setSelectedMonth] = useState(`${month}`);
   const tabColor = useReactiveVar(coachColorVar);
   return (
     <Tabs.Navigator
@@ -69,10 +96,15 @@ const TabNavigator = () => {
       />
       <Tabs.Screen
         name="리포트"
-        component={Report}
+        children={() => <Report selectedMonth={selectedMonth} />}
         options={{
           headerTitleAlign: "center",
-          headerTitle: "2021년 9월 리포트",
+          headerTitle: () => (
+            <Pick
+              selectedMonth={selectedMonth}
+              setSelectedMonth={setSelectedMonth}
+            />
+          ),
           headerTitleStyle: {
             color: theme.grayScale.white,
             fontSize: 16,
