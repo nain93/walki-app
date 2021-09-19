@@ -1,7 +1,12 @@
-import React from "react"
-import { Image, ActivityIndicator, Text, View } from "react-native"
-import styled from "styled-components"
-import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png"
+import React from "react";
+import {
+  Image,
+  ActivityIndicator,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
+import styled from "styled-components";
 import {
   KakaoOAuthToken,
   KakaoProfile,
@@ -9,18 +14,18 @@ import {
   login,
   logout,
   unlink,
-} from "@react-native-seoul/kakao-login"
-import { Caption, H4Text, theme } from "../../styles/theme"
-import { gql, useLazyQuery, useMutation } from "@apollo/client"
-import { logUserIn } from "../../../apollo"
-import { TouchableOpacity } from "react-native-gesture-handler"
+} from "@react-native-seoul/kakao-login";
+import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
+import { Caption, H4Text, theme } from "../../styles/theme";
+import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { logUserIn } from "../../../apollo";
 
 const KakaoLoginButton = ({ navigation }) => {
   const SIGN_UP_MUTATION = gql`
     mutation signUp($social: Social!, $token: String!) {
       signUp(social: $social, token: $token)
     }
-  `
+  `;
 
   const SIGN_IN_QUERY = gql`
     query signIn($social: Social!, $token: String!) {
@@ -28,46 +33,46 @@ const KakaoLoginButton = ({ navigation }) => {
         accessToken
       }
     }
-  `
-  const onCompleted = data => {
+  `;
+  const onCompleted = (data) => {
     const {
       signIn: { accessToken },
-    } = data
+    } = data;
     if (accessToken) {
-      logUserIn(accessToken)
+      logUserIn(accessToken);
     }
-  }
+  };
 
   const [signInQuery, { loading }] = useLazyQuery(SIGN_IN_QUERY, {
     onCompleted,
-  })
+  });
 
   const [signUpMutation, data] = useMutation(SIGN_UP_MUTATION, {
-    onError: error => {
+    onError: (error) => {
       if (error.message.includes("이미 가입된 유저")) {
         // * 가입된 유저가 로그인화면 접근했을때 에러 처리 로직
       }
     },
-  })
+  });
 
   // refreshToken?
   const handleKakaoLogin = async () => {
-    const token = await login()
-    const { accessToken } = token
+    const token = await login();
+    const { accessToken } = token;
     signUpMutation({
       variables: {
         social: "KAKAO",
         token: accessToken,
       },
-    })
+    });
     signInQuery({
       variables: {
         social: "KAKAO",
         token: accessToken,
       },
-    })
-    navigation.reset({ routes: [{ name: "CoachSelect" }] })
-  }
+    });
+    navigation.reset({ routes: [{ name: "CoachSelect" }] });
+  };
 
   return (
     <Container>
@@ -95,13 +100,13 @@ const KakaoLoginButton = ({ navigation }) => {
       </DescWrap>
       <KakaoDesc>그에 동의합니다. </KakaoDesc>
     </Container>
-  )
-}
+  );
+};
 
 const Container = styled.View`
   align-items: center;
   padding: 30px;
-`
+`;
 
 const KakaoButton = styled.TouchableOpacity`
   flex-direction: row;
@@ -111,29 +116,29 @@ const KakaoButton = styled.TouchableOpacity`
   border-radius: 8px;
   width: 100%;
   height: 54px;
-`
+`;
 
 const KakaoText = styled(H4Text)`
   margin-left: 5px;
-`
+`;
 
 const DescWrap = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
   margin-top: 10px;
-`
+`;
 
 const KakaoDesc = styled(Caption)`
   color: ${theme.grayScale.gray4};
   text-align: center;
-`
+`;
 
 const DescBtnText = styled(Caption)`
   color: ${theme.grayScale.gray4};
   text-align: center;
   text-decoration: underline;
   text-decoration-color: ${theme.grayScale.gray4};
-`
+`;
 
-export default KakaoLoginButton
+export default KakaoLoginButton;

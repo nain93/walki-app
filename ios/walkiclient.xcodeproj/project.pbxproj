@@ -7,31 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00C7A39C69124AAABBED713B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 22B143B335334EA0A1124A9D /* Zocial.ttf */; };
-		034494CFA1B54D63A9D43D6C /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 508F7F3DA9164867944EAC61 /* AntDesign.ttf */; };
 		03A076B526DBFCE500656DC4 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A076B426DBFCE500656DC4 /* File.swift */; };
 		03CFEC7326E49A2F00E9EC23 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CFEC7226E49A2F00E9EC23 /* HealthKit.framework */; };
-		0AE81F8C6B6A4E0CB45FC705 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC0E4F3B354F4A16920114F7 /* Entypo.ttf */; };
-		0E3D5575D66E4ECCA44CC3E2 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DFAFCC7F38D4AEBBAF97CF1 /* FontAwesome5_Brands.ttf */; };
-		0F0088FB57B2463A8F0A7976 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 519D7FABDDC84799989CAE7D /* FontAwesome5_Solid.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		16CE17A10F104339B19FA176 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37BF32FF8EDD43D09159E527 /* Octicons.ttf */; };
-		391103C02F564F4EABCA7AE5 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2AFF0E708FB4F338EB358AD /* FontAwesome5_Regular.ttf */; };
 		39F6BF82CB8E0873E4F6D836 /* libPods-walkiclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7026E56DFB02E394EF9409D /* libPods-walkiclient.a */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		3EEDB47A6F4242F3B0819368 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7EA2E0C0BF214BE3AAC4C901 /* MaterialIcons.ttf */; };
-		46A674D87D8947FD8B0F244A /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE153E8D3DEC4E4DA61DCBEE /* Fontisto.ttf */; };
-		4FE845AC679C49A3B1C98642 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5847E609AA044DFA897CDD83 /* MaterialCommunityIcons.ttf */; };
-		5D301837EA044C02B0A25C9A /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23078D3EABD84D20B3A4F13F /* FontAwesome.ttf */; };
-		691D2C9053C04A8598E4164B /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4791D69A3EDA418D8BE3575A /* EvilIcons.ttf */; };
-		79FA794478184B8EAF73C6A4 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F0BA889C47E44FDAFE468CB /* Foundation.ttf */; };
-		B3719AF8299A49B8A5F7D490 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B49712577534B299FE344DD /* Feather.ttf */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		C893856BE89B4F9899F32576 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0DFBB5008274915ACFACE14 /* Ionicons.ttf */; };
-		D85D6B975D1849CCA0DB53F5 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD0CA1D3F066414082B6A95C /* SimpleLineIcons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -201,6 +185,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				B2642E8981636EFB17C3251B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -251,22 +236,6 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				034494CFA1B54D63A9D43D6C /* AntDesign.ttf in Resources */,
-				0AE81F8C6B6A4E0CB45FC705 /* Entypo.ttf in Resources */,
-				691D2C9053C04A8598E4164B /* EvilIcons.ttf in Resources */,
-				B3719AF8299A49B8A5F7D490 /* Feather.ttf in Resources */,
-				5D301837EA044C02B0A25C9A /* FontAwesome.ttf in Resources */,
-				0E3D5575D66E4ECCA44CC3E2 /* FontAwesome5_Brands.ttf in Resources */,
-				391103C02F564F4EABCA7AE5 /* FontAwesome5_Regular.ttf in Resources */,
-				0F0088FB57B2463A8F0A7976 /* FontAwesome5_Solid.ttf in Resources */,
-				46A674D87D8947FD8B0F244A /* Fontisto.ttf in Resources */,
-				79FA794478184B8EAF73C6A4 /* Foundation.ttf in Resources */,
-				C893856BE89B4F9899F32576 /* Ionicons.ttf in Resources */,
-				4FE845AC679C49A3B1C98642 /* MaterialCommunityIcons.ttf in Resources */,
-				3EEDB47A6F4242F3B0819368 /* MaterialIcons.ttf in Resources */,
-				16CE17A10F104339B19FA176 /* Octicons.ttf in Resources */,
-				D85D6B975D1849CCA0DB53F5 /* SimpleLineIcons.ttf in Resources */,
-				00C7A39C69124AAABBED713B /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +276,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B2642E8981636EFB17C3251B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-walkiclient/Pods-walkiclient-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-walkiclient/Pods-walkiclient-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-walkiclient/Pods-walkiclient-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {

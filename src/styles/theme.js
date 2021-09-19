@@ -68,7 +68,8 @@ const toki = {
   coach: "toki",
   color: {
     main: "#f22764",
-    sub: "#f8638b",
+    sub: "#f750a0",
+    report: "#f750a0",
     character: {
       main: "#f2aacb",
       sub: "#ffcfe5",
@@ -89,6 +90,7 @@ const booki = {
   color: {
     main: "#8ad10a",
     sub: "#ade051",
+    report: "#8ad10a",
     character: {
       main: "#b1d66e",
       sub: "#d9edb4",

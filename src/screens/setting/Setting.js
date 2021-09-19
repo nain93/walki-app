@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import notification from "../../../assets/icons/notification.png";
-import setting from "../../../assets/icons/setting.png";
+import bookMark from "../../../assets/icons/bookmark.png";
 import document from "../../../assets/icons/document.png";
 import { Body1Text, theme } from "../../styles/theme";
 import { alertTimeVar, coachColorVar } from "../../../apollo";
@@ -22,11 +22,15 @@ const Setting = ({ navigation }) => {
         />
         <SettingText>응원 알림 설정</SettingText>
         <AlertSettingText coachColor={coachColor}>
-          {ampm ? `${ampm} ${hour}:${minute}` : "설정"}
+          {ampm
+            ? `${ampm} ${hour < 10 ? `0${hour}` : hour}:${
+                minute < 10 ? `0${minute}` : minute
+              }`
+            : "설정"}
         </AlertSettingText>
       </SettingBox>
       <SettingBox onPress={() => navigation.navigate("AppSetting")}>
-        <SettingImg source={setting} resizeMode="contain" />
+        <SettingImg source={bookMark} resizeMode="contain" />
         <SettingText>앱 설정</SettingText>
       </SettingBox>
       <SettingBox

@@ -16,6 +16,7 @@ import { coachColorVar } from "../../../apollo"
 import { Pedometer } from "expo-sensors"
 import { request, PERMISSIONS, check } from "react-native-permissions"
 
+
 const Home = ({ navigation }) => {
   const [state, setState] = useState([])
   const [cateState, setCateState] = useState([])
@@ -268,6 +269,7 @@ const Container = styled.SafeAreaView`
   width: 100%;
   height: 100%;
 `
+
 
 const GoalContainer = styled.TouchableOpacity`
   width: 300px;

@@ -1,15 +1,16 @@
-import React, { useRef, useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import styled from "styled-components"
-import LongButton from "../../components/LongButton"
-import { Body1Text, H1Text, theme } from "../../styles/theme"
-import { coachColorVar } from "../../../apollo"
-import { useReactiveVar } from "@apollo/client"
-import { gql, useLazyQuery, useMutation } from "@apollo/client"
-import { stepVar } from "../../../apollo"
+import React, { useRef, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import styled from "styled-components";
+import LongButton from "../../components/LongButton";
+import { Body1Text, H1Text, theme } from "../../styles/theme";
+import { coachColorVar } from "../../../apollo";
+import { useReactiveVar } from "@apollo/client";
+import { gql, useLazyQuery, useMutation } from "@apollo/client";
+import { stepVar } from "../../../apollo";
+import { KeyboardAvoidingView } from "react-native";
 const ChallengeSetting = ({ swiperRef, navigation }) => {
-  const walkRef = useRef()
-  const coachColor = useReactiveVar(coachColorVar)
+  const walkRef = useRef();
+  const coachColor = useReactiveVar(coachColorVar);
   const {
     register,
     handleSubmit,
@@ -21,19 +22,20 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
     defaultValues: {
       walkingNum: 200,
     },
-  })
+  });
 
-  const [status, setStatus] = useState("")
-  const inputWatch = watch("walkingNum")
+  const [status, setStatus] = useState("");
+  const inputWatch = watch("walkingNum");
   // const walkStatus = walk
   // const coachStatus = coachColorVar().coach
   const handleGoToNext = () => {
     if (inputWatch < 200) {
-      return
+      return;
     }
     swiperRef?.current.goToNext()
     navigation.navigate("HomeWalking")
   }
+
 
   const PUT_CHALLENGE = gql`
     mutation putChallenge($challenge: ChallengeInput) {
@@ -43,28 +45,58 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
         challengeDate
       }
     }
-  `
+  `;
+
+  function getToday() {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = ("0" + (1 + date.getMonth())).slice(-2);
+    let day = ("0" + date.getDate()).slice(-2);
+    return year + "-" + month + "-" + day;
+  }
 
   const [putChallengeMutation, { data }] = useMutation(PUT_CHALLENGE, {
-    onCompleted: data => {
-      console.log(data, "data")
+    onCompleted: (data) => {
+      console.log(data, "data");
     },
-  })
+  });
 
-  useEffect(() => {
+  const handlePutChallenge = () => {
     putChallengeMutation({
       variables: {
         challenge: {
-          step: 100,
-          stepGoal: 200,
-          challengeDate: "2021-02-11",
+          step: 0,
+          stepGoal: inputWatch,
+          challengeDate: getToday(),
         },
       },
-    })
-  }, [])
+    });
+  };
+
+  useEffect(() => {
+    walkRef?.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    register("walkingNum", { required: true });
+  }, []);
+
+
+  const defaultWalking = () => {
+    //  hometabbutton > 색 black으로, 문자 오늘은 그말할래요로..Longbutton 어떡하지..?
+    //  CharacterImage 변경
+    // coachcolorvar.coach (toki_walk, buki_walk)
+    // coachStatus.concat(walkStatus)
+  };
 
   return (
-    <>
+    <KeyboardAvoidingView
+      style={{
+        flex: 1,
+      }}
+      behavior={"height"}
+      keyboardVerticalOffset={100}
+    >
       <Container>
         <TodayChallengeBox>
           <ChallengeText>오늘의 챌린지 세우기</ChallengeText>
@@ -79,29 +111,31 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
             ref={walkRef}
             keyboardType="number-pad"
             defaultValue="200"
-            onChangeText={text => setValue("walkingNum", text)}
+            onChangeText={(text) => setValue("walkingNum", text)}
             onSubmitEditing={handleSubmit(handleGoToNext)}
             caretHidden={true}
             returnKeyType="next"
-            {...register("walkingNum", {
-              required: true,
-            })}
           />
           <WalkiText>걸음</WalkiText>
         </InputBox>
         <LongBox>
           <LongButton
-            handleGoToNext={handleSubmit(handleGoToNext)}
+            handleGoToNext={() => {
+              handleSubmit(handleGoToNext);
+              handlePutChallenge();
+              navigation.navigate("TabNavigator");
+            }}
             disabled={inputWatch < 200}
             // characterStatus={setStatus("walk")}
-            btnBackColor={coachColorVar()?.color?.main}>
+            btnBackColor={coachColorVar()?.color?.main}
+          >
             저장
           </LongButton>
         </LongBox>
       </Container>
-    </>
-  )
-}
+    </KeyboardAvoidingView>
+  );
+};
 
 const InputBox = styled.View`
   width: 100%;
@@ -110,12 +144,12 @@ const InputBox = styled.View`
   flex-direction: row;
   align-items: center;
   margin-bottom: 30px;
-`
+`;
 const LongBox = styled.View`
   width: 80%;
   height: 15%;
   flex-direction: row;
-`
+`;
 
 const TodayChallengeBox = styled.View`
   width: 100%;
@@ -123,28 +157,28 @@ const TodayChallengeBox = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const WalkTextInput = styled.TextInput`
   font-size: 64px;
   font-weight: 700;
   text-align: center;
   width: 50%;
-  border-bottom-color: ${props => props.coachColor.color.main};
+  border-bottom-color: ${(props) => props.coachColor.color.main};
   border-bottom-width: 2px;
   margin-right: 10px;
-`
+`;
 const ChallengeText = styled(H1Text)`
   text-align: center;
   color: ${theme.grayScale.gray1};
-`
+`;
 const WalkiText = styled(Body1Text)`
   text-align: center;
   color: ${theme.TextColor};
-`
+`;
 const Container = styled.SafeAreaView`
   align-items: center;
   width: 100%;
   height: 100%;
-`
-export default ChallengeSetting
+`;
+export default ChallengeSetting;
