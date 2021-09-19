@@ -32,8 +32,10 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
     if (inputWatch < 200) {
       return;
     }
-    swiperRef?.current.goToNext();
-  };
+    swiperRef?.current.goToNext()
+    navigation.navigate("HomeWalking")
+  }
+
 
   const PUT_CHALLENGE = gql`
     mutation putChallenge($challenge: ChallengeInput) {
@@ -78,6 +80,7 @@ const ChallengeSetting = ({ swiperRef, navigation }) => {
   useEffect(() => {
     register("walkingNum", { required: true });
   }, []);
+
 
   const defaultWalking = () => {
     //  hometabbutton > 색 black으로, 문자 오늘은 그말할래요로..Longbutton 어떡하지..?
