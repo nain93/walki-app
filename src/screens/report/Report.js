@@ -5,15 +5,16 @@ import ReportMain from "./ReportMain";
 import { useQuery, gql } from "@apollo/client";
 import Loading from "../../components/Loading";
 import ReportLoading from "./reportItems/ReportLoading";
+import { userNameVar } from "../../../apollo";
 
-const Report = ({ selectedMonth }) => {
+const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [stepTotal, setStepTotal] = useState({
     stepGoal: 0,
     stepAchievement: 0,
     challengeGoal: 0,
     challengeAchievement: 0,
   });
-  const [stepInfo, setStepInfo] = useState([]);
   const GET_REPORT = gql`
     query getReport($yearMonth: YearMonthInput!) {
       getReport(yearMonth: $yearMonth) {
@@ -72,7 +73,30 @@ const Report = ({ selectedMonth }) => {
       console.log(e);
     },
   });
-  if (loading) {
+  const GET_MEMBER = gql`
+    query getMember {
+      getMember {
+        name
+        profileImage
+      }
+    }
+  `;
+  const onCompleted = (data) => {
+    const { getMember } = data;
+    userNameVar({
+      ...getMember,
+    });
+    setIsLoading(false);
+  };
+
+  const {} = useQuery(GET_MEMBER, {
+    onCompleted,
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
+  if (loading || isLoading) {
     return <Loading children={<ReportLoading />} />;
   }
   return (

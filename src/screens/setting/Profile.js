@@ -5,6 +5,7 @@ import noProfileBookiImg from "../../../assets/images/noprofile_booki.png";
 import { Body1Text, Body3Text, theme } from "../../styles/theme";
 import { gql, useQuery, useReactiveVar } from "@apollo/client";
 import { coachColorVar, userNameVar } from "../../../apollo";
+import Loading from "../../components/Loading";
 
 const Profile = ({ navigation }) => {
   const GET_MEMBER = gql`
@@ -24,13 +25,17 @@ const Profile = ({ navigation }) => {
   };
   const userName = useReactiveVar(userNameVar);
 
-  const { data, loading, error } = useQuery(GET_MEMBER, {
+  const { data, loading, error, refetch } = useQuery(GET_MEMBER, {
     onCompleted,
     onError: (e) => {
       console.log(e);
     },
   });
   const { name, profileImage } = userName;
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Container>
@@ -54,6 +59,7 @@ const Profile = ({ navigation }) => {
             navigation.navigate("EditName", {
               name,
               profileImage,
+              refetch,
             })
           }
         >

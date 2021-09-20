@@ -64,15 +64,15 @@ const Home = ({ navigation }) => {
   const [currentTime, setcurrentTime] = useState("")
 
   useEffect(() => {
-    let date = new Date().getDate()
-    let month = new Date().getMonth() + 1
-    let hours = new Date().getHours()
-    let min = new Date().getMinutes()
-    console.log(hours)
-    setcurrentDate(month + "월" + " " + date + "일")
-    setcurrentTime(hours + ":" + min + "PM")
-    getLocation()
-    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then(granted => {
+
+    let date = new Date().getDate();
+    let month = new Date().getMonth() + 1;
+    let hours = new Date().getHours();
+    let min = new Date().getMinutes();
+    setcurrentDate(month + "월" + " " + date + "일");
+    setcurrentTime(hours + ":" + min + "PM");
+    getLocation();
+    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
       if (granted) {
         console.log(granted)
         getSteps()
