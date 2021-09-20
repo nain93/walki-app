@@ -28,7 +28,7 @@ import Permission from "../common/Permission"
 import HomeAfterStop from "../screens/home/HomeAfterStop"
 import HomeCompleted from "../screens/home/HomeCompleted"
 import HomeWalk from "../screens/home/HomeWalk"
-
+import HomeFail from "../screens/home/HomeFail"
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
 }
@@ -240,6 +240,11 @@ const GlobalNav = () => {
           component={ChallengeSetting}
         />
         <Stack.Screen
+          name="TabNavigator"
+          component={TabNavigator}
+          options={{ gestureEnabled: false, headerShown: false }}
+        />
+        <Stack.Screen
           name="HomeAfterStop"
           options={{
             title: "",
@@ -252,6 +257,20 @@ const GlobalNav = () => {
             },
           }}
           component={HomeAfterStop}
+        />
+        <Stack.Screen
+          name="HomeFail"
+          options={{
+            title: "",
+            headerLeft: () => null,
+            headerRight: props => <CloseIcon {...props} />,
+            headerStyle: {
+              backgroundColor: theme.grayScale.white,
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          }}
+          component={HomeFail}
         />
         <Stack.Screen
           name="HomeCompleted"
@@ -280,11 +299,6 @@ const GlobalNav = () => {
             },
           }}
           component={HomeWalk}
-        />
-        <Stack.Screen
-          name="TabNavigator"
-          component={TabNavigator}
-          options={{ gestureEnabled: false, headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

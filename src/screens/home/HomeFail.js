@@ -7,16 +7,17 @@ import Loading from "../../components/Loading"
 import WeatherLogo from "../../../assets/icons/sun.png"
 import SpaceLogo from "../../../assets/icons/bar.png"
 
-import toki_hi from "../../../assets/images/character/toki_hi.png"
-import buki_hi from "../../../assets/images/character/buki.png"
+import toki_fail from "../../../assets/images/character/toki_fail.png"
+import buki_fail from "../../../assets/images/character/buki_fail.png"
 import { CircularProgress } from "react-native-svg-circular-progress"
 import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme"
 import LongButton from "../../components/LongButton"
 import { coachColorVar } from "../../../apollo"
 import { Pedometer } from "expo-sensors"
 import { request, PERMISSIONS, check } from "react-native-permissions"
+import UserFail from "./Others/UserFail"
 
-const HomeAfterStop = ({ navigation }) => {
+const HomeFail = ({ navigation }) => {
   const [state, setState] = useState([])
   const [cateState, setCateState] = useState([])
   const [ready, setReady] = useState(true)
@@ -25,7 +26,10 @@ const HomeAfterStop = ({ navigation }) => {
     temp: 1,
     condition: "맑음",
   })
-
+  const [FailModalOpen, setFailModalOpen] = useState(false)
+  const handleFailModal = () => {
+    setFailModalOpen(!FailModalOpen)
+  }
   const getSteps = () => {
     Pedometer.watchStepCount(result =>
       setSteps(steps => ({
@@ -181,7 +185,7 @@ const HomeAfterStop = ({ navigation }) => {
                 <Animated.View style={[{ opacity: fadeimage }]}>
                   <CharacetrImage
                     source={
-                      coachColorVar().coach === "toki" ? toki_hi : buki_hi
+                      coachColorVar().coach === "toki" ? toki_fail : buki_fail
                     }
                     resizeMode="contain"
                   />
@@ -203,14 +207,19 @@ const HomeAfterStop = ({ navigation }) => {
           {/* </MiddleBox> */}
         </GoalBox>
       </MiddleStatus>
-      <CheerText>우리 내일은 더 열심히 걸어요!</CheerText>
+      <CheerText>조금만 더 힘내면 목표에 도달할 수 있어요!</CheerText>
 
       <BottomStatus>
         <LongButton
-          handleGoToNext={handlepressup}
-          btnBackColor={theme.grayScale.gray4}>
+          handleGoToNext={handleFailModal}
+          btnBackColor={theme.grayScale.gray1}>
           오늘은 그만할래요
         </LongButton>
+        <UserFail
+          navigation={navigation}
+          handleFailModal={handleFailModal}
+          FailModalOpen={FailModalOpen}
+        />
       </BottomStatus>
     </Container>
   )
@@ -391,4 +400,4 @@ const BottomStatus = styled.View`
   flex-direction: row;
 `
 
-export default HomeAfterStop
+export default HomeFail

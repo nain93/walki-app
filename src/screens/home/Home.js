@@ -15,6 +15,7 @@ import LongButton from "../../components/LongButton"
 import { coachColorVar } from "../../../apollo"
 import { Pedometer } from "expo-sensors"
 import { request, PERMISSIONS, check } from "react-native-permissions"
+import UserFail from "./Others/UserFail"
 
 const Home = ({ navigation }) => {
   const [state, setState] = useState([])
@@ -25,7 +26,10 @@ const Home = ({ navigation }) => {
     temp: 1,
     condition: "맑음",
   })
-
+  const [failModalOpen, setFailModalOpen] = useState(false)
+  const handleFailModal = () => {
+    setFailModalOpen(!failModalOpen)
+  }
   const getSteps = () => {
     Pedometer.watchStepCount(result =>
       setSteps(steps => ({
@@ -209,13 +213,15 @@ const Home = ({ navigation }) => {
 
       <BottomStatus>
         <LongButton
-          handleGoToNext={handlepressup}
+          handleGoToNext={handleGoToNext}
           btnBackColor={theme.grayScale.gray1}>
           오늘은 그만할래요
         </LongButton>
-        <LongButton handleGoToNext={handlepressdown} btnBackColor={color}>
-          test
-        </LongButton>
+        <UserFail
+          navigation={navigation}
+          handleFailModal={handleFailModal}
+          failModalOpen={failModalOpen}
+        />
       </BottomStatus>
     </Container>
   )

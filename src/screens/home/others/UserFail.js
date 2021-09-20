@@ -4,18 +4,18 @@ import tokiFail from "../../../../assets/images/toki_fail.png"
 import bukiFail from "../../../../assets/images/buki_fail.png"
 import { Body1Text, H2Text, theme } from "../../../styles/theme"
 
-const UserFail = ({ handleDeleteModal, deleteModalOpen, navigation }) => {
-  const handleOkayBtn = async () => {
-    handleDeleteModal()
-    navigation.navigate("Home")
+const UserFail = ({ handleFailModal, failModalOpen, navigation }) => {
+  const handleOkayBtn = () => {
+    handleFailModal()
+    navigation.navigate("HomeAfterStop")
   }
   return (
     <CharacterModal
-      open={deleteModalOpen}
+      open={failModalOpen}
       handleOkayBtn={handleOkayBtn}
       tokiImg={tokiFail}
       bukiImg={bukiFail}
-      handleModal={handleDeleteModal}
+      handleModal={handleFailModal}
       handleOkayBtn={handleOkayBtn}
       okayText={"그만하기"}>
       <H2Text>정말 그만할거에요?</H2Text>
