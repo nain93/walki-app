@@ -63,7 +63,6 @@ const Home = ({ navigation }) => {
     let month = new Date().getMonth() + 1;
     let hours = new Date().getHours();
     let min = new Date().getMinutes();
-    console.log(hours);
     setcurrentDate(month + "월" + " " + date + "일");
     setcurrentTime(hours + ":" + min + "PM");
     getLocation();

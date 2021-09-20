@@ -27,11 +27,14 @@ const date = new Date();
 const month = date.getMonth() + 1;
 const year = date.getFullYear();
 
-const Pick = ({ selectedMonth, setSelectedMonth }) => {
+const Pick = ({ selectedMonth, setSelectedMonth, setStepInfo }) => {
   return (
     <Picker
       selectedValue={selectedMonth ? selectedMonth : String(month)}
-      onValueChange={(itemValue, itemIndex) => setSelectedMonth(itemValue)}
+      onValueChange={(itemValue, itemIndex) => {
+        setSelectedMonth(itemValue);
+        setStepInfo([]);
+      }}
       style={{ height: 50, width: 200, color: "white" }}
       mode={"dropdown"}
       dropdownIconColor="white"
@@ -51,6 +54,7 @@ const Pick = ({ selectedMonth, setSelectedMonth }) => {
 
 const TabNavigator = () => {
   const [selectedMonth, setSelectedMonth] = useState(`${month}`);
+  const [stepInfo, setStepInfo] = useState({});
   const tabColor = useReactiveVar(coachColorVar);
   return (
     <Tabs.Navigator
@@ -96,11 +100,18 @@ const TabNavigator = () => {
       />
       <Tabs.Screen
         name="리포트"
-        children={() => <Report selectedMonth={selectedMonth} />}
+        children={() => (
+          <Report
+            stepInfo={stepInfo}
+            setStepInfo={setStepInfo}
+            selectedMonth={selectedMonth}
+          />
+        )}
         options={{
           headerTitleAlign: "center",
           headerTitle: () => (
             <Pick
+              setStepInfo={setStepInfo}
               selectedMonth={selectedMonth}
               setSelectedMonth={setSelectedMonth}
             />
