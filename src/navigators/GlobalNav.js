@@ -28,6 +28,7 @@ import HomeAfterStop from "../screens/home/HomeAfterStop"
 import HomeCompleted from "../screens/home/HomeCompleted"
 import HomeWalk from "../screens/home/HomeWalk"
 import HomeFail from "../screens/home/HomeFail"
+import CloseIcon from "../components/CloseIcon"
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
 }

@@ -83,7 +83,7 @@ const ChallengeSetting = ({ navigation }) => {
     stepVar({
       step: inputWatch,
     })
-    navigation.navigate("TabNavigator")
+    navigation.navigate("HomeWalk")
   }
 
   useEffect(() => {

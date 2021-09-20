@@ -7,8 +7,8 @@ import Loading from "../../components/Loading"
 import WeatherLogo from "../../../assets/icons/sun.png"
 import SpaceLogo from "../../../assets/icons/bar.png"
 
-import toki_walking from "../../../assets/images/character/toki_walking.png"
-import buki_walking from "../../../assets/images/character/buki_walking.png"
+import toki_hi from "../../../assets/images/character/toki_hi.png"
+import buki_hi from "../../../assets/images/character/buki.png"
 import { CircularProgress } from "react-native-svg-circular-progress"
 import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme"
 import LongButton from "../../components/LongButton"
@@ -182,9 +182,7 @@ const Home = ({ navigation }) => {
                 <Animated.View style={[{ opacity: fadeimage }]}>
                   <CharacetrImage
                     source={
-                      coachColorVar().coach === "toki"
-                        ? toki_walking
-                        : buki_walking
+                      coachColorVar().coach === "toki" ? toki_hi : buki_hi
                     }
                     resizeMode="contain"
                   />
@@ -211,8 +209,8 @@ const Home = ({ navigation }) => {
       <BottomStatus>
         <LongButton
           handleGoToNext={handleGoToNext}
-          btnBackColor={theme.grayScale.gray1}>
-          오늘은 그만할래요
+          btnBackColor={coachColorVar().color.main}>
+          오늘의 목표를 세워보세요!
         </LongButton>
         <UserFail
           navigation={navigation}
