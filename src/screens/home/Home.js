@@ -16,6 +16,7 @@ import { coachColorVar } from "../../../apollo"
 import { Pedometer } from "expo-sensors"
 import { request, PERMISSIONS, check } from "react-native-permissions"
 import UserFail from "./Others/UserFail"
+import Config from "react-native-config"
 
 const Home = ({ navigation }) => {
   const [state, setState] = useState([])
@@ -70,12 +71,7 @@ const Home = ({ navigation }) => {
     console.log(hours)
     setcurrentDate(month + "월" + " " + date + "일")
     setcurrentTime(hours + ":" + min + "PM")
-    setTimeout(() => {
-      setState()
-      setCateState()
-      getLocation()
-      setReady(false)
-    }, 1000)
+    getLocation()
     request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then(granted => {
       if (granted) {
         console.log(granted)
@@ -124,8 +120,7 @@ const Home = ({ navigation }) => {
       const latitude = locationData["coords"]["latitude"]
       const longitude = locationData["coords"]["longitude"]
 
-      // const API_KEY = "cfc258c75e1da2149c33daffd07a911d"
-      const API_KEY = "5f45ba75e045a8cb44f05067fb179d01"
+      const API_KEY = Config.API_KEY
       const result = await axios.get(
         `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
       )
@@ -142,6 +137,8 @@ const Home = ({ navigation }) => {
       })
     } catch (error) {
       // Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?")
+    } finally {
+      setReady(false)
     }
   }
   return ready ? (
@@ -227,25 +224,20 @@ const Home = ({ navigation }) => {
   )
 }
 
-const MiddleBox = styled.TouchableOpacity`
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-`
 const BlurgoalBox = styled.TouchableOpacity`
   height: 10%;
   width: 100%;
   align-items: center;
 `
+
 const Blurgoal = styled.Text`
-  font-size: 52px;
+  font-size: 25px;
   font-weight: 700;
   color: ${props => props.coachColorVar};
 `
 const ProgressGoal = styled(CircularProgress)`
-  width: 2px;
-  height: 2px;
+  width: 292px;
+  height: 292px;
 `
 
 const GoalBox = styled.View`
@@ -273,6 +265,7 @@ const Container = styled.SafeAreaView`
   align-items: center;
   width: 100%;
   height: 100%;
+  background-color: #f3f3f3;
 `
 
 const GoalContainer = styled.TouchableOpacity`

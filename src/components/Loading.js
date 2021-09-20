@@ -1,25 +1,23 @@
-import React from "react"
-import { View, Text, StyleSheet } from "react-native"
+import React from "react";
+import { ActivityIndicator } from "react-native";
+import styled from "styled-components";
+import { coachColorVar } from "../../apollo";
 
-export default function Loading() {
+const Loading = ({ children }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>준비중입니다...</Text>
-    </View>
-  )
-}
+    <Container>
+      {children}
+      {!children && (
+        <ActivityIndicator color={coachColorVar().color.main} size="large" />
+      )}
+    </Container>
+  );
+};
 
-const styles = StyleSheet.create({
-  container: {
-    //앱의 배경 색
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F22764",
+const Container = styled.View`
+  flex: 1;
+  background-color: #f3f3f3;
+  justify-content: center;
+`;
 
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "700",
-  },
-})
+export default Loading;

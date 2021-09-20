@@ -15,7 +15,6 @@ import EditName from "../screens/setting/EditName"
 import AlertSetting from "../screens/setting/AlertSetting"
 import TabNavigator from "./TabNav"
 import LeftIcon from "react-native-vector-icons/AntDesign"
-import closeIcon from "../../assets/icons/close.png"
 import { useReactiveVar } from "@apollo/client"
 import { isLoggedInVar } from "../../apollo"
 import ChallengeSetting from "../screens/coachSelect/ChallengeSetting"
@@ -33,19 +32,6 @@ const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
 }
 const Stack = createStackNavigator()
-
-const CloseIcon = () => {
-  const navigation = useNavigation()
-  return (
-    <TouchableOpacity onPress={() => navigation.goBack()}>
-      <Image
-        source={closeIcon}
-        resizeMode="contain"
-        style={{ width: 24, height: 24, marginRight: 20 }}
-      />
-    </TouchableOpacity>
-  )
-}
 
 const GlobalNav = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar)
@@ -182,7 +168,7 @@ const GlobalNav = () => {
         {/* 이용약관 */}
         <Stack.Screen
           name="TermsCheck"
-          options={({ navigation }) => ({
+          options={{
             headerTitleAlign: "center",
             title: "약관확인",
             headerLeft: () => null,
@@ -192,7 +178,7 @@ const GlobalNav = () => {
               elevation: 0, // android
               shadowOpacity: 0, //ios
             },
-          })}
+          }}
           component={TermsCheck}
         />
         <Stack.Screen
