@@ -7,16 +7,17 @@ import Loading from "../../components/Loading"
 import WeatherLogo from "../../../assets/icons/sun.png"
 import SpaceLogo from "../../../assets/icons/bar.png"
 
-import toki_cry from "../../../assets/images/character/toki_cry.png"
-import buki_cry from "../../../assets/images/character/buki_cry.png"
+import toki_fail from "../../../assets/images/character/toki_fail.png"
+import buki_fail from "../../../assets/images/character/buki_fail.png"
 import { CircularProgress } from "react-native-svg-circular-progress"
 import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme"
 import LongButton from "../../components/LongButton"
 import { coachColorVar } from "../../../apollo"
 import { Pedometer } from "expo-sensors"
 import { request, PERMISSIONS, check } from "react-native-permissions"
+import UserFail from "./Others/UserFail"
 
-const Home = ({ navigation }) => {
+const HomeFail = ({ navigation }) => {
   const [state, setState] = useState([])
   const [cateState, setCateState] = useState([])
   const [ready, setReady] = useState(true)
@@ -25,7 +26,10 @@ const Home = ({ navigation }) => {
     temp: 1,
     condition: "맑음",
   })
-
+  const [FailModalOpen, setFailModalOpen] = useState(false)
+  const handleFailModal = () => {
+    setFailModalOpen(!FailModalOpen)
+  }
   const getSteps = () => {
     Pedometer.watchStepCount(result =>
       setSteps(steps => ({
@@ -181,7 +185,7 @@ const Home = ({ navigation }) => {
                 <Animated.View style={[{ opacity: fadeimage }]}>
                   <CharacetrImage
                     source={
-                      coachColorVar().coach === "toki" ? toki_cry : buki_cry
+                      coachColorVar().coach === "toki" ? toki_fail : buki_fail
                     }
                     resizeMode="contain"
                   />
@@ -207,13 +211,15 @@ const Home = ({ navigation }) => {
 
       <BottomStatus>
         <LongButton
-          handleGoToNext={handlepressup}
+          handleGoToNext={handleFailModal}
           btnBackColor={theme.grayScale.gray1}>
           오늘은 그만할래요
         </LongButton>
-        <LongButton handleGoToNext={handlepressdown} btnBackColor={color}>
-          test
-        </LongButton>
+        <UserFail
+          navigation={navigation}
+          handleFailModal={handleFailModal}
+          FailModalOpen={FailModalOpen}
+        />
       </BottomStatus>
     </Container>
   )
@@ -394,4 +400,4 @@ const BottomStatus = styled.View`
   flex-direction: row;
 `
 
-export default Home
+export default HomeFail

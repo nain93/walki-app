@@ -16,7 +16,7 @@ import { coachColorVar } from "../../../apollo"
 import { Pedometer } from "expo-sensors"
 import { request, PERMISSIONS, check } from "react-native-permissions"
 
-const Home = ({ navigation }) => {
+const HomeAfterStop = ({ navigation }) => {
   const [state, setState] = useState([])
   const [cateState, setCateState] = useState([])
   const [ready, setReady] = useState(true)
@@ -208,11 +208,8 @@ const Home = ({ navigation }) => {
       <BottomStatus>
         <LongButton
           handleGoToNext={handlepressup}
-          btnBackColor={theme.grayScale.gray1}>
+          btnBackColor={theme.grayScale.gray4}>
           오늘은 그만할래요
-        </LongButton>
-        <LongButton handleGoToNext={handlepressdown} btnBackColor={color}>
-          test
         </LongButton>
       </BottomStatus>
     </Container>
@@ -394,4 +391,4 @@ const BottomStatus = styled.View`
   flex-direction: row;
 `
 
-export default Home
+export default HomeAfterStop

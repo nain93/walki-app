@@ -16,7 +16,7 @@ import { coachColorVar } from "../../../apollo"
 import { Pedometer } from "expo-sensors"
 import { request, PERMISSIONS, check } from "react-native-permissions"
 
-const Home = ({ navigation }) => {
+const HomeCompleted = ({ navigation }) => {
   const [state, setState] = useState([])
   const [cateState, setCateState] = useState([])
   const [ready, setReady] = useState(true)
@@ -394,4 +394,4 @@ const BottomStatus = styled.View`
   flex-direction: row;
 `
 
-export default Home
+export default HomeCompleted
