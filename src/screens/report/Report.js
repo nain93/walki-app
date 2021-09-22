@@ -39,11 +39,15 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
       },
     },
     onCompleted: (data) => {
+      console.log(data.getReport, "data");
       let res = data.getReport.challenges.map((item) => ({
         ...item,
         day: `Day ${item.challengeDate.substr(8, 2)}`,
         selected: false,
       }));
+      if (res.length === 0) {
+        return;
+      }
 
       const { stepAchievement, stepGoal, challengeAchievement, challengeGoal } =
         data.getReport;

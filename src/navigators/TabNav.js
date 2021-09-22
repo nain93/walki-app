@@ -33,6 +33,10 @@ const Pick = ({ selectedMonth, setSelectedMonth, setStepInfo }) => {
       selectedValue={selectedMonth ? selectedMonth : String(month)}
       onValueChange={(itemValue, itemIndex) => {
         setSelectedMonth(itemValue);
+        if (itemValue === `${month}`) {
+          setStepInfo([{}]);
+          return;
+        }
         setStepInfo([]);
       }}
       style={{ height: 50, width: 200, color: "white" }}
@@ -54,7 +58,7 @@ const Pick = ({ selectedMonth, setSelectedMonth, setStepInfo }) => {
 
 const TabNavigator = () => {
   const [selectedMonth, setSelectedMonth] = useState(`${month}`);
-  const [stepInfo, setStepInfo] = useState({});
+  const [stepInfo, setStepInfo] = useState([{}]);
   const tabColor = useReactiveVar(coachColorVar);
   return (
     <Tabs.Navigator

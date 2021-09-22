@@ -7,76 +7,116 @@ import AddIcon from "../../../../assets/images/report/add_challenge.png";
 import { theme } from "../../../styles/theme";
 import { ListItem } from "../../../styles/reportTheme";
 
-const AddItem = ({ step, stepGoal }) => {
+const AddItem = ({ step, stepGoal, challengeDate }) => {
   const navigation = useNavigation();
-  return (
-    <>
-      {stepGoal ? (
-        <ListItem>
-          <Text
-            style={{ color: coachColorVar().color.report, fontWeight: "600" }}
-          >
-            Today
-          </Text>
-          <View style={{ alignItems: "center" }}>
-            <Text
-              style={{
-                color: coachColorVar().color.report,
-                fontWeight: "600",
-                fontSize: 18,
-              }}
-            >
-              {step}
-            </Text>
-            <Text
-              style={{
-                color: theme.grayScale.gray2,
-                fontSize: 12,
-              }}
-            >
-              /{stepGoal}
-            </Text>
-          </View>
-        </ListItem>
-      ) : (
-        <AddList onPress={() => navigation.navigate("ChallengeSetting")}>
-          <Text
-            style={{ color: coachColorVar().color.report, fontWeight: "600" }}
-          >
-            Today
-          </Text>
-          <AddIconStyle
-            style={{
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 1,
-              },
-              shadowOpacity: 0.23,
-              shadowRadius: 2.62,
+  function getToday() {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = ("0" + (1 + date.getMonth())).slice(-2);
+    let day = ("0" + date.getDate()).slice(-2);
 
-              elevation: 2,
-            }}
-          >
-            <Image
+    return year + "-" + month + "-" + day;
+  }
+  if (challengeDate) {
+    return (
+      <>
+        {challengeDate === getToday() ? (
+          <ListItem>
+            <Text
+              style={{ color: coachColorVar().color.report, fontWeight: "600" }}
+            >
+              Today
+            </Text>
+            <View style={{ alignItems: "center" }}>
+              <Text
+                style={{
+                  color: coachColorVar().color.report,
+                  fontWeight: "600",
+                  fontSize: 18,
+                }}
+              >
+                {step}
+              </Text>
+              <Text
+                style={{
+                  color: theme.grayScale.gray2,
+                  fontSize: 12,
+                }}
+              >
+                /{stepGoal}
+              </Text>
+            </View>
+          </ListItem>
+        ) : (
+          <AddList onPress={() => navigation.navigate("ChallengeSetting")}>
+            <Text
+              style={{ color: coachColorVar().color.report, fontWeight: "600" }}
+            >
+              Today
+            </Text>
+            <AddIconStyle
               style={{
-                width: 40,
-                height: 40,
-                tintColor: coachColorVar().color.report,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 1,
+                },
+                shadowOpacity: 0.23,
+                shadowRadius: 2.62,
+
+                elevation: 2,
               }}
-              source={AddIcon}
-              resizeMode="contain"
-            />
-          </AddIconStyle>
-        </AddList>
-      )}
-    </>
+            >
+              <Image
+                style={{
+                  width: 40,
+                  height: 40,
+                  tintColor: coachColorVar().color.report,
+                }}
+                source={AddIcon}
+                resizeMode="contain"
+              />
+            </AddIconStyle>
+          </AddList>
+        )}
+      </>
+    );
+  }
+  return (
+    <AddList onPress={() => navigation.navigate("ChallengeSetting")}>
+      <Text style={{ color: coachColorVar().color.report, fontWeight: "600" }}>
+        Today
+      </Text>
+      <AddIconStyle
+        style={{
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 1,
+          },
+          shadowOpacity: 0.23,
+          shadowRadius: 2.62,
+
+          elevation: 2,
+        }}
+      >
+        <Image
+          style={{
+            width: 40,
+            height: 40,
+            tintColor: coachColorVar().color.report,
+          }}
+          source={AddIcon}
+          resizeMode="contain"
+        />
+      </AddIconStyle>
+    </AddList>
   );
 };
 
 const AddList = styled.TouchableOpacity`
   flex: 1;
-  width: 33.3%;
+  max-width: 33.3%;
   height: 110px;
   margin: 5px;
   border-radius: 16px;

@@ -23,7 +23,14 @@ const ReportMain = ({ stepInfo }) => {
 
   const renderItem = ({ item, index }) => {
     if (index === 0) {
-      return <AddItem step={item.step} stepGoal={item.stepGoal} />;
+      console.log("hio");
+      return (
+        <AddItem
+          step={item.step}
+          stepGoal={item.stepGoal}
+          challengeDate={item.challengeDate}
+        />
+      );
     }
 
     if (item.selected) {
