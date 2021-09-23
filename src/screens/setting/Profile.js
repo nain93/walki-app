@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import noProfileTokiImg from "../../../assets/images/noprofile_toki.png";
 import noProfileBookiImg from "../../../assets/images/noprofile_booki.png";
@@ -6,6 +6,7 @@ import { Body1Text, Body3Text, theme } from "../../styles/theme";
 import { gql, useQuery, useReactiveVar } from "@apollo/client";
 import { coachColorVar, userNameVar } from "../../../apollo";
 import Loading from "../../components/Loading";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Profile = ({ navigation }) => {
   const GET_MEMBER = gql`
