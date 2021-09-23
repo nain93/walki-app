@@ -9,7 +9,7 @@ import Report from "../screens/report";
 
 import LogoTitle from "../components/LogoTitle";
 import SettingLogoTitle from "../components/SettingLogoTitle";
-import { coachColorVar } from "../../apollo";
+import { coachColorVar, monthVar } from "../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import activehome from "../../assets/icons/activehome.png";
 import inactivehome from "../../assets/icons/inactivehome.png";
@@ -34,9 +34,11 @@ const Pick = ({ selectedMonth, setSelectedMonth, setStepInfo }) => {
       onValueChange={(itemValue, itemIndex) => {
         setSelectedMonth(itemValue);
         if (itemValue === `${month}`) {
+          monthVar(`${month}`);
           setStepInfo([{}]);
           return;
         }
+        monthVar("");
         setStepInfo([]);
       }}
       style={{ height: 50, width: 200, color: "white" }}

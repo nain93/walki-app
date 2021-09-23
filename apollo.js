@@ -8,6 +8,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setContext } from "@apollo/client/link/context";
 import Config from "react-native-config";
 
+const date = new Date();
+const month = date.getMonth() + 1;
+
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
 export const coachColorVar = makeVar({
@@ -43,6 +46,8 @@ export const alertTimeVar = makeVar({
 export const stepVar = makeVar({
   step: "",
 });
+
+export const monthVar = makeVar(`${month}`);
 
 const TOKEN = "token";
 

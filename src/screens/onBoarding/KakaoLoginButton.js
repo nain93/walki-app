@@ -54,7 +54,7 @@ const KakaoLoginButton = ({ navigation }) => {
   const handleKakaoLogin = async () => {
     const token = await login();
     const { accessToken } = token;
-    signUpMutation({
+    await signUpMutation({
       variables: {
         social: "KAKAO",
         token: accessToken,

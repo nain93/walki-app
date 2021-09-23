@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import ReportHeader from "./ReportHeader";
 import ReportMain from "./ReportMain";
 import { useQuery, gql } from "@apollo/client";
 import Loading from "../../components/Loading";
 import ReportLoading from "./reportItems/ReportLoading";
-import { userNameVar } from "../../../apollo";
+import { monthVar, userNameVar } from "../../../apollo";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +32,7 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
       }
     }
   `;
-  const { loading } = useQuery(GET_REPORT, {
+  const { loading, data, refetch } = useQuery(GET_REPORT, {
     variables: {
       yearMonth: {
         year: 2021,
@@ -39,24 +40,23 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
       },
     },
     onCompleted: (data) => {
-      console.log(data.getReport, "data");
       let res = data.getReport.challenges.map((item) => ({
         ...item,
         day: `Day ${item.challengeDate.substr(8, 2)}`,
         selected: false,
       }));
-      if (res.length === 0) {
-        return;
-      }
-
       const { stepAchievement, stepGoal, challengeAchievement, challengeGoal } =
         data.getReport;
       setStepTotal({
+        ...stepTotal,
         stepGoal,
         stepAchievement,
         challengeGoal,
         challengeAchievement,
       });
+      if (res.length === 0) {
+        return;
+      }
       if (res.length % 3 === 1) {
         res = res.concat([{}, {}]);
       }
@@ -73,6 +73,7 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
         })
       );
     },
+    fetchPolicy: "cache-and-network",
     onError: (e) => {
       console.log(e);
     },
@@ -100,13 +101,19 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
     },
   });
 
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [data])
+  );
+
   if (loading || isLoading) {
     return <Loading children={<ReportLoading />} />;
   }
   return (
     <Container>
       <ReportHeader stepTotal={stepTotal} />
-      <ReportMain stepInfo={stepInfo} />
+      <ReportMain stepInfo={stepInfo} setStepInfo={setStepInfo} />
     </Container>
   );
 };
