@@ -207,7 +207,7 @@ const HomeFail = ({ navigation }) => {
           {/* </MiddleBox> */}
         </GoalBox>
       </MiddleStatus>
-      <CheerText>조금만 더 힘내면 목표에 도달할 수 있어요!</CheerText>
+      <CheerText>흠..열심히 안할꺼에요?</CheerText>
 
       <BottomStatus>
         <LongButton

@@ -204,7 +204,7 @@ const Home = ({ navigation }) => {
           {/* </MiddleBox> */}
         </GoalBox>
       </MiddleStatus>
-      <CheerText>조금만 더 힘내면 목표에 도달할 수 있어요!</CheerText>
+      <CheerText>오늘도 함께 걸어요!</CheerText>
 
       <BottomStatus>
         <LongButton
