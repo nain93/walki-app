@@ -24,6 +24,7 @@ const CharacterModal = ({
         animationOut="fadeOut"
         onBackdropPress={handleModal}
         backdropTransitionOutTiming={0}
+        onBackButtonPress={handleModal}
       >
         <ModalContainer tokiImg={tokiImg}>
           {tokiImg ? (

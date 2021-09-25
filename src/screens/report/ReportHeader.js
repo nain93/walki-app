@@ -42,7 +42,12 @@ const ReportHeader = ({ stepTotal }) => {
                     coachColorVar().coach === "toki" ? "#a2d8ff" : "#C8E8FF",
                 }}
               >
-                {stepAchievement === 0 ? 0 : (stepAchievement * 100) / stepGoal}{" "}
+                {challengeAchievement === 0
+                  ? 0
+                  : (
+                      (challengeAchievement * 100) /
+                      challengeGoal
+                    ).toFixed()}{" "}
                 / 100
               </ReportNum>
               <Caption> %</Caption>
@@ -104,7 +109,7 @@ const ReportHeader = ({ stepTotal }) => {
             progress={
               challengeAchievement === 0
                 ? 0
-                : (challengeAchievement * 100) / month / 100
+                : (challengeAchievement * 100) / challengeGoal / 100
             }
             borderWidth={0}
             thickness={13}

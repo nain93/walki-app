@@ -1,38 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FlatList, Image, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
-import { coachColorVar, userNameVar } from "../../../apollo";
+import { coachColorVar, monthVar, userNameVar } from "../../../apollo";
 import Item from "./reportItems/Item";
 import ClickedItem from "./reportItems/ClickedItem";
 import AddItem from "./reportItems/AddItem";
-import { useQuery, gql, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import info from "../../../assets/icons/info.png";
+import Toast from "react-native-easy-toast";
+import AddBtn from "./reportItems/AddBtn";
 
-const ReportMain = ({ stepInfo }) => {
-  const GET_MEMBER = gql`
-    query getMember {
-      getMember {
-        name
-        profileImage
-      }
-    }
-  `;
-  const onCompleted = (data) => {
-    const { getMember } = data;
-    userNameVar({
-      ...getMember,
-    });
-  };
+const ReportMain = ({ stepInfo, setStepInfo }) => {
+  function getToday() {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = ("0" + (1 + date.getMonth())).slice(-2);
+    let day = ("0" + date.getDate()).slice(-2);
 
-  const {} = useQuery(GET_MEMBER, {
-    onCompleted,
-    onError: (e) => {
-      console.log(e);
-    },
-  });
-
+    return year + "-" + month + "-" + day;
+  }
   const userName = useReactiveVar(userNameVar);
   const [selectedId, setSelectedId] = useState([]);
+
+  const toastRef = useRef();
 
   const handleItemClick = (index) => {
     const data = [...stepInfo];
@@ -41,8 +31,13 @@ const ReportMain = ({ stepInfo }) => {
   };
 
   const renderItem = ({ item, index }) => {
-    if (index === 0) {
-      return <AddItem step={item.step} stepGoal={item.stepGoal} />;
+    if (index === 0 && monthVar() === "9") {
+      if (item.challengeDate === undefined) {
+        return <AddBtn />;
+      }
+      if (item.challengeDate === getToday()) {
+        return <AddItem step={item.step} stepGoal={item.stepGoal} />;
+      }
     }
 
     if (item.selected) {
@@ -66,6 +61,7 @@ const ReportMain = ({ stepInfo }) => {
       />
     );
   };
+
   return (
     <Container>
       <NameTitle>
@@ -73,10 +69,17 @@ const ReportMain = ({ stepInfo }) => {
           {userName.name}
         </Text>
         <Text> 님의 데일리 챌린지 히스토리</Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            toastRef.current.show(
+              "첼린지 히스토리는 오전 12시마다 업데이트됩니다.",
+              2000
+            )
+          }
+        >
           <Image
             source={info}
-            style={{ width: 20, marginLeft: 5 }}
+            style={{ width: 18, marginLeft: 5 }}
             resizeMode="contain"
           />
         </TouchableOpacity>
@@ -88,6 +91,21 @@ const ReportMain = ({ stepInfo }) => {
         keyExtractor={(item) => item.createdAt}
         extraData={selectedId}
         numColumns={3}
+      />
+      <Toast
+        ref={toastRef}
+        style={{
+          width: 350,
+          height: 50,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        position="top"
+        positionValue={60}
+        fadeInDuration={300}
+        fadeOutDuration={300}
+        opacity={0.8}
+        textStyle={{ color: "white" }}
       />
     </Container>
   );
