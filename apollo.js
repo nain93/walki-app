@@ -7,9 +7,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setContext } from "@apollo/client/link/context";
 import Config from "react-native-config";
-
-const date = new Date();
-const month = date.getMonth() + 1;
+import { month } from "./src/common/getToday";
 
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
@@ -43,9 +41,9 @@ export const alertTimeVar = makeVar({
   minute: 0,
 });
 
-export const stepVar = makeVar({
-  step: "",
-});
+export const statusVar = makeVar("home");
+
+export const stepVar = makeVar(0);
 
 export const monthVar = makeVar(`${month}`);
 
@@ -63,8 +61,6 @@ export const logUserOut = async () => {
   userNameVar({});
   tokenVar("");
 };
-
-export const ChallengeStart = stepVar({});
 
 const httpLink = createHttpLink({
   uri: Config.BACKEND_URL,

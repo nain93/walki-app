@@ -34,6 +34,12 @@ const Profile = ({ navigation }) => {
   });
   const { name, profileImage } = userName;
 
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [userName])
+  );
+
   if (loading) {
     return <Loading />;
   }
@@ -60,7 +66,6 @@ const Profile = ({ navigation }) => {
             navigation.navigate("EditName", {
               name,
               profileImage,
-              refetch,
             })
           }
         >

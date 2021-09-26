@@ -1,10 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { coachColorVar } from "../../../../apollo";
+import { coachColorVar, stepVar } from "../../../../apollo";
 import { theme } from "../../../styles/theme";
 import { ListItem } from "../../../styles/reportTheme";
+import { useReactiveVar } from "@apollo/client";
 
-const AddItem = ({ step, stepGoal }) => {
+const AddItem = ({ stepGoal }) => {
+  const step = useReactiveVar(stepVar);
   return (
     <ListItem>
       <Text style={{ color: coachColorVar().color.report, fontWeight: "600" }}>

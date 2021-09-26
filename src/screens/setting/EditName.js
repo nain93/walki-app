@@ -19,7 +19,7 @@ const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
 const EditName = ({
   navigation,
   route: {
-    params: { name, profileImage, refetch },
+    params: { name, profileImage },
   },
 }) => {
   const PUT_MEMBER = gql`
@@ -47,7 +47,6 @@ const EditName = ({
           name: data.putMember.name,
           profileImage,
         });
-        refetch();
       },
     }
   );
