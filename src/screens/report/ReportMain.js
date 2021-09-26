@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { FlatList, Image, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { coachColorVar, monthVar, userNameVar } from "../../../apollo";
@@ -9,16 +9,9 @@ import { useReactiveVar } from "@apollo/client";
 import info from "../../../assets/icons/info.png";
 import Toast from "react-native-easy-toast";
 import AddBtn from "./reportItems/AddBtn";
+import { getToday, month } from "../../common/getToday";
 
-const ReportMain = ({ stepInfo, setStepInfo }) => {
-  function getToday() {
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = ("0" + (1 + date.getMonth())).slice(-2);
-    let day = ("0" + date.getDate()).slice(-2);
-
-    return year + "-" + month + "-" + day;
-  }
+const ReportMain = ({ stepInfo }) => {
   const userName = useReactiveVar(userNameVar);
   const [selectedId, setSelectedId] = useState([]);
 
@@ -31,12 +24,12 @@ const ReportMain = ({ stepInfo, setStepInfo }) => {
   };
 
   const renderItem = ({ item, index }) => {
-    if (index === 0 && monthVar() === "9") {
+    if (index === 0 && monthVar() === `${month}`) {
       if (item.challengeDate === undefined) {
         return <AddBtn />;
       }
       if (item.challengeDate === getToday()) {
-        return <AddItem step={item.step} stepGoal={item.stepGoal} />;
+        return <AddItem stepGoal={item.stepGoal} />;
       }
     }
 

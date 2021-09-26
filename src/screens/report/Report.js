@@ -1,12 +1,13 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import ReportHeader from "./ReportHeader";
 import ReportMain from "./ReportMain";
 import { useQuery, gql } from "@apollo/client";
 import Loading from "../../components/Loading";
 import ReportLoading from "./reportItems/ReportLoading";
-import { monthVar, userNameVar } from "../../../apollo";
+import { userNameVar } from "../../../apollo";
 import { useFocusEffect } from "@react-navigation/native";
+import { getToday } from "../../common/getToday";
 
 const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,6 +33,7 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
       }
     }
   `;
+
   const { loading, data, refetch } = useQuery(GET_REPORT, {
     variables: {
       yearMonth: {
@@ -40,11 +42,19 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
       },
     },
     onCompleted: (data) => {
-      let res = data.getReport.challenges.map((item) => ({
-        ...item,
-        day: `Day ${item.challengeDate.substr(8, 2)}`,
-        selected: false,
-      }));
+      let res = data.getReport.challenges
+        .map((item) => ({
+          ...item,
+          day: `Day ${item.challengeDate.substr(8, 2)}`,
+          selected: false,
+        }))
+        .sort((a, b) => {
+          return (
+            Number(b?.challengeDate?.substr(8, 2)) -
+            Number(a?.challengeDate?.substr(8, 2))
+          );
+        });
+
       const { stepAchievement, stepGoal, challengeAchievement, challengeGoal } =
         data.getReport;
       setStepTotal({
@@ -63,15 +73,13 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
       if (res.length % 3 === 2) {
         res = res.concat([{}]);
       }
-
-      setStepInfo(
-        res.sort((a, b) => {
-          return (
-            Number(b?.challengeDate?.substr(8, 2)) -
-            Number(a?.challengeDate?.substr(8, 2))
-          );
-        })
-      );
+      if (res[0].challengeDate === getToday()) {
+        setStepInfo([...res]);
+        return;
+      } else {
+        setStepInfo([{}, ...res]);
+        return;
+      }
     },
     fetchPolicy: "cache-and-network",
     onError: (e) => {
@@ -113,7 +121,7 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
   return (
     <Container>
       <ReportHeader stepTotal={stepTotal} />
-      <ReportMain stepInfo={stepInfo} setStepInfo={setStepInfo} />
+      <ReportMain stepInfo={stepInfo} />
     </Container>
   );
 };

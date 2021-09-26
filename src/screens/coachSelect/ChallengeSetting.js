@@ -3,12 +3,11 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import LongButton from "../../components/LongButton";
 import { Body1Text, H1Text, theme } from "../../styles/theme";
-import { coachColorVar } from "../../../apollo";
+import { coachColorVar, statusVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import { gql, useMutation } from "@apollo/client";
-import { stepVar } from "../../../apollo";
 import { KeyboardAvoidingView } from "react-native";
-import { CommonActions } from "@react-navigation/native";
+import { getToday } from "../../common/getToday";
 const ChallengeSetting = ({ navigation }) => {
   const walkRef = useRef();
   const coachColor = useReactiveVar(coachColorVar);
@@ -24,14 +23,6 @@ const ChallengeSetting = ({ navigation }) => {
       walkingNum: 200,
     },
   });
-  function getToday() {
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = ("0" + (1 + date.getMonth())).slice(-2);
-    let day = ("0" + date.getDate()).slice(-2);
-
-    return year + "-" + month + "-" + day;
-  }
 
   const inputWatch = watch("walkingNum");
   // const walkStatus = walk
@@ -47,15 +38,7 @@ const ChallengeSetting = ({ navigation }) => {
     }
   `;
 
-  function getToday() {
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = ("0" + (1 + date.getMonth())).slice(-2);
-    let day = ("0" + date.getDate()).slice(-2);
-    return year + "-" + month + "-" + day;
-  }
-
-  const [putChallengeMutation, { data }] = useMutation(PUT_CHALLENGE, {
+  const [putChallengeMutation, { data, loading }] = useMutation(PUT_CHALLENGE, {
     onCompleted: (data) => {
       console.log(data, "data");
     },
@@ -74,12 +57,8 @@ const ChallengeSetting = ({ navigation }) => {
         },
       },
     });
-    stepVar({
-      step: inputWatch,
-    });
-
+    statusVar("walking");
     navigation.goBack();
-    // navigation.navigate("HomeWalk")
   };
 
   useEffect(() => {
@@ -89,13 +68,6 @@ const ChallengeSetting = ({ navigation }) => {
   useEffect(() => {
     register("walkingNum", { required: true });
   }, []);
-
-  const defaultWalking = () => {
-    //  hometabbutton > 색 black으로, 문자 오늘은 그말할래요로..Longbutton 어떡하지..?
-    //  CharacterImage 변경
-    // coachcolorvar.coach (toki_walk, buki_walk)
-    // coachStatus.concat(walkStatus)
-  };
 
   return (
     <KeyboardAvoidingView
