@@ -1,50 +1,125 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
-import { Image } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Image } from "react-native"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-import Home from "../screens/home/Home";
-import Ranking from "../screens/ranking";
-import Report from "../screens/report";
+import { createStackNavigator } from "@react-navigation/stack"
+import Home from "../screens/home/Home"
+import Ranking from "../screens/ranking"
+import Report from "../screens/report"
+import HomeWalking from "../screens/home/HomeWalk"
+import HomeAfterStop from "../screens/home/HomeAfterStop"
 
-import LogoTitle from "../components/LogoTitle";
-import SettingLogoTitle from "../components/SettingLogoTitle";
-import { coachColorVar, monthVar } from "../../apollo";
-import { useReactiveVar } from "@apollo/client";
-import activehome from "../../assets/icons/activehome.png";
-import inactivehome from "../../assets/icons/inactivehome.png";
-import inactivestar from "../../assets/icons/inactivestar.png";
-import activestar from "../../assets/icons/activestar.png";
-import activemessage from "../../assets/icons/activemessage.png";
-import inactivemessage from "../../assets/icons/inactivemessage.png";
-import setting from "../../assets/icons/setting.png";
-import bookMark from "../../assets/icons/bookmark.png";
-import { theme } from "../styles/theme";
-import { Picker } from "@react-native-picker/picker";
+import HomeCompleted from "../screens/home/HomeCompleted"
+import HomeFail from "../screens/home/HomeFail"
 
-const Tabs = createBottomTabNavigator();
-const date = new Date();
-const month = date.getMonth() + 1;
-const year = date.getFullYear();
+import LogoTitle from "../components/LogoTitle"
+import SettingLogoTitle from "../components/SettingLogoTitle"
+import { coachColorVar, monthVar } from "../../apollo"
+import { useReactiveVar } from "@apollo/client"
+import activehome from "../../assets/icons/activehome.png"
+import inactivehome from "../../assets/icons/inactivehome.png"
+import inactivestar from "../../assets/icons/inactivestar.png"
+import activestar from "../../assets/icons/activestar.png"
+import activemessage from "../../assets/icons/activemessage.png"
+import inactivemessage from "../../assets/icons/inactivemessage.png"
+import setting from "../../assets/icons/setting.png"
+import bookMark from "../../assets/icons/bookmark.png"
+import { theme } from "../styles/theme"
+import { Picker } from "@react-native-picker/picker"
+
+const Tabs = createBottomTabNavigator()
+const date = new Date()
+const month = date.getMonth() + 1
+const year = date.getFullYear()
+
+const Stack2 = createStackNavigator()
+
+const HomeStack = () => (
+  <Stack2.Navigator>
+    <Stack2.Screen
+      name="Home"
+      component={Home}
+      options={{
+        title: "",
+        headerTitle: () => null,
+        headerLeft: () => null,
+        headerStyle: {
+          backgroundColor: theme.grayScale.gray6,
+          elevation: 0, // android
+          shadowOpacity: 0, //ios
+        },
+      }}
+    />
+    <Stack2.Screen
+      name="HomeWalk"
+      component={HomeWalking}
+      options={{
+        headerTitle: () => null,
+        headerLeft: () => null,
+        headerStyle: {
+          backgroundColor: theme.grayScale.gray6,
+          elevation: 0, // android
+          shadowOpacity: 0, //ios
+        },
+      }}
+    />
+    <Stack2.Screen
+      name="HomeFail"
+      component={HomeFail}
+      options={{
+        headerTitle: () => null,
+        headerLeft: () => null,
+        headerStyle: {
+          backgroundColor: theme.grayScale.gray6,
+          elevation: 0, // android
+          shadowOpacity: 0, //ios
+        },
+      }}
+    />
+    <Stack2.Screen
+      name="HomeAfterStop"
+      component={HomeAfterStop}
+      options={{
+        headerTitle: () => null,
+        headerLeft: () => null,
+        headerStyle: {
+          backgroundColor: theme.grayScale.gray6,
+          elevation: 0, // android
+          shadowOpacity: 0, //ios
+        },
+      }}
+    />
+    {/* <Stack2.Screen name="HomeCompleted" compoennt={HomeCompleted}
+    options={{
+      headerTitle: () => null,
+      headerLeft: () => null,
+      headerStyle: {
+        backgroundColor: theme.grayScale.gray6,
+        elevation: 0, // android
+        shadowOpacity: 0, //ios
+      },
+    }} /> */}
+  </Stack2.Navigator>
+)
 
 const Pick = ({ selectedMonth, setSelectedMonth, setStepInfo }) => {
   return (
     <Picker
       selectedValue={selectedMonth ? selectedMonth : String(month)}
       onValueChange={(itemValue, itemIndex) => {
-        setSelectedMonth(itemValue);
+        setSelectedMonth(itemValue)
         if (itemValue === `${month}`) {
-          monthVar(`${month}`);
-          setStepInfo([{}]);
-          return;
+          monthVar(`${month}`)
+          setStepInfo([{}])
+          return
         }
-        monthVar("");
-        setStepInfo([]);
+        monthVar("")
+        setStepInfo([])
       }}
       style={{ height: 50, width: 200, color: "white" }}
       mode={"dropdown"}
-      dropdownIconColor="white"
-    >
+      dropdownIconColor="white">
       <Picker.Item
         label={`${year}년 ${month - 1}월 리포트`}
         value={`${month - 1}`}
@@ -55,13 +130,13 @@ const Pick = ({ selectedMonth, setSelectedMonth, setStepInfo }) => {
         value={`${month + 1}`}
       />
     </Picker>
-  );
-};
+  )
+}
 
 const TabNavigator = () => {
-  const [selectedMonth, setSelectedMonth] = useState(`${month}`);
-  const [stepInfo, setStepInfo] = useState([{}]);
-  const tabColor = useReactiveVar(coachColorVar);
+  const [selectedMonth, setSelectedMonth] = useState(`${month}`)
+  const [stepInfo, setStepInfo] = useState([{}])
+  const tabColor = useReactiveVar(coachColorVar)
   return (
     <Tabs.Navigator
       sceneContainerStyle={{
@@ -78,14 +153,13 @@ const TabNavigator = () => {
         tabBarLabelStyle: {
           fontSize: 12,
         },
-      }}
-    >
+      }}>
       <Tabs.Screen
         name="홈"
         options={{
           headerTitle: () => null,
-          headerLeft: (props) => <LogoTitle {...props} />,
-          headerRight: (props) => (
+          headerLeft: props => <LogoTitle {...props} />,
+          headerRight: props => (
             <SettingLogoTitle settingIcon={bookMark} {...props} />
           ),
           headerStyle: {
@@ -102,8 +176,9 @@ const TabNavigator = () => {
             />
           ),
         }}
-        component={Home}
+        component={HomeStack}
       />
+
       <Tabs.Screen
         name="리포트"
         children={() => (
@@ -128,7 +203,7 @@ const TabNavigator = () => {
             fontWeight: "700",
           },
           headerLeft: () => null,
-          headerRight: (props) => (
+          headerRight: props => (
             <SettingLogoTitle settingIcon={setting} {...props} />
           ),
           headerStyle: {
@@ -157,7 +232,7 @@ const TabNavigator = () => {
             fontWeight: "700",
           },
           headerLeft: () => null,
-          headerRight: (props) => (
+          headerRight: props => (
             <SettingLogoTitle settingIcon={setting} {...props} />
           ),
           headerStyle: {
@@ -175,7 +250,7 @@ const TabNavigator = () => {
         }}
       />
     </Tabs.Navigator>
-  );
-};
+  )
+}
 
-export default TabNavigator;
+export default TabNavigator

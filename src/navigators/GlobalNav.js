@@ -29,6 +29,8 @@ import HomeCompleted from "../screens/home/HomeCompleted"
 import HomeWalk from "../screens/home/HomeWalk"
 import HomeFail from "../screens/home/HomeFail"
 import CloseIcon from "../components/CloseIcon"
+import { CommonActions, StackActions } from "@react-navigation/native"
+
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
 }
@@ -272,20 +274,6 @@ const GlobalNav = () => {
             },
           }}
           component={HomeCompleted}
-        />
-        <Stack.Screen
-          name="HomeWalk"
-          options={{
-            title: "",
-            headerLeft: () => null,
-            headerRight: props => <CloseIcon {...props} />,
-            headerStyle: {
-              backgroundColor: theme.grayScale.white,
-              elevation: 0, // android
-              shadowOpacity: 0, //ios
-            },
-          }}
-          component={HomeWalk}
         />
       </Stack.Navigator>
     </NavigationContainer>
