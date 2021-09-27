@@ -20,6 +20,7 @@ const AlertSetting = ({ navigation }) => {
   });
   const { ampm, hour, minute } = timePick;
 
+  
   let nextHour;
 
   const handleGoToNext = async () => {
