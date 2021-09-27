@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import LongButton from "../../components/LongButton";
@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   Image,
   TouchableOpacity,
-  Text,
 } from "react-native";
 import { gql, useMutation } from "@apollo/client";
 import { coachColorVar, userNameVar } from "../../../apollo";
@@ -38,6 +37,7 @@ const EditName = ({
   const inputWatch = watch("name");
   const newName = getValues("name");
   const [errorMessage, setErrorMessage] = useState(null);
+  const InputRef = useRef();
 
   const [putMemberMutation, { loading, data, error }] = useMutation(
     PUT_MEMBER,
@@ -74,6 +74,10 @@ const EditName = ({
   const handleDeleteInput = () => {
     setValue("name", "");
   };
+
+  useEffect(() => {
+    InputRef?.current?.focus();
+  }, []);
 
   useEffect(() => {
     register("name", {
@@ -116,6 +120,7 @@ const EditName = ({
         <HeaderTitle>이름 변경</HeaderTitle>
         <NameInputWrap>
           <NameInput
+            ref={InputRef}
             defaultValue={newName ? newName : ""}
             onChangeText={(text) => setValue("name", text)}
             onSubmitEditing={handleSubmit(handleGoToNext)}

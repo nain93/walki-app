@@ -1,60 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import * as Location from "expo-location";
 import axios from "axios";
 import Loading from "../../components/Loading";
 import WeatherLogo from "../../../assets/icons/sun.png";
 import SpaceLogo from "../../../assets/icons/bar.png";
-import toki_default from "../../../assets/images/character/toki_hi.png";
-import buki_default from "../../../assets/images/character/buki.png";
-import toki_walking from "../../../assets/images/character/toki_walking.png";
-import buki_walking from "../../../assets/images/character/buki_walking.png";
-import { CircularProgress } from "react-native-svg-circular-progress";
-import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme";
-import LongButton from "../../components/LongButton";
-import { coachColorVar } from "../../../apollo";
 
-import { request, PERMISSIONS, check } from "react-native-permissions";
+import Config from "react-native-config";
+import StatusHome from "./StatusHome";
+import { Animated } from "react-native";
 
 const Home = ({ navigation }) => {
-  const [state, setState] = useState([]);
-  const [cateState, setCateState] = useState([]);
   const [ready, setReady] = useState(true);
-  const [character, setCharacter] = useState("");
   const [weather, setWeather] = useState({
     temp: 1,
     condition: "맑음",
   });
 
-  const getSteps = () => {
-    Pedometer.watchStepCount((result) =>
-      setSteps((steps) => ({
-        ...steps,
-        currentStepCount: result.steps,
-      }))
-    );
-  };
-  const [steps, setSteps] = useState({
-    isPedometerAvailable: "checking",
-    pastStepCount: 0,
-    currentStepCount: 0,
-  });
-
-  useEffect(() => {
-    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
-      if (granted) {
-        console.log(granted);
-        getSteps();
-      }
-    });
-  }, []);
-
-  const { currentStepCount, isPedometerAvailable } = steps;
-
   const Location = "강남구";
-  const percentage = 66;
-  const color = coachColorVar().color.main;
 
   const [currentDate, setcurrentDate] = useState("");
   const [currentTime, setcurrentTime] = useState("");
@@ -64,28 +26,10 @@ const Home = ({ navigation }) => {
     let month = new Date().getMonth() + 1;
     let hours = new Date().getHours();
     let min = new Date().getMinutes();
-    console.log(hours);
     setcurrentDate(month + "월" + " " + date + "일");
     setcurrentTime(hours + ":" + min + "PM");
-    setTimeout(() => {
-      setState();
-      setCateState();
-      getLocation();
-      setReady(false);
-    }, 1000);
+    getLocation();
   }, []);
-
-  const handleGoToNext = () => {
-    // swiperRef?.current.goToNext();
-    navigation.navigate("ChallengeSetting");
-  };
-
-  const instructions = Platform.select({
-    ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-    android:
-      "Double tap R on your keyboard to reload,\n" +
-      "Shake or press menu button for dev menu",
-  });
 
   const getLocation = async () => {
     try {
@@ -94,8 +38,7 @@ const Home = ({ navigation }) => {
       const latitude = locationData["coords"]["latitude"];
       const longitude = locationData["coords"]["longitude"];
 
-      // const API_KEY = "cfc258c75e1da2149c33daffd07a911d"
-      const API_KEY = "5f45ba75e045a8cb44f05067fb179d01";
+      const API_KEY = Config.API_KEY;
       const result = await axios.get(
         `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
       );
@@ -112,8 +55,11 @@ const Home = ({ navigation }) => {
       });
     } catch (error) {
       // Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?")
+    } finally {
+      setReady(false);
     }
   };
+
   return ready ? (
     <Loading />
   ) : (
@@ -143,92 +89,17 @@ const Home = ({ navigation }) => {
           </WeatherSpace>
         </WeatherStatus>
       </TopStatus>
-      <MiddleStatus>
-        <GoalBox>
-          <ProgressGoal>
-            <CircularProgress
-              percentage={percentage}
-              donutColor={color}
-              size={300}
-              progressWidth={140}
-            >
-              <CharacterBox>
-                <CharacetrImage
-                  // default, walking, fail, completed
-                  // coach.append walking해줄까
-                  source={
-                    coachColorVar().coach === "toki"
-                      ? toki_default
-                      : buki_default
-                  }
-                  resizeMode="contain"
-                />
-              </CharacterBox>
-            </CircularProgress>
-          </ProgressGoal>
-        </GoalBox>
-      </MiddleStatus>
-      <CheerText>오늘도 함께 달려봐요!</CheerText>
 
-      <BottomStatus>
-        <LongButton handleGoToNext={handleGoToNext} btnBackColor={color}>
-          오늘의 목표를 세워보세요!
-        </LongButton>
-      </BottomStatus>
+      <StatusHome navigation={navigation} />
     </Container>
   );
 };
-
-const blurgoal = styled.Text`
-  font-size: 25;
-  font-weight: 700;
-  color: ${coachColorVar().color.main};
-`;
-const ProgressGoal = styled(CircularProgress)`
-  width: 292px;
-  height: 292px;
-`;
-
-const GoalBox = styled.View`
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CharacterBox = styled.View`
-  width: 120px;
-  height: 192px;
-`;
-
-const CharacetrImage = styled.Image`
-  width: 120px;
-  height: 192px;
-`;
-
-const CheerText = styled.Text`
-  font-size: 16px;
-`;
 
 const Container = styled.SafeAreaView`
   align-items: center;
   width: 100%;
   height: 100%;
-`;
-
-const GoalContainer = styled.TouchableOpacity`
-  width: 300px;
-  height: 54px;
-  justify-content: center;
-  align-items: center;
-  color: ${theme.grayScale.white};
-  background-color: ${theme.toki.color.main};
-  border-radius: 8px;
-`;
-
-const GoalText = styled(H4Text)`
-  color: ${theme.grayScale.white};
-  text-align: center;
+  background-color: #f3f3f3;
 `;
 
 const TopStatus = styled.View`
@@ -323,24 +194,6 @@ const BarImage = styled.Image`
   height: 50px;
   align-items: center;
   justify-content: center;
-`;
-const MiddleStatus = styled.View`
-  width: 100%;
-  height: 60%;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding-left: 15px;
-  padding-right: 1px;
-  padding-top: 15px;
-  flex-direction: row;
-`;
-const BottomStatus = styled.View`
-  width: 80%;
-  height: 20%;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding-top: 30px;
-  flex-direction: row;
 `;
 
 export default Home;

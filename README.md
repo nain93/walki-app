@@ -31,16 +31,18 @@ yarn start 이후
 
 #### iOS (맥에서만 가능)
 
-npx pod install
-yarn ios
+- yarn
+- npx pod-install
+- yarn ios 
 
 #### Android
 
-yarn android
+- yarn
+- yarn android
 
 이후 에뮬레이터나 usb 연결 후 테스트 할 수 있습니다
 
 #### ios 디바이스 실행
 
-sudo npm install -g ios-deploy
-yarn ios --device '김지하하' --configuration Release
+- sudo npm install -g ios-deploy
+- yarn ios --device '김지하하' --configuration Release

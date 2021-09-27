@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import noProfileTokiImg from "../../../assets/images/noprofile_toki.png";
 import noProfileBookiImg from "../../../assets/images/noprofile_booki.png";
 import { Body1Text, Body3Text, theme } from "../../styles/theme";
 import { gql, useQuery, useReactiveVar } from "@apollo/client";
 import { coachColorVar, userNameVar } from "../../../apollo";
+import Loading from "../../components/Loading";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Profile = ({ navigation }) => {
   const GET_MEMBER = gql`
@@ -24,11 +26,23 @@ const Profile = ({ navigation }) => {
   };
   const userName = useReactiveVar(userNameVar);
 
-  const { data, loading, error } = useQuery(GET_MEMBER, {
+  const { data, loading, error, refetch } = useQuery(GET_MEMBER, {
     onCompleted,
+    onError: (e) => {
+      console.log(e);
+    },
   });
   const { name, profileImage } = userName;
-  const coachColor = useReactiveVar(coachColorVar);
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [userName])
+  );
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Container>
@@ -55,7 +69,7 @@ const Profile = ({ navigation }) => {
             })
           }
         >
-          <ChangeText coachColor={coachColor}>변경</ChangeText>
+          <ChangeText coachColor={coachColorVar().color.main}>변경</ChangeText>
         </NameChange>
       </NameInputBox>
     </Container>
@@ -102,7 +116,7 @@ const NameChange = styled.TouchableOpacity`
 `;
 
 const ChangeText = styled(Body1Text)`
-  color: ${(props) => props.coachColor.color.main};
+  color: ${(props) => props.coachColor};
 `;
 
 export default Profile;
