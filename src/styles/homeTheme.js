@@ -11,17 +11,17 @@ export const BlurgoalBox = styled.View`
 export const Blurgoal = styled.Text`
   font-size: 25px;
   font-weight: 700;
-  color: ${(props) => props.coachColorVar};
+  color: ${props => props.coachColorVar};
 `;
 export const ProgressGoal = styled(CircularProgress)`
-  width: 292px;
-  height: 292px;
+  width: 2px;
+  height: 2px;
 `;
 
 export const GoalBox = styled.View`
   width: 100%;
   height: 100%;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 `;
 
@@ -37,6 +37,8 @@ export const CharacetrImage = styled.Image`
 
 export const CheerText = styled.Text`
   font-size: 16px;
+  margin-top: 370px;
+  margin-bottom: 30px;
 `;
 
 export const Container = styled.SafeAreaView`
@@ -63,7 +65,6 @@ export const MiddleStatus = styled.View`
   justify-content: flex-start;
   padding-left: 15px;
   padding-right: 1px;
-  padding-top: 15px;
   flex-direction: row;
 `;
 export const BottomStatus = styled.View`
@@ -71,7 +72,7 @@ export const BottomStatus = styled.View`
   height: 20%;
   align-items: flex-start;
   justify-content: flex-start;
-  padding-top: 30px;
+  padding-top: 60px;
   flex-direction: row;
 `;
 

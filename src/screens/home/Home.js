@@ -7,7 +7,6 @@ import SpaceLogo from "../../../assets/icons/bar.png";
 
 import Config from "react-native-config";
 import StatusHome from "./StatusHome";
-import { Animated } from "react-native";
 
 const Home = ({ navigation }) => {
   const [ready, setReady] = useState(true);
@@ -15,8 +14,30 @@ const Home = ({ navigation }) => {
     temp: 1,
     condition: "맑음",
   });
+  const [weatherPic, setWeatherPic] = useState("");
 
   const Location = "강남구";
+
+  const load = async () => {
+    const result = await getLocation();
+    WeatherSetter(result);
+  };
+  const WeatherSetter = () => {
+    if (weather.condition === "맑음") {
+      setWeatherPic(require("../../../assets/icons/sun.png"));
+    } else if (weather.condition === "구름") {
+      setWeatherPic(require("../../../assets/icons/cloud.png"));
+    } else if (weather.condition === "비") {
+      setWeatherPic(require("../../../assets/icons/rain.png"));
+    } else if (weather.condition === "태풍") {
+      setWeatherPic(require("../../../assets/icons/thunderstrom.png"));
+    } else if (weather.condition === "눈") {
+      setWeatherPic(require("../../../assets/icons/snow.png"));
+    } else {
+      weather.condition === "안개";
+      setWeatherPic(require("../../../assets/icons/mist.png"));
+    }
+  };
 
   const [currentDate, setcurrentDate] = useState("");
   const [currentTime, setcurrentTime] = useState("");
@@ -25,10 +46,15 @@ const Home = ({ navigation }) => {
     let date = new Date().getDate();
     let month = new Date().getMonth() + 1;
     let hours = new Date().getHours();
-    let min = new Date().getMinutes();
+    let minutes = new Date().getMinutes();
+    hours = hours % 12;
+    hours = hours < 10 ? "0" + hours : hours;
+    let ampm = hours >= 12 ? "시" : "PM";
+    minutes = minutes < 10 ? "0" + minutes : minutes;
     setcurrentDate(month + "월" + " " + date + "일");
-    setcurrentTime(hours + ":" + min + "PM");
+    setcurrentTime(hours + ":" + minutes + ampm);
     getLocation();
+    load();
   }, []);
 
   const getLocation = async () => {
@@ -53,6 +79,7 @@ const Home = ({ navigation }) => {
         temp,
         condition,
       });
+      console.log(weather.condition);
     } catch (error) {
       // Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?")
     } finally {
@@ -82,9 +109,8 @@ const Home = ({ navigation }) => {
           </BarSpace>
           <WeatherSpace>
             <WeatherImage
-              source={WeatherLogo}
-              resizeMode={"contain"}
-            ></WeatherImage>
+              source={weatherPic}
+              resizeMode={"contain"}></WeatherImage>
             <CurrentWeather>{weather.condition}</CurrentWeather>
           </WeatherSpace>
         </WeatherStatus>
@@ -162,7 +188,7 @@ const CurrentWeather = styled.Text`
   height: 60px;
   font-size: 12px;
   padding-left: 25px;
-  padding-top: 5px;
+  padding-top: 3px;
   color: #828282;
 `;
 const CurrentTemperature = styled.Text`
@@ -182,16 +208,16 @@ const CurrentLocation = styled.Text`
 `;
 
 const WeatherImage = styled.Image`
-  width: 100px;
-  height: 50px;
-  padding-top: 40px;
+  width: 33px;
+  height: 33px;
+  padding-top: 25px;
   align-items: center;
   justify-content: center;
 `;
 
 const BarImage = styled.Image`
   width: 50px;
-  height: 50px;
+  height: 28px;
   align-items: center;
   justify-content: center;
 `;

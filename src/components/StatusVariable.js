@@ -14,7 +14,7 @@ import {
   MiddleStatus,
   ProgressGoal,
 } from "../styles/homeTheme";
-import UserFail from "../screens/home/Others/UserFail";
+import UserFail from "../screens/home/others/UserFail";
 import { Animated } from "react-native";
 
 import { Pedometer } from "expo-sensors";
@@ -39,8 +39,8 @@ const StatusVariable = ({
   const percentage = 0;
 
   const getSteps = () => {
-    Pedometer.watchStepCount((result) =>
-      setSteps((steps) => ({
+    Pedometer.watchStepCount(result =>
+      setSteps(steps => ({
         ...steps,
         currentStepCount: result.steps,
       }))
@@ -54,7 +54,7 @@ const StatusVariable = ({
   });
 
   useEffect(() => {
-    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
+    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then(granted => {
       if (granted) {
         console.log(granted);
         getSteps();
@@ -74,25 +74,24 @@ const StatusVariable = ({
         <GoalBox>
           {/* <MiddleBox onpress={handlepressup}> */}
           <ProgressGoal>
-            <TouchableOpacity onPress={handleOpacity}>
+            <TouchableOpacity
+              onPress={handleOpacity}
+              style={{ paddingTop: 370 }}>
               <CircularProgress
                 percentage={percentage}
                 donutColor={coachColorVar().color.main}
-                size={300}
-                progressWidth={140}
-              >
+                size={350}
+                progressWidth={160}>
                 <CharacterBox>
                   <Animated.View
-                    style={[{ opacity: fadeimage ? fadeimage : 1 }]}
-                  >
+                    style={[{ opacity: fadeimage ? fadeimage : 1 }]}>
                     <CharacetrImage source={coachImg} resizeMode="contain" />
                   </Animated.View>
                 </CharacterBox>
                 <Animated.View
                   style={[
                     { opacity: fadetext ? fadetext : 0, position: "absolute" },
-                  ]}
-                >
+                  ]}>
                   <BlurgoalBox>
                     <Blurgoal coachColorVar={coachColorVar().color.main}>
                       {currentStepCount}
@@ -105,18 +104,17 @@ const StatusVariable = ({
               </CircularProgress>
             </TouchableOpacity>
           </ProgressGoal>
+          <CheerText>{cheerText}</CheerText>
+
           {/* </MiddleBox> */}
         </GoalBox>
       </MiddleStatus>
-
-      <CheerText>{cheerText}</CheerText>
 
       <BottomStatus>
         <LongButton
           handleGoToNext={handleGoToNext}
           btnBackColor={buttonColor}
-          disabled={disabled}
-        >
+          disabled={disabled}>
           {buttonText}
         </LongButton>
         <UserFail
