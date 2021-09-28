@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { View, Text } from "react-native";
 import styled from "styled-components";
 import axios from "axios";
 import Loading from "../../components/Loading";
@@ -7,6 +8,7 @@ import SpaceLogo from "../../../assets/icons/bar.png";
 
 import Config from "react-native-config";
 import StatusHome from "./StatusHome";
+
 
 const Home = ({ navigation }) => {
   const [ready, setReady] = useState(true);
@@ -92,25 +94,20 @@ const Home = ({ navigation }) => {
   ) : (
     <Container>
       <TopStatus>
-        <TimeStatus>
+        <View>
           <CurrentDate>{currentDate}</CurrentDate>
           <CurrentTime>{currentTime}</CurrentTime>
-        </TimeStatus>
+        </View>
         <WeatherStatus>
           <LocationSpace>
-            <CurrentTemperature>
-              {weather.temp + "℃"}
-              {"\n"}
-            </CurrentTemperature>
-            <CurrentLocation>{Location}</CurrentLocation>
+            <CurrentTemperature>{weather.temp}</CurrentTemperature>
+            <CurrentText>{Location}</CurrentText>
           </LocationSpace>
+          <Text style={{ fontSize: 36 }}>°</Text>
           <BarSpace>
-            <BarImage source={SpaceLogo} resizeMode={"contain"}></BarImage>
-          </BarSpace>
-          <WeatherSpace>
             <WeatherImage
               source={weatherPic}
-              resizeMode={"contain"}></WeatherImage>
+              resizeMode={"contain"}/>
             <CurrentWeather>{weather.condition}</CurrentWeather>
           </WeatherSpace>
         </WeatherStatus>
@@ -122,104 +119,58 @@ const Home = ({ navigation }) => {
 };
 
 const Container = styled.SafeAreaView`
-  align-items: center;
-  width: 100%;
-  height: 100%;
+  flex: 1;
+  padding: 30px;
   background-color: #f3f3f3;
 `;
 
 const TopStatus = styled.View`
-  width: 100%;
-  height: 20%;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding-left: 15px;
-  padding-right: 1px;
-  padding-top: 35px;
   flex-direction: row;
+  justify-content: space-between;
 `;
 
-const TimeStatus = styled.View`
-  width: 40%;
-  height: 90%;
-  padding-left: 15px;
-`;
 const WeatherStatus = styled.View`
-  width: 60%;
-  height: 100%;
   flex-direction: row;
-  padding-left: 50px;
 `;
 const LocationSpace = styled.View`
-  width: 30%;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: 5px;
 `;
 const WeatherSpace = styled.View`
-  width: 30%;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  padding-top: 3px;
 `;
 
 const BarSpace = styled.View`
-  width: 10%;
-  align-items: center;
   justify-content: center;
-  padding-bottom: 40px;
-  padding-left: 30px;
-  padding-right: 10px;
+  margin: 0 10px;
 `;
 const CurrentDate = styled.Text`
-  width: 100px;
-  height: 20px;
   font-weight: bold;
   font-size: 16px;
 `;
 
 const CurrentTime = styled.Text`
-  width: 130px;
-  height: 40px;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 36px;
 `;
 
-const CurrentWeather = styled.Text`
-  width: 70px;
-  height: 60px;
+const CurrentText = styled.Text`
   font-size: 12px;
-  padding-left: 25px;
-  padding-top: 3px;
-  color: #828282;
+
+  color: ${theme.grayScale.gray3};
 `;
 const CurrentTemperature = styled.Text`
-  width: 70px;
-  height: 30px;
-  padding-left: 30px;
-  font-size: 26px;
-`;
-
-const CurrentLocation = styled.Text`
-  width: 70px;
-  height: 60px;
-  font-size: 12px;
-  padding-left: 30px;
-  padding-top: 5px;
-  color: #828282;
+  font-size: 36px;
 `;
 
 const WeatherImage = styled.Image`
-  width: 33px;
-  height: 33px;
-  padding-top: 25px;
-  align-items: center;
-  justify-content: center;
-`;
 
-const BarImage = styled.Image`
-  width: 50px;
-  height: 28px;
-  align-items: center;
-  justify-content: center;
+  width: 40px;
+  height: 40px;
 `;
 
 export default Home;

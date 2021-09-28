@@ -1,26 +1,18 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
-import { coachColorVar, stepVar } from "../../apollo";
+import { coachColorVar, statusVar } from "../../apollo";
 import LongButton from "../components/LongButton";
-import {
-  Blurgoal,
-  BlurgoalBox,
-  BottomStatus,
-  CharacetrImage,
-  CharacterBox,
-  CheerText,
-  GoalBox,
-  GoalText,
-  MiddleStatus,
-  ProgressGoal,
-} from "../styles/homeTheme";
-import UserFail from "../screens/home/others/UserFail";
-import { Animated } from "react-native";
+
+import { Blurgoal, CharacetrImage, GoalBox } from "../styles/homeTheme";
+import UserFail from "../screens/home/Others/UserFail";
+import { Animated, View } from "react-native";
 
 import { Pedometer } from "expo-sensors";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { gql, useMutation, useReactiveVar } from "@apollo/client";
+import { Body1Text, H4Text, theme } from "../styles/theme";
 
 const StatusVariable = ({
   coachImg,
@@ -37,14 +29,18 @@ const StatusVariable = ({
 }) => {
   const navigation = useNavigation();
   const percentage = 0;
+  const status = useReactiveVar(statusVar);
 
   const getSteps = () => {
-    Pedometer.watchStepCount(result =>
-      setSteps(steps => ({
-        ...steps,
-        currentStepCount: result.steps,
-      }))
-    );
+
+    Pedometer.watchStepCount((result) => {
+      if (status === "walking") {
+        setSteps((steps) => ({
+          ...steps,
+          currentStepCount: result.steps,
+        }));
+      }
+    });
   };
 
   const [steps, setSteps] = useState({
@@ -56,73 +52,89 @@ const StatusVariable = ({
   useEffect(() => {
     request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then(granted => {
       if (granted) {
-        console.log(granted);
         getSteps();
       }
     });
   }, []);
 
-  useEffect(() => {
-    stepVar(currentStepCount);
-  }, [currentStepCount]);
-
   const { currentStepCount, isPedometerAvailable } = steps;
+
+
+  const PUT_CHALLENGE = gql`
+    mutation putChallenge($challenge: ChallengeInput) {
+      putChallenge(challenge: $challenge) {
+        step
+      }
+    }
+  `;
+
+  const [putChallengeMutation, { data, loading }] = useMutation(PUT_CHALLENGE, {
+    onCompleted: (data) => {
+      console.log(data, "data");
+    },
+  });
+
+  // useEffect(() => {
+  //   const putStep = async () => {
+  //     await putChallengeMutation({
+  //       variables: {
+  //         challenge: {
+  //           step: currentStepCount,
+  //           challengeDate: getToday(),
+  //         },
+  //       },
+  //     });
+  //     stepVar(currentStepCount);
+  //   };
+  //   putStep();
+  // }, [currentStepCount]);
+  // * 12시에 업데이트 해야됨 or 일정 간격
 
   return (
     <>
-      <MiddleStatus>
-        <GoalBox>
-          {/* <MiddleBox onpress={handlepressup}> */}
-          <ProgressGoal>
-            <TouchableOpacity
-              onPress={handleOpacity}
-              style={{ paddingTop: 370 }}>
-              <CircularProgress
-                percentage={percentage}
-                donutColor={coachColorVar().color.main}
-                size={350}
-                progressWidth={160}>
-                <CharacterBox>
-                  <Animated.View
-                    style={[{ opacity: fadeimage ? fadeimage : 1 }]}>
-                    <CharacetrImage source={coachImg} resizeMode="contain" />
-                  </Animated.View>
-                </CharacterBox>
-                <Animated.View
-                  style={[
-                    { opacity: fadetext ? fadetext : 0, position: "absolute" },
-                  ]}>
-                  <BlurgoalBox>
-                    <Blurgoal coachColorVar={coachColorVar().color.main}>
-                      {currentStepCount}
-                      {"\n"}
-                    </Blurgoal>
+      <GoalBox>
+        <TouchableOpacity onPress={handleOpacity}>
+          <CircularProgress
+            percentage={percentage}
+            donutColor={coachColorVar().color.main}
+            size={350}
+            progressWidth={165}
+          >
+            <Animated.View style={[{ opacity: fadeimage ? fadeimage : 1 }]}>
+              <CharacetrImage source={coachImg} resizeMode="contain" />
+            </Animated.View>
+            <Animated.View
+              style={[
+                { opacity: fadetext ? fadetext : 0, position: "absolute" },
+              ]}
+            >
+              <View style={{ alignItems: "center" }}>
+                <Blurgoal coachColorVar={coachColorVar().color.main}>
+                  {currentStepCount}
+                  {"\n"}
+                </Blurgoal>
 
-                    <GoalText>{goalText}</GoalText>
-                  </BlurgoalBox>
-                </Animated.View>
-              </CircularProgress>
-            </TouchableOpacity>
-          </ProgressGoal>
-          <CheerText>{cheerText}</CheerText>
-
-          {/* </MiddleBox> */}
-        </GoalBox>
-      </MiddleStatus>
-
-      <BottomStatus>
-        <LongButton
-          handleGoToNext={handleGoToNext}
-          btnBackColor={buttonColor}
-          disabled={disabled}>
-          {buttonText}
-        </LongButton>
-        <UserFail
-          navigation={navigation}
-          handleFailModal={handleGoToNext}
-          failModalOpen={failModalOpen}
-        />
-      </BottomStatus>
+                <H4Text>{goalText}</H4Text>
+              </View>
+            </Animated.View>
+          </CircularProgress>
+        </TouchableOpacity>
+        <Body1Text style={{ marginTop: 10, color: theme.grayScale.gray2 }}>
+          {cheerText}
+        </Body1Text>
+      </GoalBox>
+      <LongButton
+        handleGoToNext={handleGoToNext}
+        btnBackColor={buttonColor}
+        disabled={disabled}
+      >
+        {buttonText}
+      </LongButton>
+      <UserFail
+        navigation={navigation}
+        handleFailModal={handleGoToNext}
+        failModalOpen={failModalOpen}
+      />
     </>
   );
 };

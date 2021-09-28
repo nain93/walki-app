@@ -5,9 +5,6 @@ import { coachColorVar } from "../../../apollo";
 import { Body1Text, Caption, theme } from "../../styles/theme";
 import * as Progress from "react-native-progress";
 
-const date = new Date();
-const month = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-
 const ReportHeader = ({ stepTotal }) => {
   const { stepGoal, stepAchievement, challengeGoal, challengeAchievement } =
     stepTotal;
