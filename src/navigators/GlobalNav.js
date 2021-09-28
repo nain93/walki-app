@@ -46,7 +46,7 @@ const GlobalNav = () => {
           Platform.OS === "android" && TransitionScreenOptions,
           { cardStyle: { backgroundColor: theme.grayScale.white } }
         )}>
-        {!isLoggedIn && (
+        {/* {!isLoggedIn && (
           <Stack.Screen
             name="OnBoarding"
             options={{
@@ -54,7 +54,7 @@ const GlobalNav = () => {
             }}
             component={OnBoarding}
           />
-        )} */}
+        )}  */}
         <Stack.Screen
           name="CoachSelect"
           options={{

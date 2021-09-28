@@ -7,6 +7,7 @@ import { alertTimeVar, coachColorVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import LongButton from "../../components/LongButton";
 import PushNotification from "react-native-push-notification";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 PushNotification.configure({
   onRegister: function (token) {
@@ -16,7 +17,7 @@ PushNotification.configure({
   onNotification: function (notification) {
     console.log("NOTIFICATION:", notification);
 
-    // notification.finish(PushNotificationIOS.FetchResult.NoData);
+    notification.finish(PushNotificationIOS.FetchResult.NoData);
   },
 
   onAction: function (notification) {
@@ -50,6 +51,7 @@ const AlertSetting = ({ navigation }) => {
   });
   const InputRef = useRef();
 
+  
   useEffect(() => {
     InputRef?.current?.focus();
   }, []);

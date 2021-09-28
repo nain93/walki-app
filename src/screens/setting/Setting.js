@@ -6,7 +6,7 @@ import document from "../../../assets/icons/document.png";
 import { Body1Text, theme } from "../../styles/theme";
 import { alertTimeVar, coachColorVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
-import { View } from "react-native";
+import { View, Platform } from "react-native";
 
 const Setting = ({ navigation }) => {
   const alertTime = useReactiveVar(alertTimeVar);
@@ -33,7 +33,8 @@ const Setting = ({ navigation }) => {
             : "설정"}
         </AlertSettingText>
       </SettingBox>
-      <SettingBox onPress={() => navigation.navigate("AppSetting")}>
+      <SettingBox onPress={() => navigation.navigate("Appsetting")}>
+        {/* ios, aos 따로? */}
         <View style={{ flexDirection: "row" }}>
           <SettingImg source={bookMark} resizeMode="contain" />
           <SettingText>앱 설정</SettingText>

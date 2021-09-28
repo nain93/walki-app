@@ -14,7 +14,7 @@ import {
   MiddleStatus,
   ProgressGoal,
 } from "../styles/homeTheme";
-import UserFail from "../screens/home/Others/UserFail";
+import UserFail from "../screens/home/others/UserFail";
 import { Animated } from "react-native";
 
 import { Pedometer } from "expo-sensors";
