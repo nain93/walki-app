@@ -1,28 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
-import { coachColorVar, statusVar, stepVar } from "../../apollo";
+import { coachColorVar, statusVar } from "../../apollo";
 import LongButton from "../components/LongButton";
-import {
-  Blurgoal,
-  BlurgoalBox,
-  BottomStatus,
-  CharacetrImage,
-  CharacterBox,
-  CheerText,
-  GoalBox,
-  GoalText,
-  MiddleStatus,
-  ProgressGoal,
-} from "../styles/homeTheme";
+import { Blurgoal, CharacetrImage, GoalBox } from "../styles/homeTheme";
 import UserFail from "../screens/home/Others/UserFail";
-import { Animated } from "react-native";
+import { Animated, View } from "react-native";
 
 import { Pedometer } from "expo-sensors";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { gql, useMutation, useReactiveVar } from "@apollo/client";
-import { getToday } from "../common/getToday";
+import { Body1Text, H4Text, theme } from "../styles/theme";
 
 const StatusVariable = ({
   coachImg,
@@ -96,65 +85,53 @@ const StatusVariable = ({
   //   };
   //   putStep();
   // }, [currentStepCount]);
-  // * 12시에 업데이트 해야됨
+  // * 12시에 업데이트 해야됨 or 일정 간격
 
   return (
     <>
-      <MiddleStatus>
-        <GoalBox>
-          {/* <MiddleBox onpress={handlepressup}> */}
-          <ProgressGoal>
-            <TouchableOpacity onPress={handleOpacity}>
-              <CircularProgress
-                percentage={percentage}
-                donutColor={coachColorVar().color.main}
-                size={300}
-                progressWidth={140}
-              >
-                <CharacterBox>
-                  <Animated.View
-                    style={[{ opacity: fadeimage ? fadeimage : 1 }]}
-                  >
-                    <CharacetrImage source={coachImg} resizeMode="contain" />
-                  </Animated.View>
-                </CharacterBox>
-                <Animated.View
-                  style={[
-                    { opacity: fadetext ? fadetext : 0, position: "absolute" },
-                  ]}
-                >
-                  <BlurgoalBox>
-                    <Blurgoal coachColorVar={coachColorVar().color.main}>
-                      {currentStepCount}
-                      {"\n"}
-                    </Blurgoal>
+      <GoalBox>
+        <TouchableOpacity onPress={handleOpacity}>
+          <CircularProgress
+            percentage={percentage}
+            donutColor={coachColorVar().color.main}
+            size={350}
+            progressWidth={165}
+          >
+            <Animated.View style={[{ opacity: fadeimage ? fadeimage : 1 }]}>
+              <CharacetrImage source={coachImg} resizeMode="contain" />
+            </Animated.View>
+            <Animated.View
+              style={[
+                { opacity: fadetext ? fadetext : 0, position: "absolute" },
+              ]}
+            >
+              <View style={{ alignItems: "center" }}>
+                <Blurgoal coachColorVar={coachColorVar().color.main}>
+                  {currentStepCount}
+                  {"\n"}
+                </Blurgoal>
 
-                    <GoalText>{goalText}</GoalText>
-                  </BlurgoalBox>
-                </Animated.View>
-              </CircularProgress>
-            </TouchableOpacity>
-          </ProgressGoal>
-          {/* </MiddleBox> */}
-        </GoalBox>
-      </MiddleStatus>
-
-      <CheerText>{cheerText}</CheerText>
-
-      <BottomStatus>
-        <LongButton
-          handleGoToNext={handleGoToNext}
-          btnBackColor={buttonColor}
-          disabled={disabled}
-        >
-          {buttonText}
-        </LongButton>
-        <UserFail
-          navigation={navigation}
-          handleFailModal={handleGoToNext}
-          failModalOpen={failModalOpen}
-        />
-      </BottomStatus>
+                <H4Text>{goalText}</H4Text>
+              </View>
+            </Animated.View>
+          </CircularProgress>
+        </TouchableOpacity>
+        <Body1Text style={{ marginTop: 10, color: theme.grayScale.gray2 }}>
+          {cheerText}
+        </Body1Text>
+      </GoalBox>
+      <LongButton
+        handleGoToNext={handleGoToNext}
+        btnBackColor={buttonColor}
+        disabled={disabled}
+      >
+        {buttonText}
+      </LongButton>
+      <UserFail
+        navigation={navigation}
+        handleFailModal={handleGoToNext}
+        failModalOpen={failModalOpen}
+      />
     </>
   );
 };
