@@ -4,8 +4,7 @@ import styled from "styled-components";
 import LongButton from "../../components/LongButton";
 import { Body1Text, H1Text, theme } from "../../styles/theme";
 import { coachColorVar, statusVar } from "../../../apollo";
-import { useReactiveVar } from "@apollo/client";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useReactiveVar } from "@apollo/client";
 import { KeyboardAvoidingView } from "react-native";
 import { getToday } from "../../common/getToday";
 const ChallengeSetting = ({ navigation }) => {

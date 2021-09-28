@@ -60,6 +60,7 @@ export const logUserOut = async () => {
   isLoggedInVar(false);
   userNameVar({});
   tokenVar("");
+  statusVar("home");
 };
 
 const httpLink = createHttpLink({

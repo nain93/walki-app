@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
-import { coachColorVar, stepVar } from "../../apollo";
+import { coachColorVar, statusVar, stepVar } from "../../apollo";
 import LongButton from "../components/LongButton";
 import {
   Blurgoal,
@@ -21,6 +21,8 @@ import { Pedometer } from "expo-sensors";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { gql, useMutation, useReactiveVar } from "@apollo/client";
+import { getToday } from "../common/getToday";
 
 const StatusVariable = ({
   coachImg,
@@ -37,14 +39,17 @@ const StatusVariable = ({
 }) => {
   const navigation = useNavigation();
   const percentage = 0;
+  const status = useReactiveVar(statusVar);
 
   const getSteps = () => {
-    Pedometer.watchStepCount((result) =>
-      setSteps((steps) => ({
-        ...steps,
-        currentStepCount: result.steps,
-      }))
-    );
+    Pedometer.watchStepCount((result) => {
+      if (status === "walking") {
+        setSteps((steps) => ({
+          ...steps,
+          currentStepCount: result.steps,
+        }));
+      }
+    });
   };
 
   const [steps, setSteps] = useState({
@@ -56,17 +61,42 @@ const StatusVariable = ({
   useEffect(() => {
     request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
       if (granted) {
-        console.log(granted);
         getSteps();
       }
     });
   }, []);
 
-  useEffect(() => {
-    stepVar(currentStepCount);
-  }, [currentStepCount]);
-
   const { currentStepCount, isPedometerAvailable } = steps;
+
+  const PUT_CHALLENGE = gql`
+    mutation putChallenge($challenge: ChallengeInput) {
+      putChallenge(challenge: $challenge) {
+        step
+      }
+    }
+  `;
+
+  const [putChallengeMutation, { data, loading }] = useMutation(PUT_CHALLENGE, {
+    onCompleted: (data) => {
+      console.log(data, "data");
+    },
+  });
+
+  // useEffect(() => {
+  //   const putStep = async () => {
+  //     await putChallengeMutation({
+  //       variables: {
+  //         challenge: {
+  //           step: currentStepCount,
+  //           challengeDate: getToday(),
+  //         },
+  //       },
+  //     });
+  //     stepVar(currentStepCount);
+  //   };
+  //   putStep();
+  // }, [currentStepCount]);
+  // * 12시에 업데이트 해야됨
 
   return (
     <>
