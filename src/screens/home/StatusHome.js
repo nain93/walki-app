@@ -7,6 +7,7 @@ import { useReactiveVar } from "@apollo/client";
 import HomeWalk from "./HomeWalk";
 import HomeAfterStop from "./HomeAfterStop";
 import { Animated } from "react-native";
+import HomeCompleted from "./HomeCompleted";
 
 const StatusHome = ({ navigation }) => {
   const status = useReactiveVar(statusVar);
@@ -70,6 +71,12 @@ const StatusHome = ({ navigation }) => {
   }
   if (status === "afterStop") {
     return <HomeAfterStop />;
+  }
+  if (status === "success") {
+    return <HomeCompleted />;
+  }
+  if (status === "fail") {
+    return <HomeFail />;
   }
 };
 
