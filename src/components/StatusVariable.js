@@ -4,7 +4,7 @@ import { coachColorVar, statusVar } from "../../apollo";
 import LongButton from "../components/LongButton";
 
 import { Blurgoal, CharacetrImage, GoalBox } from "../styles/homeTheme";
-import UserFail from "../screens/home/Others/UserFail";
+import UserFail from "../screens/home/others/UserFail";
 import { Animated, View } from "react-native";
 
 import { Pedometer } from "expo-sensors";
@@ -32,10 +32,9 @@ const StatusVariable = ({
   const status = useReactiveVar(statusVar);
 
   const getSteps = () => {
-
-    Pedometer.watchStepCount((result) => {
+    Pedometer.watchStepCount(result => {
       if (status === "walking") {
-        setSteps((steps) => ({
+        setSteps(steps => ({
           ...steps,
           currentStepCount: result.steps,
         }));
@@ -59,7 +58,6 @@ const StatusVariable = ({
 
   const { currentStepCount, isPedometerAvailable } = steps;
 
-
   const PUT_CHALLENGE = gql`
     mutation putChallenge($challenge: ChallengeInput) {
       putChallenge(challenge: $challenge) {
@@ -69,7 +67,7 @@ const StatusVariable = ({
   `;
 
   const [putChallengeMutation, { data, loading }] = useMutation(PUT_CHALLENGE, {
-    onCompleted: (data) => {
+    onCompleted: data => {
       console.log(data, "data");
     },
   });
@@ -98,16 +96,14 @@ const StatusVariable = ({
             percentage={percentage}
             donutColor={coachColorVar().color.main}
             size={350}
-            progressWidth={165}
-          >
+            progressWidth={165}>
             <Animated.View style={[{ opacity: fadeimage ? fadeimage : 1 }]}>
               <CharacetrImage source={coachImg} resizeMode="contain" />
             </Animated.View>
             <Animated.View
               style={[
                 { opacity: fadetext ? fadetext : 0, position: "absolute" },
-              ]}
-            >
+              ]}>
               <View style={{ alignItems: "center" }}>
                 <Blurgoal coachColorVar={coachColorVar().color.main}>
                   {currentStepCount}
@@ -126,8 +122,7 @@ const StatusVariable = ({
       <LongButton
         handleGoToNext={handleGoToNext}
         btnBackColor={buttonColor}
-        disabled={disabled}
-      >
+        disabled={disabled}>
         {buttonText}
       </LongButton>
       <UserFail
