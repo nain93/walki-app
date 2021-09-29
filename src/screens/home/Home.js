@@ -12,7 +12,7 @@ const Home = ({ navigation }) => {
   const [ready, setReady] = useState(true);
   const [weather, setWeather] = useState({
     temp: 1,
-    condition: "맑음",
+    condition: "구름",
   });
   const [weatherPic, setWeatherPic] = useState("");
 
