@@ -141,8 +141,9 @@ const EditName = ({
           handleGoToNext={handleSubmit(handleGoToNext)}
           disabled={errorMessage || inputWatch === name}
           btnBackColor={coachColorVar().color.main}
+          loading={loading}
         >
-          {loading ? <ActivityIndicator color="white" /> : "변경하기"}
+          변경하기
         </LongButton>
       </Container>
     </TouchableWithoutFeedback>
