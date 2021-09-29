@@ -8,7 +8,7 @@ import SpaceLogo from "../../../assets/icons/bar.png";
 
 import Config from "react-native-config";
 import StatusHome from "./StatusHome";
-
+import { theme } from "../../styles/theme";
 
 const Home = ({ navigation }) => {
   const [ready, setReady] = useState(true);
@@ -106,13 +106,16 @@ const Home = ({ navigation }) => {
           <Text style={{ fontSize: 36 }}>°</Text>
           <BarSpace>
             <WeatherImage
-              source={weatherPic}
-              resizeMode={"contain"}/>
-            <CurrentWeather>{weather.condition}</CurrentWeather>
+              source={SpaceLogo}
+              resizeMode={"contain"}
+            ></WeatherImage>
+          </BarSpace>
+          <WeatherSpace>
+            <WeatherImage source={WeatherLogo} resizeMode={"contain"} />
+            <CurrentText>{weather.condition}</CurrentText>
           </WeatherSpace>
         </WeatherStatus>
       </TopStatus>
-
       <StatusHome navigation={navigation} />
     </Container>
   );
@@ -168,7 +171,6 @@ const CurrentTemperature = styled.Text`
 `;
 
 const WeatherImage = styled.Image`
-
   width: 40px;
   height: 40px;
 `;
