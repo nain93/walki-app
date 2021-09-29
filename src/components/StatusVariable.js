@@ -85,7 +85,9 @@ const StatusVariable = ({
   //   };
   //   putStep();
   // }, [currentStepCount]);
-  // * 12시에 업데이트 해야됨 or 일정 간격
+  // * 12시전에 (11시59분59초) 한번 업데이트 해야됨
+  // * 종료시점을 알수있으면 종료하기전에 스탭 보내기
+  // * 아니면 asyncStorage에 스탭 넣어두기
 
   return (
     <>
