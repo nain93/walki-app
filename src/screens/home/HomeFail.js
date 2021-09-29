@@ -31,8 +31,8 @@ const HomeFail = ({ navigation }) => {
     setFailModalOpen(!FailModalOpen);
   };
   const getSteps = () => {
-    Pedometer.watchStepCount(result =>
-      setSteps(steps => ({
+    Pedometer.watchStepCount((result) =>
+      setSteps((steps) => ({
         ...steps,
         currentStepCount: result.steps,
       }))
@@ -45,7 +45,7 @@ const HomeFail = ({ navigation }) => {
   });
 
   useEffect(() => {
-    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then(granted => {
+    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
       if (granted) {
         console.log(granted);
         getSteps();
@@ -76,7 +76,7 @@ const HomeFail = ({ navigation }) => {
       getLocation();
       setReady(false);
     }, 1000);
-    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then(granted => {
+    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
       if (granted) {
         console.log(granted);
         getSteps();
@@ -167,7 +167,8 @@ const HomeFail = ({ navigation }) => {
           <WeatherSpace>
             <WeatherImage
               source={WeatherLogo}
-              resizeMode={"contain"}></WeatherImage>
+              resizeMode={"contain"}
+            ></WeatherImage>
             <CurrentWeather>{weather.condition}</CurrentWeather>
           </WeatherSpace>
         </WeatherStatus>
@@ -180,7 +181,8 @@ const HomeFail = ({ navigation }) => {
               percentage={percentage}
               donutColor={color}
               size={300}
-              progressWidth={140}>
+              progressWidth={140}
+            >
               <CharacterBox>
                 <Animated.View style={[{ opacity: fadeimage }]}>
                   <CharacetrImage
@@ -192,8 +194,9 @@ const HomeFail = ({ navigation }) => {
                 </Animated.View>
               </CharacterBox>
               <Animated.View
-                style={[{ opacity: fadetext, position: "absolute" }]}>
-                <BlurgoalBox onpress={handlepressdown => handlepressup}>
+                style={[{ opacity: fadetext, position: "absolute" }]}
+              >
+                <BlurgoalBox onpress={(handlepressdown) => handlepressup}>
                   <Blurgoal coachColorVar={coachColorVar().color.main}>
                     {currentStepCount}
                     {"\n"}
@@ -212,7 +215,8 @@ const HomeFail = ({ navigation }) => {
       <BottomStatus>
         <LongButton
           handleGoToNext={handleFailModal}
-          btnBackColor={theme.grayScale.gray1}>
+          btnBackColor={theme.grayScale.gray1}
+        >
           오늘은 그만할래요
         </LongButton>
         <UserFail
@@ -239,7 +243,7 @@ const BlurgoalBox = styled.TouchableOpacity`
 const Blurgoal = styled.Text`
   font-size: 52px;
   font-weight: 700;
-  color: ${props => props.coachColorVar};
+  color: ${(props) => props.coachColorVar};
 `;
 const ProgressGoal = styled(CircularProgress)`
   width: 2px;

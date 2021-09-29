@@ -104,15 +104,16 @@ const Home = ({ navigation }) => {
           </LocationSpace>
           <Text style={{ fontSize: 36 }}>°</Text>
           <BarSpace>
-            <BarImage source={SpaceLogo} resizeMode={"contain"}></BarImage>
+            <WeatherImage
+              source={SpaceLogo}
+              resizeMode={"contain"}></WeatherImage>
           </BarSpace>
           <WeatherSpace>
-            <WeatherImage source={weatherPic} resizeMode={"contain"} />
-            <CurrentWeather>{weather.condition}</CurrentWeather>
+            <WeatherImage source={WeatherLogo} resizeMode={"contain"} />
+            <CurrentText>{weather.condition}</CurrentText>
           </WeatherSpace>
         </WeatherStatus>
       </TopStatus>
-
       <StatusHome navigation={navigation} />
     </Container>
   );

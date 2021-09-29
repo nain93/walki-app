@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import Others from "./Others";
+import Others from "./others";
 import Profile from "./Profile";
 import Setting from "./Setting";
 import { theme } from "../../styles/theme";
