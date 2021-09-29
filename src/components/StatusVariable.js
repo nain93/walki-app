@@ -4,7 +4,7 @@ import { coachColorVar, statusVar } from "../../apollo";
 import LongButton from "../components/LongButton";
 
 import { Blurgoal, CharacetrImage, GoalBox } from "../styles/homeTheme";
-import UserFail from "../screens/home/Others/UserFail";
+import UserFail from "../screens/home/others/UserFail";
 import { Animated, View } from "react-native";
 
 import { Pedometer } from "expo-sensors";
@@ -32,7 +32,6 @@ const StatusVariable = ({
   const status = useReactiveVar(statusVar);
 
   const getSteps = () => {
-
     Pedometer.watchStepCount((result) => {
       if (status === "walking") {
         setSteps((steps) => ({
@@ -50,7 +49,7 @@ const StatusVariable = ({
   });
 
   useEffect(() => {
-    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then(granted => {
+    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
       if (granted) {
         getSteps();
       }
@@ -58,7 +57,6 @@ const StatusVariable = ({
   }, []);
 
   const { currentStepCount, isPedometerAvailable } = steps;
-
 
   const PUT_CHALLENGE = gql`
     mutation putChallenge($challenge: ChallengeInput) {

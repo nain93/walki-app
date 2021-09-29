@@ -15,7 +15,7 @@ import LongButton from "../../components/LongButton";
 import { coachColorVar } from "../../../apollo";
 import { Pedometer } from "expo-sensors";
 import { request, PERMISSIONS, check } from "react-native-permissions";
-import UserFail from "./Others/UserFail";
+import UserFail from "./others/UserFail";
 
 const HomeFail = ({ navigation }) => {
   const [state, setState] = useState([]);
