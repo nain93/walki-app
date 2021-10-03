@@ -28,7 +28,7 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
           challengeDate
           step
           stepGoal
-          createdAt
+          createdAt3
         }
       }
     }
@@ -41,9 +41,9 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
         month: Number(selectedMonth),
       },
     },
-    onCompleted: (data) => {
+    onCompleted: data => {
       let res = data.getReport.challenges
-        .map((item) => ({
+        .map(item => ({
           ...item,
           day: `Day ${item.challengeDate.substr(8, 2)}`,
           selected: false,
@@ -82,7 +82,7 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
       }
     },
     fetchPolicy: "cache-and-network",
-    onError: (e) => {
+    onError: e => {
       console.log(e);
     },
   });
@@ -94,7 +94,7 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
       }
     }
   `;
-  const onCompleted = (data) => {
+  const onCompleted = data => {
     const { getMember } = data;
     userNameVar({
       ...getMember,
@@ -104,7 +104,7 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
 
   const {} = useQuery(GET_MEMBER, {
     onCompleted,
-    onError: (e) => {
+    onError: e => {
       console.log(e);
     },
   });
