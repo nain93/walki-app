@@ -121,7 +121,7 @@ const Home = ({ navigation }) => {
   );
 };
 
-const Container = styled.SafeAreaView`
+const Container = styled.View`
   flex: 1;
   padding: 30px;
   background-color: #f3f3f3;
