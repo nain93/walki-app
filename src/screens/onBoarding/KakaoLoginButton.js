@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, ActivityIndicator, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import {
@@ -11,7 +11,7 @@ import {
 } from "@react-native-seoul/kakao-login";
 import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
 import { Caption, H4Text, theme } from "../../styles/theme";
-import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { logUserIn } from "../../../apollo";
 
 const KakaoLoginButton = ({ navigation }) => {
@@ -28,6 +28,7 @@ const KakaoLoginButton = ({ navigation }) => {
       }
     }
   `;
+  const [isLoading, setIsLoading] = useState(false);
   const onCompleted = (data) => {
     const {
       signIn: { accessToken },
@@ -36,13 +37,14 @@ const KakaoLoginButton = ({ navigation }) => {
       console.log(accessToken, "accessToken");
       logUserIn(accessToken);
     }
+    setIsLoading(false);
   };
 
-  const [signInQuery, { loading }] = useLazyQuery(SIGN_IN_QUERY, {
+  const [signInQuery] = useLazyQuery(SIGN_IN_QUERY, {
     onCompleted,
   });
 
-  const [signUpMutation, data] = useMutation(SIGN_UP_MUTATION, {
+  const [signUpMutation] = useMutation(SIGN_UP_MUTATION, {
     onError: (error) => {
       if (error.message.includes("이미 가입된 유저")) {
         // * 가입된 유저가 로그인화면 접근했을때 에러 처리 로직
@@ -52,6 +54,7 @@ const KakaoLoginButton = ({ navigation }) => {
 
   // refreshToken?
   const handleKakaoLogin = async () => {
+    setIsLoading(true);
     const token = await login();
     const { accessToken } = token;
     await signUpMutation({
@@ -72,7 +75,7 @@ const KakaoLoginButton = ({ navigation }) => {
   return (
     <Container>
       <KakaoButton onPress={handleKakaoLogin}>
-        {loading ? (
+        {isLoading ? (
           <ActivityIndicator color="black" />
         ) : (
           <>

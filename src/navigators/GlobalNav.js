@@ -1,43 +1,44 @@
-import React from "react"
-import { NavigationContainer } from "@react-navigation/native"
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
   TransitionPresets,
-} from "@react-navigation/stack"
-import { Image, Platform, TouchableOpacity } from "react-native"
-import OnBoarding from "../screens/onBoarding"
-import CoachSelect from "../screens/coachSelect"
-import BeforeStart from "../screens/beforeStart"
-import { theme } from "../styles/theme"
-import SettingScreen from "../screens/setting"
-import { useNavigation } from "@react-navigation/native"
-import EditName from "../screens/setting/EditName"
-import AlertSetting from "../screens/setting/AlertSetting"
-import TabNavigator from "./TabNav"
-import LeftIcon from "react-native-vector-icons/AntDesign"
-import { useReactiveVar } from "@apollo/client"
-import { isLoggedInVar } from "../../apollo"
-import ChallengeSetting from "../screens/coachSelect/ChallengeSetting"
-import AppSetting from "../screens/setting/AppSetting"
-import OpenSource from "../screens/setting/OpenSource"
-import Service from "../screens/terms/Service"
-import Info from "../screens/terms/Info"
-import TermsCheck from "../screens/terms/TermsCheck"
-import Permission from "../common/Permission"
-import HomeAfterStop from "../screens/home/HomeAfterStop"
-import HomeCompleted from "../screens/home/HomeCompleted"
-import HomeWalk from "../screens/home/HomeWalk"
-import HomeFail from "../screens/home/HomeFail"
-import CloseIcon from "../components/CloseIcon"
-import { CommonActions, StackActions } from "@react-navigation/native"
+} from "@react-navigation/stack";
+import { Image, Platform, TouchableOpacity } from "react-native";
+import OnBoarding from "../screens/onBoarding";
+import CoachSelect from "../screens/coachSelect";
+import BeforeStart from "../screens/beforeStart";
+import { theme } from "../styles/theme";
+import SettingScreen from "../screens/setting";
+import { useNavigation } from "@react-navigation/native";
+import EditName from "../screens/setting/EditName";
+import AlertSetting from "../screens/setting/AlertSetting";
+import TabNavigator from "./TabNav";
+import LeftIcon from "react-native-vector-icons/AntDesign";
+import { useReactiveVar } from "@apollo/client";
+import { isLoggedInVar } from "../../apollo";
+import ChallengeSetting from "../screens/coachSelect/ChallengeSetting";
+import AppSetting from "../screens/setting/AppSetting";
+import OpenSource from "../screens/setting/OpenSource";
+import Service from "../screens/terms/Service";
+import Info from "../screens/terms/Info";
+import TermsCheck from "../screens/terms/TermsCheck";
+import Permission from "../common/Permission";
+import HomeAfterStop from "../screens/home/HomeAfterStop";
+import HomeCompleted from "../screens/home/HomeCompleted";
+import HomeWalk from "../screens/home/HomeWalk";
+import HomeFail from "../screens/home/HomeFail";
+import CloseIcon from "../components/CloseIcon";
+import successPopUp from "../components/successPopUp";
+import { CommonActions, StackActions } from "@react-navigation/native";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
-}
-const Stack = createStackNavigator()
+};
+const Stack = createStackNavigator();
 
 const GlobalNav = () => {
-  const isLoggedIn = useReactiveVar(isLoggedInVar)
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -93,12 +94,12 @@ const GlobalNav = () => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.goBack()
+                    navigation.goBack();
                   }}
                   style={{ marginLeft: 20 }}>
                   <LeftIcon name="left" size={24} />
                 </TouchableOpacity>
-              )
+              );
             },
             headerStyle: {
               backgroundColor: theme.grayScale.white,
@@ -130,12 +131,12 @@ const GlobalNav = () => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.goBack()
+                    navigation.goBack();
                   }}
                   style={{ marginLeft: 20 }}>
                   <LeftIcon name="left" size={24} />
                 </TouchableOpacity>
-              )
+              );
             },
             headerStyle: {
               backgroundColor: theme.grayScale.white,
@@ -153,12 +154,12 @@ const GlobalNav = () => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.goBack()
+                    navigation.goBack();
                   }}
                   style={{ marginLeft: 20 }}>
                   <LeftIcon name="left" size={24} />
                 </TouchableOpacity>
-              )
+              );
             },
             headerStyle: {
               backgroundColor: theme.grayScale.white,
@@ -229,55 +230,27 @@ const GlobalNav = () => {
           component={ChallengeSetting}
         />
         <Stack.Screen
+          name="successPopUp"
+          options={{
+            title: "",
+            headerLeft: () => null,
+            headerRight: props => <CloseIcon {...props} />,
+            headerStyle: {
+              backgroundColor: theme.grayScale.white,
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          }}
+          component={successPopUp}
+        />
+        <Stack.Screen
           name="TabNavigator"
           component={TabNavigator}
           options={{ gestureEnabled: false, headerShown: false }}
         />
-        <Stack.Screen
-          name="HomeAfterStop"
-          options={{
-            title: "",
-            headerLeft: () => null,
-            headerRight: props => <CloseIcon {...props} />,
-            headerStyle: {
-              backgroundColor: theme.grayScale.white,
-              elevation: 0, // android
-              shadowOpacity: 0, //ios
-            },
-          }}
-          component={HomeAfterStop}
-        />
-        <Stack.Screen
-          name="HomeFail"
-          options={{
-            title: "",
-            headerLeft: () => null,
-            headerRight: props => <CloseIcon {...props} />,
-            headerStyle: {
-              backgroundColor: theme.grayScale.white,
-              elevation: 0, // android
-              shadowOpacity: 0, //ios
-            },
-          }}
-          component={HomeFail}
-        />
-        <Stack.Screen
-          name="HomeCompleted"
-          options={{
-            title: "",
-            headerLeft: () => null,
-            headerRight: props => <CloseIcon {...props} />,
-            headerStyle: {
-              backgroundColor: theme.grayScale.white,
-              elevation: 0, // android
-              shadowOpacity: 0, //ios
-            },
-          }}
-          component={HomeCompleted}
-        />
       </Stack.Navigator>
     </NavigationContainer>
-  )
-}
+  );
+};
 
-export default GlobalNav
+export default GlobalNav;

@@ -18,8 +18,7 @@ const UserFail = ({ handleFailModal, failModalOpen, navigation }) => {
       bukiImg={bukiFail}
       handleModal={handleFailModal}
       handleOkayBtn={handleOkayBtn}
-      okayText={"그만하기"}
-    >
+      okayText={"그만하기"}>
       <H2Text>정말 그만할거에요?</H2Text>
       <Body1Text style={{ color: theme.TextColor }}>
         그만하기를 선택하면{"\n"}오늘은 다시 운동할 수 없어요.

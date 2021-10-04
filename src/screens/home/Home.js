@@ -1,22 +1,44 @@
 import React, { useState, useEffect, useRef } from "react";
+import { View, Text } from "react-native";
 import styled from "styled-components";
 import axios from "axios";
 import Loading from "../../components/Loading";
 import WeatherLogo from "../../../assets/icons/sun.png";
 import SpaceLogo from "../../../assets/icons/bar.png";
-
+import { theme } from "../../styles/theme";
 import Config from "react-native-config";
 import StatusHome from "./StatusHome";
-import { Animated } from "react-native";
 
 const Home = ({ navigation }) => {
   const [ready, setReady] = useState(true);
   const [weather, setWeather] = useState({
     temp: 1,
-    condition: "맑음",
+    condition: "비",
   });
+  const [weatherPic, setWeatherPic] = useState("");
 
   const Location = "강남구";
+
+  const load = async () => {
+    const result = await getLocation();
+    WeatherSetter(result);
+  };
+  const WeatherSetter = () => {
+    if (weather.condition === "맑음") {
+      setWeatherPic(require("../../../assets/icons/sun.png"));
+    } else if (weather.condition === "구름") {
+      setWeatherPic(require("../../../assets/icons/cloud.png"));
+    } else if (weather.condition === "비") {
+      setWeatherPic(require("../../../assets/icons/rain.png"));
+    } else if (weather.condition === "태풍") {
+      setWeatherPic(require("../../../assets/icons/thunderstrom.png"));
+    } else if (weather.condition === "눈") {
+      setWeatherPic(require("../../../assets/icons/snow.png"));
+    } else {
+      weather.condition === "안개";
+      setWeatherPic(require("../../../assets/icons/mist.png"));
+    }
+  };
 
   const [currentDate, setcurrentDate] = useState("");
   const [currentTime, setcurrentTime] = useState("");
@@ -25,10 +47,15 @@ const Home = ({ navigation }) => {
     let date = new Date().getDate();
     let month = new Date().getMonth() + 1;
     let hours = new Date().getHours();
-    let min = new Date().getMinutes();
+    let minutes = new Date().getMinutes();
+    hours = hours % 12;
+    hours = hours < 10 ? "0" + hours : hours;
+    let ampm = hours >= 12 ? "시" : "PM";
+    minutes = minutes < 10 ? "0" + minutes : minutes;
     setcurrentDate(month + "월" + " " + date + "일");
-    setcurrentTime(hours + ":" + min + "PM");
+    setcurrentTime(hours + ":" + minutes + ampm);
     getLocation();
+    load();
   }, []);
 
   const getLocation = async () => {
@@ -39,9 +66,7 @@ const Home = ({ navigation }) => {
       const longitude = locationData["coords"]["longitude"];
 
       const API_KEY = Config.API_KEY;
-      const result = await axios.get(
-        `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
-      );
+      const result = await axios.get(Config.WEATHER_API);
 
       const temp = result.data.main.temp;
       const condition = result.data.weather[0].main;
@@ -53,6 +78,7 @@ const Home = ({ navigation }) => {
         temp,
         condition,
       });
+      console.log(weather.condition);
     } catch (error) {
       // Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?")
     } finally {
@@ -65,98 +91,62 @@ const Home = ({ navigation }) => {
   ) : (
     <Container>
       <TopStatus>
-        <TimeStatus>
+        <View>
           <CurrentDate>{currentDate}</CurrentDate>
           <CurrentTime>{currentTime}</CurrentTime>
-        </TimeStatus>
+        </View>
         <WeatherStatus>
           <LocationSpace>
-            <CurrentTemperature>
-              {weather.temp + "℃"}
-              {"\n"}
-            </CurrentTemperature>
-            <CurrentLocation>{Location}</CurrentLocation>
+            <CurrentTemperature>{weather.temp}</CurrentTemperature>
+            <CurrentText>{Location}</CurrentText>
           </LocationSpace>
+          <Text style={{ fontSize: 36 }}>°</Text>
           <BarSpace>
-            <BarImage source={SpaceLogo} resizeMode={"contain"}></BarImage>
+            <WeatherImage
+              source={SpaceLogo}
+              resizeMode={"contain"}></WeatherImage>
           </BarSpace>
           <WeatherSpace>
-            <WeatherImage
-              source={WeatherLogo}
-              resizeMode={"contain"}
-            ></WeatherImage>
-            <CurrentWeather>{weather.condition}</CurrentWeather>
+            <WeatherImage source={WeatherLogo} resizeMode={"contain"} />
+            <CurrentText>{weather.condition}</CurrentText>
           </WeatherSpace>
         </WeatherStatus>
       </TopStatus>
-
       <StatusHome navigation={navigation} />
     </Container>
   );
 };
 
 const Container = styled.SafeAreaView`
-  align-items: center;
-  width: 100%;
-  height: 100%;
+  flex: 1;
+  padding: 30px;
   background-color: #f3f3f3;
 `;
 
 const TopStatus = styled.View`
-  width: 100%;
-  height: 20%;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding-left: 15px;
-  padding-right: 1px;
-  padding-top: 35px;
   flex-direction: row;
+  justify-content: space-between;
 `;
 
-const TimeStatus = styled.View`
-  width: 40%;
-  height: 90%;
-  padding-left: 15px;
-`;
 const WeatherStatus = styled.View`
-  width: 60%;
-  height: 100%;
   flex-direction: row;
-  padding-left: 50px;
 `;
 const LocationSpace = styled.View`
-  width: 30%;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: 5px;
 `;
 const WeatherSpace = styled.View`
-  width: 30%;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  padding-top: 3px;
 `;
 
 const BarSpace = styled.View`
-  width: 10%;
-  align-items: center;
   justify-content: center;
-  padding-bottom: 40px;
-  padding-left: 30px;
-  padding-right: 10px;
+  margin: 0 10px;
 `;
-const CurrentDate = styled.Text`
-  width: 100px;
-  height: 20px;
-  font-weight: bold;
-  font-size: 16px;
-`;
-
-const CurrentTime = styled.Text`
-  width: 130px;
-  height: 40px;
-  font-weight: bold;
-  font-size: 30px;
-`;
-
 const CurrentWeather = styled.Text`
   width: 70px;
   height: 60px;
@@ -165,35 +155,34 @@ const CurrentWeather = styled.Text`
   padding-top: 5px;
   color: #828282;
 `;
-const CurrentTemperature = styled.Text`
-  width: 70px;
-  height: 30px;
-  padding-left: 30px;
-  font-size: 26px;
+const CurrentDate = styled.Text`
+  font-weight: bold;
+  font-size: 16px;
 `;
-
-const CurrentLocation = styled.Text`
-  width: 70px;
-  height: 60px;
-  font-size: 12px;
-  padding-left: 30px;
-  padding-top: 5px;
-  color: #828282;
-`;
-
-const WeatherImage = styled.Image`
-  width: 100px;
-  height: 50px;
-  padding-top: 40px;
-  align-items: center;
-  justify-content: center;
-`;
-
 const BarImage = styled.Image`
   width: 50px;
   height: 50px;
   align-items: center;
   justify-content: center;
+`;
+
+const CurrentTime = styled.Text`
+  font-weight: bold;
+  font-size: 36px;
+`;
+
+const CurrentText = styled.Text`
+  font-size: 12px;
+
+  color: ${theme.grayScale.gray3};
+`;
+const CurrentTemperature = styled.Text`
+  font-size: 36px;
+`;
+
+const WeatherImage = styled.Image`
+  width: 40px;
+  height: 40px;
 `;
 
 export default Home;
