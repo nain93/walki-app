@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
+import Svg, { Path } from "react-native-svg";
 import { coachColorVar, statusVar } from "../../apollo";
 import LongButton from "../components/LongButton";
 
-import { Blurgoal, CharacetrImage, GoalBox } from "../styles/homeTheme";
+import {
+  Blurgoal,
+  CharacetrImage,
+  GoalBox,
+  Blurgoal2,
+} from "../styles/homeTheme";
 import UserFail from "../screens/home/others/UserFail";
-import { Animated, View } from "react-native";
+import { Animated, View, Text } from "react-native";
 
 import { Pedometer } from "expo-sensors";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { gql, useMutation, useReactiveVar } from "@apollo/client";
+import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { Body1Text, H4Text, theme } from "../styles/theme";
-
+import { getToday } from "../common/getToday";
 const StatusVariable = ({
   coachImg,
   goalText,
@@ -28,7 +34,8 @@ const StatusVariable = ({
   fadetext,
 }) => {
   const navigation = useNavigation();
-  const percentage = 0;
+  const percentage = 66;
+  // const percentage = currentStepCount / data?.getChallenge?.stepGoal;
   const status = useReactiveVar(statusVar);
 
   const getSteps = () => {
@@ -65,8 +72,23 @@ const StatusVariable = ({
       }
     }
   `;
-
-  const [putChallengeMutation, { data, loading }] = useMutation(PUT_CHALLENGE, {
+  const GET_CHALLENGE = gql`
+    query getChallenge($challengeDate: LocalDate) {
+      getChallenge(challengeDate: $challengeDate) {
+        step
+        stepGoal
+      }
+    }
+  `;
+  const { data } = useQuery(GET_CHALLENGE, {
+    variables: {
+      challengeDate: getToday(),
+    },
+    onCompleted: data => {
+      console.log(data, "data1");
+    },
+  });
+  const [putChallengeMutation, { loading }] = useMutation(PUT_CHALLENGE, {
     onCompleted: data => {
       console.log(data, "data");
     },
@@ -109,10 +131,36 @@ const StatusVariable = ({
               <View style={{ alignItems: "center" }}>
                 <Blurgoal coachColorVar={coachColorVar().color.main}>
                   {currentStepCount}
-                  {"\n"}
                 </Blurgoal>
 
                 <H4Text>{goalText}</H4Text>
+                <View
+                  style={{
+                    flex: 1,
+                    aligitems: "center",
+                    justifyConetent: "center",
+                    flexDirection: "row",
+                  }}>
+                  <View
+                    style={{
+                      width: "20%",
+                      height: "120%",
+                      backgroundColor: coachColorVar().color.main,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: 20,
+                    }}>
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 10,
+                      }}>
+                      목표
+                    </Text>
+                  </View>
+
+                  <Blurgoal2> {data?.getChallenge?.stepGoal} 걸음</Blurgoal2>
+                </View>
               </View>
             </Animated.View>
           </CircularProgress>

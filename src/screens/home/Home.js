@@ -66,9 +66,7 @@ const Home = ({ navigation }) => {
       const longitude = locationData["coords"]["longitude"];
 
       const API_KEY = Config.API_KEY;
-      const result = await axios.get(
-        `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
-      );
+      const result = await axios.get(Config.WEATHER_API);
 
       const temp = result.data.main.temp;
       const condition = result.data.weather[0].main;
