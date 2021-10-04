@@ -28,7 +28,6 @@ const StatusVariable = ({
   fadetext,
 }) => {
   const navigation = useNavigation();
-  const percentage = 0;
   const status = useReactiveVar(statusVar);
 
   const getSteps = () => {
@@ -50,8 +49,14 @@ const StatusVariable = ({
 
   useEffect(() => {
     request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
-      if (granted) {
+      if (granted === "granted") {
         getSteps();
+        return;
+      } else if (granted === "unavailable") {
+        request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
+          console.log(granted);
+        });
+        return;
       }
     });
   }, []);
@@ -95,7 +100,7 @@ const StatusVariable = ({
       <GoalBox>
         <TouchableOpacity onPress={handleOpacity}>
           <CircularProgress
-            percentage={percentage}
+            percentage={0}
             donutColor={coachColorVar().color.main}
             size={350}
             progressWidth={165}

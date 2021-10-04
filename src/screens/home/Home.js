@@ -5,16 +5,15 @@ import axios from "axios";
 import Loading from "../../components/Loading";
 import WeatherLogo from "../../../assets/icons/sun.png";
 import SpaceLogo from "../../../assets/icons/bar.png";
-
+import { theme } from "../../styles/theme";
 import Config from "react-native-config";
 import StatusHome from "./StatusHome";
-import { theme } from "../../styles/theme";
 
 const Home = ({ navigation }) => {
   const [ready, setReady] = useState(true);
   const [weather, setWeather] = useState({
     temp: 1,
-    condition: "맑음",
+    condition: "비",
   });
   const [weatherPic, setWeatherPic] = useState("");
 
@@ -107,8 +106,7 @@ const Home = ({ navigation }) => {
           <BarSpace>
             <WeatherImage
               source={SpaceLogo}
-              resizeMode={"contain"}
-            ></WeatherImage>
+              resizeMode={"contain"}></WeatherImage>
           </BarSpace>
           <WeatherSpace>
             <WeatherImage source={WeatherLogo} resizeMode={"contain"} />
@@ -151,9 +149,23 @@ const BarSpace = styled.View`
   justify-content: center;
   margin: 0 10px;
 `;
+const CurrentWeather = styled.Text`
+  width: 70px;
+  height: 60px;
+  font-size: 12px;
+  padding-left: 25px;
+  padding-top: 5px;
+  color: #828282;
+`;
 const CurrentDate = styled.Text`
   font-weight: bold;
   font-size: 16px;
+`;
+const BarImage = styled.Image`
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
 `;
 
 const CurrentTime = styled.Text`

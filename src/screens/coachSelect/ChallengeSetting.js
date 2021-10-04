@@ -137,7 +137,7 @@ const WalkiText = styled(Body1Text)`
   color: ${theme.grayScale.gray1};
 `;
 
-const Container = styled.SafeAreaView`
+const Container = styled.View`
   flex: 1;
   padding: 30px;
   justify-content: space-between;

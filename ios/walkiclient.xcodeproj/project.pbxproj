@@ -369,7 +369,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.walkiclient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bside.walki;
 				PRODUCT_NAME = walkiclient;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "walkiclient-Bridging-Header.h";
@@ -401,7 +401,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.walkiclient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bside.walki;
 				PRODUCT_NAME = walkiclient;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "walkiclient-Bridging-Header.h";
