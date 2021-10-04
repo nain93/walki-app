@@ -11,8 +11,7 @@ import {
   Blurgoal2,
 } from "../styles/homeTheme";
 import UserFail from "../screens/home/others/UserFail";
-import { Animated, View, Text } from "react-native";
-
+import { Animated } from "react-native";
 import { Pedometer } from "expo-sensors";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { useNavigation } from "@react-navigation/native";
