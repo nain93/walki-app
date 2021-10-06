@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
 import Svg, { Path } from "react-native-svg";
-import { coachColorVar, statusVar } from "../../apollo";
+import { coachColorVar, statusVar, stepVar } from "../../apollo";
 import LongButton from "../components/LongButton";
 
 import {
@@ -12,7 +12,6 @@ import {
 } from "../styles/homeTheme";
 import UserFail from "../screens/home/others/UserFail";
 import { Animated, View, Text } from "react-native";
-
 import { Pedometer } from "expo-sensors";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { useNavigation } from "@react-navigation/native";
@@ -61,6 +60,18 @@ const StatusVariable = ({
         getSteps();
       }
     });
+  }, []);
+
+  useEffect(() => {
+    checkTime: getToday();
+    if (percentage == 100) {
+      navigation.navigate("successPopUp");
+    }
+
+    // else if(percentage !=100){
+    //   stepVar("fail")
+    // }
+    // getToday해서 11:59분에 percentage 100인지 체크
   }, []);
 
   const { currentStepCount, isPedometerAvailable } = steps;
