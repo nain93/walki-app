@@ -32,10 +32,10 @@ const StatusVariable = ({
   handleOpacity,
   fadeimage,
   fadetext,
+  fadetextwalk,
 }) => {
   const navigation = useNavigation();
-  const percentage = 66;
-  // const percentage = currentStepCount / data?.getChallenge?.stepGoal;
+
   const status = useReactiveVar(statusVar);
 
   const getSteps = () => {
@@ -88,6 +88,10 @@ const StatusVariable = ({
       console.log(data, "data1");
     },
   });
+  const percentage =
+    currentStepCount === 0
+      ? 0
+      : (currentStepCount / data?.getChallenge?.stepGoal) * 100;
   const [putChallengeMutation, { loading }] = useMutation(PUT_CHALLENGE, {
     onCompleted: data => {
       console.log(data, "data");
@@ -134,6 +138,20 @@ const StatusVariable = ({
                 </Blurgoal>
 
                 <H4Text>{goalText}</H4Text>
+              </View>
+            </Animated.View>
+            <Animated.View
+              style={[
+                {
+                  opacity: fadetextwalk ? fadetextwalk : 0,
+                  position: "absolute",
+                },
+              ]}>
+              <View style={{ alignItems: "center" }}>
+                <Blurgoal coachColorVar={coachColorVar().color.main}>
+                  {currentStepCount}
+                </Blurgoal>
+
                 <View
                   style={{
                     flex: 1,
@@ -143,7 +161,7 @@ const StatusVariable = ({
                   }}>
                   <View
                     style={{
-                      width: "20%",
+                      width: "30%",
                       height: "120%",
                       backgroundColor: coachColorVar().color.main,
                       alignItems: "center",

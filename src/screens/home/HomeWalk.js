@@ -5,11 +5,8 @@ import buki_walking from "../../../assets/images/character/buki_walking.png";
 import { theme } from "../../styles/theme";
 import StatusVariable from "../../components/StatusVariable";
 import { Animated } from "react-native";
-import { request, PERMISSIONS } from "react-native-permissions";
-import { Pedometer } from "expo-sensors";
 
-import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
-import { NavigationContainer } from "@react-navigation/native";
+import { useReactiveVar } from "@apollo/client";
 
 const HomeWalk = navigation => {
   const [failModalOpen, setFailModalOpen] = useState(false);
@@ -17,12 +14,14 @@ const HomeWalk = navigation => {
     setFailModalOpen(!failModalOpen);
   };
   const fadetext = useRef(new Animated.Value(0)).current;
+  const fadetextwalk = useRef(new Animated.Value(0)).current;
+
   const fadeimage = useRef(new Animated.Value(0.8)).current;
   const [onOff, setOnOff] = useState(false);
   const status = useReactiveVar(statusVar);
 
   const handlepressup = () => {
-    Animated.timing(fadetext, {
+    Animated.timing(fadetextwalk, {
       toValue: 0.8,
       duration: 500,
       useNativeDriver: true,
@@ -34,7 +33,7 @@ const HomeWalk = navigation => {
     }).start();
   };
   const handlepressdown = () => {
-    Animated.timing(fadetext, {
+    Animated.timing(fadetextwalk, {
       toValue: 0,
       duration: 500,
       useNativeDriver: true,
@@ -45,76 +44,6 @@ const HomeWalk = navigation => {
       useNativeDriver: true,
     }).start();
   };
-  // const getSteps = () => {
-  //   Pedometer.watchStepCount(result => {
-  //     if (status === "walking") {
-  //       setSteps(steps => ({
-  //         ...steps,
-  //         currentStepCount: result.steps,
-  //       }));
-  //     }
-  //   });
-  // };
-
-  // const [steps, setSteps] = useState({
-  //   isPedometerAvailable: "checking",
-  //   pastStepCount: 0,
-  //   currentStepCount: 0,
-  // });
-
-  // useEffect(() => {
-  //   request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then(granted => {
-  //     if (granted) {
-  //       getSteps();
-  //     }
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   let hours = new Date().getHours();
-  //   let minutes = new Date().getMinutes();
-  //   if (percentage == 100) {
-  //     status = "success";
-  //   }
-  // 12시에 percent <100 이면
-  //  status = "fail"
-  // }, []);
-
-  // const { currentStepCount, isPedometerAvailable } = steps;
-
-  // const PUT_CHALLENGE = gql`
-  //   mutation putChallenge($challenge: ChallengeInput) {
-  //     putChallenge(challenge: $challenge) {
-  //       step
-  //     }
-  //   }
-  // `;
-  // const GET_CHALLENGE = gql`
-  //   query getChallenge($challengeDate: LocalDate) {
-  //     getChallenge(challengeDate: $challengeDate) {
-  //       step
-  //       stepGoal
-  //     }
-  //   }
-  // `;
-  // const { data } = useQuery(GET_CHALLENGE, {
-  //   variables: {
-  //     challengeDate: getToday(),
-  //   },
-  //   onCompleted: data => {
-  //     console.log(data, "data1");
-  //   },
-  // });
-  // const [putChallengeMutation, { loading }] = useMutation(PUT_CHALLENGE, {
-  //   onCompleted: data => {
-  //     console.log(data, "data");
-  //   },
-  // });
-  // const percentage = currentStepCount / data?.getChallenge?.stepGoal;
-
-  // if (percentage == 100) {
-  //   navigation.navigate("successPopUp");
-  // }
 
   return (
     <StatusVariable
@@ -136,7 +65,7 @@ const HomeWalk = navigation => {
       }}
       failModalOpen={failModalOpen}
       fadeimage={fadeimage}
-      fadetext={fadetext}
+      fadetextwalk={fadetextwalk}
     />
   );
 };

@@ -14,7 +14,9 @@ const StatusHome = ({ navigation }) => {
   const percentage = 0;
 
   const fadetext = useRef(new Animated.Value(0)).current;
+  const fadetextwalk = useRef(new Animated.Value(0)).current;
   const fadeimage = useRef(new Animated.Value(0.8)).current;
+  // fadetext 1, 2 만들어서 home, homewalk에서 따로 사용해야 하나?
   const [onOff, setOnOff] = useState(false);
 
   const handlepressup = () => {
@@ -41,6 +43,29 @@ const StatusHome = ({ navigation }) => {
       useNativeDriver: true,
     }).start();
   };
+  // const handlepressdown_home = () => {
+  //   Animated.timing(fadetext, {
+  //     toValue: 0,
+  //     duration: 500,
+  //     useNativeDriver: true,
+  //   }).start();
+  //   Animated.timing(fadeimage, {
+  //     toValue: 0.8,
+  //     duration: 500,
+  //     useNativeDriver: true,
+  //   }).start();
+  // };  const handlepressdown_walk = () => {
+  //   Animated.timing(fadetext1, {
+  //     toValue: 0,
+  //     duration: 500,
+  //     useNativeDriver: true,
+  //   }).start();
+  //   Animated.timing(fadeimage, {
+  //     toValue: 0.8,
+  //     duration: 500,
+  //     useNativeDriver: true,
+  //   }).start();
+  // };
 
   if (status === "home") {
     return (
@@ -63,6 +88,7 @@ const StatusHome = ({ navigation }) => {
         }}
         fadeimage={fadeimage}
         fadetext={fadetext}
+        fadetextwalk={fadetextwalk}
       />
     );
   }
