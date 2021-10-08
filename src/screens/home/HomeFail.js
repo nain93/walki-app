@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import toki_fail from "../../../assets/images/character/toki_cry.png";
-import buki_fail from "../../../assets/images/character/buki_cry.png";
-import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme";
-import { coachColorVar } from "../../../apollo";
-import UserFail from "./others/UserFail";
-import StatusVariable from "../../components/StatusVariable";
+import toki_fail from "../../../assets/images/character/toki_fail.png"
+import buki_fail from "../../../assets/images/character/buki_fail.png"
+import { CircularProgress } from "react-native-svg-circular-progress"
+import { Body3Text, H3Text, H4Text, theme } from "../../styles/theme"
+import LongButton from "../../components/LongButton"
+import { coachColorVar } from "../../../apollo"
+import { Pedometer } from "expo-sensors"
+import { request, PERMISSIONS, check } from "react-native-permissions"
+import UserFail from "./others/UserFail"
+
 
 const HomeFail = ({ navigation }) => {
   const [failModalOpen, setFailModalOpen] = useState(false);
