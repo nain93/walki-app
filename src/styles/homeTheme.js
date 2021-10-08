@@ -5,7 +5,7 @@ export const GoalContainer = styled.View`
 `;
 
 export const Blurgoal = styled.Text`
-  font-size: 25px;
+  font-size: 35px;
   font-weight: 700;
   color: ${props => props.coachColorVar};
 `;
@@ -22,6 +22,6 @@ export const CharacetrImage = styled.Image`
 `;
 
 export const Blurgoal2 = styled.Text`
-  font-size: 10px;
+  font-size: 16px;
   font-weight: 700;
 `;

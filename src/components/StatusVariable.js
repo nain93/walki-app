@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
 import Svg, { Path } from "react-native-svg";
-import { coachColorVar, statusVar } from "../../apollo";
+import { coachColorVar, statusVar, stepVar } from "../../apollo";
 import LongButton from "../components/LongButton";
 
 import {
@@ -11,7 +11,8 @@ import {
   Blurgoal2,
 } from "../styles/homeTheme";
 import UserFail from "../screens/home/others/UserFail";
-import { Animated } from "react-native";
+import { Animated, View, Text } from "react-native";
+
 import { Pedometer } from "expo-sensors";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { useNavigation } from "@react-navigation/native";
@@ -31,10 +32,10 @@ const StatusVariable = ({
   handleOpacity,
   fadeimage,
   fadetext,
+  fadetextwalk,
 }) => {
   const navigation = useNavigation();
-  const percentage = 66;
-  // const percentage = currentStepCount / data?.getChallenge?.stepGoal;
+
   const status = useReactiveVar(statusVar);
 
   const getSteps = () => {
@@ -62,6 +63,18 @@ const StatusVariable = ({
     });
   }, []);
 
+  useEffect(() => {
+    checkTime: getToday();
+    if (percentage == 100) {
+      navigation.navigate("successPopUp");
+    }
+
+    // else if(percentage !=100){
+    //   stepVar("fail")
+    // }
+    // getToday해서 11:59분에 percentage 100인지 체크
+  }, []);
+
   const { currentStepCount, isPedometerAvailable } = steps;
 
   const PUT_CHALLENGE = gql`
@@ -87,6 +100,10 @@ const StatusVariable = ({
       console.log(data, "data1");
     },
   });
+  const percentage =
+    currentStepCount === 0
+      ? 0
+      : (currentStepCount / data?.getChallenge?.stepGoal) * 100;
   const [putChallengeMutation, { loading }] = useMutation(PUT_CHALLENGE, {
     onCompleted: data => {
       console.log(data, "data");
@@ -133,6 +150,20 @@ const StatusVariable = ({
                 </Blurgoal>
 
                 <H4Text>{goalText}</H4Text>
+              </View>
+            </Animated.View>
+            <Animated.View
+              style={[
+                {
+                  opacity: fadetextwalk ? fadetextwalk : 0,
+                  position: "absolute",
+                },
+              ]}>
+              <View style={{ alignItems: "center" }}>
+                <Blurgoal coachColorVar={coachColorVar().color.main}>
+                  {currentStepCount}
+                </Blurgoal>
+
                 <View
                   style={{
                     flex: 1,
@@ -142,7 +173,7 @@ const StatusVariable = ({
                   }}>
                   <View
                     style={{
-                      width: "20%",
+                      width: "30%",
                       height: "120%",
                       backgroundColor: coachColorVar().color.main,
                       alignItems: "center",

@@ -43,13 +43,16 @@ export const alertTimeVar = makeVar({
 
 export const statusVar = makeVar("home");
 
-export const stepVar = makeVar(0);
+export const stepVar = makeVar({
+  step: 0,
+  stepGoal: 200,
+});
 
 export const monthVar = makeVar(`${month}`);
 
 const TOKEN = "token";
 
-export const logUserIn = async (token) => {
+export const logUserIn = async token => {
   await AsyncStorage.setItem(TOKEN, token);
   isLoggedInVar(true);
   tokenVar(token);
