@@ -11,9 +11,9 @@ import HomeCompleted from "./HomeCompleted";
 
 const StatusHome = ({ navigation }) => {
   const status = useReactiveVar(statusVar);
-  const percentage = 0;
 
   const fadetext = useRef(new Animated.Value(0)).current;
+  const fadetextwalk = useRef(new Animated.Value(0)).current;
   const fadeimage = useRef(new Animated.Value(0.8)).current;
   const [onOff, setOnOff] = useState(false);
 
@@ -50,7 +50,7 @@ const StatusHome = ({ navigation }) => {
         cheerText="오늘도 함께 걸어요!"
         buttonText="오늘의 목표를 세워보세요!"
         buttonColor={coachColorVar().color.main}
-        handleGoToNext={() => navigation.navigate("ChallengeSetting")}
+        handleGoToNext={() => navigation.navigate("challengeSetting")}
         handleOpacity={() => {
           if (onOff) {
             handlepressdown();
@@ -63,6 +63,7 @@ const StatusHome = ({ navigation }) => {
         }}
         fadeimage={fadeimage}
         fadetext={fadetext}
+        fadetextwalk={fadetextwalk}
       />
     );
   }

@@ -5,11 +5,10 @@ export const GoalContainer = styled.View`
 `;
 
 export const Blurgoal = styled.Text`
-  font-size: 25px;
+  font-size: 35px;
   font-weight: 700;
   color: ${props => props.coachColorVar};
 `;
-
 
 export const GoalBox = styled.View`
   flex: 1;
@@ -17,8 +16,12 @@ export const GoalBox = styled.View`
   justify-content: center;
 `;
 
-
 export const CharacetrImage = styled.Image`
   width: 150px;
   height: 200px;
+`;
+
+export const Blurgoal2 = styled.Text`
+  font-size: 16px;
+  font-weight: 700;
 `;
