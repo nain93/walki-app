@@ -4,13 +4,12 @@ import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
-import { Image, Platform, TouchableOpacity } from "react-native";
+import { Platform, TouchableOpacity } from "react-native";
 import OnBoarding from "../screens/onBoarding";
 import CoachSelect from "../screens/coachSelect";
 import BeforeStart from "../screens/beforeStart";
 import { theme } from "../styles/theme";
 import SettingScreen from "../screens/setting";
-import { useNavigation } from "@react-navigation/native";
 import EditName from "../screens/setting/EditName";
 import AlertSetting from "../screens/setting/AlertSetting";
 import TabNavigator from "./TabNav";
@@ -23,13 +22,7 @@ import OpenSource from "../screens/setting/OpenSource";
 import Service from "../screens/terms/Service";
 import Info from "../screens/terms/Info";
 import TermsCheck from "../screens/terms/TermsCheck";
-import Permission from "../common/Permission";
-import HomeAfterStop from "../screens/home/HomeAfterStop";
-import HomeCompleted from "../screens/home/HomeCompleted";
-import HomeWalk from "../screens/home/HomeWalk";
-import HomeFail from "../screens/home/HomeFail";
 import CloseIcon from "../components/CloseIcon";
-import { CommonActions, StackActions } from "@react-navigation/native";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,

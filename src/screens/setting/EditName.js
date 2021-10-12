@@ -6,7 +6,6 @@ import { H2Text, theme } from "../../styles/theme";
 import {
   TouchableWithoutFeedback,
   Keyboard,
-  ActivityIndicator,
   Image,
   TouchableOpacity,
 } from "react-native";

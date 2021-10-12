@@ -20,45 +20,13 @@ import inactivemessage from "../../assets/icons/inactivemessage.png";
 import setting from "../../assets/icons/setting.png";
 import bookMark from "../../assets/icons/bookmark.png";
 import { theme } from "../styles/theme";
-import { Picker } from "@react-native-picker/picker";
-import { month, year } from "../common/getToday";
+import { month } from "../common/getToday";
 import WheelPicker from "../components/WheelPicker";
 
 const Tabs = createBottomTabNavigator();
 
-// const Pick = ({ selectedMonth, setSelectedMonth, setStepInfo }) => {
-//   return (
-//     <Picker
-//       selectedValue={selectedMonth ? selectedMonth : String(month)}
-//       onValueChange={(itemValue, itemIndex) => {
-//         setSelectedMonth(itemValue);
-//         if (itemValue === `${month}`) {
-//           monthVar(`${month}`);
-//           setStepInfo([{}]);
-//           return;
-//         }
-//         monthVar("");
-//         setStepInfo([]);
-//       }}
-//       style={{ height: 50, width: 200, color: "white" }}
-//       mode={"dropdown"}
-//       dropdownIconColor="white"
-//     >
-//       <Picker.Item
-//         label={`${year}년 ${month - 1}월 리포트`}
-//         value={`${month - 1}`}
-//       />
-//       <Picker.Item label={`${year}년 ${month}월 리포트`} value={`${month}`} />
-//       <Picker.Item
-//         label={`${year}년 ${month + 1}월 리포트`}
-//         value={`${month + 1}`}
-//       />
-//     </Picker>
-//   );
-// };
-
 const TabNavigator = () => {
-  const [selectedMonth, setSelectedMonth] = useState(`${month}`);
+  const [selectedMonth, setSelectedMonth] = useState(month);
   const [stepInfo, setStepInfo] = useState([{}]);
   const tabColor = useReactiveVar(coachColorVar);
   return (
@@ -115,12 +83,13 @@ const TabNavigator = () => {
         )}
         options={{
           headerTitleAlign: "center",
-          headerTitle: () => <WheelPicker />,
-          //  <Pick
-          //     setStepInfo={setStepInfo}
-          //     selectedMonth={selectedMonth}
-          //     setSelectedMonth={setSelectedMonth}
-          //   />
+          headerTitle: () => (
+            <WheelPicker
+              setStepInfo={setStepInfo}
+              selectedMonth={selectedMonth}
+              setSelectedMonth={setSelectedMonth}
+            />
+          ),
           headerTitleStyle: {
             color: theme.grayScale.white,
             fontSize: 16,

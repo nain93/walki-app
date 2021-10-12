@@ -24,7 +24,7 @@ const ReportMain = ({ stepInfo }) => {
   };
 
   const renderItem = ({ item, index }) => {
-    if (index === 0 && monthVar() === `${month}`) {
+    if (index === 0) {
       if (item.challengeDate === undefined) {
         return <AddBtn />;
       }

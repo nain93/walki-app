@@ -45,7 +45,10 @@ export const statusVar = makeVar("home");
 
 export const stepVar = makeVar(0);
 
-export const monthVar = makeVar(`${month}`);
+export const monthVar = makeVar({
+  thisMonth: month,
+  walkedMonth: [],
+});
 
 const TOKEN = "token";
 

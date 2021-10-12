@@ -1612,13 +1612,6 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.0.tgz#0eee6373e11418bfe0b5638f654df7a4ca6a3950"
   integrity sha512-wYn6r8zVZyQJ6rQaALBEln5B1pzxb9shV5Ef97kTvn6yVGrqyXVnDqnU24MXnFubR+rZjBY9NWuxX3FB2sTsjg==
 
-"@gregfrench/react-native-wheel-picker@^1.2.16":
-  version "1.2.16"
-  resolved "https://registry.yarnpkg.com/@gregfrench/react-native-wheel-picker/-/react-native-wheel-picker-1.2.16.tgz#db7ea16fbd6ac0c9c88c699492806efcd2ddf0c6"
-  integrity sha512-GojKngBkcIi34bJ2Sq71dgEuyJ8aLASugR8u3zUcqNoB9Rs7iJQBgZm5lCX5K4fzvUqepGaGL45FQrsJzBAt1g==
-  dependencies:
-    "@react-native-picker/picker" "^1.9.4"
-
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -1876,11 +1869,6 @@
   integrity sha512-k6bZWUKLif4GjenyTD3aQLwA2VT3bNmt22INO/34lexnpmqkPDZF7nreqbckTHG0Zso9wDTe4N/AZJUC/d8iRg==
   dependencies:
     invariant "^2.2.4"
-
-"@react-native-picker/picker@^1.9.4":
-  version "1.16.8"
-  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.16.8.tgz#2126ca54d4a5a3e9ea5e3f39ad1e6643f8e4b3d4"
-  integrity sha512-pacdQDX6V6EmjF+HoiIh6u++qx4mTK0WnhgUHRc01B+Qt5eoeUwseBqmqfTSXTx/aHDEd6PiIw7UGvKgFoqgFQ==
 
 "@react-native-picker/picker@^2.1.0":
   version "2.1.0"
@@ -5605,6 +5593,11 @@ react-native-config@^1.4.4:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.4.4.tgz#e0e10802d1e61ef051040c84dfd19f85a5984620"
   integrity sha512-bu47sJHn/HrB7COAWBI8DieAhrbFLINHFE2HBCcVkDu0Y5ScrMs6vL+jhIm+pMSgxouseLhXG8h7xYYpxE38PA==
+
+react-native-date-picker@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-4.1.0.tgz#60a27dba8ed10a09f127343425fd787c6a7689e6"
+  integrity sha512-XUaOUYoYpLRrq3OIUdbx4sntajbYk86MA0sBAQ+MSK1Ft0CdCgfQdyRaJ7D8o0S39uQlgyIMFFFtjC72WIecCQ==
 
 react-native-easy-toast@^2.0.0:
   version "2.0.0"
