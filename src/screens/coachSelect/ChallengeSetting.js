@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import LongButton from "../../components/LongButton";
 import { Body1Text, theme } from "../../styles/theme";
-import { coachColorVar, statusVar } from "../../../apollo";
+import { coachColorVar, monthVar, statusVar } from "../../../apollo";
 import { gql, useMutation, useReactiveVar } from "@apollo/client";
 import { KeyboardAvoidingView } from "react-native";
-import { getToday } from "../../common/getToday";
+import { getToday, month, year } from "../../common/getToday";
 import HeaderForm from "../../components/HeaderForm";
 const ChallengeSetting = ({ navigation }) => {
   const walkRef = useRef();
@@ -55,6 +55,15 @@ const ChallengeSetting = ({ navigation }) => {
         },
       },
     });
+    const check = monthVar().walkedMonth.map((item) => {
+      return month === item.month;
+    });
+    if (!check) {
+      monthVar({
+        walkedMonth: (prev) => [...prev, { month, year }],
+      });
+    }
+
     statusVar("walking");
     navigation.goBack();
   };

@@ -48,7 +48,10 @@ export const stepVar = makeVar({
   stepGoal: 200,
 });
 
-export const monthVar = makeVar(`${month}`);
+export const monthVar = makeVar({
+  thisMonth: month,
+  walkedMonth: [],
+});
 
 const TOKEN = "token";
 
