@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { FlatList, Image, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
-import { coachColorVar, monthVar, userNameVar } from "../../../apollo";
+import { coachColorVar, userNameVar } from "../../../apollo";
 import Item from "./reportItems/Item";
 import ClickedItem from "./reportItems/ClickedItem";
 import AddItem from "./reportItems/AddItem";
@@ -9,7 +9,7 @@ import { useReactiveVar } from "@apollo/client";
 import info from "../../../assets/icons/info.png";
 import Toast from "react-native-easy-toast";
 import AddBtn from "./reportItems/AddBtn";
-import { getToday, month } from "../../common/getToday";
+import { getToday } from "../../common/getToday";
 
 const ReportMain = ({ stepInfo }) => {
   const userName = useReactiveVar(userNameVar);
