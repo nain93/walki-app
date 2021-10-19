@@ -221,7 +221,7 @@ const GlobalNav = () => {
           }}
           component={ChallengeSetting}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="successPopUp"
           options={{
             title: "",
@@ -233,8 +233,8 @@ const GlobalNav = () => {
               shadowOpacity: 0, //ios
             },
           }}
-          component={successPopUp}
-        />
+          component={successPopUp} */}
+        {/* /> */}
         <Stack.Screen
           name="TabNavigator"
           component={TabNavigator}
