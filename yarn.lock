@@ -1431,6 +1431,7 @@
     "@expo/json-file" "8.2.33"
     "@expo/plist" "0.0.15"
     "@react-native/normalize-color" "^2.0.0"
+
     chalk "^4.1.2"
     debug "^4.3.1"
     find-up "~5.0.0"
@@ -1604,6 +1605,7 @@
   version "0.0.15"
   resolved "https://registry.yarnpkg.com/@expo/plist/-/plist-0.0.15.tgz#41ef37b7bbe6b81c48bf4a5c359661c766bb9e90"
   integrity sha512-LDxiS0KNZAGJu4fIJhbEKczmb+zeftl1NU0LE0tj0mozoMI5HSKdMUchgvnBm35bwBl8ekKkAfJJ0ONxljWQjQ==
+
   dependencies:
     "@xmldom/xmldom" "~0.7.0"
     base64-js "^1.2.3"
@@ -1918,6 +1920,7 @@
   version "12.9.2"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-12.9.2.tgz#c162537f3279c63fc9b11d6ed1db6d0f38b17953"
   integrity sha512-oetLiJF3kuSCZyeu2hKHXj9kmeN4+6N+rBP5KckKce0HFbap/vKDB6nRr6lqa//BEOnEGC09HdJHnKlIClh9UA==
+
 
 "@react-native-picker/picker@^2.1.0":
   version "2.1.0"

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Alert } from 'react-native'
 import AppLoading from "expo-app-loading";
 import GlobalNav from "./src/navigators/GlobalNav";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
@@ -52,6 +53,7 @@ PushNotification.createChannel(
   (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
 );
 
+
 export default function App() {
   const [loading, setLoading] = useState(true);
   const onFinish = () => {
@@ -68,6 +70,28 @@ export default function App() {
     }
   };
 
+  async function requestUsePermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled=
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  if (enabled) {
+    console.log('Authorization status:', authStatus);
+  }
+  if (AuthorizationStatus) {
+    console.log('이 곳은 승인 상태일 때에만 타게 됩니다.')
+  }
+  }
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived', JSON.stringify(remoteMessage));
+    });
+      return unsubscribe;
+  }, []);
+  
+  
   const preload = async () => {
     const token = await AsyncStorage.getItem("token");
     if (token) {

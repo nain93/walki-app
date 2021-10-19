@@ -38,9 +38,8 @@ const GlobalNav = () => {
           {},
           Platform.OS === "android" && TransitionScreenOptions,
           { cardStyle: { backgroundColor: theme.grayScale.white } }
-        )}
-      >
-        {!isLoggedIn && (
+        )}>
+        {/* {!isLoggedIn && (
           <Stack.Screen
             name="OnBoarding"
             options={{
@@ -48,7 +47,7 @@ const GlobalNav = () => {
             }}
             component={OnBoarding}
           />
-        )}
+        )}  */}
         <Stack.Screen
           name="CoachSelect"
           options={{
@@ -70,7 +69,7 @@ const GlobalNav = () => {
             headerTitleAlign: "center",
             headerTitleStyle: { fontSize: 16, fontWeight: "700" },
             headerLeft: () => null,
-            headerRight: (props) => <CloseIcon {...props} />,
+            headerRight: props => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -89,8 +88,7 @@ const GlobalNav = () => {
                   onPress={() => {
                     navigation.goBack();
                   }}
-                  style={{ marginLeft: 20 }}
-                >
+                  style={{ marginLeft: 20 }}>
                   <LeftIcon name="left" size={24} />
                 </TouchableOpacity>
               );
@@ -108,7 +106,7 @@ const GlobalNav = () => {
           options={{
             title: "",
             headerLeft: () => null,
-            headerRight: (props) => <CloseIcon {...props} />,
+            headerRight: props => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -127,8 +125,7 @@ const GlobalNav = () => {
                   onPress={() => {
                     navigation.goBack();
                   }}
-                  style={{ marginLeft: 20 }}
-                >
+                  style={{ marginLeft: 20 }}>
                   <LeftIcon name="left" size={24} />
                 </TouchableOpacity>
               );
@@ -151,8 +148,7 @@ const GlobalNav = () => {
                   onPress={() => {
                     navigation.goBack();
                   }}
-                  style={{ marginLeft: 20 }}
-                >
+                  style={{ marginLeft: 20 }}>
                   <LeftIcon name="left" size={24} />
                 </TouchableOpacity>
               );
@@ -172,7 +168,7 @@ const GlobalNav = () => {
             headerTitleAlign: "center",
             title: "약관확인",
             headerLeft: () => null,
-            headerRight: (props) => <CloseIcon {...props} />,
+            headerRight: props => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -187,7 +183,7 @@ const GlobalNav = () => {
             headerTitleAlign: "center",
             title: "서비스 이용약관",
             headerLeft: () => null,
-            headerRight: (props) => <CloseIcon {...props} />,
+            headerRight: props => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -202,7 +198,7 @@ const GlobalNav = () => {
             headerTitleAlign: "center",
             title: "개인정보 처리방침",
             headerLeft: () => null,
-            headerRight: (props) => <CloseIcon {...props} />,
+            headerRight: props => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -216,7 +212,7 @@ const GlobalNav = () => {
           options={{
             title: "",
             headerLeft: () => null,
-            headerRight: (props) => <CloseIcon {...props} />,
+            headerRight: props => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -224,6 +220,20 @@ const GlobalNav = () => {
             },
           }}
           component={ChallengeSetting}
+        />
+        <Stack.Screen
+          name="successPopUp"
+          options={{
+            title: "",
+            headerLeft: () => null,
+            headerRight: props => <CloseIcon {...props} />,
+            headerStyle: {
+              backgroundColor: theme.grayScale.white,
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          }}
+          component={successPopUp}
         />
         <Stack.Screen
           name="TabNavigator"

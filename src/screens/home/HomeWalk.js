@@ -1,22 +1,27 @@
-import React, { useRef, useState } from "react";
-import { coachColorVar } from "../../../apollo";
+import React, { useRef, useState, useEffect } from "react";
+import { coachColorVar, statusVar } from "../../../apollo";
 import toki_walking from "../../../assets/images/character/toki_walking.png";
 import buki_walking from "../../../assets/images/character/buki_walking.png";
 import { theme } from "../../styles/theme";
 import StatusVariable from "../../components/StatusVariable";
 import { Animated } from "react-native";
 
-const HomeWalk = () => {
+import { useReactiveVar } from "@apollo/client";
+
+const HomeWalk = navigation => {
   const [failModalOpen, setFailModalOpen] = useState(false);
   const handleFailModal = () => {
     setFailModalOpen(!failModalOpen);
   };
   const fadetext = useRef(new Animated.Value(0)).current;
+  const fadetextwalk = useRef(new Animated.Value(0)).current;
+
   const fadeimage = useRef(new Animated.Value(0.8)).current;
   const [onOff, setOnOff] = useState(false);
+  const status = useReactiveVar(statusVar);
 
   const handlepressup = () => {
-    Animated.timing(fadetext, {
+    Animated.timing(fadetextwalk, {
       toValue: 0.8,
       duration: 500,
       useNativeDriver: true,
@@ -28,7 +33,7 @@ const HomeWalk = () => {
     }).start();
   };
   const handlepressdown = () => {
-    Animated.timing(fadetext, {
+    Animated.timing(fadetextwalk, {
       toValue: 0,
       duration: 500,
       useNativeDriver: true,
@@ -60,7 +65,7 @@ const HomeWalk = () => {
       }}
       failModalOpen={failModalOpen}
       fadeimage={fadeimage}
-      fadetext={fadetext}
+      fadetextwalk={fadetextwalk}
     />
   );
 };
