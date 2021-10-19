@@ -6,7 +6,7 @@ import { month, year } from "../common/getToday";
 const WheelPicker = ({ selectedMonth, setSelectedMonth, setStepInfo }) => {
   return (
     <Picker
-      selectedValue={selectedMonth ? selectedMonth : month}
+      selectedValue={selectedMonth}
       onValueChange={(itemValue, itemIndex) => {
         setSelectedMonth(itemValue);
         if (itemValue === month) {
