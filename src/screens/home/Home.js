@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import styled from "styled-components";
 import axios from "axios";
@@ -88,10 +88,16 @@ const Home = ({ navigation }) => {
     }
   };
 
-  return ready ? (
-    <Loading />
-  ) : (
-    <Container>
+  if (ready) {
+    return (
+      <Container style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
+        <Loading />
+      </Container>
+    );
+  }
+
+  return (
+    <Container style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
       <TopStatus>
         <View>
           <CurrentDate>{currentDate}</CurrentDate>
@@ -106,7 +112,8 @@ const Home = ({ navigation }) => {
           <BarSpace>
             <WeatherImage
               source={SpaceLogo}
-              resizeMode={"contain"}></WeatherImage>
+              resizeMode={"contain"}
+            ></WeatherImage>
           </BarSpace>
           <WeatherSpace>
             <WeatherImage source={WeatherLogo} resizeMode={"contain"} />

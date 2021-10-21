@@ -8,11 +8,10 @@ import HomeWalk from "./HomeWalk";
 import HomeAfterStop from "./HomeAfterStop";
 import { Animated } from "react-native";
 import HomeCompleted from "./HomeCompleted";
+import Loading from "../../components/Loading";
 
 const StatusHome = ({ navigation }) => {
   const status = useReactiveVar(statusVar);
-  const percentage = 0;
-
   const fadetext = useRef(new Animated.Value(0)).current;
   const fadeimage = useRef(new Animated.Value(0.8)).current;
   const [onOff, setOnOff] = useState(false);

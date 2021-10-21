@@ -38,9 +38,12 @@ const AlertSetting = ({ navigation }) => {
   const handleChangeState = (nextHour) => {
     PushNotification.localNotificationSchedule({
       channelId: "default",
-      message: `오늘도 ${
+      title: `오늘도 ${
         coachColor.coach === "booki" ? "부키" : "토키"
       }와 함께 동네 한 바퀴 어때요?`,
+      // message: `오늘도 ${
+      //   coachColor.coach === "booki" ? "부키" : "토키"
+      // }와 함께 동네 한 바퀴 어때요?`,
       date: nextHour,
       allowWhileIdle: true,
       repeatType: "day",

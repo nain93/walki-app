@@ -23,6 +23,7 @@ import Service from "../screens/terms/Service";
 import Info from "../screens/terms/Info";
 import TermsCheck from "../screens/terms/TermsCheck";
 import CloseIcon from "../components/CloseIcon";
+import AlertSetting2 from "../screens/setting/AlertSetting2";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -49,6 +50,12 @@ const GlobalNav = () => {
             component={OnBoarding}
           />
         )}
+
+        <Stack.Screen
+          name="TabNavigator"
+          component={TabNavigator}
+          options={{ gestureEnabled: false, headerShown: false }}
+        />
         <Stack.Screen
           name="CoachSelect"
           options={{
@@ -224,11 +231,6 @@ const GlobalNav = () => {
             },
           }}
           component={ChallengeSetting}
-        />
-        <Stack.Screen
-          name="TabNavigator"
-          component={TabNavigator}
-          options={{ gestureEnabled: false, headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

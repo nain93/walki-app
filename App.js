@@ -3,10 +3,12 @@ import AppLoading from "expo-app-loading";
 import GlobalNav from "./src/navigators/GlobalNav";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import { ApolloProvider } from "@apollo/client";
-import client, { isLoggedInVar, tokenVar } from "./apollo";
+import client, { coachSelect, isLoggedInVar, tokenVar } from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotification, { Importance } from "react-native-push-notification";
 import * as SplashScreen from "expo-splash-screen";
+import STOARGE from "./src/constants/stoarge";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 PushNotification.configure({
   onRegister: function (token) {
@@ -54,6 +56,7 @@ PushNotification.createChannel(
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const { TOKEN, COACH } = STOARGE;
   const onFinish = () => {
     setLoading(false);
     SplashScreen.hideAsync();
@@ -62,6 +65,10 @@ export default function App() {
   const prepare = async () => {
     try {
       await SplashScreen.preventAutoHideAsync();
+      const coach = await AsyncStorage.getItem(COACH);
+      if (coach) {
+        await coachSelect(coach);
+      }
       // await new Promise((resolve) => setTimeout(resolve, 2000));
     } catch (e) {
       console.warn(e);
@@ -69,7 +76,7 @@ export default function App() {
   };
 
   const preload = async () => {
-    const token = await AsyncStorage.getItem("token");
+    const token = await AsyncStorage.getItem(TOKEN);
     if (token) {
       isLoggedInVar(true);
       tokenVar(token);
@@ -92,7 +99,9 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <AppearanceProvider>
-        <GlobalNav />
+        <SafeAreaProvider>
+          <GlobalNav />
+        </SafeAreaProvider>
       </AppearanceProvider>
     </ApolloProvider>
   );

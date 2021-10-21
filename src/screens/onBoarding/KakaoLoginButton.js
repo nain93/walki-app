@@ -11,10 +11,11 @@ import {
 } from "@react-native-seoul/kakao-login";
 import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
 import { Caption, H4Text, theme } from "../../styles/theme";
-import { gql, useLazyQuery, useMutation } from "@apollo/client";
-import { logUserIn } from "../../../apollo";
+import { gql, useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
+import { coachColorVar, logUserIn } from "../../../apollo";
 
 const KakaoLoginButton = ({ navigation }) => {
+  const coachColor = useReactiveVar(coachColorVar);
   const SIGN_UP_MUTATION = gql`
     mutation signUp($social: Social!, $token: String!) {
       signUp(social: $social, token: $token)
@@ -69,7 +70,11 @@ const KakaoLoginButton = ({ navigation }) => {
         token: accessToken,
       },
     });
-    navigation.reset({ routes: [{ name: "CoachSelect" }] });
+    if (coachColor.coach) {
+      navigation.reset({ routes: [{ name: "TabNavigator" }] });
+    } else {
+      navigation.reset({ routes: [{ name: "CoachSelect" }] });
+    }
   };
 
   return (
