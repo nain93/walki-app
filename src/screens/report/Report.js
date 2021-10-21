@@ -81,7 +81,7 @@ const Report = ({ selectedMonth, stepInfo, setStepInfo }) => {
         return;
       }
     },
-    // fetchPolicy: "cache-and-network",
+    fetchPolicy: "cache-and-network",
     onError: (e) => {
       console.log(e);
     },

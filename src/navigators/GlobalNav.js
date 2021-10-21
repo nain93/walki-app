@@ -24,6 +24,7 @@ import Info from "../screens/terms/Info";
 import TermsCheck from "../screens/terms/TermsCheck";
 import CloseIcon from "../components/CloseIcon";
 import AlertSetting2 from "../screens/setting/AlertSetting2";
+import SuccessPopUp from "../components/SuccessPopUp";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -172,6 +173,7 @@ const GlobalNav = () => {
           })}
           component={OpenSource}
         />
+
         {/* 이용약관 */}
         <Stack.Screen
           name="TermsCheck"
@@ -233,6 +235,20 @@ const GlobalNav = () => {
           component={ChallengeSetting}
         />
       </Stack.Navigator>
+      <Stack.Screen
+        name="successPopUp"
+        options={{
+          title: "",
+          headerLeft: () => null,
+          headerRight: (props) => <CloseIcon {...props} />,
+          headerStyle: {
+            backgroundColor: theme.grayScale.white,
+            elevation: 0, // android
+            shadowOpacity: 0, //ios
+          },
+        }}
+        component={SuccessPopUp}
+      />
     </NavigationContainer>
   );
 };

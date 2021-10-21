@@ -9,12 +9,14 @@ import LongButton from "../../components/LongButton";
 import PushNotification from "react-native-push-notification";
 import DatePicker from "react-native-date-picker";
 
+
 const AlertSetting = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
   const coachColor = useReactiveVar(coachColorVar);
 
   const InputRef = useRef();
 
+  
   useEffect(() => {
     InputRef?.current?.focus();
   }, []);

@@ -13,6 +13,7 @@ import Loading from "../../components/Loading";
 const StatusHome = ({ navigation }) => {
   const status = useReactiveVar(statusVar);
   const fadetext = useRef(new Animated.Value(0)).current;
+  const fadetextwalk = useRef(new Animated.Value(0)).current;
   const fadeimage = useRef(new Animated.Value(0.8)).current;
   const [onOff, setOnOff] = useState(false);
 
@@ -62,6 +63,7 @@ const StatusHome = ({ navigation }) => {
         }}
         fadeimage={fadeimage}
         fadetext={fadetext}
+        fadetextwalk={fadetextwalk}
       />
     );
   }
