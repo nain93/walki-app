@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Alert } from "react-native";
 import AppLoading from "expo-app-loading";
 import GlobalNav from "./src/navigators/GlobalNav";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
-import { ApolloProvider } from "@apollo/client";
-import client, { coachSelect, isLoggedInVar, tokenVar } from "./apollo";
+import { ApolloProvider, useReactiveVar } from "@apollo/client";
+import client, {
+  coachSelect,
+  isCoachVar,
+  isLoggedInVar,
+  tokenVar,
+} from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotification, { Importance } from "react-native-push-notification";
 import * as SplashScreen from "expo-splash-screen";
 import STOARGE from "./src/constants/stoarge";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import CoachNav from "./src/navigators/CoachNav";
 
 PushNotification.configure({
   onRegister: function (token) {
@@ -56,6 +61,7 @@ PushNotification.createChannel(
 );
 
 export default function App() {
+  const isCoach = useReactiveVar(isCoachVar);
   const [loading, setLoading] = useState(true);
   const { TOKEN, COACH } = STOARGE;
   const onFinish = () => {
@@ -67,8 +73,12 @@ export default function App() {
     try {
       await SplashScreen.preventAutoHideAsync();
       const coach = await AsyncStorage.getItem(COACH);
+      console.log(coach, "coach");
       if (coach) {
+        isCoachVar(true);
         await coachSelect(coach);
+      } else {
+        isCoachVar(false);
       }
       // await new Promise((resolve) => setTimeout(resolve, 2000));
     } catch (e) {
@@ -78,6 +88,7 @@ export default function App() {
 
   const preload = async () => {
     const token = await AsyncStorage.getItem(TOKEN);
+    console.log(token, "token");
     if (token) {
       isLoggedInVar(true);
       tokenVar(token);
@@ -101,7 +112,7 @@ export default function App() {
     <ApolloProvider client={client}>
       <AppearanceProvider>
         <SafeAreaProvider>
-          <GlobalNav />
+          {isCoach ? <GlobalNav /> : <CoachNav />}
         </SafeAreaProvider>
       </AppearanceProvider>
     </ApolloProvider>

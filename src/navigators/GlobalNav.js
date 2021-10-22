@@ -57,20 +57,7 @@ const GlobalNav = () => {
           component={TabNavigator}
           options={{ gestureEnabled: false, headerShown: false }}
         />
-        <Stack.Screen
-          name="CoachSelect"
-          options={{
-            headerShown: false,
-          }}
-          component={CoachSelect}
-        />
-        <Stack.Screen
-          name="BeforeStart"
-          options={{
-            headerShown: false,
-          }}
-          component={BeforeStart}
-        />
+
         <Stack.Screen
           name="SettingScreen"
           options={{

@@ -39,9 +39,9 @@ const StatusVariable = ({
   const status = useReactiveVar(statusVar);
 
   const getSteps = () => {
-    Pedometer.watchStepCount(result => {
+    Pedometer.watchStepCount((result) => {
       if (status === "walking") {
-        setSteps(steps => ({
+        setSteps((steps) => ({
           ...steps,
           currentStepCount: result.steps,
         }));
@@ -56,7 +56,7 @@ const StatusVariable = ({
   });
 
   useEffect(() => {
-    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then(granted => {
+    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
       if (granted) {
         getSteps();
       }
@@ -96,16 +96,13 @@ const StatusVariable = ({
     variables: {
       challengeDate: getToday(),
     },
-    onCompleted: data => {
-      console.log(data, "data1");
-    },
   });
   const percentage =
     currentStepCount === 0
       ? 0
       : (currentStepCount / data?.getChallenge?.stepGoal) * 100;
   const [putChallengeMutation, { loading }] = useMutation(PUT_CHALLENGE, {
-    onCompleted: data => {
+    onCompleted: (data) => {
       console.log(data, "data");
     },
   });
@@ -136,14 +133,16 @@ const StatusVariable = ({
             percentage={percentage}
             donutColor={coachColorVar().color.main}
             size={350}
-            progressWidth={165}>
+            progressWidth={165}
+          >
             <Animated.View style={[{ opacity: fadeimage ? fadeimage : 1 }]}>
               <CharacetrImage source={coachImg} resizeMode="contain" />
             </Animated.View>
             <Animated.View
               style={[
                 { opacity: fadetext ? fadetext : 0, position: "absolute" },
-              ]}>
+              ]}
+            >
               <View style={{ alignItems: "center" }}>
                 <Blurgoal coachColorVar={coachColorVar().color.main}>
                   {currentStepCount}
@@ -158,7 +157,8 @@ const StatusVariable = ({
                   opacity: fadetextwalk ? fadetextwalk : 0,
                   position: "absolute",
                 },
-              ]}>
+              ]}
+            >
               <View style={{ alignItems: "center" }}>
                 <Blurgoal coachColorVar={coachColorVar().color.main}>
                   {currentStepCount}
@@ -170,7 +170,8 @@ const StatusVariable = ({
                     aligitems: "center",
                     justifyConetent: "center",
                     flexDirection: "row",
-                  }}>
+                  }}
+                >
                   <View
                     style={{
                       width: "30%",
@@ -179,12 +180,14 @@ const StatusVariable = ({
                       alignItems: "center",
                       justifyContent: "center",
                       borderRadius: 20,
-                    }}>
+                    }}
+                  >
                     <Text
                       style={{
                         color: "white",
                         fontSize: 10,
-                      }}>
+                      }}
+                    >
                       목표
                     </Text>
                   </View>
@@ -202,7 +205,8 @@ const StatusVariable = ({
       <LongButton
         handleGoToNext={handleGoToNext}
         btnBackColor={buttonColor}
-        disabled={disabled}>
+        disabled={disabled}
+      >
         {buttonText}
       </LongButton>
       <UserFail

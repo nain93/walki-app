@@ -8,7 +8,6 @@ import HomeWalk from "./HomeWalk";
 import HomeAfterStop from "./HomeAfterStop";
 import { Animated } from "react-native";
 import HomeCompleted from "./HomeCompleted";
-import Loading from "../../components/Loading";
 
 const StatusHome = ({ navigation }) => {
   const status = useReactiveVar(statusVar);
@@ -49,7 +48,7 @@ const StatusHome = ({ navigation }) => {
         goalText="목표를 설정해주세요"
         cheerText="오늘도 함께 걸어요!"
         buttonText="오늘의 목표를 세워보세요!"
-        buttonColor={coachColorVar().color.main}
+        buttonColor={coachColorVar().color.main || "white"}
         handleGoToNext={() => navigation.navigate("ChallengeSetting")}
         handleOpacity={() => {
           if (onOff) {

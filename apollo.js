@@ -12,6 +12,7 @@ import { theme } from "./src/styles/theme";
 import STOARGE from "./src/constants/stoarge";
 
 export const isLoggedInVar = makeVar(false);
+export const isCoachVar = makeVar(false);
 export const tokenVar = makeVar("");
 export const coachColorVar = makeVar({
   coach: "",

@@ -9,7 +9,7 @@ import Report from "../screens/report";
 
 import LogoTitle from "../components/LogoTitle";
 import SettingLogoTitle from "../components/SettingLogoTitle";
-import { coachColorVar, monthVar } from "../../apollo";
+import { coachColorVar } from "../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import activehome from "../../assets/icons/activehome.png";
 import inactivehome from "../../assets/icons/inactivehome.png";
@@ -35,7 +35,7 @@ const TabNavigator = () => {
         backgroundColor: theme.grayScale.white,
       }}
       screenOptions={{
-        tabBarActiveTintColor: tabColor.color.main,
+        tabBarActiveTintColor: tabColor?.color?.main,
         tabBarInactiveTintColor: theme.grayScale.gray3,
         tabBarStyle: {
           height: 68,
@@ -71,7 +71,6 @@ const TabNavigator = () => {
         }}
         component={Home}
       />
-
       <Tabs.Screen
         name="리포트"
         children={() => (
@@ -100,7 +99,7 @@ const TabNavigator = () => {
             <SettingLogoTitle settingIcon={setting} {...props} />
           ),
           headerStyle: {
-            backgroundColor: coachColorVar().color.report,
+            backgroundColor: coachColorVar()?.color?.report,
             elevation: 0, // android
             shadowOpacity: 0, //ios
           },
@@ -129,7 +128,7 @@ const TabNavigator = () => {
             <SettingLogoTitle settingIcon={setting} {...props} />
           ),
           headerStyle: {
-            backgroundColor: coachColorVar().color.report,
+            backgroundColor: coachColorVar()?.color?.report,
             elevation: 0, // android
             shadowOpacity: 0, //ios
           },
