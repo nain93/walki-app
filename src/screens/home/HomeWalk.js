@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
-import { coachColorVar, statusVar } from "../../../apollo";
+import React, { useRef, useState } from "react";
+import { coachColorVar } from "../../../apollo";
 import toki_walking from "../../../assets/images/character/toki_walking.png";
 import buki_walking from "../../../assets/images/character/buki_walking.png";
 import { theme } from "../../styles/theme";
@@ -8,7 +8,7 @@ import { Animated } from "react-native";
 
 import { useReactiveVar } from "@apollo/client";
 
-const HomeWalk = navigation => {
+const HomeWalk = (navigation) => {
   const [failModalOpen, setFailModalOpen] = useState(false);
   const handleFailModal = () => {
     setFailModalOpen(!failModalOpen);
@@ -18,7 +18,6 @@ const HomeWalk = navigation => {
 
   const fadeimage = useRef(new Animated.Value(0.8)).current;
   const [onOff, setOnOff] = useState(false);
-  const status = useReactiveVar(statusVar);
 
   const handlepressup = () => {
     Animated.timing(fadetextwalk, {

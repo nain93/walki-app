@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -20,13 +20,17 @@ import inactivemessage from "../../assets/icons/inactivemessage.png";
 import setting from "../../assets/icons/setting.png";
 import bookMark from "../../assets/icons/bookmark.png";
 import { theme } from "../styles/theme";
-import { month } from "../common/getToday";
-import WheelPicker from "../components/WheelPicker";
+import { month, year } from "../common/getToday";
+import BottomSheetPicker from "../components/BottomSheetPicker";
 
 const Tabs = createBottomTabNavigator();
 
 const TabNavigator = () => {
-  const [selectedMonth, setSelectedMonth] = useState(month);
+  const bottomSheetRef = useRef(null);
+  const [selectedMonth, setSelectedMonth] = useState({
+    year,
+    month,
+  });
   const [stepInfo, setStepInfo] = useState([{}]);
   const tabColor = useReactiveVar(coachColorVar);
   return (
@@ -75,25 +79,23 @@ const TabNavigator = () => {
         name="리포트"
         children={() => (
           <Report
+            bottomSheetRef={bottomSheetRef}
             stepInfo={stepInfo}
             setStepInfo={setStepInfo}
             selectedMonth={selectedMonth}
+            setSelectedMonth={setSelectedMonth}
           />
         )}
         options={{
           headerTitleAlign: "center",
           headerTitle: () => (
-            <WheelPicker
+            <BottomSheetPicker
               setStepInfo={setStepInfo}
+              bottomSheetRef={bottomSheetRef}
               selectedMonth={selectedMonth}
-              setSelectedMonth={setSelectedMonth}
             />
           ),
-          headerTitleStyle: {
-            color: theme.grayScale.white,
-            fontSize: 16,
-            fontWeight: "700",
-          },
+
           headerLeft: () => null,
           headerRight: (props) => (
             <SettingLogoTitle settingIcon={setting} {...props} />

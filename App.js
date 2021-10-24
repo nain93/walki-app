@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AppLoading from "expo-app-loading";
 import GlobalNav from "./src/navigators/GlobalNav";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
-import { ApolloProvider, useReactiveVar } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import client, {
+  coachColorVar,
   coachSelect,
   isCoachVar,
   isLoggedInVar,
   tokenVar,
+  walkStatus,
 } from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotification, { Importance } from "react-native-push-notification";
 import * as SplashScreen from "expo-splash-screen";
 import STOARGE from "./src/constants/stoarge";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import CoachNav from "./src/navigators/CoachNav";
 
 PushNotification.configure({
   onRegister: function (token) {
@@ -61,9 +62,7 @@ PushNotification.createChannel(
 );
 
 export default function App() {
-  const isCoach = useReactiveVar(isCoachVar);
   const [loading, setLoading] = useState(true);
-  const { TOKEN, COACH } = STOARGE;
   const onFinish = () => {
     setLoading(false);
     SplashScreen.hideAsync();
@@ -72,26 +71,31 @@ export default function App() {
   const prepare = async () => {
     try {
       await SplashScreen.preventAutoHideAsync();
-      const coach = await AsyncStorage.getItem(COACH);
-      console.log(coach, "coach");
-      if (coach) {
-        isCoachVar(true);
-        await coachSelect(coach);
-      } else {
-        isCoachVar(false);
-      }
+
       // await new Promise((resolve) => setTimeout(resolve, 2000));
     } catch (e) {
       console.warn(e);
     }
   };
-
+  const { TOKEN, COACH, STATUS } = STOARGE;
   const preload = async () => {
     const token = await AsyncStorage.getItem(TOKEN);
     console.log(token, "token");
     if (token) {
       isLoggedInVar(true);
       tokenVar(token);
+    }
+    const coach = await AsyncStorage.getItem(COACH);
+    console.log(coach, "coach");
+    if (coach) {
+      await coachSelect(coach);
+      isCoachVar(true);
+    } else {
+      isCoachVar(false);
+    }
+    const status = await AsyncStorage.getItem(STATUS);
+    if (status) {
+      walkStatus(status);
     }
     return prepare();
   };
@@ -112,7 +116,7 @@ export default function App() {
     <ApolloProvider client={client}>
       <AppearanceProvider>
         <SafeAreaProvider>
-          {isCoach ? <GlobalNav /> : <CoachNav />}
+          <GlobalNav />
         </SafeAreaProvider>
       </AppearanceProvider>
     </ApolloProvider>

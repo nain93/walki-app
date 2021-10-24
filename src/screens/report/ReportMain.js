@@ -11,7 +11,7 @@ import Toast from "react-native-easy-toast";
 import AddBtn from "./reportItems/AddBtn";
 import { getToday } from "../../common/getToday";
 
-const ReportMain = ({ stepInfo }) => {
+const ReportMain = ({ stepInfo, children }) => {
   const userName = useReactiveVar(userNameVar);
   const [selectedId, setSelectedId] = useState([]);
 
@@ -100,6 +100,7 @@ const ReportMain = ({ stepInfo }) => {
         opacity={0.8}
         textStyle={{ color: "white" }}
       />
+      {children}
     </Container>
   );
 };

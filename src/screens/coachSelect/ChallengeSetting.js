@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import LongButton from "../../components/LongButton";
 import { Body1Text, theme } from "../../styles/theme";
-import { coachColorVar, monthVar, statusVar } from "../../../apollo";
-import { gql, useMutation, useReactiveVar } from "@apollo/client";
+import { coachColorVar, monthVar, walkStatus } from "../../../apollo";
+import { gql, useMutation, useReactiveVar, useQuery } from "@apollo/client";
 import { KeyboardAvoidingView } from "react-native";
 import { getToday, month, year } from "../../common/getToday";
 import HeaderForm from "../../components/HeaderForm";
+
 const ChallengeSetting = ({ navigation }) => {
   const walkRef = useRef();
   const coachColor = useReactiveVar(coachColorVar);
@@ -26,7 +27,7 @@ const ChallengeSetting = ({ navigation }) => {
 
   const inputWatch = watch("walkingNum");
 
-  const PUT_CHALLENGE = gql`
+  const PUT_CHALLENGE_MUTATION = gql`
     mutation putChallenge($challenge: ChallengeInput) {
       putChallenge(challenge: $challenge) {
         step
@@ -36,11 +37,45 @@ const ChallengeSetting = ({ navigation }) => {
     }
   `;
 
-  const [putChallengeMutation, { data, loading }] = useMutation(PUT_CHALLENGE, {
+  const GET_CHALLENGES_QUERY = gql`
+    query getChallenges {
+      getChallenges {
+        challengeDate
+      }
+    }
+  `;
+
+  const { refetch } = useQuery(GET_CHALLENGES_QUERY, {
     onCompleted: (data) => {
-      console.log(data, "data");
+      const arr = [];
+      data.getChallenges.map((item, idx) => {
+        if (arr[idx - 1]?.month === Number(item.challengeDate.slice(5, 7))) {
+          return;
+        }
+        arr.push({
+          year: Number(item.challengeDate.slice(0, 4)),
+          month: Number(item.challengeDate.slice(5, 7)),
+        });
+      });
+      monthVar([...arr]);
     },
   });
+
+  const [putChallengeMutation, { loading }] = useMutation(
+    PUT_CHALLENGE_MUTATION,
+    {
+      onCompleted: (data) => {
+        refetch();
+      },
+      refetchQueries: [
+        {
+          query: GET_CHALLENGES_QUERY,
+        },
+      ],
+      awaitRefetchQueries: true,
+      // ! refetchQueries
+    }
+  );
 
   const handlePutChallenge = async () => {
     if (inputWatch < 200) {
@@ -55,16 +90,7 @@ const ChallengeSetting = ({ navigation }) => {
         },
       },
     });
-    const check = monthVar().walkedMonth.map((item) => {
-      return month === item.month;
-    });
-    if (!check) {
-      monthVar({
-        walkedMonth: (prev) => [...prev, { month, year }],
-      });
-    }
-
-    statusVar("walking");
+    walkStatus("walking");
     navigation.goBack();
   };
 
