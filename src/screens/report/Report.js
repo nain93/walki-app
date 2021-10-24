@@ -7,9 +7,11 @@ import Loading from "../../components/Loading";
 import ReportLoading from "./reportItems/ReportLoading";
 import { monthVar, userNameVar } from "../../../apollo";
 import { useFocusEffect } from "@react-navigation/native";
-import BottomSheet, {
+import {
   BottomSheetBackdrop,
   BottomSheetScrollView,
+  BottomSheetModalProvider,
+  BottomSheetModal,
 } from "@gorhom/bottom-sheet";
 import { Text, TouchableWithoutFeedback } from "react-native";
 import { getToday, month } from "../../common/getToday";
@@ -156,26 +158,28 @@ const Report = ({
       <Container>
         <ReportHeader stepTotal={stepTotal} />
         <ReportMain stepInfo={stepInfo}>
-          <BottomSheet
-            enablePanDownToClose
-            ref={bottomSheetRef}
-            index={0}
-            snapPoints={snapPoints}
-            backdropComponent={renderBackdrop}
-          >
-            <BottomSheetScrollView
-              style={{ flex: 1 }}
-              contentContainerStyle={{
-                alignItems: "center",
-              }}
+          <BottomSheetModalProvider>
+            <BottomSheetModal
+              enablePanDownToClose
+              ref={bottomSheetRef}
+              index={0}
+              snapPoints={snapPoints}
+              backdropComponent={renderBackdrop}
             >
-              {monthV.map((item, idx) => (
-                <MonthItem key={idx} onPress={() => handleMonthClick(item)}>
-                  <Text>{`${item.year}년 ${item.month}월 리포트`}</Text>
-                </MonthItem>
-              ))}
-            </BottomSheetScrollView>
-          </BottomSheet>
+              <BottomSheetScrollView
+                style={{ flex: 1 }}
+                contentContainerStyle={{
+                  alignItems: "center",
+                }}
+              >
+                {monthV.map((item, idx) => (
+                  <MonthItem key={idx} onPress={() => handleMonthClick(item)}>
+                    <Text>{`${item.year}년 ${item.month}월 리포트`}</Text>
+                  </MonthItem>
+                ))}
+              </BottomSheetScrollView>
+            </BottomSheetModal>
+          </BottomSheetModalProvider>
         </ReportMain>
       </Container>
     </TouchableWithoutFeedback>

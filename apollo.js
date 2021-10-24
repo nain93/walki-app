@@ -55,7 +55,7 @@ export const monthVar = makeVar([
   },
 ]);
 
-const { TOKEN, COACH, STATUS } = STOARGE;
+const { TOKEN, COACH, STATUS, TIME } = STOARGE;
 
 export const logUserIn = async (token) => {
   await AsyncStorage.setItem(TOKEN, token);
@@ -84,6 +84,13 @@ export const coachSelect = async (coach) => {
 export const walkStatus = async (status) => {
   await AsyncStorage.setItem(STATUS, status);
   statusVar(status);
+};
+
+export const alertTimeSetting = async (time) => {
+  await AsyncStorage.setItem(TIME, JSON.stringify(time));
+  alertTimeVar({
+    ...time,
+  });
 };
 
 const httpLink = createHttpLink({
