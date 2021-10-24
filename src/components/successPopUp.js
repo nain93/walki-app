@@ -5,7 +5,7 @@ import { useForm, useEffect } from "react-hook-form";
 
 import LongButton from "./LongButton";
 import { Body1Text, theme, H1Text } from "../styles/theme";
-import { coachColorVar, statusVar } from "../../apollo";
+import { coachColorVar, statusVar, walkStatus } from "../../apollo";
 import { KeyboardAvoidingView } from "react-native";
 
 const SuccessPopUp = ({ navigation }) => {
@@ -15,7 +15,7 @@ const SuccessPopUp = ({ navigation }) => {
   //   },
   // });
   const NextPage = () => {
-    statusVar("success");
+    walkStatus("success");
     navigation.navigate("HomeCompleted");
     navigation.goBack();
   };

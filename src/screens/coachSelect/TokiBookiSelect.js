@@ -6,7 +6,7 @@ import tokiImg from "../../../assets/images/toki_character.png";
 import bookiImg from "../../../assets/images/booki_character.png";
 import LongButton from "../../components/LongButton";
 import { useMutation, gql, useQuery } from "@apollo/client";
-import { coachColorVar, coachSelect } from "../../../apollo";
+import { coachSelect } from "../../../apollo";
 
 const TokiBookiSelect = ({ navigation }) => {
   const [isClick, setIsClick] = useState("");

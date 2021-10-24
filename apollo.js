@@ -7,9 +7,9 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setContext } from "@apollo/client/link/context";
 import Config from "react-native-config";
-import { month } from "./src/common/getToday";
 import { theme } from "./src/styles/theme";
 import STOARGE from "./src/constants/stoarge";
+import { month, year } from "./src/common/getToday";
 
 export const isLoggedInVar = makeVar(false);
 export const isCoachVar = makeVar(false);
@@ -48,12 +48,14 @@ export const statusVar = makeVar("home");
 
 export const stepVar = makeVar(0);
 
-export const monthVar = makeVar({
-  thisMonth: month,
-  walkedMonth: [],
-});
+export const monthVar = makeVar([
+  {
+    year,
+    month,
+  },
+]);
 
-const { TOKEN, COACH } = STOARGE;
+const { TOKEN, COACH, STATUS } = STOARGE;
 
 export const logUserIn = async (token) => {
   await AsyncStorage.setItem(TOKEN, token);
@@ -66,16 +68,22 @@ export const logUserOut = async () => {
   isLoggedInVar(false);
   userNameVar({});
   tokenVar("");
-  statusVar("home");
+  walkStatus("home");
 };
 
 export const coachSelect = async (coach) => {
   await AsyncStorage.setItem(COACH, coach);
+  isCoachVar(true);
   if (coach === "toki") {
     coachColorVar({ coach: "toki", ...theme.toki });
   } else if (coach === "booki") {
     coachColorVar({ coach: "booki", ...theme.booki });
   }
+};
+
+export const walkStatus = async (status) => {
+  await AsyncStorage.setItem(STATUS, status);
+  statusVar(status);
 };
 
 const httpLink = createHttpLink({
