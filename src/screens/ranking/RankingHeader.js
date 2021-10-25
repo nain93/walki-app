@@ -6,8 +6,9 @@ import { H2Text, H4Text, theme } from "../../styles/theme";
 import chat from "../../../assets/icons/chat.png";
 import tokiHappy from "../../../assets/images/ranking/toki_happy.png";
 import bukiHappy from "../../../assets/images/ranking/buki_happy.png";
+import { day, month } from "../../common/getToday";
 
-const RankingHeader = () => {
+const RankingHeader = ({ rank }) => {
   return (
     <Conatiner coachColor={coachColorVar().color.report}>
       <View>
@@ -29,16 +30,22 @@ const RankingHeader = () => {
         </TextWrap>
         <RankingWrap>
           <RankingBox style={{ opacity: 0.6, marginRight: 8 }}>
-            <Text>4/4</Text>
+            <Text>
+              {month}/{day - 2}
+            </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <H2Text style={{ color: coachColorVar().color.main }}>34</H2Text>
               <Text> 위</Text>
             </View>
           </RankingBox>
           <RankingBox>
-            <Text>4/5</Text>
+            <Text>
+              {month}/{day - 1}
+            </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <H2Text style={{ color: coachColorVar().color.main }}>2</H2Text>
+              <H2Text style={{ color: coachColorVar().color.main }}>
+                {rank}
+              </H2Text>
               <Text> 위</Text>
             </View>
           </RankingBox>

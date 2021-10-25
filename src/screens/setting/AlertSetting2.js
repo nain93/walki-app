@@ -34,14 +34,14 @@ const AlertSetting2 = ({ navigation }) => {
     let nextHour;
     nextHour = new Date();
 
-    nextHour.setDate(nextHour.getDate() + 1);
+    nextHour.setDate(nextHour.getDate());
     if (ampm === "오후") {
       nextHour.setHours(hour + 12, minute, 0);
     }
     if (ampm === "오전") {
       nextHour.setHours(hour, minute, 0);
     }
-    console.log(nextHour, "nextHour");
+    console.log(typeof nextHour, "nextHour");
     handleChangeState(nextHour);
     alertTimeVar({
       ...timePick,

@@ -14,13 +14,14 @@ const DeleteUser = ({ handleDeleteModal, deleteModalOpen, navigation }) => {
       deleteMember
     }
   `;
-  const { COACH } = STOARGE;
   const [deleteUserMutation] = useMutation(DELETE_USER_MUTATION);
 
   const handleOkayBtn = async () => {
+    const { COACH, TIME } = STOARGE;
     deleteUserMutation();
     await logUserOut();
     await AsyncStorage.removeItem(COACH);
+    await AsyncStorage.removeItem(TIME);
     isCoachVar(false);
     handleDeleteModal();
     navigation.reset({ routes: [{ name: "OnBoarding" }] });
