@@ -22,7 +22,7 @@ const AlertSetting = ({ navigation }) => {
   const handleGoToNext = async () => {
     PushNotification.setApplicationIconBadgeNumber(0);
     PushNotification.cancelAllLocalNotifications();
-    // date.setDate(date.getDate()+1);
+    date.setDate(date.getDate() + 1);
     handleChangeState(date);
     alertTimeSetting({
       ampm: date.getHours() >= 12 ? "오후" : "오전",
@@ -42,9 +42,7 @@ const AlertSetting = ({ navigation }) => {
       title: `오늘도 ${
         coachColor.coach === "booki" ? "부키" : "토키"
       }와 함께 동네 한 바퀴 어때요?`,
-      // message: `오늘도 ${
-      //   coachColor.coach === "booki" ? "부키" : "토키"
-      // }와 함께 동네 한 바퀴 어때요?`,
+      message: "",
       date: nextHour,
       allowWhileIdle: true,
       repeatType: "day",
