@@ -50,7 +50,7 @@ const StatusHome = ({ navigation }) => {
         cheerText="오늘도 함께 걸어요!"
         buttonText="오늘의 목표를 세워보세요!"
         buttonColor={coachColorVar().color.main}
-        handleGoToNext={() => navigation.navigate("challengeSetting")}
+        handleGoToNext={() => navigation.navigate("ChallengeSetting")}
         handleOpacity={() => {
           if (onOff) {
             handlepressdown();
