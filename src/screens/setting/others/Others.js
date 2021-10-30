@@ -6,7 +6,7 @@ import DeleteUser from "./DeleteUser";
 import LogOut from "./LogOut";
 import Share from "react-native-share";
 
-const Others = ({ navigation }) => {
+const Others = () => {
   const [logOutModalOpen, setLogOutModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const handleShare = () => {
@@ -44,7 +44,6 @@ const Others = ({ navigation }) => {
         <SettingText>로그아웃</SettingText>
       </SettingBox>
       <LogOut
-        navigation={navigation}
         handleLogOutModal={handleLogOutModal}
         logOutModalOpen={logOutModalOpen}
       />
@@ -52,7 +51,6 @@ const Others = ({ navigation }) => {
         <SettingText>탈퇴하기</SettingText>
       </SettingBox>
       <DeleteUser
-        navigation={navigation}
         handleDeleteModal={handleDeleteModal}
         deleteModalOpen={deleteModalOpen}
       />

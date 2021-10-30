@@ -2,20 +2,22 @@ import React, { useState } from "react";
 import AppLoading from "expo-app-loading";
 import GlobalNav from "./src/navigators/GlobalNav";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import client, {
   coachColorVar,
   coachSelect,
   isCoachVar,
   isLoggedInVar,
+  statusVar,
   tokenVar,
-  walkStatus,
 } from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotification, { Importance } from "react-native-push-notification";
 import * as SplashScreen from "expo-splash-screen";
 import STOARGE from "./src/constants/stoarge";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { theme } from "./src/styles/theme";
+import LoggedOutNav from "./src/navigators/LoggedOutNav";
 
 PushNotification.configure({
   onRegister: function (token) {
@@ -62,10 +64,11 @@ PushNotification.createChannel(
 );
 
 export default function App() {
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
   const [loading, setLoading] = useState(true);
   const onFinish = () => {
-    setLoading(false);
     SplashScreen.hideAsync();
+    setLoading(false);
   };
 
   const prepare = async () => {
@@ -78,25 +81,42 @@ export default function App() {
     }
   };
   const { TOKEN, COACH, STATUS } = STOARGE;
-  const preload = async () => {
+
+  const getToken = async () => {
     const token = await AsyncStorage.getItem(TOKEN);
     console.log(token, "token");
     if (token) {
       isLoggedInVar(true);
       tokenVar(token);
     }
+  };
+
+  const getCoach = async () => {
     const coach = await AsyncStorage.getItem(COACH);
     console.log(coach, "coach");
     if (coach) {
-      await coachSelect(coach);
       isCoachVar(true);
-    } else {
-      isCoachVar(false);
+      if (coach === "toki") {
+        coachColorVar({ coach: "toki", ...theme.toki });
+      } else if (coach === "booki") {
+        coachColorVar({ coach: "booki", ...theme.booki });
+      }
     }
+  };
+
+  const getStatus = async () => {
     const status = await AsyncStorage.getItem(STATUS);
     if (status) {
-      walkStatus(status);
+      statusVar(status);
     }
+  };
+
+  const preload = async () => {
+    const token = getToken();
+    const coach = getCoach();
+    const status = getStatus();
+
+    await Promise.all([token, coach, status]);
     return prepare();
   };
 
@@ -116,7 +136,7 @@ export default function App() {
     <ApolloProvider client={client}>
       <AppearanceProvider>
         <SafeAreaProvider>
-          <GlobalNav />
+          {isLoggedIn ? <GlobalNav /> : <LoggedOutNav />}
         </SafeAreaProvider>
       </AppearanceProvider>
     </ApolloProvider>

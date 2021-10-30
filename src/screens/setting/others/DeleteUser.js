@@ -8,7 +8,7 @@ import { isCoachVar, logUserOut } from "../../../../apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import STOARGE from "../../../constants/stoarge";
 
-const DeleteUser = ({ handleDeleteModal, deleteModalOpen, navigation }) => {
+const DeleteUser = ({ handleDeleteModal, deleteModalOpen }) => {
   const DELETE_USER_MUTATION = gql`
     mutation deleteMember {
       deleteMember
@@ -24,7 +24,6 @@ const DeleteUser = ({ handleDeleteModal, deleteModalOpen, navigation }) => {
     await AsyncStorage.removeItem(TIME);
     isCoachVar(false);
     handleDeleteModal();
-    navigation.reset({ routes: [{ name: "OnBoarding" }] });
   };
 
   return (

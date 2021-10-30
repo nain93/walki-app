@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
-import Svg, { Path } from "react-native-svg";
 import { coachColorVar, statusVar, stepVar } from "../../apollo";
 import LongButton from "../components/LongButton";
 
@@ -20,6 +19,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { Body1Text, H4Text, theme } from "../styles/theme";
 import { getToday } from "../common/getToday";
+
 const StatusVariable = ({
   coachImg,
   goalText,
@@ -34,34 +34,41 @@ const StatusVariable = ({
   fadetext,
   fadetextwalk,
 }) => {
+  let subscription = null;
   const navigation = useNavigation();
-
   const status = useReactiveVar(statusVar);
-
-  const getSteps = () => {
-    Pedometer.watchStepCount((result) => {
-      if (status === "walking") {
-        setSteps((steps) => ({
-          ...steps,
-          currentStepCount: result.steps,
-        }));
-      }
-    });
-  };
-
   const [steps, setSteps] = useState({
     isPedometerAvailable: "checking",
     pastStepCount: 0,
     currentStepCount: 0,
   });
 
-  useEffect(() => {
-    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
+  const getPermission = async () => {
+    try {
+      const granted = await request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION);
       if (granted) {
-        getSteps();
+        //
       }
-    });
-  }, []);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // useEffect(() => {
+  //   Pedometer.watchStepCount((result) => {
+  //     if (status === "walking" && result) {
+  //       setSteps((steps) => ({
+  //         ...steps,
+  //         currentStepCount: result.steps,
+  //       }));
+  //       stepVar(result.steps);
+  //     }
+  //   });
+  //   // return () => {
+  //   //   subscription && subscription.remove();
+  //   //   subscription = null;
+  //   // };
+  // }, []);
 
   useEffect(() => {
     checkTime: getToday();
@@ -92,16 +99,21 @@ const StatusVariable = ({
       }
     }
   `;
-  const { data } = useQuery(GET_CHALLENGE, {
+  const { data, loading } = useQuery(GET_CHALLENGE, {
     variables: {
       challengeDate: getToday(),
     },
   });
-  const percentage =
-    currentStepCount === 0
-      ? 0
-      : (currentStepCount / data?.getChallenge?.stepGoal) * 100;
-  const [putChallengeMutation, { loading }] = useMutation(PUT_CHALLENGE, {
+
+  let percentage;
+  if (!loading) {
+    percentage =
+      currentStepCount === 0
+        ? 0
+        : (currentStepCount / data?.getChallenge?.stepGoal) * 100;
+  }
+
+  const [putChallengeMutation, {}] = useMutation(PUT_CHALLENGE, {
     onCompleted: (data) => {
       console.log(data, "data");
     },
@@ -123,6 +135,7 @@ const StatusVariable = ({
   // }, [currentStepCount]);
   // * 12시전에 (11시59분59초) 한번 업데이트 해야됨
   // * 종료시점을 알수있으면 종료하기전에 스탭 보내기
+  // !! Pedometer.watchStepCount 초기화 안되게 해야됨
   // * 아니면 asyncStorage에 스탭 넣어두기
 
   return (
@@ -130,7 +143,7 @@ const StatusVariable = ({
       <GoalBox>
         <TouchableOpacity onPress={handleOpacity}>
           <CircularProgress
-            percentage={percentage}
+            percentage={0}
             donutColor={coachColorVar().color.main}
             size={350}
             progressWidth={165}

@@ -37,11 +37,13 @@ const Ranking = () => {
       end: getToday(),
     },
     onCompleted: ({ getMyRankings }) => {
-      const {
-        number,
-        challengeDate,
-        member: { profileImage, name },
-      } = getMyRankings[0];
+      if (getMyRankings.length !== 0) {
+        const {
+          number,
+          challengeDate,
+          member: { profileImage, name },
+        } = getMyRankings[0];
+      }
     },
   });
 
@@ -51,7 +53,7 @@ const Ranking = () => {
 
   return (
     <Container>
-      <RankingHeader rank={data?.member?.name} />
+      <RankingHeader rank={data?.getMyRankings?.number} />
       <RankingMain />
     </Container>
   );

@@ -22,7 +22,7 @@ const AlertSetting = ({ navigation }) => {
   const handleGoToNext = async () => {
     PushNotification.setApplicationIconBadgeNumber(0);
     PushNotification.cancelAllLocalNotifications();
-    date.setDate(date.getDate() + 1);
+    // date.setDate(date.getDate() + 1);
     handleChangeState(date);
     alertTimeSetting({
       ampm: date.getHours() >= 12 ? "오후" : "오전",
@@ -46,6 +46,8 @@ const AlertSetting = ({ navigation }) => {
       date: nextHour,
       allowWhileIdle: true,
       repeatType: "day",
+      ignoreInForeground: true,
+      invokeApp: false,
     });
   };
 

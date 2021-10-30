@@ -6,8 +6,6 @@ import { theme } from "../../styles/theme";
 import StatusVariable from "../../components/StatusVariable";
 import { Animated } from "react-native";
 
-import { useReactiveVar } from "@apollo/client";
-
 const HomeWalk = (navigation) => {
   const [failModalOpen, setFailModalOpen] = useState(false);
   const handleFailModal = () => {

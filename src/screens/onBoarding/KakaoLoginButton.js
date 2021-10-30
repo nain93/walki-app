@@ -70,11 +70,6 @@ const KakaoLoginButton = ({ navigation }) => {
         token: accessToken,
       },
     });
-    if (isCoach) {
-      navigation.reset({ routes: [{ name: "TabNavigator" }] });
-    } else {
-      navigation.reset({ routes: [{ name: "CoachSelect" }] });
-    }
   };
 
   return (

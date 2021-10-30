@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, AppState } from "react-native";
+import React, { useState } from "react";
+import { View, Text, AppState, Platform } from "react-native";
 import styled from "styled-components";
 import { H1Text, theme, Body1Text, Body3Text } from "../../styles/theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AndroidOpenSettings from "react-native-android-open-settings";
-import { check, PERMISSIONS, RESULTS } from "react-native-permissions";
+import { check, PERMISSIONS } from "react-native-permissions";
 import PushNotification from "react-native-push-notification";
 import { coachColorVar } from "../../../apollo";
 
@@ -12,22 +12,26 @@ const AppSetting = ({ navigation }) => {
   const [notiCheck, setNotiCheck] = useState(true);
   const [detailCheck, setDetailCheck] = useState(true);
   const handleOnOfPush = () => {
-    openDroidSetting(AndroidOpenSettings.appNotificationSettings).then(() => {
-      PushNotification.checkPermissions((permissions) => {
-        setNotiCheck(permissions.alert);
+    if (Platform.OS === "android") {
+      openDroidSetting(AndroidOpenSettings.appNotificationSettings).then(() => {
+        PushNotification.checkPermissions((permissions) => {
+          setNotiCheck(permissions.alert);
+        });
       });
-    });
+    }
   };
   const handleOnOfInfo = () => {
-    openDroidSetting(AndroidOpenSettings.appDetailsSettings).then(() => {
-      check(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((check) => {
-        if (check === "granted") {
-          setDetailCheck(true);
-        } else if (check === "blocked") {
-          setDetailCheck(false);
-        }
+    if (Platform.OS === "android") {
+      openDroidSetting(AndroidOpenSettings.appDetailsSettings).then(() => {
+        check(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((check) => {
+          if (check === "granted") {
+            setDetailCheck(true);
+          } else if (check === "blocked") {
+            setDetailCheck(false);
+          }
+        });
       });
-    });
+    }
   };
 
   const openDroidSetting = (settingFunc) => {
@@ -51,7 +55,6 @@ const AppSetting = ({ navigation }) => {
   const { gray1, gray2, gray3, gray6 } = theme.grayScale;
   return (
     <Container>
-      {console.log(notiCheck, "notiCheck")}
       <Wrap>
         <H1Text>앱설정</H1Text>
         <View>

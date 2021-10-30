@@ -33,7 +33,7 @@ const Stack = createStackNavigator();
 
 const GlobalNav = () => {
   const isCoach = useReactiveVar(isCoachVar);
-  const isLoggedIn = useReactiveVar(isLoggedInVar);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -43,15 +43,6 @@ const GlobalNav = () => {
           { cardStyle: { backgroundColor: theme.grayScale.white } }
         )}
       >
-        {!isLoggedIn && (
-          <Stack.Screen
-            name="OnBoarding"
-            options={{
-              headerShown: false,
-            }}
-            component={OnBoarding}
-          />
-        )}
         {!isCoach && (
           <Stack.Screen
             name="CoachSelect"
