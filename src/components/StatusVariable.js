@@ -11,14 +11,28 @@ import {
 } from "../styles/homeTheme";
 import UserFail from "../screens/home/others/UserFail";
 import { Animated, View, Text } from "react-native";
-
-import { Pedometer } from "expo-sensors";
 import { request, PERMISSIONS } from "react-native-permissions";
+import GoogleFit, { Scopes } from "react-native-google-fit";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { Body1Text, H4Text, theme } from "../styles/theme";
 import { getToday } from "../common/getToday";
+
+const opt = {
+  startDate: "2021-10-29T00:00:17.971Z", // required ISO8601Timestamp
+  endDate: new Date().toISOString(), // required ISO8601Timestamp
+  bucketUnit: "DAY", // optional - default "DAY". Valid values: "NANOSECOND" | "MICROSECOND" | "MILLISECOND" | "SECOND" | "MINUTE" | "HOUR" | "DAY"
+  bucketInterval: 1, // optional - default 1.
+};
+const options = {
+  scopes: [
+    Scopes.FITNESS_ACTIVITY_READ,
+    Scopes.FITNESS_ACTIVITY_WRITE,
+    Scopes.FITNESS_BODY_READ,
+    Scopes.FITNESS_BODY_WRITE,
+  ],
+};
 
 const StatusVariable = ({
   coachImg,
@@ -34,41 +48,12 @@ const StatusVariable = ({
   fadetext,
   fadetextwalk,
 }) => {
-  let subscription = null;
   const navigation = useNavigation();
   const status = useReactiveVar(statusVar);
   const [steps, setSteps] = useState({
-    isPedometerAvailable: "checking",
-    pastStepCount: 0,
-    currentStepCount: 0,
+    totalSteps: "",
+    observeSteps: "",
   });
-
-  const getPermission = async () => {
-    try {
-      const granted = await request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION);
-      if (granted) {
-        //
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  // useEffect(() => {
-  //   Pedometer.watchStepCount((result) => {
-  //     if (status === "walking" && result) {
-  //       setSteps((steps) => ({
-  //         ...steps,
-  //         currentStepCount: result.steps,
-  //       }));
-  //       stepVar(result.steps);
-  //     }
-  //   });
-  //   // return () => {
-  //   //   subscription && subscription.remove();
-  //   //   subscription = null;
-  //   // };
-  // }, []);
 
   useEffect(() => {
     checkTime: getToday();
@@ -82,7 +67,36 @@ const StatusVariable = ({
     // getToday해서 11:59분에 percentage 100인지 체크
   }, []);
 
-  const { currentStepCount, isPedometerAvailable } = steps;
+  useEffect(() => {
+    GoogleFit.authorize(options).then((authResult) => {
+      if (authResult.success) {
+        GoogleFit.getDailySteps(new Date().toISOString()).then((res) => {
+          if (res.length !== 0) {
+            const { date, value } = res[2].steps[0];
+            if (value) {
+              console.log(value, "value");
+              setSteps({ ...steps, totalSteps: value });
+              stepVar(value);
+            }
+          }
+        });
+      } else {
+        console.log("AUTH_DENIED", authResult.message);
+      }
+    });
+  }, [steps.observeSteps]);
+
+  useEffect(() => {
+    request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
+      if (granted) {
+        GoogleFit.startRecording((callback) => {
+          GoogleFit.observeSteps((res) => {
+            setSteps({ ...steps, observeSteps: res.steps });
+          });
+        });
+      }
+    });
+  }, []);
 
   const PUT_CHALLENGE = gql`
     mutation putChallenge($challenge: ChallengeInput) {
@@ -108,9 +122,9 @@ const StatusVariable = ({
   let percentage;
   if (!loading) {
     percentage =
-      currentStepCount === 0
+      steps.totalSteps === 0
         ? 0
-        : (currentStepCount / data?.getChallenge?.stepGoal) * 100;
+        : (steps.totalSteps / data?.getChallenge?.stepGoal) * 100;
   }
 
   const [putChallengeMutation, {}] = useMutation(PUT_CHALLENGE, {
@@ -143,7 +157,7 @@ const StatusVariable = ({
       <GoalBox>
         <TouchableOpacity onPress={handleOpacity}>
           <CircularProgress
-            percentage={0}
+            percentage={percentage ? percentage : 0}
             donutColor={coachColorVar().color.main}
             size={350}
             progressWidth={165}
@@ -158,7 +172,7 @@ const StatusVariable = ({
             >
               <View style={{ alignItems: "center" }}>
                 <Blurgoal coachColorVar={coachColorVar().color.main}>
-                  {currentStepCount}
+                  {steps.totalSteps}
                 </Blurgoal>
 
                 <H4Text>{goalText}</H4Text>
@@ -174,7 +188,7 @@ const StatusVariable = ({
             >
               <View style={{ alignItems: "center" }}>
                 <Blurgoal coachColorVar={coachColorVar().color.main}>
-                  {currentStepCount}
+                  {steps.totalSteps}
                 </Blurgoal>
 
                 <View
