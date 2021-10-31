@@ -8,6 +8,7 @@ import HomeWalk from "./HomeWalk";
 import HomeAfterStop from "./HomeAfterStop";
 import { Animated } from "react-native";
 import HomeCompleted from "./HomeCompleted";
+import HomeFail from "./HomeFail";
 
 const StatusHome = ({ navigation }) => {
   const status = useReactiveVar(statusVar);

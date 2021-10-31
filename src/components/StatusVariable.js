@@ -18,6 +18,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { Body1Text, H4Text, theme } from "../styles/theme";
 import { getToday } from "../common/getToday";
+import styled from "styled-components";
 
 const opt = {
   startDate: "2021-10-29T00:00:17.971Z", // required ISO8601Timestamp
@@ -36,7 +37,6 @@ const options = {
 
 const StatusVariable = ({
   coachImg,
-  goalText,
   cheerText,
   buttonText,
   buttonColor,
@@ -45,39 +45,24 @@ const StatusVariable = ({
   failModalOpen,
   handleOpacity,
   fadeimage,
-  fadetext,
   fadetextwalk,
 }) => {
   const navigation = useNavigation();
   const status = useReactiveVar(statusVar);
+  const step = useReactiveVar(stepVar);
   const [steps, setSteps] = useState({
-    totalSteps: "",
+    totalSteps: 0,
     observeSteps: "",
   });
-
-  useEffect(() => {
-    checkTime: getToday();
-    if (percentage == 100) {
-      navigation.navigate("successPopUp");
-    }
-
-    // else if(percentage !=100){
-    //   stepVar("fail")
-    // }
-    // getToday해서 11:59분에 percentage 100인지 체크
-  }, []);
 
   useEffect(() => {
     GoogleFit.authorize(options).then((authResult) => {
       if (authResult.success) {
         GoogleFit.getDailySteps(new Date().toISOString()).then((res) => {
-          if (res.length !== 0) {
+          if (res[2].steps.length !== 0) {
             const { date, value } = res[2].steps[0];
-            if (value) {
-              console.log(value, "value");
-              setSteps({ ...steps, totalSteps: value });
-              stepVar(value);
-            }
+            setSteps({ ...steps, totalSteps: value });
+            stepVar(value);
           }
         });
       } else {
@@ -89,7 +74,7 @@ const StatusVariable = ({
   useEffect(() => {
     request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
       if (granted) {
-        GoogleFit.startRecording((callback) => {
+        GoogleFit.startRecording(() => {
           GoogleFit.observeSteps((res) => {
             setSteps({ ...steps, observeSteps: res.steps });
           });
@@ -119,45 +104,51 @@ const StatusVariable = ({
     },
   });
 
-  let percentage;
-  if (!loading) {
-    percentage =
-      steps.totalSteps === 0
-        ? 0
-        : (steps.totalSteps / data?.getChallenge?.stepGoal) * 100;
-  }
-
   const [putChallengeMutation, {}] = useMutation(PUT_CHALLENGE, {
     onCompleted: (data) => {
       console.log(data, "data");
     },
   });
 
+  useEffect(() => {
+    statusVar("fail");
+    if (step === data?.getChallenge?.stepGoal) {
+    }
+  }, [step]);
+
   // useEffect(() => {
-  //   const putStep = async () => {
-  //     await putChallengeMutation({
-  //       variables: {
-  //         challenge: {
-  //           step: currentStepCount,
-  //           challengeDate: getToday(),
+  //   const now = new Date();
+  //   const hour = now.getHours();
+  //   const date = now.getMinutes();
+  //   console.log(date, "date");
+  //   if (hour === 0) {
+  //     const putStep = async () => {
+  //       await putChallengeMutation({
+  //         variables: {
+  //           challenge: {
+  //             step: steps.totalSteps,
+  //             challengeDate: getToday(),
+  //           },
   //         },
-  //       },
-  //     });
-  //     stepVar(currentStepCount);
-  //   };
-  //   putStep();
-  // }, [currentStepCount]);
+  //       });
+  //     };
+  //     putStep();
+  //   }
+  // }, []);
+  // * status가 walking중이어야하고 00시여야함
+  // * 하루전날 스탭을 보내야함 date.setDate(date.getDate() - 1)
   // * 12시전에 (11시59분59초) 한번 업데이트 해야됨
-  // * 종료시점을 알수있으면 종료하기전에 스탭 보내기
-  // !! Pedometer.watchStepCount 초기화 안되게 해야됨
-  // * 아니면 asyncStorage에 스탭 넣어두기
+  // * 종료시점을 알수있으면 종료하기전에 스탭 보내기 x
+  // * 백에 안보내도 되지않나 googleAPi에 저장되어있기때문
 
   return (
     <>
       <GoalBox>
         <TouchableOpacity onPress={handleOpacity}>
           <CircularProgress
-            percentage={percentage ? percentage : 0}
+            percentage={
+              step === 0 ? 0 : (step / data?.getChallenge?.stepGoal) * 100
+            }
             donutColor={coachColorVar().color.main}
             size={350}
             progressWidth={165}
@@ -165,19 +156,7 @@ const StatusVariable = ({
             <Animated.View style={[{ opacity: fadeimage ? fadeimage : 1 }]}>
               <CharacetrImage source={coachImg} resizeMode="contain" />
             </Animated.View>
-            <Animated.View
-              style={[
-                { opacity: fadetext ? fadetext : 0, position: "absolute" },
-              ]}
-            >
-              <View style={{ alignItems: "center" }}>
-                <Blurgoal coachColorVar={coachColorVar().color.main}>
-                  {steps.totalSteps}
-                </Blurgoal>
 
-                <H4Text>{goalText}</H4Text>
-              </View>
-            </Animated.View>
             <Animated.View
               style={[
                 {
@@ -188,7 +167,7 @@ const StatusVariable = ({
             >
               <View style={{ alignItems: "center" }}>
                 <Blurgoal coachColorVar={coachColorVar().color.main}>
-                  {steps.totalSteps}
+                  {step}
                 </Blurgoal>
 
                 <View
@@ -199,25 +178,16 @@ const StatusVariable = ({
                     flexDirection: "row",
                   }}
                 >
-                  <View
-                    style={{
-                      width: "30%",
-                      height: "120%",
-                      backgroundColor: coachColorVar().color.main,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderRadius: 20,
-                    }}
-                  >
+                  <GoalTextBox coachColorVar={coachColorVar().color.main}>
                     <Text
                       style={{
                         color: "white",
-                        fontSize: 10,
+                        fontSize: 12,
                       }}
                     >
                       목표
                     </Text>
-                  </View>
+                  </GoalTextBox>
 
                   <Blurgoal2> {data?.getChallenge?.stepGoal} 걸음</Blurgoal2>
                 </View>
@@ -244,5 +214,13 @@ const StatusVariable = ({
     </>
   );
 };
+
+const GoalTextBox = styled.View`
+  background-color: ${(props) => props.coachColorVar};
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 5px 10px;
+`;
 
 export default StatusVariable;

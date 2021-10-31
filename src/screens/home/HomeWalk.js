@@ -6,7 +6,7 @@ import { theme } from "../../styles/theme";
 import StatusVariable from "../../components/StatusVariable";
 import { Animated } from "react-native";
 
-const HomeWalk = (navigation) => {
+const HomeWalk = () => {
   const [failModalOpen, setFailModalOpen] = useState(false);
   const handleFailModal = () => {
     setFailModalOpen(!failModalOpen);
@@ -45,7 +45,6 @@ const HomeWalk = (navigation) => {
   return (
     <StatusVariable
       coachImg={coachColorVar().coach === "toki" ? toki_walking : buki_walking}
-      goalText="목표를 설정해주세요"
       cheerText="조금만 더 힘내면 목표에 도달할 수 있어요!"
       buttonText="오늘은 그만할래요"
       buttonColor={theme.grayScale.gray1}

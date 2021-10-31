@@ -6,7 +6,7 @@ import { Body1Text, theme } from "../../styles/theme";
 import { coachColorVar, monthVar, walkStatus } from "../../../apollo";
 import { gql, useMutation, useReactiveVar, useQuery } from "@apollo/client";
 import { KeyboardAvoidingView } from "react-native";
-import { getToday, month, year } from "../../common/getToday";
+import { getToday } from "../../common/getToday";
 import HeaderForm from "../../components/HeaderForm";
 
 const ChallengeSetting = ({ navigation }) => {
