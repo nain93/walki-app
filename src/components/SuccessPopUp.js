@@ -16,7 +16,6 @@ const SuccessPopUp = ({ navigation }) => {
   // });
   const NextPage = () => {
     walkStatus("success");
-    navigation.navigate("HomeCompleted");
     navigation.goBack();
   };
   // useEffect(() => {
