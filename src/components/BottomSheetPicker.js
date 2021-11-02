@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text } from "react-native";
 import { monthVar } from "../../apollo";
 import { gql, useQuery } from "@apollo/client";
 import { theme } from "../styles/theme";

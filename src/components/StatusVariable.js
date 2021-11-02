@@ -46,6 +46,8 @@ const StatusVariable = ({
   handleOpacity,
   fadeimage,
   fadetextwalk,
+  goalText,
+  fadetext,
 }) => {
   const navigation = useNavigation();
   const status = useReactiveVar(statusVar);
@@ -111,7 +113,7 @@ const StatusVariable = ({
   });
 
   useEffect(() => {
-    statusVar("fail");
+    // statusVar("fail");
     if (step === data?.getChallenge?.stepGoal) {
     }
   }, [step]);
@@ -156,7 +158,19 @@ const StatusVariable = ({
             <Animated.View style={[{ opacity: fadeimage ? fadeimage : 1 }]}>
               <CharacetrImage source={coachImg} resizeMode="contain" />
             </Animated.View>
+            <Animated.View
+              style={[
+                { opacity: fadetext ? fadetext : 0, position: "absolute" },
+              ]}
+            >
+              <View style={{ alignItems: "center" }}>
+                <Blurgoal coachColorVar={coachColorVar().color.main}>
+                  {steps.totalSteps}
+                </Blurgoal>
 
+                <H4Text>{goalText}</H4Text>
+              </View>
+            </Animated.View>
             <Animated.View
               style={[
                 {
