@@ -49,6 +49,18 @@ const AlertSetting = ({ navigation }) => {
       ignoreInForeground: true,
       invokeApp: false,
     });
+    
+    PushNotificationIOS.addNotificationRequest({
+      id: "default",
+      fireDate: nextHour,
+      title: "IOS TEST",
+      body: "please IOS work",
+      repeats: true,
+      repeatsComponent: {
+        hour: true,
+        minute: true,
+      }
+    })
   };
 
   return (
