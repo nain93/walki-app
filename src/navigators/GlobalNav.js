@@ -4,32 +4,27 @@ import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
-import { Image, Platform, TouchableOpacity } from "react-native";
+import { Platform, TouchableOpacity } from "react-native";
 import OnBoarding from "../screens/onBoarding";
 import CoachSelect from "../screens/coachSelect";
 import BeforeStart from "../screens/beforeStart";
 import { theme } from "../styles/theme";
 import SettingScreen from "../screens/setting";
-import { useNavigation } from "@react-navigation/native";
 import EditName from "../screens/setting/EditName";
 import AlertSetting from "../screens/setting/AlertSetting";
 import TabNavigator from "./TabNav";
 import LeftIcon from "react-native-vector-icons/AntDesign";
 import { useReactiveVar } from "@apollo/client";
-import { isLoggedInVar } from "../../apollo";
+import { isCoachVar, isLoggedInVar } from "../../apollo";
 import ChallengeSetting from "../screens/coachSelect/ChallengeSetting";
 import AppSetting from "../screens/setting/AppSetting";
 import OpenSource from "../screens/setting/OpenSource";
 import Service from "../screens/terms/Service";
 import Info from "../screens/terms/Info";
 import TermsCheck from "../screens/terms/TermsCheck";
-import Permission from "../common/Permission";
-import HomeAfterStop from "../screens/home/HomeAfterStop";
-import HomeCompleted from "../screens/home/HomeCompleted";
-import HomeWalk from "../screens/home/HomeWalk";
-import HomeFail from "../screens/home/HomeFail";
 import CloseIcon from "../components/CloseIcon";
-import { CommonActions, StackActions } from "@react-navigation/native";
+import AlertSetting2 from "../screens/setting/AlertSetting2";
+import SuccessPopUp from "../components/SuccessPopUp";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -37,7 +32,8 @@ const TransitionScreenOptions = {
 const Stack = createStackNavigator();
 
 const GlobalNav = () => {
-  const isLoggedIn = useReactiveVar(isLoggedInVar);
+  const isCoach = useReactiveVar(isCoachVar);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -45,23 +41,22 @@ const GlobalNav = () => {
           {},
           Platform.OS === "android" && TransitionScreenOptions,
           { cardStyle: { backgroundColor: theme.grayScale.white } }
+
         )}
       >
-        {!isLoggedIn && (
+        {!isCoach && (
           <Stack.Screen
-            name="OnBoarding"
+            name="CoachSelect"
             options={{
               headerShown: false,
             }}
-            component={OnBoarding}
+            component={CoachSelect}
           />
         )}
         <Stack.Screen
-          name="CoachSelect"
-          options={{
-            headerShown: false,
-          }}
-          component={CoachSelect}
+          name="TabNavigator"
+          component={TabNavigator}
+          options={{ gestureEnabled: false, headerShown: false }}
         />
         <Stack.Screen
           name="BeforeStart"
@@ -70,6 +65,7 @@ const GlobalNav = () => {
           }}
           component={BeforeStart}
         />
+
         <Stack.Screen
           name="SettingScreen"
           options={{
@@ -172,6 +168,7 @@ const GlobalNav = () => {
           })}
           component={OpenSource}
         />
+
         {/* 이용약관 */}
         <Stack.Screen
           name="TermsCheck"
@@ -232,12 +229,21 @@ const GlobalNav = () => {
           }}
           component={ChallengeSetting}
         />
-        <Stack.Screen
-          name="TabNavigator"
-          component={TabNavigator}
-          options={{ gestureEnabled: false, headerShown: false }}
-        />
       </Stack.Navigator>
+      <Stack.Screen
+        name="successPopUp"
+        options={{
+          title: "",
+          headerLeft: () => null,
+          headerRight: (props) => <CloseIcon {...props} />,
+          headerStyle: {
+            backgroundColor: theme.grayScale.white,
+            elevation: 0, // android
+            shadowOpacity: 0, //ios
+          },
+        }}
+        component={SuccessPopUp}
+      />
     </NavigationContainer>
   );
 };

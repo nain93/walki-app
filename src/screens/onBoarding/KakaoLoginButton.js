@@ -9,12 +9,22 @@ import {
   logout,
   unlink,
 } from "@react-native-seoul/kakao-login";
+import appleAuth, {
+  AppleButton,
+  AppleAuthRequestOperation,
+  AppleAuthRequestScope,
+  AppleAuthCredentialState,
+  AppleAuthError,
+} from '@invertase/react-native-apple-authentication';
 import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
 import { Caption, H4Text, theme } from "../../styles/theme";
-import { gql, useLazyQuery, useMutation } from "@apollo/client";
-import { logUserIn } from "../../../apollo";
+import { gql, useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
+import { isCoachVar, logUserIn } from "../../../apollo";
+
+
 
 const KakaoLoginButton = ({ navigation }) => {
+  const isCoach = useReactiveVar(isCoachVar);
   const SIGN_UP_MUTATION = gql`
     mutation signUp($social: Social!, $token: String!) {
       signUp(social: $social, token: $token)
@@ -69,9 +79,119 @@ const KakaoLoginButton = ({ navigation }) => {
         token: accessToken,
       },
     });
-    navigation.reset({ routes: [{ name: "CoachSelect" }] });
   };
 
+  const onAppleButtonPress = async () => {
+    setIsLoading(true);
+
+      try {
+          // performs login request
+           const appleAuthRequestResponse = await appleAuth.performRequest({
+             requestedOperation: appleAuth.Operation.LOGIN,
+             requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+           });
+           // get current authentication state for user
+           const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+           // use credentialState response to ensure the user is authenticated
+           if (credentialState === appleAuth.State.AUTHORIZED) {
+             // user is authenticated
+                  console.log("test1", appleAuthRequestResponse);
+                  const token =   appleAuthRequestResponse.identityToken
+                  const { accessToken } = token;
+    await signUpMutation({
+      variables: {
+        social: "APPLE",
+        token: accessToken,
+      },
+    });
+    signInQuery({
+      variables: {
+        social: "APPLE",
+        token: accessToken,
+      },
+    });
+    navigation.reset({ routes: [{ name: "CoachSelect" }] });
+  }
+
+           }
+          catch (error) {
+             if (error.code === appleAuth.Error.CANCELED) {
+                 // login canceled
+             } else {
+                 // login error
+             }
+      }
+  
+    // const token = await appleLogin().appleAuthRequestResponse.identityToken
+    
+    // appleLogin()
+    // appleAuthRequestResponse.identityToken
+    
+    // appleAuth.performRequest({
+    //   requestedOperation: AppleAuthRequestOperation.LOGIN,
+    //   requestedScopes: [AppleAuthRequestScope.EMAIL],
+    // });
+  //   const { accessToken } = token;
+  //   await signUpMutation({
+  //     variables: {
+  //       social: "APPLE",
+  //       token: accessToken,
+  //     },
+  //   });
+  //   signInQuery({
+  //     variables: {
+  //       social: "APPLE",
+  //       token: accessToken,
+  //     },
+  //   });
+  //   navigation.reset({ routes: [{ name: "CoachSelect" }] });
+  // }
+  // const onAppleButtonPress = async () => {
+  //   try {
+  //     const responseObject = await appleAuth.performRequest({
+  //       requestedOperation: AppleAuthRequestOperation.LOGIN,
+  //       requestedScopes: [AppleAuthRequestScope.EMAIL],
+  //     });
+  //     console.log('responseObject:::', responseObject);
+  //     const credentialState = await appleAuth.getCredentialStateForUser(
+  //       responseObject.user,
+  //     );
+  //     if (credentialState === AppleAuthCredentialState.AUTHORIZED) {
+  //       console.log('user is authenticated');
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     if (error.code === AppleAuthError.CANCELED) {
+  //       console.log('canceled');
+  //     } else {
+  //       console.log('error');
+  //     }
+  //   }
+  // };
+
+//   const appleLogin = async() => {
+//     try {
+//         // performs login request
+//          const appleAuthRequestResponse = await appleAuth.performRequest({
+//            requestedOperation: appleAuth.Operation.LOGIN,
+//            requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+//          });
+//          // get current authentication state for user
+//          const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+//          // use credentialState response to ensure the user is authenticated
+//          if (credentialState === appleAuth.State.AUTHORIZED) {
+//            // user is authenticated
+//                 console.log(appleAuthRequestResponse);
+//          }
+//        } catch (error) {
+//            if (error.code === appleAuth.Error.CANCELED) {
+//                // login canceled
+//            } else {
+//                // login error
+//            }
+//     }
+}
+  
   return (
     <Container>
       <KakaoButton onPress={handleKakaoLogin}>
@@ -84,6 +204,16 @@ const KakaoLoginButton = ({ navigation }) => {
           </>
         )}
       </KakaoButton>
+      <AppleButton
+        buttonStyle={AppleButton.Style.WHITE}
+        buttonType={AppleButton.Type.SIGN_IN}
+        style={{
+          width: 160, // You must specify a width
+          height: 45, // You must specify a height
+        }}
+        onPress={onAppleButtonPress}
+      />
+
 
       <DescWrap>
         <KakaoDesc>walki의 </KakaoDesc>

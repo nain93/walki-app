@@ -3,11 +3,10 @@ import { logUserOut } from "../../../../apollo";
 import CharacterModal from "../../../components/CharacterModal";
 import { H3Text, theme } from "../../../styles/theme";
 
-const LogOut = ({ handleLogOutModal, logOutModalOpen, navigation }) => {
+const LogOut = ({ handleLogOutModal, logOutModalOpen }) => {
   const handleOkayBtn = async () => {
     await logUserOut();
     handleLogOutModal();
-    navigation.reset({ routes: [{ name: "OnBoarding" }] });
   };
 
   return (

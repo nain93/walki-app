@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import styled from "styled-components";
 import axios from "axios";
@@ -66,9 +66,7 @@ const Home = ({ navigation }) => {
       const longitude = locationData["coords"]["longitude"];
 
       const API_KEY = Config.API_KEY;
-      const result = await axios.get(
-        `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
-      );
+      const result = await axios.get(Config.WEATHER_API);
 
       const temp = result.data.main.temp;
       const condition = result.data.weather[0].main;
@@ -88,10 +86,16 @@ const Home = ({ navigation }) => {
     }
   };
 
-  return ready ? (
-    <Loading />
-  ) : (
-    <Container>
+  if (ready) {
+    return (
+      <Container style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
+        <Loading />
+      </Container>
+    );
+  }
+
+  return (
+    <Container style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
       <TopStatus>
         <View>
           <CurrentDate>{currentDate}</CurrentDate>
@@ -106,7 +110,8 @@ const Home = ({ navigation }) => {
           <BarSpace>
             <WeatherImage
               source={SpaceLogo}
-              resizeMode={"contain"}></WeatherImage>
+              resizeMode={"contain"}
+            ></WeatherImage>
           </BarSpace>
           <WeatherSpace>
             <WeatherImage source={WeatherLogo} resizeMode={"contain"} />
@@ -149,23 +154,10 @@ const BarSpace = styled.View`
   justify-content: center;
   margin: 0 10px;
 `;
-const CurrentWeather = styled.Text`
-  width: 70px;
-  height: 60px;
-  font-size: 12px;
-  padding-left: 25px;
-  padding-top: 5px;
-  color: #828282;
-`;
+
 const CurrentDate = styled.Text`
   font-weight: bold;
   font-size: 16px;
-`;
-const BarImage = styled.Image`
-  width: 50px;
-  height: 50px;
-  align-items: center;
-  justify-content: center;
 `;
 
 const CurrentTime = styled.Text`

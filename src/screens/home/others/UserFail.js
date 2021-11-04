@@ -3,12 +3,12 @@ import CharacterModal from "../../../components/CharacterModal";
 import tokiFail from "../../../../assets/images/toki_fail.png";
 import bukiFail from "../../../../assets/images/buki_fail.png";
 import { Body1Text, H2Text, theme } from "../../../styles/theme";
-import { statusVar } from "../../../../apollo";
+import { walkStatus } from "../../../../apollo";
 
-const UserFail = ({ handleFailModal, failModalOpen, navigation }) => {
+const UserFail = ({ handleFailModal, failModalOpen }) => {
   const handleOkayBtn = () => {
+    walkStatus("afterStop");
     handleFailModal();
-    statusVar("afterStop");
   };
   return (
     <CharacterModal
@@ -18,7 +18,7 @@ const UserFail = ({ handleFailModal, failModalOpen, navigation }) => {
       bukiImg={bukiFail}
       handleModal={handleFailModal}
       handleOkayBtn={handleOkayBtn}
-      okayText={"그만하기"}
+      okayText="그만하기"
     >
       <H2Text>정말 그만할거에요?</H2Text>
       <Body1Text style={{ color: theme.TextColor }}>

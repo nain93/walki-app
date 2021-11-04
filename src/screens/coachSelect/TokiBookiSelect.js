@@ -5,48 +5,88 @@ import { View } from "react-native";
 import tokiImg from "../../../assets/images/toki_character.png";
 import bookiImg from "../../../assets/images/booki_character.png";
 import LongButton from "../../components/LongButton";
-import { coachColorVar } from "../../../apollo";
+import { useMutation, gql, useQuery } from "@apollo/client";
+import { coachSelect } from "../../../apollo";
 
 const TokiBookiSelect = ({ navigation }) => {
-  const [coachSelect, setCoachSelect] = useState("");
+  const [isClick, setIsClick] = useState("");
+  const PUT_MEMBER_MUTATION = gql`
+    mutation putMember($member: MemberInput) {
+      putMember(member: $member) {
+        coach {
+          name
+        }
+      }
+    }
+  `;
+
+  const GET_COACHES_QUERY = gql`
+    query getCoaches {
+      getCoaches {
+        id
+        name
+        description
+      }
+    }
+  `;
+
+  const [putMemberMutation] = useMutation(PUT_MEMBER_MUTATION, {
+    onCompleted: (data) => console.log(data, "data"),
+  });
+  const { data, loading } = useQuery(GET_COACHES_QUERY);
 
   const handleTokiSelect = () => {
-    setCoachSelect("toki");
-    coachColorVar({ coach: "toki", ...theme.toki });
+    setIsClick("toki");
+    if (!loading) {
+      putMemberMutation({
+        variables: {
+          member: {
+            coachId: data?.getCoaches[0].id,
+          },
+        },
+      });
+    }
   };
 
   const handleBookiSelect = () => {
-    setCoachSelect("booki");
-    coachColorVar({ coach: "booki", ...theme.booki });
+    setIsClick("booki");
+    if (!loading) {
+      putMemberMutation({
+        variables: {
+          member: {
+            coachId: data?.getCoaches[1].id,
+          },
+        },
+      });
+    }
   };
 
-  const handleGoToNext = () => {
-    // swiperRef?.current.goToNext();
+  const handleGoToNext = async () => {
+    if (isClick === "toki") {
+      await coachSelect("toki");
+    } else if (isClick === "booki") {
+      await coachSelect("booki");
+    }
     navigation.navigate("BeforeStart");
   };
 
   return (
     <Container>
       <View>
-        <TokiBox selected={coachSelect === "toki"} onPress={handleTokiSelect}>
+        <TokiBox selected={isClick === "toki"} onPress={handleTokiSelect}>
           <Wrapper>
             <TokiBookiImg source={tokiImg} resizeMode="contain" />
             <TitleBox>
-              <TokiTitle selected={coachSelect === "toki"}>토키 코치</TokiTitle>
+              <TokiTitle selected={isClick === "toki"}>토키 코치</TokiTitle>
               <Desc>뛰기와 스피드를 즐긴다면?</Desc>
             </TitleBox>
           </Wrapper>
         </TokiBox>
-        <BookiBox
-          selected={coachSelect === "booki"}
-          onPress={handleBookiSelect}
-        >
+        <BookiBox selected={isClick === "booki"} onPress={handleBookiSelect}>
           <Wrapper>
             <TokiBookiImg source={bookiImg} resizeMode="contain" />
             <TitleBox>
-              <BookiTitle selected={coachSelect === "booki"}>
-                부키 코치
-              </BookiTitle>
+              <BookiTitle selected={isClick === "booki"}>부키 코치</BookiTitle>
               <Desc>걷기와 여유를 즐긴다면?</Desc>
             </TitleBox>
           </Wrapper>
@@ -54,7 +94,7 @@ const TokiBookiSelect = ({ navigation }) => {
       </View>
       <LongButton
         handleGoToNext={handleGoToNext}
-        disabled={!coachSelect}
+        disabled={!isClick}
         btnBackColor={theme.grayScale.black}
       >
         선택 완료

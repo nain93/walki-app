@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -9,7 +9,7 @@ import Report from "../screens/report";
 
 import LogoTitle from "../components/LogoTitle";
 import SettingLogoTitle from "../components/SettingLogoTitle";
-import { coachColorVar, monthVar } from "../../apollo";
+import { coachColorVar } from "../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import activehome from "../../assets/icons/activehome.png";
 import inactivehome from "../../assets/icons/inactivehome.png";
@@ -20,45 +20,17 @@ import inactivemessage from "../../assets/icons/inactivemessage.png";
 import setting from "../../assets/icons/setting.png";
 import bookMark from "../../assets/icons/bookmark.png";
 import { theme } from "../styles/theme";
-import { Picker } from "@react-native-picker/picker";
 import { month, year } from "../common/getToday";
-// import WheelPicker from "../components/WheelPicker";
+import BottomSheetPicker from "../components/BottomSheetPicker";
 
 const Tabs = createBottomTabNavigator();
 
-// const Pick = ({ selectedMonth, setSelectedMonth, setStepInfo }) => {
-//   return (
-//     <Picker
-//       selectedValue={selectedMonth ? selectedMonth : String(month)}
-//       onValueChange={(itemValue, itemIndex) => {
-//         setSelectedMonth(itemValue);
-//         if (itemValue === `${month}`) {
-//           monthVar(`${month}`);
-//           setStepInfo([{}]);
-//           return;
-//         }
-//         monthVar("");
-//         setStepInfo([]);
-//       }}
-//       style={{ height: 50, width: 200, color: "white" }}
-//       mode={"dropdown"}
-//       dropdownIconColor="white"
-//     >
-//       <Picker.Item
-//         label={`${year}년 ${month - 1}월 리포트`}
-//         value={`${month - 1}`}
-//       />
-//       <Picker.Item label={`${year}년 ${month}월 리포트`} value={`${month}`} />
-//       <Picker.Item
-//         label={`${year}년 ${month + 1}월 리포트`}
-//         value={`${month + 1}`}
-//       />
-//     </Picker>
-//   );
-// };
-
 const TabNavigator = () => {
-  const [selectedMonth, setSelectedMonth] = useState(`${month}`);
+  const bottomSheetRef = useRef(null);
+  const [selectedMonth, setSelectedMonth] = useState({
+    year,
+    month,
+  });
   const [stepInfo, setStepInfo] = useState([{}]);
   const tabColor = useReactiveVar(coachColorVar);
   return (
@@ -67,7 +39,7 @@ const TabNavigator = () => {
         backgroundColor: theme.grayScale.white,
       }}
       screenOptions={{
-        tabBarActiveTintColor: tabColor.color.main,
+        tabBarActiveTintColor: tabColor?.color?.main,
         tabBarInactiveTintColor: theme.grayScale.gray3,
         tabBarStyle: {
           height: 68,
@@ -103,35 +75,33 @@ const TabNavigator = () => {
         }}
         component={Home}
       />
-
       <Tabs.Screen
         name="리포트"
         children={() => (
           <Report
+            bottomSheetRef={bottomSheetRef}
             stepInfo={stepInfo}
             setStepInfo={setStepInfo}
             selectedMonth={selectedMonth}
+            setSelectedMonth={setSelectedMonth}
           />
         )}
         options={{
           headerTitleAlign: "center",
-          // headerTitle: () => <WheelPicker />,
-          //  <Pick
-          //     setStepInfo={setStepInfo}
-          //     selectedMonth={selectedMonth}
-          //     setSelectedMonth={setSelectedMonth}
-          //   />
-          headerTitleStyle: {
-            color: theme.grayScale.white,
-            fontSize: 16,
-            fontWeight: "700",
-          },
+          headerTitle: () => (
+            <BottomSheetPicker
+              setStepInfo={setStepInfo}
+              bottomSheetRef={bottomSheetRef}
+              selectedMonth={selectedMonth}
+            />
+          ),
+
           headerLeft: () => null,
           headerRight: (props) => (
             <SettingLogoTitle settingIcon={setting} {...props} />
           ),
           headerStyle: {
-            backgroundColor: coachColorVar().color.report,
+            backgroundColor: coachColorVar()?.color?.report,
             elevation: 0, // android
             shadowOpacity: 0, //ios
           },
@@ -160,7 +130,7 @@ const TabNavigator = () => {
             <SettingLogoTitle settingIcon={setting} {...props} />
           ),
           headerStyle: {
-            backgroundColor: coachColorVar().color.report,
+            backgroundColor: coachColorVar()?.color?.report,
             elevation: 0, // android
             shadowOpacity: 0, //ios
           },

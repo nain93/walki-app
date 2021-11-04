@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import notification from "../../../assets/icons/notification.png";
 import bookMark from "../../../assets/icons/bookmark.png";
 import document from "../../../assets/icons/document.png";
 import { Body1Text, theme } from "../../styles/theme";
-import { alertTimeVar, coachColorVar } from "../../../apollo";
+import { coachColorVar } from "../../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import { View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import STOARGE from "../../constants/stoarge";
+import { useFocusEffect } from "@react-navigation/core";
 
 const Setting = ({ navigation }) => {
-  const alertTime = useReactiveVar(alertTimeVar);
-  const { ampm, hour, minute } = alertTime;
+  const [time, setTime] = useState({
+    ampm: "",
+    hour: 0,
+    minute: 0,
+  });
   const coachColor = useReactiveVar(coachColorVar);
+  const { TIME } = STOARGE;
+
+  useFocusEffect(
+    useCallback(() => {
+      const getAlertTime = async () => {
+        const alertTime = await AsyncStorage.getItem(TIME);
+        setTime({ ...JSON.parse(alertTime) });
+      };
+      getAlertTime();
+    }, [])
+  );
+  const { ampm, hour, minute } = time;
 
   return (
     <Container>
@@ -34,6 +52,7 @@ const Setting = ({ navigation }) => {
         </AlertSettingText>
       </SettingBox>
       <SettingBox onPress={() => navigation.navigate("AppSetting")}>
+        {/* ios, aos 따로? */}
         <View style={{ flexDirection: "row" }}>
           <SettingImg source={bookMark} resizeMode="contain" />
           <SettingText>앱 설정</SettingText>

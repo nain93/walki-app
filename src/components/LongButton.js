@@ -16,9 +16,11 @@ const LongButton = ({
       onPress={handleGoToNext}
       btnBackColor={btnBackColor}
     >
-      <NextText>
-        {loading ? <ActivityIndicator color="white" /> : children}
-      </NextText>
+      {loading ? (
+        <ActivityIndicator color="white" />
+      ) : (
+        <NextText>{children}</NextText>
+      )}
     </Container>
   );
 };

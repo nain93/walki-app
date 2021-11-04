@@ -6,7 +6,6 @@ import { H2Text, theme } from "../../styles/theme";
 import {
   TouchableWithoutFeedback,
   Keyboard,
-  ActivityIndicator,
   Image,
   TouchableOpacity,
 } from "react-native";
@@ -22,7 +21,7 @@ const EditName = ({
     params: { name, profileImage },
   },
 }) => {
-  const PUT_MEMBER = gql`
+  const PUT_MEMBER_MUTATION = gql`
     mutation putMember($member: MemberInput) {
       putMember(member: $member) {
         name
@@ -40,7 +39,7 @@ const EditName = ({
   const InputRef = useRef();
 
   const [putMemberMutation, { loading, data, error }] = useMutation(
-    PUT_MEMBER,
+    PUT_MEMBER_MUTATION,
     {
       onCompleted: (data) => {
         userNameVar({

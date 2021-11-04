@@ -1,35 +1,83 @@
 import React, { useRef } from "react";
-import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
+import { Text, FlatList, Image, TouchableOpacity } from "react-native";
 import styled from "styled-components";
-import { H2Text } from "../../styles/theme";
+import { H2Text, H4Text, theme } from "../../styles/theme";
 import info from "../../../assets/icons/info.png";
 import Toast from "react-native-easy-toast";
+import { gql, useQuery } from "@apollo/client";
+import { getYesterday } from "../../common/getToday";
+import Loading from "../../components/Loading";
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-];
-
-const Item = ({ title }) => (
-  <View>
-    <Text>{title}</Text>
-  </View>
+const Item = ({ name, profile, rank }) => (
+  <RankContainer>
+    <UserProfile>
+      <H2Text>{rank}</H2Text>
+      <ProfileImg
+        source={{ uri: profile }}
+        resizeMode="cover"
+        style={{ marginLeft: 30, marginRight: 10 }}
+      />
+      <H4Text style={{ color: theme.grayScale.gray1 }}>{name}</H4Text>
+    </UserProfile>
+    <Text>232,631</Text>
+  </RankContainer>
 );
 
+const RankContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const UserProfile = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const ProfileImg = styled.Image`
+  width: 40px;
+  height: 40px;
+  margin: 10px 0;
+  border-radius: 20px;
+`;
+
 const RankingMain = () => {
-  const renderItem = ({ item }) => <Item title={item.title} />;
+  const GET_TOP10_RANKINGS_QUERY = gql`
+    query getTop10Rankings($date: LocalDate) {
+      getTop10Rankings(date: $date) {
+        member {
+          id
+          name
+          profileImage
+          coach {
+            name
+          }
+        }
+        number
+        challengeDate
+      }
+    }
+  `;
+  const { data, loading } = useQuery(GET_TOP10_RANKINGS_QUERY, {
+    variables: {
+      date: getYesterday(),
+      // date: "2021-10-24",
+    },
+  });
+
+  // todo getChallenge query로 어제 step 가져와야함
+  const renderItem = ({ item }) => (
+    <Item
+      name={item.member.name}
+      profile={item.member.profileImage}
+      rank={item.number}
+    />
+  );
 
   const toastRef = useRef();
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <Container>
       <Title>
@@ -50,9 +98,9 @@ const RankingMain = () => {
         </TouchableOpacity>
       </Title>
       <FlatList
-        data={DATA}
+        data={data.getTop10Rankings}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => String(item.member.id)}
         // extraData={selectedId}
       />
       <Toast
