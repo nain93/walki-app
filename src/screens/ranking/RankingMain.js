@@ -61,6 +61,7 @@ const RankingMain = () => {
   const { data, loading } = useQuery(GET_TOP10_RANKINGS_QUERY, {
     variables: {
       date: getYesterday(),
+      // date: "2021-10-24",
     },
   });
 

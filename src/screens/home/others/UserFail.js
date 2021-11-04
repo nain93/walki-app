@@ -5,10 +5,10 @@ import bukiFail from "../../../../assets/images/buki_fail.png";
 import { Body1Text, H2Text, theme } from "../../../styles/theme";
 import { walkStatus } from "../../../../apollo";
 
-const UserFail = ({ handleFailModal, failModalOpen, navigation }) => {
+const UserFail = ({ handleFailModal, failModalOpen }) => {
   const handleOkayBtn = () => {
-    handleFailModal();
     walkStatus("afterStop");
+    handleFailModal();
   };
   return (
     <CharacterModal

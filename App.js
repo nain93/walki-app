@@ -106,6 +106,7 @@ export default function App() {
 
   const getStatus = async () => {
     const status = await AsyncStorage.getItem(STATUS);
+    console.log(status, "status");
     if (status) {
       statusVar(status);
     }

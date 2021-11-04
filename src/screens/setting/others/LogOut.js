@@ -1,15 +1,11 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
 import { logUserOut } from "../../../../apollo";
 import CharacterModal from "../../../components/CharacterModal";
-import STOARGE from "../../../constants/stoarge";
 import { H3Text, theme } from "../../../styles/theme";
 
 const LogOut = ({ handleLogOutModal, logOutModalOpen }) => {
   const handleOkayBtn = async () => {
-    const { TIME } = STOARGE;
     await logUserOut();
-    await AsyncStorage.removeItem(TIME);
     handleLogOutModal();
   };
 

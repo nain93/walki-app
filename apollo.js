@@ -65,10 +65,10 @@ export const logUserIn = async (token) => {
 
 export const logUserOut = async () => {
   await AsyncStorage.removeItem(TOKEN);
+  await AsyncStorage.removeItem(TIME);
   isLoggedInVar(false);
   userNameVar({});
   tokenVar("");
-  walkStatus("home");
 };
 
 export const coachSelect = async (coach) => {

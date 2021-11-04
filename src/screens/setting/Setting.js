@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import notification from "../../../assets/icons/notification.png";
 import bookMark from "../../../assets/icons/bookmark.png";
@@ -10,7 +10,6 @@ import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import STOARGE from "../../constants/stoarge";
 import { useFocusEffect } from "@react-navigation/core";
-import { useCallback, useState } from "react/cjs/react.development";
 
 const Setting = ({ navigation }) => {
   const [time, setTime] = useState({

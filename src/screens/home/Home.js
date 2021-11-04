@@ -124,7 +124,7 @@ const Home = ({ navigation }) => {
   );
 };
 
-const Container = styled.SafeAreaView`
+const Container = styled.View`
   flex: 1;
   padding: 30px;
   background-color: #f3f3f3;
@@ -154,23 +154,10 @@ const BarSpace = styled.View`
   justify-content: center;
   margin: 0 10px;
 `;
-const CurrentWeather = styled.Text`
-  width: 70px;
-  height: 60px;
-  font-size: 12px;
-  padding-left: 25px;
-  padding-top: 5px;
-  color: #828282;
-`;
+
 const CurrentDate = styled.Text`
   font-weight: bold;
   font-size: 16px;
-`;
-const BarImage = styled.Image`
-  width: 50px;
-  height: 50px;
-  align-items: center;
-  justify-content: center;
 `;
 
 const CurrentTime = styled.Text`

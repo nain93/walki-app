@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
-import { coachColorVar, statusVar, stepVar } from "../../apollo";
+import { coachColorVar, statusVar, stepVar, walkStatus } from "../../apollo";
 import LongButton from "../components/LongButton";
 
 import {
@@ -63,7 +63,11 @@ const StatusVariable = ({
         GoogleFit.getDailySteps(new Date().toISOString()).then((res) => {
           if (res[2].steps.length !== 0) {
             const { date, value } = res[2].steps[0];
+            console.log(value, "value");
             setSteps({ ...steps, totalSteps: value });
+            if (value >= data?.getChallenge?.stepGoal) {
+              walkStatus("success");
+            }
             stepVar(value);
           }
         });
@@ -97,12 +101,18 @@ const StatusVariable = ({
       getChallenge(challengeDate: $challengeDate) {
         step
         stepGoal
+        challengeDate
       }
     }
   `;
   const { data, loading } = useQuery(GET_CHALLENGE, {
     variables: {
       challengeDate: getToday(),
+    },
+    onCompleted: (data) => {
+      if (data === undefined) {
+        walkStatus("home");
+      }
     },
   });
 
@@ -111,12 +121,6 @@ const StatusVariable = ({
       console.log(data, "data");
     },
   });
-
-  useEffect(() => {
-    // statusVar("fail");
-    if (step === data?.getChallenge?.stepGoal) {
-    }
-  }, [step]);
 
   // useEffect(() => {
   //   const now = new Date();
@@ -149,7 +153,11 @@ const StatusVariable = ({
         <TouchableOpacity onPress={handleOpacity}>
           <CircularProgress
             percentage={
-              step === 0 ? 0 : (step / data?.getChallenge?.stepGoal) * 100
+              step === 0
+                ? 0
+                : step > 100
+                ? 100
+                : (step / data?.getChallenge?.stepGoal) * 100
             }
             donutColor={coachColorVar().color.main}
             size={350}
@@ -165,7 +173,7 @@ const StatusVariable = ({
             >
               <View style={{ alignItems: "center" }}>
                 <Blurgoal coachColorVar={coachColorVar().color.main}>
-                  {steps.totalSteps}
+                  0
                 </Blurgoal>
 
                 <H4Text>{goalText}</H4Text>
@@ -221,7 +229,6 @@ const StatusVariable = ({
         {buttonText}
       </LongButton>
       <UserFail
-        navigation={navigation}
         handleFailModal={handleGoToNext}
         failModalOpen={failModalOpen}
       />

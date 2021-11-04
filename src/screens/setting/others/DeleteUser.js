@@ -17,11 +17,11 @@ const DeleteUser = ({ handleDeleteModal, deleteModalOpen }) => {
   const [deleteUserMutation] = useMutation(DELETE_USER_MUTATION);
 
   const handleOkayBtn = async () => {
-    const { COACH, TIME } = STOARGE;
+    const { COACH, STATUS } = STOARGE;
     deleteUserMutation();
     await logUserOut();
     await AsyncStorage.removeItem(COACH);
-    await AsyncStorage.removeItem(TIME);
+    await AsyncStorage.removeItem(STATUS);
     isCoachVar(false);
     handleDeleteModal();
   };
