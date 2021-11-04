@@ -1,0 +1,164 @@
+2021-10-20 04:00:52.255641+0900 walkiclient[98439:8078517] Task <FB285C6B-4EAF-4F8F-A73A-EC91D4E515AA>.<1> finished with error [-1001] Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={_kCFStreamErrorCodeKey=-2102, NSUnderlyingError=0x2829c08d0 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=-2102, _kCFStreamErrorDomainKey=4}}, _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <FB285C6B-4EAF-4F8F-A73A-EC91D4E515AA>.<1>, _NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <FB285C6B-4EAF-4F8F-A73A-EC91D4E515AA>.<1>"
+), NSLocalizedDescription=The request timed out., NSErrorFailingURLStringKey=http://192.168.0.103:8081/status, NSErrorFailingURLKey=http://192.168.0.103:8081/status, _kCFStreamErrorDomainKey=4}
+2021-10-20 04:00:52.304683+0900 walkiclient[98439:8078362] [native] Running application main ({
+    initialProps =     {
+    };
+    rootTag = 1;
+})
+2021-10-20 04:01:52.896185+0900 walkiclient[98439:8078519] Task <365202F8-0D1D-4806-B39A-95840BECB864>.<2> finished with error [-1001] Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={_kCFStreamErrorCodeKey=-2102, NSUnderlyingError=0x2829cabe0 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=-2102, _kCFStreamErrorDomainKey=4}}, _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <365202F8-0D1D-4806-B39A-95840BECB864>.<2>, _NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <365202F8-0D1D-4806-B39A-95840BECB864>.<2>"
+), NSLocalizedDescription=The request timed out., NSErrorFailingURLStringKey=http://192.168.0.103:8081/status, NSErrorFailingURLKey=http://192.168.0.103:8081/status, _kCFStreamErrorDomainKey=4}
+2021-10-20 04:01:52.997795+0900 walkiclient[98439:8078517] [connection] nw_socket_handle_socket_event [C3.1:1] Socket SO_ERROR [61: Connection refused]
+2021-10-20 04:01:52.998363+0900 walkiclient[98439:8078517] [connection] nw_socket_handle_socket_event [C4.1:1] Socket SO_ERROR [61: Connection refused]
+2021-10-20 04:01:53.001868+0900 walkiclient[98439:8078517] [connection] nw_socket_handle_socket_event [C3.2:1] Socket SO_ERROR [61: Connection refused]
+2021-10-20 04:01:53.002218+0900 walkiclient[98439:8078517] [connection] nw_socket_handle_socket_event [C4.2:1] Socket SO_ERROR [61: Connection refused]
+2021-10-20 04:01:53.003031+0900 walkiclient[98439:8079176] [connection] nw_connection_get_connected_socket [C3] Client called nw_connection_get_connected_socket on unconnected nw_connection
+2021-10-20 04:01:53.003129+0900 walkiclient[98439:8079176] TCP Conn 0x281098160 Failed : error 0:61 [61]
+2021-10-20 04:01:53.003501+0900 walkiclient[98439:8079176] [connection] nw_connection_get_connected_socket [C4] Client called nw_connection_get_connected_socket on unconnected nw_connection
+2021-10-20 04:01:53.003588+0900 walkiclient[98439:8079176] TCP Conn 0x28109c160 Failed : error 0:61 [61]
+2021-10-20 04:01:53.205583+0900 walkiclient[98439:8078517] [connection] nw_socket_handle_socket_event [C5.1:1] Socket SO_ERROR [61: Connection refused]
+2021-10-20 04:01:53.206248+0900 walkiclient[98439:8078517] [connection] nw_socket_handle_socket_event [C5.2:1] Socket SO_ERROR [61: Connection refused]
+2021-10-20 04:01:53.206614+0900 walkiclient[98439:8078523] [connection] nw_connection_get_connected_socket [C5] Client called nw_connection_get_connected_socket on unconnected nw_connection
+2021-10-20 04:01:53.206956+0900 walkiclient[98439:8078523] TCP Conn 0x281094a50 Failed : error 0:61 [61]
+2021-10-20 04:01:53.586508+0900 walkiclient[98439:8078829] [javascript] Running "main" with {"rootTag":1,"initialProps":{}}
+2021-10-20 04:01:53.619448+0900 walkiclient[98439:8078517] [native] Manifest does not exist - creating a new one.
+
+(null)
+2021-10-20 04:01:53.827418+0900 walkiclient[98439:8078362] [native] [GESTURE HANDLER] Initialize gesture handler for root view <RCTRootContentView: 0x104e0e570; reactTag: 1; frame = (0 0; 375 812); gestureRecognizers = <NSArray: 0x2829fd2f0>; layer = <CALayer: 0x2827a9620>>
+2021-10-20 04:01:56.406550+0900 walkiclient[98439:8078362] -canOpenURL: failed for URL: "kakaokompassauth://authorize" - error: "This app is not allowed to query for scheme kakaokompassauth"
+2021-10-20 04:01:56412 [💬][AuthController.swift 382:21] -> code_verifier: EHEG+uc7PX86/z95C+2KiSvEJoTNz0/yKV3I53dyw5QIHaKknBgyq1mFJ9ti6swGBGgV0LjWzR1qhHUuMUF09A
+2021-10-20 04:01:56413 [💬][AuthController.swift 385:25] -> code_challenge: bvk37umm2CBAU3q6JMcQbNrRonuGUmoxAkNJEd3Jxaw
+2021-10-20 04:01:56414 [💬][AuthController.swift 269:21] -> 
+===================================================================================================
+2021-10-20 04:01:56415 [💬][AuthController.swift 270:21] -> request: 
+ url:https://kauth.kakao.com/oauth/authorize?code_challenge=bvk37umm2CBAU3q6JMcQbNrRonuGUmoxAkNJEd3Jxaw&code_challenge_method=S256&redirect_uri=kakao526b6c2b9e557fa37f7a04ede96db3c0://oauth&client_id=526b6c2b9e557fa37f7a04ede96db3c0&ka=sdk/2.4.1%20sdk_type/swift%20os/ios-14.7.1%20lang/ko-KR%20res/375x812%20device/iPhone%20origin/com.bside.walki%20app_ver/1.0&response_type=code
+ parameters: ["code_challenge": "bvk37umm2CBAU3q6JMcQbNrRonuGUmoxAkNJEd3Jxaw", "code_challenge_method": "S256", "redirect_uri": "kakao526b6c2b9e557fa37f7a04ede96db3c0://oauth", "client_id": "526b6c2b9e557fa37f7a04ede96db3c0", "ka": "sdk/2.4.1 sdk_type/swift os/ios-14.7.1 lang/ko-KR res/375x812 device/iPhone origin/com.bside.walki app_ver/1.0", "response_type": "code"] 
+
+2021-10-20 04:02:05930 [💬][AuthController.swift 224:21] -> callback url: kakao526b6c2b9e557fa37f7a04ede96db3c0://oauth?code=RDgetJ8nqwdAbyHM5uuxZ6CKmltnj5klT8sgM5s4fHcQv2ITDm_NXcN2pvDoZTJNPce98Qo9dGkAAAF8me6j5g
+2021-10-20 04:02:05931 [ℹ️][AuthController.swift 228:25] -> code:
+ RDgetJ8nqwdAbyHM5uuxZ6CKmltnj5klT8sgM5s4fHcQv2ITDm_NXcN2pvDoZTJNPce98Qo9dGkAAAF8me6j5g
+
+
+2021-10-20 04:02:06.078880+0900 walkiclient[98439:8078519] [connection] nw_endpoint_handler_set_adaptive_read_handler [C6.1.1 27.0.237.15:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for read_timeout failed
+2021-10-20 04:02:06.079636+0900 walkiclient[98439:8078519] [connection] nw_endpoint_handler_set_adaptive_write_handler [C6.1.1 27.0.237.15:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for write_timeout failed
+2021-10-20 04:02:06186 [💬][Api.swift 86:29] -> ===================================================================================================
+2021-10-20 04:02:06189 [💬][Api.swift 87:29] -> session: 
+ type: Auth
+
+
+2021-10-20 04:02:06192 [ℹ️][Api.swift 88:29] -> request: 
+ method: HTTPMethod(rawValue: "POST")
+ url:https://kauth.kakao.com/oauth/token
+ headers:nil
+ parameters: Optional(["client_id": "526b6c2b9e557fa37f7a04ede96db3c0", "code": "RDgetJ8nqwdAbyHM5uuxZ6CKmltnj5klT8sgM5s4fHcQv2ITDm_NXcN2pvDoZTJNPce98Qo9dGkAAAF8me6j5g", "grant_type": "authorization_code", "code_verifier": "EHEG+uc7PX86/z95C+2KiSvEJoTNz0/yKV3I53dyw5QIHaKknBgyq1mFJ9ti6swGBGgV0LjWzR1qhHUuMUF09A", "redirect_uri": "kakao526b6c2b9e557fa37f7a04ede96db3c0://oauth", "ios_bundle_id": "com.bside.walki"]) 
+
+
+2021-10-20 04:02:06194 [ℹ️][Api.swift 89:29] -> response:
+ Optional({
+    "access_token" = "e20IzjRM7xGwAt9xVqVeK8Zr5lmZXGlgt2A6Dwo9c-sAAAF8me6k7w";
+    "expires_in" = 43199;
+    "refresh_token" = "kzvBMabMko68hXEfuaMyRn62_CXnOW7W5tMEKgo9c-sAAAF8me6k7g";
+    "refresh_token_expires_in" = 5183999;
+    scope = "age_range account_email profile_image gender profile_nickname";
+    "token_type" = bearer;
+})
+
+
+2021-10-20 04:02:06203 [💬][Properties.swift 32:21] -> load-crypted : {length = 288, bytes = 0x86b7ebb8 de7b6bfe 6951baf8 c52f25ee ... 8cb540cc 9298a865 }
+2021-10-20 04:02:06214 [💬][Properties.swift 34:21] -> load-plain : {length = 287, bytes = 0x7b227265 66726573 68546f6b 656e4578 ... 223a3433 3139397d }
+2021-10-20 04:02:06216 [💬][Auth.swift 43:17] -> >>>> [KakaoSDKCommon.SessionType.Auth: Alamofire.Session, KakaoSDKCommon.SessionType.AuthApi: Alamofire.Session, KakaoSDKCommon.SessionType.Api: Alamofire.Session, KakaoSDKCommon.SessionType.RxAuthApi: Alamofire.Session]
+2021-10-20 04:02:06216 [💬][MigrateManager.swift 20:17] -> ============================================================================================================
+2021-10-20 04:02:06217 [💬][MigrateManager.swift 21:17] -> check migration... 
+2021-10-20 04:02:06217 [💬][MigrateManager.swift 23:21] ->  pass migration... 
+2021-10-20 04:02:06217 [💬][MigrateManager.swift 24:21] ->  used sdk version:2.4.1
+2021-10-20 04:02:06219 [💬][Properties.swift 22:21] -> save-plain : {length = 287, bytes = 0x7b227265 66726573 68546f6b 656e4578 ... 223a3433 3139397d }
+2021-10-20 04:02:06225 [💬][Properties.swift 24:21] -> save-crypted : {length = 288, bytes = 0x86b7ebb8 de7b6bfe 6951baf8 c52f25ee ... ba461a1b 4a7987b3 }
+2021-10-20 04:02:06.347861+0900 walkiclient[98439:8079176] [connection] nw_endpoint_handler_set_adaptive_read_handler [C7.1 13.124.166.99:80 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for read_timeout failed
+2021-10-20 04:02:06.347951+0900 walkiclient[98439:8079176] [connection] nw_endpoint_handler_set_adaptive_write_handler [C7.1 13.124.166.99:80 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for write_timeout failed
+2021-10-20 04:02:10.116881+0900 walkiclient[98439:8079352] [connection] nw_endpoint_handler_set_adaptive_read_handler [C8.1 13.124.166.99:80 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for read_timeout failed
+2021-10-20 04:02:10.116935+0900 walkiclient[98439:8079352] [connection] nw_endpoint_handler_set_adaptive_write_handler [C8.1 13.124.166.99:80 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for write_timeout failed
+2021-10-20 04:02:18.142313+0900 walkiclient[98439:8078362] Can't find keyplane that supports type 4 for keyboard iPhone-PortraitChoco-NumberPad; using 25889_PortraitChoco_iPhone-Simple-Pad_Default
+2021-10-20 04:02:19.178051+0900 walkiclient[98439:8079348] [connection] nw_endpoint_handler_set_adaptive_read_handler [C9.1 13.209.60.131:80 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for read_timeout failed
+2021-10-20 04:02:19.178136+0900 walkiclient[98439:8079348] [connection] nw_endpoint_handler_set_adaptive_write_handler [C9.1 13.209.60.131:80 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for write_timeout failed
+2021-10-20 04:02:21.289551+0900 walkiclient[98439:8078829] [javascript] Possible Unhandled Promise Rejection (id: 0):
+Error: Exception while fetching data (/putChallenge) : 접근 권한 없음
+ApolloError@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:190361:30
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:164441:49
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:166942:36
+tryCallTwo@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5765:9
+doResolve@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5929:25
+Promise@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5788:14
+then@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:166941:29
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:166956:45
+notifySubscription@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185466:24
+onNotify@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185510:23
+next@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185560:17
+forEach@[native code]
+iterateObserversSafely@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:166927:32
+next@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:167036:35
+notifySubscription@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185466:24
+onNotify@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185510:23
+next@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185560:17
+next@[native code]
+notifySubscription@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185466:24
+onNotify@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185510:23
+next@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185560:17
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:186614:24
+tryCallOne@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5756:16
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5857:27
+_callTimer@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:30979:17
+_callImmediatesPass@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:31018:17
+callImmediates@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:31235:33
+__callImmediates@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5044:35
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:4830:34
+__guard@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5027:15
+flushedQueue@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:4829:21
+flushedQueue@[native code]
+invokeCallbackAndReturnFlushedQueue@[native code]
+2021-10-20 04:02:22.080952+0900 walkiclient[98439:8078829] [javascript] Possible Unhandled Promise Rejection (id: 1):
+Error: Exception while fetching data (/putChallenge) : 접근 권한 없음
+ApolloError@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:190361:30
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:164441:49
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:166942:36
+tryCallTwo@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5765:9
+doResolve@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5929:25
+Promise@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5788:14
+then@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:166941:29
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:166956:45
+notifySubscription@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185466:24
+onNotify@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185510:23
+next@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185560:17
+forEach@[native code]
+iterateObserversSafely@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:166927:32
+next@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:167036:35
+notifySubscription@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185466:24
+onNotify@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185510:23
+next@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185560:17
+next@[native code]
+notifySubscription@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185466:24
+onNotify@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185510:23
+next@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:185560:17
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:186614:24
+tryCallOne@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5756:16
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5857:27
+_callTimer@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:30979:17
+_callImmediatesPass@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:31018:17
+callImmediates@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:31235:33
+__callImmediates@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5044:35
+/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:4830:34
+__guard@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:5027:15
+flushedQueue@/private/var/containers/Bundle/Application/98D01EDB-23FA-48BF-AC52-D0A705EA6ACD/walkiclient.app/main.jsbundle:4829:21
+flushedQueue@[native code]
+invokeCallbackAndReturnFlushedQueue@[native code]
+2021-10-20 04:02:25.737536+0900 walkiclient[98439:8079348] [connection] nw_endpoint_handler_set_adaptive_read_handler [C10.1 13.209.60.131:80 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for read_timeout failed
+2021-10-20 04:02:25.737602+0900 walkiclient[98439:8079348] [connection] nw_endpoint_handler_set_adaptive_write_handler [C10.1 13.209.60.131:80 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for write_timeout failed
+2021-10-20 04:02:25.813294+0900 walkiclient[98439:8078829] [javascript] [Error: Exception while fetching data (/getMember) : 접근 권한 없음]
+2021-10-20 04:02:27.218116+0900 walkiclient[98439:8078362] Can't find keyplane that supports type 8 for keyboard iPhone-PortraitChoco-DecimalPad; using 25930_PortraitChoco_iPhone-Simple-Pad_Default
+2021-10-20 04:02:37.968251+0900 walkiclient[98439:8078362] Can't find keyplane that supports type 8 for keyboard iPhone-PortraitChoco-DecimalPad; using 25930_PortraitChoco_iPhone-Simple-Pad_Default
+2021-10-20 04:02:44.422486+0900 walkiclient[98439:8079435] [hcln] AVHapticClient.mm:416:-[AVHapticClient finish:]: Player was not running - bailing with error Error Domain=com.apple.CoreHaptics Code=-4805 "(null)" for client 0x1018087
+2021-10-20 04:02:44.423433+0900 walkiclient[98439:8079435] [Feedback] core haptics engine finished for <_UIFeedbackCoreHapticsHapticsOnlyEngine: 0x280c86ca0> with error: Error Domain=com.apple.CoreHaptics Code=-4805 "(null)"
+2021-10-20 04:02:48.444291+0900 walkiclient[98439:8079435] notifier request success
+2021-10-20 04:02:48.449586+0900 walkiclient[98439:8079578] notifier request success
+2021-10-20 04:02:48.699145+0900 walkiclient[98439:8079561] [connection] nw_endpoint_handler_set_adaptive_read_handler [C11.1 13.209.60.131:80 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for read_timeout failed
+2021-10-20 04:02:48.699405+0900 walkiclient[98439:8079561] [connection] nw_endpoint_handler_set_adaptive_write_handler [C11.1 13.209.60.131:80 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for write_timeout failed
