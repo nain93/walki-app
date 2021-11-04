@@ -15,7 +15,7 @@ import AlertSetting from "../screens/setting/AlertSetting";
 import TabNavigator from "./TabNav";
 import LeftIcon from "react-native-vector-icons/AntDesign";
 import { useReactiveVar } from "@apollo/client";
-import { isLoggedInVar } from "../../apollo";
+import { isCoachVar, isLoggedInVar } from "../../apollo";
 import ChallengeSetting from "../screens/coachSelect/ChallengeSetting";
 import AppSetting from "../screens/setting/AppSetting";
 import OpenSource from "../screens/setting/OpenSource";
@@ -23,6 +23,8 @@ import Service from "../screens/terms/Service";
 import Info from "../screens/terms/Info";
 import TermsCheck from "../screens/terms/TermsCheck";
 import CloseIcon from "../components/CloseIcon";
+import AlertSetting2 from "../screens/setting/AlertSetting2";
+import SuccessPopUp from "../components/SuccessPopUp";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -30,7 +32,8 @@ const TransitionScreenOptions = {
 const Stack = createStackNavigator();
 
 const GlobalNav = () => {
-  const isLoggedIn = useReactiveVar(isLoggedInVar);
+  const isCoach = useReactiveVar(isCoachVar);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -38,22 +41,22 @@ const GlobalNav = () => {
           {},
           Platform.OS === "android" && TransitionScreenOptions,
           { cardStyle: { backgroundColor: theme.grayScale.white } }
-        )}>
-        {!isLoggedIn && (
+
+        )}
+      >
+        {!isCoach && (
           <Stack.Screen
-            name="OnBoarding"
+            name="CoachSelect"
             options={{
               headerShown: false,
             }}
-            component={OnBoarding}
+            component={CoachSelect}
           />
-        )} 
+        )}
         <Stack.Screen
-          name="CoachSelect"
-          options={{
-            headerShown: false,
-          }}
-          component={CoachSelect}
+          name="TabNavigator"
+          component={TabNavigator}
+          options={{ gestureEnabled: false, headerShown: false }}
         />
         <Stack.Screen
           name="BeforeStart"
@@ -62,6 +65,7 @@ const GlobalNav = () => {
           }}
           component={BeforeStart}
         />
+
         <Stack.Screen
           name="SettingScreen"
           options={{
@@ -69,7 +73,7 @@ const GlobalNav = () => {
             headerTitleAlign: "center",
             headerTitleStyle: { fontSize: 16, fontWeight: "700" },
             headerLeft: () => null,
-            headerRight: props => <CloseIcon {...props} />,
+            headerRight: (props) => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -88,7 +92,8 @@ const GlobalNav = () => {
                   onPress={() => {
                     navigation.goBack();
                   }}
-                  style={{ marginLeft: 20 }}>
+                  style={{ marginLeft: 20 }}
+                >
                   <LeftIcon name="left" size={24} />
                 </TouchableOpacity>
               );
@@ -106,7 +111,7 @@ const GlobalNav = () => {
           options={{
             title: "",
             headerLeft: () => null,
-            headerRight: props => <CloseIcon {...props} />,
+            headerRight: (props) => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -125,7 +130,8 @@ const GlobalNav = () => {
                   onPress={() => {
                     navigation.goBack();
                   }}
-                  style={{ marginLeft: 20 }}>
+                  style={{ marginLeft: 20 }}
+                >
                   <LeftIcon name="left" size={24} />
                 </TouchableOpacity>
               );
@@ -148,7 +154,8 @@ const GlobalNav = () => {
                   onPress={() => {
                     navigation.goBack();
                   }}
-                  style={{ marginLeft: 20 }}>
+                  style={{ marginLeft: 20 }}
+                >
                   <LeftIcon name="left" size={24} />
                 </TouchableOpacity>
               );
@@ -161,6 +168,7 @@ const GlobalNav = () => {
           })}
           component={OpenSource}
         />
+
         {/* 이용약관 */}
         <Stack.Screen
           name="TermsCheck"
@@ -168,7 +176,7 @@ const GlobalNav = () => {
             headerTitleAlign: "center",
             title: "약관확인",
             headerLeft: () => null,
-            headerRight: props => <CloseIcon {...props} />,
+            headerRight: (props) => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -183,7 +191,7 @@ const GlobalNav = () => {
             headerTitleAlign: "center",
             title: "서비스 이용약관",
             headerLeft: () => null,
-            headerRight: props => <CloseIcon {...props} />,
+            headerRight: (props) => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -198,7 +206,7 @@ const GlobalNav = () => {
             headerTitleAlign: "center",
             title: "개인정보 처리방침",
             headerLeft: () => null,
-            headerRight: props => <CloseIcon {...props} />,
+            headerRight: (props) => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -212,7 +220,7 @@ const GlobalNav = () => {
           options={{
             title: "",
             headerLeft: () => null,
-            headerRight: props => <CloseIcon {...props} />,
+            headerRight: (props) => <CloseIcon {...props} />,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
@@ -221,26 +229,21 @@ const GlobalNav = () => {
           }}
           component={ChallengeSetting}
         />
-        {/* <Stack.Screen
-          name="successPopUp"
-          options={{
-            title: "",
-            headerLeft: () => null,
-            headerRight: props => <CloseIcon {...props} />,
-            headerStyle: {
-              backgroundColor: theme.grayScale.white,
-              elevation: 0, // android
-              shadowOpacity: 0, //ios
-            },
-          }}
-          component={successPopUp} */}
-        {/* /> */}
-        <Stack.Screen
-          name="TabNavigator"
-          component={TabNavigator}
-          options={{ gestureEnabled: false, headerShown: false }}
-        />
       </Stack.Navigator>
+      <Stack.Screen
+        name="successPopUp"
+        options={{
+          title: "",
+          headerLeft: () => null,
+          headerRight: (props) => <CloseIcon {...props} />,
+          headerStyle: {
+            backgroundColor: theme.grayScale.white,
+            elevation: 0, // android
+            shadowOpacity: 0, //ios
+          },
+        }}
+        component={SuccessPopUp}
+      />
     </NavigationContainer>
   );
 };

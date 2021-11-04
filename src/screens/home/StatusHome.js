@@ -8,10 +8,10 @@ import HomeWalk from "./HomeWalk";
 import HomeAfterStop from "./HomeAfterStop";
 import { Animated } from "react-native";
 import HomeCompleted from "./HomeCompleted";
+import HomeFail from "./HomeFail";
 
 const StatusHome = ({ navigation }) => {
   const status = useReactiveVar(statusVar);
-
   const fadetext = useRef(new Animated.Value(0)).current;
   const fadetextwalk = useRef(new Animated.Value(0)).current;
   const fadeimage = useRef(new Animated.Value(0.8)).current;
@@ -45,11 +45,11 @@ const StatusHome = ({ navigation }) => {
   if (status === "home") {
     return (
       <StatusVariable
-        coachImg={coachColorVar().coach === "toki" ? toki_hi : buki_hi}
+        coachImg={coachColorVar()?.coach === "toki" ? toki_hi : buki_hi}
         goalText="목표를 설정해주세요"
         cheerText="오늘도 함께 걸어요!"
         buttonText="오늘의 목표를 세워보세요!"
-        buttonColor={coachColorVar().color.main}
+        buttonColor={coachColorVar()?.color.main || "white"}
         handleGoToNext={() => navigation.navigate("ChallengeSetting")}
         handleOpacity={() => {
           if (onOff) {

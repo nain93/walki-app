@@ -15,7 +15,7 @@ const SettingScreen = ({ navigation }) => {
           <Profile navigation={navigation} />
           <Setting navigation={navigation} />
           <Line />
-          <Others navigation={navigation} />
+          <Others />
         </Container>
       </KeyboardAwareScrollView>
     </TouchableWithoutFeedback>

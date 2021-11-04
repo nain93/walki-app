@@ -1,14 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
-import { coachColorVar, statusVar } from "../../../apollo";
+import React, { useRef, useState } from "react";
+import { coachColorVar } from "../../../apollo";
 import toki_walking from "../../../assets/images/character/toki_walking.png";
 import buki_walking from "../../../assets/images/character/buki_walking.png";
 import { theme } from "../../styles/theme";
 import StatusVariable from "../../components/StatusVariable";
 import { Animated } from "react-native";
 
-import { useReactiveVar } from "@apollo/client";
-
-const HomeWalk = navigation => {
+const HomeWalk = () => {
   const [failModalOpen, setFailModalOpen] = useState(false);
   const handleFailModal = () => {
     setFailModalOpen(!failModalOpen);
@@ -18,7 +16,6 @@ const HomeWalk = navigation => {
 
   const fadeimage = useRef(new Animated.Value(0.8)).current;
   const [onOff, setOnOff] = useState(false);
-  const status = useReactiveVar(statusVar);
 
   const handlepressup = () => {
     Animated.timing(fadetextwalk, {
@@ -48,7 +45,6 @@ const HomeWalk = navigation => {
   return (
     <StatusVariable
       coachImg={coachColorVar().coach === "toki" ? toki_walking : buki_walking}
-      goalText="목표를 설정해주세요"
       cheerText="조금만 더 힘내면 목표에 도달할 수 있어요!"
       buttonText="오늘은 그만할래요"
       buttonColor={theme.grayScale.gray1}
