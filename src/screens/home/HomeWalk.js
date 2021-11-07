@@ -3,10 +3,9 @@ import { coachColorVar } from "../../../apollo";
 import toki_walking from "../../../assets/images/character/toki_walking.png";
 import buki_walking from "../../../assets/images/character/buki_walking.png";
 import { theme } from "../../styles/theme";
-import StatusVariable from "../../components/StatusVariable";
 import { Animated } from "react-native";
 
-const HomeWalk = () => {
+const HomeWalk = ({ StatusVariable }) => {
   const [failModalOpen, setFailModalOpen] = useState(false);
   const handleFailModal = () => {
     setFailModalOpen(!failModalOpen);

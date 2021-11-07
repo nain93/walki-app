@@ -3,38 +3,29 @@ import { Text } from "react-native";
 import { monthVar } from "../../apollo";
 import { gql, useQuery } from "@apollo/client";
 import { theme } from "../styles/theme";
-import { month, year } from "../common/getToday";
 import DownIcon from "react-native-vector-icons/AntDesign";
 import styled from "styled-components";
 
 const BottomSheetPicker = ({ selectedMonth, bottomSheetRef }) => {
-  const GET_CHALLENGES_QUERY = gql`
-    query getChallenges {
-      getChallenges {
-        challengeDate
+  const GET_REPORT_MONTH = gql`
+    query getReportMonth {
+      getReportMonth {
+        yearMonthList
       }
     }
   `;
 
-  const {} = useQuery(GET_CHALLENGES_QUERY, {
+  const {} = useQuery(GET_REPORT_MONTH, {
     onCompleted: (data) => {
-      const arr = [];
-      data.getChallenges.map((item, idx) => {
-        if (arr[idx - 1]?.month === Number(item.challengeDate.slice(5, 7))) {
-          return;
-        }
-        arr.push({
-          year: Number(item.challengeDate.slice(0, 4)),
-          month: Number(item.challengeDate.slice(5, 7)),
+      const months = [];
+      data.getReportMonth.yearMonthList.map((item, idx) => {
+        months.push({
+          year: Number(item.slice(0, 4)),
+          month: Number(item.slice(5, 7)),
         });
       });
-      if (arr[0]?.month !== month) {
-        monthVar([{ year, month }, ...arr]);
-      } else {
-        monthVar([...arr]);
-      }
+      monthVar([...months]);
     },
-    fetchPolicy: "cache-and-network",
   });
 
   const handleBottomSheet = () => {

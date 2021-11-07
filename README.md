@@ -46,9 +46,3 @@ yarn start 이후
 
 - sudo npm install -g ios-deploy
 - yarn ios --device '김지하하' --configuration Release
-
-코치 선택 putMember
-
-알람 시간 asyncStorage
-
-리포트 바텀시트

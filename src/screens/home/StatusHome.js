@@ -2,13 +2,13 @@ import React, { useRef, useState } from "react";
 import { coachColorVar, statusVar } from "../../../apollo";
 import toki_hi from "../../../assets/images/character/toki_hi.png";
 import buki_hi from "../../../assets/images/character/buki.png";
-import StatusVariable from "../../components/StatusVariable";
 import { useReactiveVar } from "@apollo/client";
 import HomeWalk from "./HomeWalk";
 import HomeAfterStop from "./HomeAfterStop";
 import { Animated } from "react-native";
 import HomeCompleted from "./HomeCompleted";
 import HomeFail from "./HomeFail";
+import StatusVariable from "../../components/statusVariable/StatusVariable";
 
 const StatusHome = ({ navigation }) => {
   const status = useReactiveVar(statusVar);
@@ -68,16 +68,16 @@ const StatusHome = ({ navigation }) => {
     );
   }
   if (status === "walking") {
-    return <HomeWalk />;
+    return <HomeWalk StatusVariable={StatusVariable} />;
   }
   if (status === "afterStop") {
-    return <HomeAfterStop />;
+    return <HomeAfterStop StatusVariable={StatusVariable} />;
   }
   if (status === "success") {
-    return <HomeCompleted />;
+    return <HomeCompleted StatusVariable={StatusVariable} />;
   }
   if (status === "fail") {
-    return <HomeFail />;
+    return <HomeFail StatusVariable={StatusVariable} />;
   }
 };
 

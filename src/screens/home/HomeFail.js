@@ -4,9 +4,8 @@ import toki_fail from "../../../assets/images/character/toki_cry.png";
 import buki_fail from "../../../assets/images/character/buki_cry.png";
 import { theme } from "../../styles/theme";
 import { coachColorVar } from "../../../apollo";
-import StatusVariable from "../../components/StatusVariable";
 
-const HomeFail = () => {
+const HomeFail = ({ StatusVariable }) => {
   const [failModalOpen, setFailModalOpen] = useState(false);
   const handleFailModal = () => {
     setFailModalOpen(!failModalOpen);

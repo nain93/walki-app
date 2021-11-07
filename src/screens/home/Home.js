@@ -108,10 +108,7 @@ const Home = ({ navigation }) => {
           </LocationSpace>
           <Text style={{ fontSize: 36 }}>°</Text>
           <BarSpace>
-            <WeatherImage
-              source={SpaceLogo}
-              resizeMode={"contain"}
-            ></WeatherImage>
+            <WeatherImage source={SpaceLogo} resizeMode={"contain"} />
           </BarSpace>
           <WeatherSpace>
             <WeatherImage source={WeatherLogo} resizeMode={"contain"} />

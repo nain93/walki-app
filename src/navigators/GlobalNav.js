@@ -41,7 +41,6 @@ const GlobalNav = () => {
           {},
           Platform.OS === "android" && TransitionScreenOptions,
           { cardStyle: { backgroundColor: theme.grayScale.white } }
-
         )}
       >
         {!isCoach && (

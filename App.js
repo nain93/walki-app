@@ -70,7 +70,7 @@ export default function App() {
     SplashScreen.hideAsync();
     setLoading(false);
   };
-    
+
   const prepare = async () => {
     try {
       await SplashScreen.preventAutoHideAsync();

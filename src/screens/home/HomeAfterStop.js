@@ -1,11 +1,10 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { coachColorVar } from "../../../apollo";
-import StatusVariable from "../../components/StatusVariable";
 import { theme } from "../../styles/theme";
 import toki_hi from "../../../assets/images/character/toki_hi.png";
 import buki_hi from "../../../assets/images/character/buki.png";
 
-const HomeAfterStop = () => {
+const HomeAfterStop = ({ StatusVariable }) => {
   return (
     <StatusVariable
       coachImg={coachColorVar().coach === "toki" ? toki_hi : buki_hi}

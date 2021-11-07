@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-import { Image } from "react-native";
+import { Image, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Home from "../screens/home/Home";
@@ -38,18 +38,28 @@ const TabNavigator = () => {
       sceneContainerStyle={{
         backgroundColor: theme.grayScale.white,
       }}
-      screenOptions={{
-        tabBarActiveTintColor: tabColor?.color?.main,
-        tabBarInactiveTintColor: theme.grayScale.gray3,
-        tabBarStyle: {
-          height: 68,
-          paddingTop: 10,
-          paddingBottom: 10,
-        },
-        tabBarLabelStyle: {
-          fontSize: 12,
-        },
-      }}
+      screenOptions={
+        Platform.OS === "android"
+          ? {
+              tabBarActiveTintColor: tabColor?.color?.main,
+              tabBarInactiveTintColor: theme.grayScale.gray3,
+              tabBarStyle: {
+                height: 68,
+                paddingTop: 10,
+                paddingBottom: 10,
+              },
+              tabBarLabelStyle: {
+                fontSize: 12,
+              },
+            }
+          : {
+              tabBarActiveTintColor: tabColor?.color?.main,
+              tabBarInactiveTintColor: theme.grayScale.gray3,
+              tabBarLabelStyle: {
+                fontSize: 12,
+              },
+            }
+      }
     >
       <Tabs.Screen
         name="홈"
