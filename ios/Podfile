@@ -20,4 +20,6 @@ target 'walkiclient' do
   # end
   pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
   
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
 end

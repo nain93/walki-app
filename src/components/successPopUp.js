@@ -3,19 +3,19 @@ import styled from "styled-components";
 import fire from "../../assets/icons/fire.png";
 import { useForm, useEffect } from "react-hook-form";
 
-import LongButton from "../components/LongButton";
+import LongButton from "./LongButton";
 import { Body1Text, theme, H1Text } from "../styles/theme";
-import { coachColorVar, statusVar } from "../../apollo";
+import { coachColorVar, statusVar, walkStatus } from "../../apollo";
 import { KeyboardAvoidingView } from "react-native";
 
-const successPopUp = ({ navigation }) => {
+const SuccessPopUp = ({ navigation }) => {
   // const { putStatus, setStatus } = useForm({
   //   defaultValues: {
   //     statusVar: "walking",
   //   },
   // });
   const NextPage = () => {
-    statusVar("success");
+    walkStatus("success");
     navigation.navigate("HomeCompleted");
     navigation.goBack();
   };
@@ -28,7 +28,8 @@ const successPopUp = ({ navigation }) => {
         flex: 1,
       }}
       behavior={"height"}
-      keyboardVerticalOffset={100}>
+      keyboardVerticalOffset={100}
+    >
       <Container>
         <TodayChallengeBox>
           <Fire source={fire} resizeMode={"contain"}></Fire>
@@ -38,7 +39,8 @@ const successPopUp = ({ navigation }) => {
         <LongBox>
           <LongButton
             onpress={() => NextPage()}
-            btnBackColor={coachColorVar()?.color?.main}>
+            btnBackColor={coachColorVar()?.color?.main}
+          >
             계속하기
           </LongButton>
         </LongBox>
@@ -81,4 +83,4 @@ const Fire = styled.Image`
   width: 120px;
   height: 192px;
 `;
-export default successPopUp;
+export default SuccessPopUp;

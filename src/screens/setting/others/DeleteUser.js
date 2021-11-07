@@ -4,7 +4,9 @@ import tokiFail from "../../../../assets/images/toki_fail.png";
 import bukiFail from "../../../../assets/images/buki_fail.png";
 import { Body1Text, H2Text, theme } from "../../../styles/theme";
 import { useMutation, gql } from "@apollo/client";
-import { logUserOut } from "../../../../apollo";
+import { isCoachVar, logUserOut } from "../../../../apollo";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import STOARGE from "../../../constants/stoarge";
 
 const DeleteUser = ({ handleDeleteModal, deleteModalOpen, navigation }) => {
   const DELETE_USER_MUTATION = gql`
@@ -12,12 +14,15 @@ const DeleteUser = ({ handleDeleteModal, deleteModalOpen, navigation }) => {
       deleteMember
     }
   `;
-
   const [deleteUserMutation] = useMutation(DELETE_USER_MUTATION);
 
   const handleOkayBtn = async () => {
+    const { COACH, TIME } = STOARGE;
     deleteUserMutation();
     await logUserOut();
+    await AsyncStorage.removeItem(COACH);
+    await AsyncStorage.removeItem(TIME);
+    isCoachVar(false);
     handleDeleteModal();
     navigation.reset({ routes: [{ name: "OnBoarding" }] });
   };
