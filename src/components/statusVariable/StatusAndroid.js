@@ -162,7 +162,7 @@ const StatusAndroid = ({
             percentage={
               step === 0
                 ? 0
-                : step > 100
+                : step > data?.getChallenge?.stepGoal
                 ? 100
                 : (step / data?.getChallenge?.stepGoal) * 100
             }

@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import AppLoading from "expo-app-loading";
 import GlobalNav from "./src/navigators/GlobalNav";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
-import { ApolloProvider, useReactiveVar } from "@apollo/client";
+import { ApolloProvider, useQuery, useReactiveVar } from "@apollo/client";
 import client, {
   coachColorVar,
-  coachSelect,
   isCoachVar,
   isLoggedInVar,
   statusVar,

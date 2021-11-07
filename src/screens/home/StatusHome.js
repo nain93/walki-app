@@ -9,6 +9,8 @@ import { Animated } from "react-native";
 import HomeCompleted from "./HomeCompleted";
 import HomeFail from "./HomeFail";
 import StatusVariable from "../../components/statusVariable/StatusVariable";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import STOARGE from "../../constants/stoarge";
 
 const StatusHome = ({ navigation }) => {
   const status = useReactiveVar(statusVar);
@@ -41,6 +43,20 @@ const StatusHome = ({ navigation }) => {
       useNativeDriver: true,
     }).start();
   };
+
+  const GET_REFRESH_TOKEN = gql`
+    query refreshToken {
+      refreshToken {
+        accessToken
+      }
+    }
+  `;
+
+  const {} = useQuery(GET_REFRESH_TOKEN, {
+    onCompleted: (data) => {
+      AsyncStorage.setItem(STOARGE.TOKEN, data.refreshToken.accessToken);
+    },
+  });
 
   if (status === "home") {
     return (
