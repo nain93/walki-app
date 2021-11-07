@@ -3,12 +3,14 @@ import { coachColorVar, statusVar } from "../../../apollo";
 import toki_hi from "../../../assets/images/character/toki_hi.png";
 import buki_hi from "../../../assets/images/character/buki.png";
 import StatusVariable from "../../components/StatusVariable";
-import { useReactiveVar } from "@apollo/client";
+import { gql, useQuery, useReactiveVar } from "@apollo/client";
 import HomeWalk from "./HomeWalk";
 import HomeAfterStop from "./HomeAfterStop";
 import { Animated } from "react-native";
 import HomeCompleted from "./HomeCompleted";
 import HomeFail from "./HomeFail";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import STOARGE from "../../constants/stoarge";
 
 const StatusHome = ({ navigation }) => {
   const status = useReactiveVar(statusVar);
@@ -41,6 +43,20 @@ const StatusHome = ({ navigation }) => {
       useNativeDriver: true,
     }).start();
   };
+
+  const GET_REFRESH_TOKEN = gql`
+    query refreshToken {
+      refreshToken {
+        accessToken
+      }
+    }
+  `;
+
+  const {} = useQuery(GET_REFRESH_TOKEN, {
+    onCompleted: (data) => {
+      AsyncStorage.setItem(STOARGE.TOKEN, data.refreshToken.accessToken);
+    },
+  });
 
   if (status === "home") {
     return (

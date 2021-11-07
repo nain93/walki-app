@@ -122,6 +122,14 @@ const StatusVariable = ({
     },
   });
 
+  useEffect(() => {
+    if (!loading) {
+      if (data === undefined) {
+        walkStatus("home");
+      }
+    }
+  }, []);
+
   // useEffect(() => {
   //   const now = new Date();
   //   const hour = now.getHours();
@@ -155,7 +163,7 @@ const StatusVariable = ({
             percentage={
               step === 0
                 ? 0
-                : step > 100
+                : step > data?.getChallenge?.stepGoal
                 ? 100
                 : (step / data?.getChallenge?.stepGoal) * 100
             }
