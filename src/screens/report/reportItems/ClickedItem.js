@@ -18,14 +18,14 @@ const ClickedItem = ({ step, stepGoal, onPress, opacity }) => {
       onPress={onPress}
       style={{
         backgroundColor:
-          step === stepGoal
+          step >= stepGoal
             ? coachColorVar().color.report
             : theme.grayScale.gray6,
       }}
     >
       <Image
         source={
-          step === stepGoal
+          step >= stepGoal
             ? coachColorVar().coach === "toki"
               ? tokiGood
               : bukiGood
@@ -39,10 +39,10 @@ const ClickedItem = ({ step, stepGoal, onPress, opacity }) => {
       <H4Text
         style={{
           color:
-            step === stepGoal ? theme.grayScale.white : theme.grayScale.gray3,
+            step >= stepGoal ? theme.grayScale.white : theme.grayScale.gray3,
         }}
       >
-        {step === stepGoal ? "잘했어요!" : "힘내세요!"}
+        {step >= stepGoal ? "잘했어요!" : "힘내세요!"}
       </H4Text>
     </ListItem>
   );

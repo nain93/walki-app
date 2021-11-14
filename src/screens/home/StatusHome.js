@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { coachColorVar, statusVar } from "../../../apollo";
 import toki_hi from "../../../assets/images/character/toki_hi.png";
 import buki_hi from "../../../assets/images/character/buki.png";
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar,gql,useQuery } from "@apollo/client";
 import HomeWalk from "./HomeWalk";
 import HomeAfterStop from "./HomeAfterStop";
 import { Animated } from "react-native";

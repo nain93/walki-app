@@ -18,13 +18,12 @@ import appleAuth, {
 } from '@invertase/react-native-apple-authentication';
 import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
 import { Caption, H4Text, theme } from "../../styles/theme";
-import { gql, useLazyQuery, useMutation, useReactiveVar } from "@apollo/client";
-import { isCoachVar, logUserIn } from "../../../apollo";
+import { gql, useLazyQuery, useMutation } from "@apollo/client";
+import {  logUserIn } from "../../../apollo";
 
 
 
 const KakaoLoginButton = ({ navigation }) => {
-  const isCoach = useReactiveVar(isCoachVar);
   const SIGN_UP_MUTATION = gql`
     mutation signUp($social: Social!, $token: String!) {
       signUp(social: $social, token: $token)
@@ -67,6 +66,7 @@ const KakaoLoginButton = ({ navigation }) => {
     setIsLoading(true);
     const token = await login();
     const { accessToken } = token;
+    console.log(accessToken,"accessToken");
     await signUpMutation({
       variables: {
         social: "KAKAO",
@@ -96,18 +96,17 @@ const KakaoLoginButton = ({ navigation }) => {
            if (credentialState === appleAuth.State.AUTHORIZED) {
              // user is authenticated
                   console.log("test1", appleAuthRequestResponse);
-                  const token =   appleAuthRequestResponse.identityToken
-                  const { accessToken } = token;
-    await signUpMutation({
-      variables: {
-        social: "APPLE",
-        token: accessToken,
-      },
-    });
+                  const token = appleAuthRequestResponse.authorizationCode;
+    // await signUpMutation({
+    //   variables: {
+    //     social: "APPLE",
+    //     token,
+    //   },
+    // });
     signInQuery({
       variables: {
         social: "APPLE",
-        token: accessToken,
+        token,
       },
     });
     navigation.reset({ routes: [{ name: "CoachSelect" }] });

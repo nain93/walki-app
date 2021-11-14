@@ -36,10 +36,8 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>kakaokompassauth</string>
-		<string>kakao526b6c2b9e557fa37f7a04ede96db3c0</string>
 		<string>storykompassauth</string>
 		<string>kakaolink</string>
-		<string>kakaotalk-9.5.2</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -87,5 +85,12 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Read and understand health data.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Share workout data with other apps.</string>
+	<!-- Below is only required if requesting clinical health data -->
+	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
+	<string>Read and understand clinical health data.</string>
 </dict>
 </plist>
