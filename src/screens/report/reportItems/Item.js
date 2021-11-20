@@ -13,7 +13,7 @@ const Item = ({ day, step, stepGoal, onPress, opacity }) => {
       onPress={onPress}
       style={{
         backgroundColor:
-          step === stepGoal
+          step >= stepGoal
             ? coachColorVar().color.report
             : theme.grayScale.gray6,
       }}
@@ -22,7 +22,7 @@ const Item = ({ day, step, stepGoal, onPress, opacity }) => {
         style={{
           marginBottom: 5,
           color:
-            step === stepGoal ? theme.grayScale.gray6 : theme.grayScale.gray4,
+            step >= stepGoal ? theme.grayScale.gray6 : theme.grayScale.gray4,
           fontSize: 14,
         }}
       >
@@ -32,7 +32,7 @@ const Item = ({ day, step, stepGoal, onPress, opacity }) => {
         <Text
           style={{
             color:
-              step === stepGoal ? theme.grayScale.white : theme.grayScale.gray3,
+              step >= stepGoal ? theme.grayScale.white : theme.grayScale.gray3,
             fontSize: 18,
             fontWeight: "600",
           }}
@@ -42,7 +42,7 @@ const Item = ({ day, step, stepGoal, onPress, opacity }) => {
         <Text
           style={{
             color:
-              step === stepGoal ? theme.grayScale.gray5 : theme.grayScale.gray4,
+              step >= stepGoal ? theme.grayScale.gray5 : theme.grayScale.gray4,
             fontSize: 12,
           }}
         >

@@ -1366,7 +1366,7 @@
   resolved "https://registry.yarnpkg.com/@emotion/unitless/-/unitless-0.7.5.tgz#77211291c1900a700b8a78cfafda3160d76949ed"
   integrity sha512-OWORNpfjMsSSUBVrRBVGECkhWcULOAJz9ZW8uK9qgxD+87M7jHRcvh/A96XXNhXTLmKcoYSQtBEX7lHMO7YRwg==
 
-"@expo/config-plugins@2.0.4":
+"@expo/config-plugins@2.0.4", "@expo/config-plugins@^2.0.0":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-2.0.4.tgz#955fd70a2aeefbe99ec71cecb1d7ea7b626dc79e"
   integrity sha512-JGt/X2tFr7H8KBQrKfbGo9hmCubQraMxq5sj3bqDdKmDOLcE1a/EDCP9g0U4GHsa425J8VDIkQUHYz3h3ndEXQ==
@@ -5673,6 +5673,13 @@ react-native-google-fit@^0.17.1:
   integrity sha512-10A2Nfgl8bQES5UvxjmiYPg0FZdbrbMjgMaY83lEhFN5PD8f7DDD3Jl4D1kxtGSPHxJTe68orklqT6PB3pCGSw==
   dependencies:
     moment "2.29.1"
+
+react-native-health@^1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-health/-/react-native-health-1.11.0.tgz#31b696a08d610a905aa14632d28cb0178f7cbca0"
+  integrity sha512-aUvT9Va7WphB3VIUyvilXT4b9d/uw67vx1/tAK69gEdR7PQP+pfo4Cp5xGtB41Hj1jQb5QIlsRwaqgoTayR2vA==
+  dependencies:
+    "@expo/config-plugins" "^2.0.0"
 
 react-native-iphone-x-helper@^1.0.3:
   version "1.3.1"

@@ -4,7 +4,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "react-native start"
+    "start": "react-native start",
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
     "@apollo/client": "^3.4.4",
@@ -42,6 +43,7 @@
     "react-native-easy-toast": "^2.0.0",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-google-fit": "^0.17.1",
+    "react-native-health": "^1.11.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-modal": "^13.0.0",
     "react-native-permissions": "^3.0.5",
