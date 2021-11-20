@@ -3,6 +3,7 @@ const STOARGE = {
   COACH: "coach",
   STATUS: "status",
   TIME: "time",
+  STEP: "step",
 };
 
 export default STOARGE;

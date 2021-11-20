@@ -8,7 +8,9 @@ import client, {
   isCoachVar,
   isLoggedInVar,
   statusVar,
+  stepVar,
   tokenVar,
+  walkStatus,
 } from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotification, { Importance } from "react-native-push-notification";
@@ -17,6 +19,7 @@ import STOARGE from "./src/constants/stoarge";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { theme } from "./src/styles/theme";
 import LoggedOutNav from "./src/navigators/LoggedOutNav";
+import { getToday } from "./src/common/getToday";
 
 PushNotification.configure({
   onRegister: function (token) {
@@ -73,13 +76,12 @@ export default function App() {
   const prepare = async () => {
     try {
       await SplashScreen.preventAutoHideAsync();
-
       // await new Promise((resolve) => setTimeout(resolve, 2000));
     } catch (e) {
       console.warn(e);
     }
   };
-  const { TOKEN, COACH, STATUS } = STOARGE;
+  const { TOKEN, COACH, STATUS, STEP } = STOARGE;
 
   const getToken = async () => {
     const token = await AsyncStorage.getItem(TOKEN);
@@ -111,12 +113,25 @@ export default function App() {
     }
   };
 
+  const getSteps = async () => {
+    const steps = await AsyncStorage.getItem(STEP);
+    if (steps) {
+      const { step, date } = JSON.parse(steps);
+      if (date !== getToday()) {
+        walkStatus("home");
+        stepVar({ step, date });
+      }
+      console.log(step, "step");
+    }
+  };
+
   const preload = async () => {
     const token = getToken();
     const coach = getCoach();
     const status = getStatus();
+    const step = getSteps();
 
-    await Promise.all([token, coach, status]);
+    await Promise.all([token, coach, status, step]);
     return prepare();
   };
 

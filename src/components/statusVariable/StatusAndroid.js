@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
-import { coachColorVar, stepVar, walkStatus } from "../../../apollo";
+import { coachColorVar, stepVar, walkStatus, statusVar } from "../../../apollo";
 import LongButton from "../../components/LongButton";
 
 import {
@@ -10,7 +10,7 @@ import {
   Blurgoal2,
 } from "../../styles/homeTheme";
 import UserFail from "../../screens/home/others/UserFail";
-import { Animated, View, Text, Platform } from "react-native";
+import { Animated, View, Text } from "react-native";
 import { request, PERMISSIONS } from "react-native-permissions";
 import GoogleFit, { Scopes } from "react-native-google-fit";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -20,7 +20,7 @@ import { getToday } from "../../common/getToday";
 import styled from "styled-components";
 
 const opt = {
-  startDate: "2021-10-29T00:00:17.971Z", // required ISO8601Timestamp
+  startDate: "2021-11-10T00:00:17.971Z", // required ISO8601Timestamp
   endDate: new Date().toISOString(), // required ISO8601Timestamp
   bucketUnit: "DAY", // optional - default "DAY". Valid values: "NANOSECOND" | "MICROSECOND" | "MILLISECOND" | "SECOND" | "MINUTE" | "HOUR" | "DAY"
   bucketInterval: 1, // optional - default 1.
@@ -51,6 +51,7 @@ const StatusAndroid = ({
   },
 }) => {
   const step = useReactiveVar(stepVar);
+  const status = useReactiveVar(statusVar);
   const [steps, setSteps] = useState({
     totalSteps: 0,
     observeSteps: "",
@@ -67,7 +68,7 @@ const StatusAndroid = ({
             if (value >= data?.getChallenge?.stepGoal) {
               walkStatus("success");
             }
-            stepVar(value);
+            stepVar({ step: value, date: step.date });
           }
         });
       } else {
@@ -88,13 +89,6 @@ const StatusAndroid = ({
     });
   }, []);
 
-  const PUT_CHALLENGE = gql`
-    mutation putChallenge($challenge: ChallengeInput) {
-      putChallenge(challenge: $challenge) {
-        step
-      }
-    }
-  `;
   const GET_CHALLENGE = gql`
     query getChallenge($challengeDate: LocalDate) {
       getChallenge(challengeDate: $challengeDate) {
@@ -104,20 +98,16 @@ const StatusAndroid = ({
       }
     }
   `;
+
   const { data, loading } = useQuery(GET_CHALLENGE, {
     variables: {
       challengeDate: getToday(),
     },
     onCompleted: (data) => {
-      if (data === undefined) {
+      if (data) {
+      } else {
         walkStatus("home");
       }
-    },
-  });
-
-  const [putChallengeMutation, {}] = useMutation(PUT_CHALLENGE, {
-    onCompleted: (data) => {
-      console.log(data, "data");
     },
   });
 
@@ -129,42 +119,19 @@ const StatusAndroid = ({
     }
   }, []);
 
-  // useEffect(() => {
-  //   const now = new Date();
-  //   const hour = now.getHours();
-  //   const date = now.getMinutes();
-  //   console.log(date, "date");
-  //   if (hour === 0) {
-  //     const putStep = async () => {
-  //       await putChallengeMutation({
-  //         variables: {
-  //           challenge: {
-  //             step: steps.totalSteps,
-  //             challengeDate: getToday(),
-  //           },
-  //         },
-  //       });
-  //     };
-  //     putStep();
-  //   }
-  // }, []);
-  // * status가 walking중이어야하고 00시여야함
-  // * 하루전날 스탭을 보내야함 date.setDate(date.getDate() - 1)
-  // * 12시전에 (11시59분59초) 한번 업데이트 해야됨
-  // * 종료시점을 알수있으면 종료하기전에 스탭 보내기 x
-  // * 백에 안보내도 되지않나 googleAPi에 저장되어있기때문
-
   return (
     <>
       <GoalBox>
         <TouchableOpacity onPress={handleOpacity}>
           <CircularProgress
             percentage={
-              step === 0
+              status === "home"
                 ? 0
-                : step > data?.getChallenge?.stepGoal
+                : step.step === 0
+                ? 0
+                : step.step > data?.getChallenge?.stepGoal
                 ? 100
-                : (step / data?.getChallenge?.stepGoal) * 100
+                : (step.step / data?.getChallenge?.stepGoal) * 100
             }
             donutColor={coachColorVar().color.main}
             size={350}
@@ -196,7 +163,7 @@ const StatusAndroid = ({
             >
               <View style={{ alignItems: "center" }}>
                 <Blurgoal coachColorVar={coachColorVar().color.main}>
-                  {step}
+                  {step.step}
                 </Blurgoal>
 
                 <View
@@ -217,7 +184,6 @@ const StatusAndroid = ({
                       목표
                     </Text>
                   </GoalTextBox>
-
                   <Blurgoal2> {data?.getChallenge?.stepGoal} 걸음</Blurgoal2>
                 </View>
               </View>

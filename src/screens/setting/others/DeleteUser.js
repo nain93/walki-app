@@ -4,7 +4,7 @@ import tokiFail from "../../../../assets/images/toki_fail.png";
 import bukiFail from "../../../../assets/images/buki_fail.png";
 import { Body1Text, H2Text, theme } from "../../../styles/theme";
 import { useMutation, gql } from "@apollo/client";
-import { isCoachVar, logUserOut } from "../../../../apollo";
+import { isCoachVar, logUserOut, statusVar } from "../../../../apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import STOARGE from "../../../constants/stoarge";
 
@@ -22,6 +22,7 @@ const DeleteUser = ({ handleDeleteModal, deleteModalOpen }) => {
     await logUserOut();
     await AsyncStorage.removeItem(COACH);
     await AsyncStorage.removeItem(STATUS);
+    statusVar("home");
     isCoachVar(false);
     handleDeleteModal();
   };

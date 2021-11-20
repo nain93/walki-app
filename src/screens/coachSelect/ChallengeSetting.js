@@ -3,13 +3,16 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import LongButton from "../../components/LongButton";
 import { Body1Text, theme } from "../../styles/theme";
-import { coachColorVar, monthVar, walkStatus } from "../../../apollo";
+import { coachColorVar, monthVar, stepVar, walkStatus } from "../../../apollo";
 import { gql, useMutation, useReactiveVar, useQuery } from "@apollo/client";
 import { KeyboardAvoidingView } from "react-native";
 import { getToday } from "../../common/getToday";
 import HeaderForm from "../../components/HeaderForm";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import STOARGE from "../../constants/stoarge";
 
 const ChallengeSetting = ({ navigation }) => {
+  const step = useReactiveVar(stepVar);
   const walkRef = useRef();
   const coachColor = useReactiveVar(coachColorVar);
   const {
@@ -90,6 +93,10 @@ const ChallengeSetting = ({ navigation }) => {
         },
       },
     });
+    await AsyncStorage.setItem(
+      STOARGE.STEP,
+      JSON.stringify({ step: step.step, date: getToday() })
+    );
     walkStatus("walking");
     navigation.goBack();
   };

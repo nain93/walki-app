@@ -87,11 +87,11 @@ const StatusIos = ({
         <TouchableOpacity onPress={handleOpacity}>
           <CircularProgress
             percentage={
-              step === 0
+              step.step === 0
                 ? 0
-                : step > 100
+                : step.step > 100
                 ? 100
-                : (step / data?.getChallenge?.stepGoal) * 100
+                : (step.step / data?.getChallenge?.stepGoal) * 100
             }
             donutColor={coachColorVar().color.main}
             size={350}
@@ -122,7 +122,7 @@ const StatusIos = ({
             >
               <View style={{ alignItems: "center" }}>
                 <Blurgoal coachColorVar={coachColorVar().color.main}>
-                  {step}
+                  {step.step}
                 </Blurgoal>
 
                 <View

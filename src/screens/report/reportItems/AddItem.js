@@ -20,7 +20,7 @@ const AddItem = ({ stepGoal }) => {
             fontSize: 18,
           }}
         >
-          {step}
+          {step.step}
         </Text>
         <Text
           style={{
