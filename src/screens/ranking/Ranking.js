@@ -53,7 +53,7 @@ const Ranking = () => {
 
   return (
     <Container>
-      <RankingHeader rank={data?.getMyRankings?.number} />
+      <RankingHeader rankingData={data?.getMyRankings} />
       <RankingMain />
     </Container>
   );

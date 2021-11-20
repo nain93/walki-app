@@ -6,9 +6,9 @@ import { H2Text, H4Text, theme } from "../../styles/theme";
 import chat from "../../../assets/icons/chat.png";
 import tokiHappy from "../../../assets/images/ranking/toki_happy.png";
 import bukiHappy from "../../../assets/images/ranking/buki_happy.png";
-import { day, month } from "../../common/getToday";
+import { day, getToday, getYesterday, month } from "../../common/getToday";
 
-const RankingHeader = ({ rank }) => {
+const RankingHeader = ({ rankingData }) => {
   return (
     <Conatiner coachColor={coachColorVar().color.report}>
       <View>
@@ -24,8 +24,23 @@ const RankingHeader = ({ rank }) => {
             }}
           />
           <H4Text style={{ color: theme.grayScale.white }}>
-            지난 랭킹보다
-            <Text style={{ color: "#FFED4B" }}> 32위 상승</Text>했어요!
+            지난 랭킹보다{" "}
+            <Text style={{ color: "#FFED4B" }}>
+              {(rankingData.length === 0
+                ? 0
+                : rankingData.length === 1 &&
+                  rankingData[0].challengeDate === getYesterday()
+                ? 0
+                : rankingData[0].number) -
+                (rankingData.length === 0
+                  ? 0
+                  : rankingData.length === 1 &&
+                    rankingData[0].challengeDate === getYesterday()
+                  ? rankingData[0].number
+                  : rankingData[1].number)}
+              위 상승
+            </Text>
+            했어요!
           </H4Text>
         </TextWrap>
         <RankingWrap>
@@ -34,7 +49,14 @@ const RankingHeader = ({ rank }) => {
               {month}/{day - 2}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <H2Text style={{ color: coachColorVar().color.main }}>34</H2Text>
+              <H2Text style={{ color: coachColorVar().color.main }}>
+                {rankingData.length === 0
+                  ? 0
+                  : rankingData.length === 1 &&
+                    rankingData[0].challengeDate === getYesterday()
+                  ? 0
+                  : rankingData[0].number}
+              </H2Text>
               <Text> 위</Text>
             </View>
           </RankingBox>
@@ -44,7 +66,12 @@ const RankingHeader = ({ rank }) => {
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <H2Text style={{ color: coachColorVar().color.main }}>
-                {rank}
+                {rankingData.length === 0
+                  ? 0
+                  : rankingData.length === 1 &&
+                    rankingData[0].challengeDate === getYesterday()
+                  ? rankingData[0].number
+                  : rankingData[1].number}
               </H2Text>
               <Text> 위</Text>
             </View>

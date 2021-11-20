@@ -8,14 +8,21 @@ import { gql, useQuery } from "@apollo/client";
 import { getYesterday } from "../../common/getToday";
 import Loading from "../../components/Loading";
 
-const Item = ({ name, profile, rank }) => (
+const Item = ({ name, profile, rank, numberColor }) => (
   <RankContainer>
     <UserProfile>
-      <H2Text>{rank}</H2Text>
+      <H2Text
+        style={{
+          color: numberColor ? `${numberColor}` : theme.grayScale.black,
+          width: 25,
+        }}
+      >
+        {rank}
+      </H2Text>
       <ProfileImg
         source={{ uri: profile }}
         resizeMode="cover"
-        style={{ marginLeft: 30, marginRight: 10 }}
+        style={{ marginLeft: 20, marginRight: 10 }}
       />
       <H4Text style={{ color: theme.grayScale.gray1 }}>{name}</H4Text>
     </UserProfile>
@@ -27,6 +34,7 @@ const RankContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding: 10px 0;
 `;
 
 const UserProfile = styled.View`
@@ -37,7 +45,6 @@ const UserProfile = styled.View`
 const ProfileImg = styled.Image`
   width: 40px;
   height: 40px;
-  margin: 10px 0;
   border-radius: 20px;
 `;
 
@@ -66,13 +73,24 @@ const RankingMain = () => {
   });
 
   // todo getChallenge query로 어제 step 가져와야함
-  const renderItem = ({ item }) => (
-    <Item
-      name={item.member.name}
-      profile={item.member.profileImage}
-      rank={item.number}
-    />
-  );
+  const renderItem = ({ item, index }) => {
+    return (
+      <Item
+        numberColor={
+          index === 0
+            ? "#FFA319"
+            : index === 1
+            ? "#BDBDBD"
+            : index === 2
+            ? "#C67855"
+            : theme.grayScale.black
+        }
+        name={item.member.name}
+        profile={item.member.profileImage}
+        rank={item.number}
+      />
+    );
+  };
 
   const toastRef = useRef();
   if (loading) {
