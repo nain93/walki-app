@@ -1,26 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import fire from "../../assets/icons/fire.png";
-import { useForm, useEffect } from "react-hook-form";
 
 import LongButton from "./LongButton";
 import { Body1Text, theme, H1Text } from "../styles/theme";
-import { coachColorVar, statusVar, walkStatus } from "../../apollo";
+import { coachColorVar } from "../../apollo";
 import { KeyboardAvoidingView } from "react-native";
 
 const SuccessPopUp = ({ navigation }) => {
-  // const { putStatus, setStatus } = useForm({
-  //   defaultValues: {
-  //     statusVar: "walking",
-  //   },
-  // });
-  const NextPage = () => {
-    walkStatus("success");
-    navigation.goBack();
-  };
-  // useEffect(() => {
-  //   putStatus("walking");
-  // }, []);
   return (
     <KeyboardAvoidingView
       style={{
@@ -37,7 +24,7 @@ const SuccessPopUp = ({ navigation }) => {
         </TodayChallengeBox>
         <LongBox>
           <LongButton
-            onpress={() => NextPage()}
+            onpress={() => navigation.goBack()}
             btnBackColor={coachColorVar()?.color?.main}
           >
             계속하기

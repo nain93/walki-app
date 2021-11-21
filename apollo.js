@@ -44,7 +44,7 @@ export const alertTimeVar = makeVar({
   minute: 0,
 });
 
-export const statusVar = makeVar("home");
+export const statusVar = makeVar("");
 
 export const stepVar = makeVar({
   step: 0,

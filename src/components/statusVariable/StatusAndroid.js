@@ -19,6 +19,7 @@ import { Body1Text, H4Text, theme } from "../../styles/theme";
 import { getToday } from "../../common/getToday";
 import styled from "styled-components";
 import Loading from "../Loading";
+import { useNavigation } from "@react-navigation/core";
 
 const opt = {
   startDate: "2021-11-10T00:00:17.971Z", // required ISO8601Timestamp
@@ -57,6 +58,7 @@ const StatusAndroid = ({
     totalSteps: 0,
     observeSteps: "",
   });
+  const navigation = useNavigation();
 
   useEffect(() => {
     GoogleFit.authorize(options).then((authResult) => {
@@ -68,6 +70,7 @@ const StatusAndroid = ({
             setSteps({ ...steps, totalSteps: value });
             if (value >= data?.getChallenge?.stepGoal) {
               walkStatus("success");
+              navigation.navigate("successPopUp");
             }
             stepVar({ step: value, date: step.date });
           }
@@ -104,24 +107,9 @@ const StatusAndroid = ({
     variables: {
       challengeDate: getToday(),
     },
-    onCompleted: (data) => {
-      if (data) {
-      } else {
-        walkStatus("home");
-      }
-    },
   });
 
-  useEffect(() => {
-    console.log(step, "step");
-    if (!loading) {
-      if (data === undefined) {
-        walkStatus("home");
-      }
-    }
-  }, []);
-
-  if (!step.step || loading) {
+  if (loading) {
     return <Loading />;
   }
 
