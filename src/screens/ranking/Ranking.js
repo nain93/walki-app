@@ -22,6 +22,7 @@ const Ranking = () => {
     query getMyRankings($start: LocalDate!, $end: LocalDate!) {
       getMyRankings(start: $start, end: $end) {
         member {
+          id
           name
           profileImage
         }
@@ -41,7 +42,7 @@ const Ranking = () => {
         const {
           number,
           challengeDate,
-          member: { profileImage, name },
+          member: { profileImage, name, id },
         } = getMyRankings[0];
       }
     },
@@ -54,7 +55,7 @@ const Ranking = () => {
   return (
     <Container>
       <RankingHeader rankingData={data?.getMyRankings} />
-      <RankingMain />
+      <RankingMain myId={data?.getMyRankings[0]?.member.id}/>
     </Container>
   );
 };

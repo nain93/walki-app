@@ -1,20 +1,22 @@
-import React, { useRef } from "react";
-import { Text, FlatList, Image, TouchableOpacity } from "react-native";
+import React, {  useEffect, useRef, useState } from "react";
+import { Text, FlatList, Image, TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
-import { H2Text, H4Text, theme } from "../../styles/theme";
+import { Body3Text, H2Text, H4Text, theme } from "../../styles/theme";
 import info from "../../../assets/icons/info.png";
 import Toast from "react-native-easy-toast";
 import { gql, useQuery } from "@apollo/client";
-import { getYesterday } from "../../common/getToday";
 import Loading from "../../components/Loading";
+import { getYesterday } from "../../common/getToday";
+import tokiDefault from "../../../assets/images//toki_default.png";
+import bukiDefault from "../../../assets/images/buki_default.png";
 
-const Item = ({ name, profile, rank, numberColor }) => (
-  <RankContainer>
+const Item = ({ name, profile, rank, numberColor,rankingStep,coach,myId }) => (
+  <RankContainer myId={myId} coach={coach}>
     <UserProfile>
       <H2Text
         style={{
           color: numberColor ? `${numberColor}` : theme.grayScale.black,
-          width: 25,
+          width: 30,
         }}
       >
         {rank}
@@ -22,11 +24,14 @@ const Item = ({ name, profile, rank, numberColor }) => (
       <ProfileImg
         source={{ uri: profile }}
         resizeMode="cover"
-        style={{ marginLeft: 20, marginRight: 10 }}
+        style={{ marginRight: 10 }}
       />
       <H4Text style={{ color: theme.grayScale.gray1 }}>{name}</H4Text>
     </UserProfile>
-    <Text>232,631</Text>
+    <View style={{flexDirection:"row", alignItems:"center"}}>
+      <Image style={{width:18,height:18,marginRight:4}} source={coach === "부키" ? bukiDefault: tokiDefault} />
+      <Body3Text style={{color:theme.grayScale.gray1}}>{String(rankingStep).slice(0,String(rankingStep).length-3) + "," + String(rankingStep).slice(String(rankingStep).length-3,String(rankingStep).length)}</Body3Text>
+    </View>
   </RankContainer>
 );
 
@@ -34,7 +39,9 @@ const RankContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 14px 20px;
+  margin: 12px 0;
+  background-color: ${props=>props.myId ? props.coach === "부키" ? "#DCF2B6" : "#FCBFD1" : "" };
 `;
 
 const UserProfile = styled.View`
@@ -48,7 +55,8 @@ const ProfileImg = styled.Image`
   border-radius: 20px;
 `;
 
-const RankingMain = () => {
+const RankingMain = ({myId}) => {
+  const [rankingStep,setRankingStep] = useState(0)
   const GET_TOP10_RANKINGS_QUERY = gql`
     query getTop10Rankings($date: LocalDate) {
       getTop10Rankings(date: $date) {
@@ -72,10 +80,40 @@ const RankingMain = () => {
     },
   });
 
+  const GET_CHALLENGE_QUERY = gql`
+    query getChallenge($challengeDate: LocalDate) {
+      getChallenge(challengeDate: $challengeDate) {
+        step
+        stepGoal
+        challengeDate
+      }
+    }
+  `;
+
+  const {refetch} = useQuery(GET_CHALLENGE_QUERY,{
+    variables:{
+      challengeDate:getYesterday()
+    },
+    onCompleted:(data)=>{
+      if(data){
+        setRankingStep(data.getChallenge.step)
+      }
+     
+    }
+  })
+
+  useEffect(()=>{
+    refetch()
+  },[])
+
+
+
+
   // todo getChallenge query로 어제 step 가져와야함
   const renderItem = ({ item, index }) => {
     return (
       <Item
+        rankingStep={rankingStep}
         numberColor={
           index === 0
             ? "#FFA319"
@@ -85,7 +123,9 @@ const RankingMain = () => {
             ? "#C67855"
             : theme.grayScale.black
         }
+        myId={myId}
         name={item.member.name}
+        coach={item.member.coach.name}
         profile={item.member.profileImage}
         rank={item.number}
       />
@@ -99,7 +139,7 @@ const RankingMain = () => {
   return (
     <Container>
       <Title>
-        <H2Text>TOP 10</H2Text>
+        <H2Text style={{marginHorizontal:20}}>TOP 10</H2Text>
         <TouchableOpacity
           onPress={() =>
             toastRef.current.show(
@@ -142,7 +182,6 @@ const RankingMain = () => {
 
 const Container = styled.View`
   flex: 1;
-  padding: 0 30px;
   padding-top: 30px;
 `;
 

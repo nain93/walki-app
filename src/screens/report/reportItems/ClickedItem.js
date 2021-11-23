@@ -34,7 +34,7 @@ const ClickedItem = ({ step, stepGoal, onPress, opacity }) => {
             : bukiFail
         }
         resizeMode="contain"
-        style={{ width: 60, height: 60 }}
+        style={{ width: 50, height: 50 }}
       />
       <H4Text
         style={{

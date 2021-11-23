@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ListItem = styled.TouchableOpacity`
   flex: 1;
-  max-width: 31.5%;
+  max-width: 106px;
   height: 110px;
   justify-content: space-around;
   align-items: center;

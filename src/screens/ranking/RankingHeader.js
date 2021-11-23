@@ -56,7 +56,7 @@ const RankingHeader = ({ rankingData }) => {
             }}
           />
           <H4Text style={{ color: theme.grayScale.white }}>
-            지난 랭킹보다{" "}
+            {upDown === "same" ? null : `지난 랭킹보다{" "}`}
             <Text style={{ color: "#FFED4B" }}>
               {upDown === "same" ? "" : `${rank}위`}{" "}
               {upDown === "up" ? "상승" : upDown === "same" ? "" : "하락"}
@@ -64,7 +64,7 @@ const RankingHeader = ({ rankingData }) => {
             {upDown === "up"
               ? "했어요!"
               : upDown === "same"
-              ? "같은 순위에요!"
+              ? "지난 랭킹이랑 같은 순위에요!"
               : "했어요"}
           </H4Text>
         </TextWrap>
