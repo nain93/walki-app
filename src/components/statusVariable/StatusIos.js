@@ -2,21 +2,23 @@ import React, { useState, useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
 import { coachColorVar, stepVar, walkStatus } from "../../../apollo";
 import LongButton from "../../components/LongButton";
-
+// import permissions from "./HealthKitPermission"
 import {
   Blurgoal,
   CharacetrImage,
   GoalBox,
   Blurgoal2,
 } from "../../styles/homeTheme";
+
 import UserFail from "../../screens/home/others/UserFail";
 import { Animated, View, Text, Platform } from "react-native";
-import { request, PERMISSIONS } from "react-native-permissions";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { Body1Text, H4Text, theme } from "../../styles/theme";
 import { getToday } from "../../common/getToday";
 import styled from "styled-components";
+import AppleHealthKit from 'react-native-health';
+
 
 const StatusIos = ({
   props: {
@@ -39,6 +41,35 @@ const StatusIos = ({
     totalSteps: 0,
     observeSteps: "",
   });
+
+
+ 
+// AppleHealthKit.initHealthKit(permissions, (error) => {
+//   if (error) {
+//     console.log('[ERROR] Cannot grant permissions!');
+//   }
+
+// const majorVersionIOS = parseInt(Platform.Version, 15);
+//       if (majorVersionIOS >= 13) {
+//         console.log('ios >= 13');
+
+//         let optionsSteps = {
+//           date: new Date().toISOString(), // optional; default now
+//           includeManuallyAdded: true, // optional: default true
+//         };
+//         AppleHealthKit.getStepCount(optionsSteps, (err, results) => {
+//           if (err) {
+//             console.log('err', err);
+//             return;
+//           }
+//           // results ? setSteps(results.value) : setSteps(null);
+//           // stepVar(results);
+//           setSteps(results.value)
+//           stepVar(results.value)
+//           console.log(results.value)
+//         });
+//       }
+// })
 
   const PUT_CHALLENGE = gql`
     mutation putChallenge($challenge: ChallengeInput) {
@@ -66,13 +97,14 @@ const StatusIos = ({
       }
     },
   });
-
+  
   const [putChallengeMutation, {}] = useMutation(PUT_CHALLENGE, {
     onCompleted: (data) => {
       console.log(data, "data");
     },
   });
 
+  
   useEffect(() => {
     if (!loading) {
       if (data === undefined) {
@@ -176,5 +208,4 @@ const GoalTextBox = styled.View`
   border-radius: 20px;
   padding: 5px 10px;
 `;
-
 export default StatusIos;
