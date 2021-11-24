@@ -1,46 +1,27 @@
-import React, { useState } from "react";
-import { Image, ActivityIndicator, TouchableOpacity } from "react-native";
+import React, {useState} from "react";
+import {ActivityIndicator, Image, TouchableOpacity} from "react-native";
 import styled from "styled-components";
-import {
-  KakaoOAuthToken,
-  KakaoProfile,
-  getProfile as getKakaoProfile,
-  login,
-  logout,
-  unlink,
-} from "@react-native-seoul/kakao-login";
-import appleAuth, {
-  AppleButton,
-  AppleAuthRequestOperation,
-  AppleAuthRequestScope,
-  AppleAuthCredentialState,
-  AppleAuthError,
-} from '@invertase/react-native-apple-authentication';
+import {login,} from "@react-native-seoul/kakao-login";
+import appleAuth, {AppleButton,} from '@invertase/react-native-apple-authentication';
 import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
-import { Caption, H4Text, theme } from "../../styles/theme";
-import { gql, useLazyQuery, useMutation } from "@apollo/client";
-import {  logUserIn } from "../../../apollo";
+import {Caption, H4Text, theme} from "../../styles/theme";
+import {gql, useLazyQuery} from "@apollo/client";
+import {logUserIn} from "../../../apollo";
 
 
-
-const KakaoLoginButton = ({ navigation }) => {
-  const SIGN_UP_MUTATION = gql`
-    mutation signUp($social: Social!, $token: String!) {
-      signUp(social: $social, token: $token)
-    }
-  `;
-
-  const SIGN_IN_QUERY = gql`
-    query signIn($social: Social!, $token: String!) {
-      signIn(social: $social, token: $token) {
+const KakaoLoginButton = ({navigation}) => {
+  const GET_ACCESS_TOKEN_QUERY = gql`
+    query getAccessToken($social: Social!, $token: String!) {
+      getAccessToken(social: $social, token: $token) {
+        isNew
         accessToken
       }
-    }
-  `;
+    }`;
+
   const [isLoading, setIsLoading] = useState(false);
   const onCompleted = (data) => {
     const {
-      signIn: { accessToken },
+      signIn: {accessToken},
     } = data;
     if (accessToken) {
       console.log(accessToken, "accessToken");
@@ -49,31 +30,17 @@ const KakaoLoginButton = ({ navigation }) => {
     setIsLoading(false);
   };
 
-  const [signInQuery] = useLazyQuery(SIGN_IN_QUERY, {
+  const [getAccessToken] = useLazyQuery(GET_ACCESS_TOKEN_QUERY, {
     onCompleted,
-  });
-
-  const [signUpMutation] = useMutation(SIGN_UP_MUTATION, {
-    onError: (error) => {
-      if (error.message.includes("이미 가입된 유저")) {
-        // * 가입된 유저가 로그인화면 접근했을때 에러 처리 로직
-      }
-    },
   });
 
   // refreshToken?
   const handleKakaoLogin = async () => {
     setIsLoading(true);
     const token = await login();
-    const { accessToken } = token;
-    console.log(accessToken,"accessToken");
-    await signUpMutation({
-      variables: {
-        social: "KAKAO",
-        token: accessToken,
-      },
-    });
-    signInQuery({
+    const {accessToken} = token;
+    console.log(accessToken, "accessToken");
+    getAccessToken({
       variables: {
         social: "KAKAO",
         token: accessToken,
@@ -84,89 +51,83 @@ const KakaoLoginButton = ({ navigation }) => {
   const onAppleButtonPress = async () => {
     setIsLoading(true);
 
-      try {
-          // performs login request
-           const appleAuthRequestResponse = await appleAuth.performRequest({
-             requestedOperation: appleAuth.Operation.LOGIN,
-             requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-           });
-           // get current authentication state for user
-           const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
-           // use credentialState response to ensure the user is authenticated
-           if (credentialState === appleAuth.State.AUTHORIZED) {
-             // user is authenticated
-                  console.log("test1", appleAuthRequestResponse);
-                  const token = appleAuthRequestResponse.authorizationCode;
-    // await signUpMutation({
-    //   variables: {
-    //     social: "APPLE",
-    //     token,
-    //   },
-    // });
-    signInQuery({
-      variables: {
-        social: "APPLE",
-        token,
-      },
-    });
-    navigation.reset({ routes: [{ name: "CoachSelect" }] });
-  }
+    try {
+      // performs login request
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+      });
+      // get current authentication state for user
+      const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+      // use credentialState response to ensure the user is authenticated
+      if (credentialState === appleAuth.State.AUTHORIZED) {
+        // user is authenticated
+        console.log("test1", appleAuthRequestResponse);
+        const token = appleAuthRequestResponse.authorizationCode;
 
-           }
-          catch (error) {
-             if (error.code === appleAuth.Error.CANCELED) {
-                 // login canceled
-             } else {
-                 // login error
-             }
+        getAccessToken({
+          variables: {
+            social: "APPLE",
+            token: token,
+          },
+        });
+        navigation.reset({routes: [{name: "CoachSelect"}]});
       }
-  
+
+    } catch (error) {
+      if (error.code === appleAuth.Error.CANCELED) {
+        // login canceled
+      } else {
+        // login error
+      }
+    }
+
     // const token = await appleLogin().appleAuthRequestResponse.identityToken
-    
+
     // appleLogin()
     // appleAuthRequestResponse.identityToken
-    
+
     // appleAuth.performRequest({
     //   requestedOperation: AppleAuthRequestOperation.LOGIN,
     //   requestedScopes: [AppleAuthRequestScope.EMAIL],
     // });
-  //   const { accessToken } = token;
-  //   await signUpMutation({
-  //     variables: {
-  //       social: "APPLE",
-  //       token: accessToken,
-  //     },
-  //   });
-  //   signInQuery({
-  //     variables: {
-  //       social: "APPLE",
-  //       token: accessToken,
-  //     },
-  //   });
-  //   navigation.reset({ routes: [{ name: "CoachSelect" }] });
-  // }
-  // const onAppleButtonPress = async () => {
-  //   try {
-  //     const responseObject = await appleAuth.performRequest({
-  //       requestedOperation: AppleAuthRequestOperation.LOGIN,
-  //       requestedScopes: [AppleAuthRequestScope.EMAIL],
-  //     });
-  //     console.log('responseObject:::', responseObject);
-  //     const credentialState = await appleAuth.getCredentialStateForUser(
-  //       responseObject.user,
-  //     );
-  //     if (credentialState === AppleAuthCredentialState.AUTHORIZED) {
-  //       console.log('user is authenticated');
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     if (error.code === AppleAuthError.CANCELED) {
-  //       console.log('canceled');
-  //     } else {
-  //       console.log('error');
-  //     }
-  //   }
-  // };
+    //   const { accessToken } = token;
+    //   await signUpMutation({
+    //     variables: {
+    //       social: "APPLE",
+    //       token: accessToken,
+    //     },
+    //   });
+    //   signInQuery({
+    //     variables: {
+    //       social: "APPLE",
+    //       token: accessToken,
+    //     },
+    //   });
+    //   navigation.reset({ routes: [{ name: "CoachSelect" }] });
+    // }
+    // const onAppleButtonPress = async () => {
+    //   try {
+    //     const responseObject = await appleAuth.performRequest({
+    //       requestedOperation: AppleAuthRequestOperation.LOGIN,
+    //       requestedScopes: [AppleAuthRequestScope.EMAIL],
+    //     });
+    //     console.log('responseObject:::', responseObject);
+    //     const credentialState = await appleAuth.getCredentialStateForUser(
+    //       responseObject.user,
+    //     );
+    //     if (credentialState === AppleAuthCredentialState.AUTHORIZED) {
+    //       console.log('user is authenticated');
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //     if (error.code === AppleAuthError.CANCELED) {
+    //       console.log('canceled');
+    //     } else {
+    //       console.log('error');
+    //     }
+    //   }
+    // };
 
 //   const appleLogin = async() => {
 //     try {
@@ -189,16 +150,16 @@ const KakaoLoginButton = ({ navigation }) => {
 //                // login error
 //            }
 //     }
-}
-  
+  }
+
   return (
     <Container>
       <KakaoButton onPress={handleKakaoLogin}>
         {isLoading ? (
-          <ActivityIndicator color="black" />
+          <ActivityIndicator color="black"/>
         ) : (
           <>
-            <Image source={kakaoLogo} />
+            <Image source={kakaoLogo}/>
             <KakaoText>카카오로 시작하기</KakaoText>
           </>
         )}
