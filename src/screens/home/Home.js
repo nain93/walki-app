@@ -8,16 +8,22 @@ import SpaceLogo from "../../../assets/icons/bar.png";
 import { theme } from "../../styles/theme";
 import Config from "react-native-config";
 import StatusHome from "./StatusHome";
+import * as Location from 'expo-location';
+import translate from 'translate-google-api';
+ 
+
 
 const Home = ({ navigation }) => {
   const [ready, setReady] = useState(true);
   const [weather, setWeather] = useState({
-    temp: 1,
-    condition: "비",
+    temp: 0,
+    condition: '',
   });
+  const [city, setCity] = useState("")
+  const [transCity, setTransCity] = useState("")
   const [weatherPic, setWeatherPic] = useState("");
 
-  const Location = "강남구";
+  // const Location = "강남구";
 
   const load = async () => {
     const result = await getLocation();
@@ -25,8 +31,8 @@ const Home = ({ navigation }) => {
   };
   const WeatherSetter = () => {
     if (weather.condition === "맑음") {
-      setWeatherPic(require("../../../assets/icons/sun.png"));
-    } else if (weather.condition === "구름") {
+      setWeatherPic(require("../../../assets/icons/cloud.png"));
+    } else if (weather.condition === "clouds") {
       setWeatherPic(require("../../../assets/icons/cloud.png"));
     } else if (weather.condition === "비") {
       setWeatherPic(require("../../../assets/icons/rain.png"));
@@ -66,14 +72,23 @@ const Home = ({ navigation }) => {
       const longitude = locationData["coords"]["longitude"];
 
       const API_KEY = Config.API_KEY;
-      const result = await axios.get(Config.WEATHER_API);
+      // const result = await axios.get(Config.WEATHER_API);
+      const result = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
 
-      const temp = result.data.main.temp;
+      const temp = Math.round(result.data.main.temp);
       const condition = result.data.weather[0].main;
-      console.log(result);
-      console.log(temp);
-      console.log(condition);
-
+      const city = result.data.name
+      const coWeather = weather.condition
+   
+    const resultt = await translate([city, coWeather], {
+      from: "en",
+      to: "ko",
+    },console.log(resultt, '번역'));
+      // console.log(result, "결과");
+      // console.log(temp, "1");
+      // console.log(condition, "2");
+      // console.log(city, "도시")
+      setCity(city)
       setWeather({
         temp,
         condition,
@@ -85,7 +100,7 @@ const Home = ({ navigation }) => {
       setReady(false);
     }
   };
-
+  
   if (ready) {
     return (
       <Container style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
@@ -104,7 +119,7 @@ const Home = ({ navigation }) => {
         <WeatherStatus>
           <LocationSpace>
             <CurrentTemperature>{weather.temp}</CurrentTemperature>
-            <CurrentText>{Location}</CurrentText>
+            <CurrentCity>{city}</CurrentCity>
           </LocationSpace>
           <Text style={{ fontSize: 36 }}>°</Text>
           <BarSpace>
@@ -137,8 +152,9 @@ const WeatherStatus = styled.View`
 `;
 const LocationSpace = styled.View`
   align-items: flex-end;
-  justify-content: space-between;
   padding-bottom: 5px;
+  justify-content: space-between;
+
 `;
 const WeatherSpace = styled.View`
   align-items: center;
@@ -149,24 +165,30 @@ const WeatherSpace = styled.View`
 
 const BarSpace = styled.View`
   justify-content: center;
-  margin: 0 10px;
+  margin: 0px;
 `;
 
 const CurrentDate = styled.Text`
-  font-weight: bold;
   font-size: 16px;
+  font-weight: bold;
+
 `;
 
 const CurrentTime = styled.Text`
-  font-weight: bold;
   font-size: 36px;
+  font-weight: bold;
+
 `;
 
 const CurrentText = styled.Text`
   font-size: 12px;
-
   color: ${theme.grayScale.gray3};
 `;
+const CurrentCity = styled.Text`
+font-size: 8px;
+justify-content: center;
+color: ${theme.grayScale.gray3};
+`
 const CurrentTemperature = styled.Text`
   font-size: 36px;
 `;
