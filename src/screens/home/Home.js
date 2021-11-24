@@ -9,6 +9,9 @@ import { theme } from "../../styles/theme";
 import Config from "react-native-config";
 import StatusHome from "./StatusHome";
 import * as Location from 'expo-location';
+import translate from 'translate-google-api';
+ 
+
 
 const Home = ({ navigation }) => {
   const [ready, setReady] = useState(true);
@@ -17,6 +20,7 @@ const Home = ({ navigation }) => {
     condition: '',
   });
   const [city, setCity] = useState("")
+  const [transCity, setTransCity] = useState("")
   const [weatherPic, setWeatherPic] = useState("");
 
   // const Location = "강남구";
@@ -27,7 +31,7 @@ const Home = ({ navigation }) => {
   };
   const WeatherSetter = () => {
     if (weather.condition === "맑음") {
-      setWeatherPic(require("../../../assets/icons/sun.png"));
+      setWeatherPic(require("../../../assets/icons/cloud.png"));
     } else if (weather.condition === "clouds") {
       setWeatherPic(require("../../../assets/icons/cloud.png"));
     } else if (weather.condition === "비") {
@@ -71,14 +75,19 @@ const Home = ({ navigation }) => {
       // const result = await axios.get(Config.WEATHER_API);
       const result = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
 
-      const temp = result.data.main.temp;
+      const temp = Math.round(result.data.main.temp);
       const condition = result.data.weather[0].main;
       const city = result.data.name
-      console.log(result, "결과");
-      console.log(temp, "1");
-      console.log(condition, "2");
-      console.log(Location.reverseGeocodeAsync, "위치")
-      console.log(city, "도시")
+      const coWeather = weather.condition
+   
+    const resultt = await translate([city, coWeather], {
+      from: "en",
+      to: "ko",
+    },console.log(resultt, '번역'));
+      // console.log(result, "결과");
+      // console.log(temp, "1");
+      // console.log(condition, "2");
+      // console.log(city, "도시")
       setCity(city)
       setWeather({
         temp,
@@ -91,12 +100,7 @@ const Home = ({ navigation }) => {
       setReady(false);
     }
   };
-  // "main":{"temp":-0.18,"feels_like":-4.77,"temp_min":-1.16,"temp_max":1.85,"pressure":1018,"humidity":50,"sea_level":1018,"grnd_level":1014},
-  // "visibility":10000,
-  // "wind":{"speed":4.4,"deg":308,"gust":11.18},"clouds":{"all":24},
-  // "dt":1637675324,
-  // "sys":{"type":1,"id":5509,"country":"KR","sunrise":1637619579,"sunset":1637655414},
-  // "timezone":32400,"id":1837217,"name":"Sinch’ŏn-dong","cod":200}',
+  
   if (ready) {
     return (
       <Container style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
@@ -115,7 +119,7 @@ const Home = ({ navigation }) => {
         <WeatherStatus>
           <LocationSpace>
             <CurrentTemperature>{weather.temp}</CurrentTemperature>
-            <CurrentText>{city}</CurrentText>
+            <CurrentCity>{city}</CurrentCity>
           </LocationSpace>
           <Text style={{ fontSize: 36 }}>°</Text>
           <BarSpace>
@@ -148,8 +152,9 @@ const WeatherStatus = styled.View`
 `;
 const LocationSpace = styled.View`
   align-items: flex-end;
-  justify-content: space-between;
   padding-bottom: 5px;
+  justify-content: space-between;
+
 `;
 const WeatherSpace = styled.View`
   align-items: center;
@@ -160,22 +165,30 @@ const WeatherSpace = styled.View`
 
 const BarSpace = styled.View`
   justify-content: center;
-  margin: 0 10px;
+  margin: 0px;
 `;
 
 const CurrentDate = styled.Text`
   font-size: 16px;
+  font-weight: bold;
+
 `;
 
 const CurrentTime = styled.Text`
   font-size: 36px;
+  font-weight: bold;
+
 `;
 
 const CurrentText = styled.Text`
   font-size: 12px;
-
   color: ${theme.grayScale.gray3};
 `;
+const CurrentCity = styled.Text`
+font-size: 8px;
+justify-content: center;
+color: ${theme.grayScale.gray3};
+`
 const CurrentTemperature = styled.Text`
   font-size: 36px;
 `;

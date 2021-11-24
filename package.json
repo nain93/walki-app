@@ -59,7 +59,8 @@
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
     "react-native-web-swiper": "^2.2.1",
-    "styled-components": "^5.3.0"
+    "styled-components": "^5.3.0",
+    "translate-google-api": "^1.0.4"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
