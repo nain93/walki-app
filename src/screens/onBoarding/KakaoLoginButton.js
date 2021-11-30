@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Image, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Image, TouchableOpacity,Platform } from "react-native";
 import styled from "styled-components";
 import { login } from "@react-native-seoul/kakao-login";
 import appleAuth, {
@@ -22,11 +22,11 @@ const KakaoLoginButton = ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const onCompleted = (data) => {
+    console.log(data,"data")
     const {
-      signIn: { accessToken },
+      getAccessToken: { accessToken },
     } = data;
     if (accessToken) {
-      console.log(accessToken, "accessToken");
       logUserIn(accessToken);
     }
     setIsLoading(false);
@@ -41,7 +41,6 @@ const KakaoLoginButton = ({ navigation }) => {
     setIsLoading(true);
     const token = await login();
     const { accessToken } = token;
-    console.log(accessToken, "accessToken");
     getAccessToken({
       variables: {
         social: "KAKAO",
@@ -167,7 +166,7 @@ const KakaoLoginButton = ({ navigation }) => {
           </>
         )}
       </KakaoButton>
-      <AppleButton
+      {Platform.OS === "ios" ? <AppleButton
         buttonStyle={AppleButton.Style.WHITE}
         buttonType={AppleButton.Type.SIGN_IN}
         style={{
@@ -175,7 +174,7 @@ const KakaoLoginButton = ({ navigation }) => {
           height: 45, // You must specify a height
         }}
         onPress={onAppleButtonPress}
-      />
+      /> : <></>}
 
       <DescWrap>
         <KakaoDesc>walki의 </KakaoDesc>
