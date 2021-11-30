@@ -22,7 +22,6 @@ const KakaoLoginButton = ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const onCompleted = (data) => {
-    console.log(data,"data")
     const {
       getAccessToken: { accessToken },
     } = data;
