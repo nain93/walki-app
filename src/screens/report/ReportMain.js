@@ -61,7 +61,7 @@ const ReportMain = ({ stepInfo, children }) => {
         <Text style={{ color: coachColorVar().color.sub }}>
           {userName.name}
         </Text>
-        <Text> 님의 데일리 챌린지 히스토리</Text>
+        <Text style={{fontFamily:"NanumBarunGothic"}}> 님의 데일리 챌린지 히스토리</Text>
         <TouchableOpacity
           onPress={() =>
             toastRef.current.show(

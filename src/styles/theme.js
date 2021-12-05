@@ -3,52 +3,63 @@ import styled from "styled-components";
 export const Setting = styled.Text`
   font-size: 64px;
   font-weight: 700;
+  font-family: "NanumBarunGothic";
 `;
 
 export const HomeText = styled.Text`
   font-size: 54px;
   font-weight: 700;
+  font-family: "NanumBarunGothic";
 `;
 
 export const H1Text = styled.Text`
   font-size: 30px;
   font-weight: 700;
+  font-family: "NanumBarunGothic";
 `;
 
 export const H2Text = styled.Text`
   font-size: 24px;
   font-weight: 700;
+  font-family: "NanumBarunGothic";
 `;
 
 export const H3Text = styled.Text`
   font-size: 18px;
   font-weight: 700;
+  font-family: "NanumBarunGothic";
 `;
 
 export const H4Text = styled.Text`
   font-size: 16px;
   font-weight: 700;
+  font-family:"NanumBarunGothic";
 `;
 
 export const Body1Text = styled.Text`
   font-size: 16px;
   font-weight: 400;
+  font-family:"NanumBarunGothic";
 `;
 
 export const Body2Text = styled.Text`
   font-size: 14px;
   font-weight: 600;
+  font-family:"NanumBarunGothic";
 `;
 
 export const Body3Text = styled.Text`
   font-size: 14px;
   font-weight: 400;
+  font-family:"NanumBarunGothic";
 `;
 
 export const Caption = styled.Text`
   font-size: 12px;
   font-weight: 400;
+  font-family:"NanumBarunGothic";
 `;
+
 
 const grayScale = {
   black: "#000000",

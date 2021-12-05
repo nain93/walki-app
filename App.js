@@ -111,6 +111,9 @@ export default function App() {
     if (status) {
       statusVar(status);
     }
+    else if(status === null){
+      statusVar("home")
+    }
   };
 
   const getSteps = async () => {

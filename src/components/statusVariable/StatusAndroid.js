@@ -66,7 +66,6 @@ const StatusAndroid = ({
         GoogleFit.getDailySteps(new Date().toISOString()).then((res) => {
           if (res[2].steps.length !== 0) {
             const { date, value } = res[2].steps[0];
-            console.log(value, "value");
             setSteps({ ...steps, totalSteps: value });
             if (value >= data?.getChallenge?.stepGoal) {
               walkStatus("success");
