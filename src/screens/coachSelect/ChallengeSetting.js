@@ -8,8 +8,8 @@ import { gql, useMutation, useReactiveVar, useQuery } from "@apollo/client";
 import { KeyboardAvoidingView } from "react-native";
 import { getToday } from "../../common/getToday";
 import HeaderForm from "../../components/HeaderForm";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import STOARGE from "../../constants/stoarge";
+import BackgroundService from 'react-native-background-actions';
+import { startCounter, stopCounter } from 'react-native-accurate-step-counter';
 
 const ChallengeSetting = ({ navigation }) => {
   const step = useReactiveVar(stepVar);
@@ -80,6 +80,58 @@ const ChallengeSetting = ({ navigation }) => {
     }
   );
 
+  const options = {
+    taskName: 'Example',
+    taskTitle: `걸음수: 0`,
+    taskDesc: `걸음수`,
+    taskIcon: {
+        name: 'ic_launcher',
+        type: 'mipmap',
+    },
+    color: '#ff00ff',
+    linkingURI: 'yourSchemeHere://chat/jane', 
+    parameters: {
+        delay: 1000,
+    },
+};
+
+  const sleep = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+
+  const veryIntensiveTask = async (taskDataArguments) => {
+    const {delay} = taskDataArguments;
+
+    await new Promise(async (resolve) => {
+      let a = 0;
+      const config = {
+        default_threshold: 15.0,
+        default_delay: 150000000,
+        cheatInterval: 3000,
+        onStepCountChange: (stepCount) =>  a = stepCount ,
+        onCheat: () => { console.log("User is Cheating") }
+      }
+      startCounter(config);
+      for (let i = 0; BackgroundService.isRunning(); i++) {
+        await BackgroundService.updateNotification({taskTitle: `걸음수: ${a}`})
+        stepVar(a)
+        const date = new Date()
+        if (date.getHours() === 0 && date.getMinutes===0 && date.getSeconds===0){
+          await BackgroundService.stop()
+          await putChallengeMutation({
+            variables: {
+              challenge: {
+                step: a,
+                stepGoal: inputWatch,
+                challengeDate: getToday(),
+              },
+            },
+          });
+        }
+        await sleep(delay);
+      }
+    })
+  };
+
+
   const handlePutChallenge = async () => {
     if (inputWatch < 200) {
       return;
@@ -93,10 +145,7 @@ const ChallengeSetting = ({ navigation }) => {
         },
       },
     });
-    await AsyncStorage.setItem(
-      STOARGE.STEP,
-      JSON.stringify({ step: step.step, date: getToday() })
-    );
+    await BackgroundService.start(veryIntensiveTask, options);
     walkStatus("walking");
     navigation.goBack();
   };

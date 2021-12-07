@@ -41,7 +41,7 @@ const RankContainer = styled.View`
   justify-content: space-between;
   padding: 14px 20px;
   margin: 12px 0;
-  background-color: ${props=>props.myId ? props.coach === "부키" ? "#DCF2B6" : "#FCBFD1" : "" };
+  background-color: ${props=>props.myId ? props.coach === "부키" ? "#DCF2B6" : "#FCBFD1" : "transparent" };
 `;
 
 const UserProfile = styled.View`

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {SafeAreaView} from "react-native"
 import AppLoading from "expo-app-loading";
 import GlobalNav from "./src/navigators/GlobalNav";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
@@ -16,10 +17,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotification, { Importance } from "react-native-push-notification";
 import * as SplashScreen from "expo-splash-screen";
 import STOARGE from "./src/constants/stoarge";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import { theme } from "./src/styles/theme";
 import LoggedOutNav from "./src/navigators/LoggedOutNav";
 import { getToday } from "./src/common/getToday";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
 
 PushNotification.configure({
   onRegister: function (token) {
@@ -81,7 +83,7 @@ export default function App() {
       console.warn(e);
     }
   };
-  const { TOKEN, COACH, STATUS, STEP } = STOARGE;
+  const { TOKEN, COACH, STATUS } = STOARGE;
 
   const getToken = async () => {
     const token = await AsyncStorage.getItem(TOKEN);
@@ -116,25 +118,12 @@ export default function App() {
     }
   };
 
-  const getSteps = async () => {
-    const steps = await AsyncStorage.getItem(STEP);
-    if (steps) {
-      const { step, date } = JSON.parse(steps);
-      if (date !== getToday()) {
-        walkStatus("home");
-        stepVar({ step, date });
-      }
-      console.log(step, "step");
-    }
-  };
-
   const preload = async () => {
     const token = getToken();
     const coach = getCoach();
     const status = getStatus();
-    const step = getSteps();
 
-    await Promise.all([token, coach, status, step]);
+    await Promise.all([token, coach, status]);
     return prepare();
   };
 

@@ -3388,15 +3388,6 @@ expo-modules-core@~0.2.0:
   resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.2.0.tgz#68e5b6e53d0afbf8d131578831aed657589a2d42"
   integrity sha512-inpfZ5X/BaTtbj2wG9PA9AC0MN8VyId6KSRlVuEg7+ziurHBy/kKDFxpOddUokhwiln2uhoYPSStJjR/tKypdw==
 
-expo-sensors@~10.2.2:
-  version "10.2.2"
-  resolved "https://registry.yarnpkg.com/expo-sensors/-/expo-sensors-10.2.2.tgz#882e25b3135995e383d88b21b17e5f1b1155d4e0"
-  integrity sha512-kZZobyfQQPA7PwuTQ2+HwunZ1o2emWLKqWP9jYOBPI4toQAproSLzhlhKmpm2vRDOL1ctC12Fb0g9elv7r9Omg==
-  dependencies:
-    "@expo/config-plugins" "^3.0.0"
-    expo-modules-core "~0.2.0"
-    invariant "^2.2.4"
-
 expo-splash-screen@~0.11.2:
   version "0.11.2"
   resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.11.2.tgz#70c69052981cc982d12030f2a1df5b35af7ee752"
@@ -5016,11 +5007,6 @@ mockdate@^3.0.2:
   resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-3.0.5.tgz#789be686deb3149e7df2b663d2bc4392bc3284fb"
   integrity sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==
 
-moment@2.29.1:
-  version "2.29.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
-  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
-
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -5697,13 +5683,6 @@ react-native-gesture-handler@~1.10.2:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-google-fit@^0.17.1:
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/react-native-google-fit/-/react-native-google-fit-0.17.1.tgz#0cd210de7a41943596d33a8b0993e9eb7099413c"
-  integrity sha512-10A2Nfgl8bQES5UvxjmiYPg0FZdbrbMjgMaY83lEhFN5PD8f7DDD3Jl4D1kxtGSPHxJTe68orklqT6PB3pCGSw==
-  dependencies:
-    moment "2.29.1"
-
 react-native-health@^1.11.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/react-native-health/-/react-native-health-1.11.0.tgz#31b696a08d610a905aa14632d28cb0178f7cbca0"
@@ -5772,18 +5751,6 @@ react-native-safe-area-context@3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.2.0.tgz#06113c6b208f982d68ab5c3cebd199ca93db6941"
   integrity sha512-k2Nty4PwSnrg9HwrYeeE+EYqViYJoOFwEy9LxL5RIRfoqxAq/uQXNGwpUg2/u4gnKpBbEPa9eRh15KKMe/VHkA==
-
-react-native-safe-area-context@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz#9549a2ce580f2374edb05e49d661258d1b8bcaed"
-  integrity sha512-yOwiiPJ1rk+/nfK13eafbpW6sKW0jOnsRem2C1LPJjM3tfTof6hlvV5eWHATye3XOpu2cJ7N+HdkUvUDGwFD2Q==
-
-react-native-screens@~3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.4.0.tgz#91deeac7630db9f3984053e2ab146d71bba7af4e"
-  integrity sha512-cg+q9MRnVdeOcJyvJtqffoXLur/C2wHA/7IO2+FAipzTlgHbbM1mTuSM7qG+SeiQjoIs4mHOEf7A0ziPKW04sA==
-  dependencies:
-    warn-once "^0.1.0"
 
 react-native-shake@^4.0.2:
   version "4.0.2"

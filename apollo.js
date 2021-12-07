@@ -46,10 +46,7 @@ export const alertTimeVar = makeVar({
 
 export const statusVar = makeVar("");
 
-export const stepVar = makeVar({
-  step: 0,
-  date: "",
-});
+export const stepVar = makeVar(0);
 
 export const monthVar = makeVar([
   {

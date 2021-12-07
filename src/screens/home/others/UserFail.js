@@ -4,9 +4,11 @@ import tokiFail from "../../../../assets/images/toki_fail.png";
 import bukiFail from "../../../../assets/images/buki_fail.png";
 import { Body1Text, H2Text, theme } from "../../../styles/theme";
 import { walkStatus } from "../../../../apollo";
+import BackgroundService from 'react-native-background-actions';
 
 const UserFail = ({ handleFailModal, failModalOpen }) => {
-  const handleOkayBtn = () => {
+  const handleOkayBtn = async () => {
+    await BackgroundService.stop()
     walkStatus("afterStop");
     handleFailModal();
   };
