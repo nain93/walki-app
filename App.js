@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppLoading from "expo-app-loading";
 import GlobalNav from "./src/navigators/GlobalNav";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
@@ -20,6 +20,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { theme } from "./src/styles/theme";
 import LoggedOutNav from "./src/navigators/LoggedOutNav";
 import { getToday } from "./src/common/getToday";
+
 
 PushNotification.configure({
   onRegister: function (token) {
@@ -72,7 +73,7 @@ export default function App() {
     SplashScreen.hideAsync();
     setLoading(false);
   };
-
+  
   const prepare = async () => {
     try {
       await SplashScreen.preventAutoHideAsync();
@@ -151,6 +152,8 @@ export default function App() {
   }
 
   return (
+
+    
     <ApolloProvider client={client}>
       <AppearanceProvider>
         <SafeAreaProvider>

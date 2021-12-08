@@ -10,7 +10,8 @@ import Config from "react-native-config";
 import StatusHome from "./StatusHome";
 import * as Location from 'expo-location';
 import translate from 'translate-google-api';
- 
+import Smartlook from 'smartlook-react-native-wrapper';
+
 
 
 const Home = ({ navigation }) => {
@@ -24,6 +25,7 @@ const Home = ({ navigation }) => {
   const [weatherPic, setWeatherPic] = useState("");
 
   // const Location = "강남구";
+  const SMARTLOOK_API_KEY = '8858648cf1d106460c611d4f3c6f1dcc806d7bb0';
 
   const load = async () => {
     const result = await getLocation();
@@ -45,7 +47,12 @@ const Home = ({ navigation }) => {
       setWeatherPic(require("../../../assets/icons/mist.png"));
     }
   };
+  useEffect(() => {
+    Smartlook.setUserIdentifier('Input test');
+    Smartlook.setupAndStartRecording(SMARTLOOK_API_KEY);
 
+    return () => Smartlook.stopRecording();
+  }, []);
   const [currentDate, setcurrentDate] = useState("");
   const [currentTime, setcurrentTime] = useState("");
 
