@@ -83,13 +83,13 @@ const ChallengeSetting = ({ navigation }) => {
   const options = {
     taskName: 'Example',
     taskTitle: `걸음수: 0`,
-    taskDesc: `걸음수`,
+    taskDesc: `목표 걸음수: ${inputWatch}`,
     taskIcon: {
         name: 'ic_launcher',
         type: 'mipmap',
     },
     color: '#ff00ff',
-    linkingURI: 'yourSchemeHere://chat/jane', 
+    linkingURI: 'app://open.my.app', 
     parameters: {
         delay: 1000,
     },

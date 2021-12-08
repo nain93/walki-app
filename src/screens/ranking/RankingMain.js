@@ -10,8 +10,8 @@ import { getYesterday } from "../../common/getToday";
 import tokiDefault from "../../../assets/images//toki_default.png";
 import bukiDefault from "../../../assets/images/buki_default.png";
 
-const Item = ({ name, profile, rank, numberColor,rankingStep,coach,myId }) => (
-  <RankContainer myId={myId} coach={coach}>
+const Item = ({ name, profile, rank, numberColor,rankingStep,coach,myId,userId }) => (
+  <RankContainer myId={myId} userId={userId} coach={coach}>
     <UserProfile>
       <H2Text
         style={{
@@ -30,7 +30,12 @@ const Item = ({ name, profile, rank, numberColor,rankingStep,coach,myId }) => (
     </UserProfile>
     <View style={{flexDirection:"row", alignItems:"center"}}>
       <Image style={{width:18,height:18,marginRight:4}} source={coach === "부키" ? bukiDefault: tokiDefault} />
-      <Body3Text style={{color:theme.grayScale.gray1}}>{String(rankingStep).slice(0,String(rankingStep).length-3) + "," + String(rankingStep).slice(String(rankingStep).length-3,String(rankingStep).length)}</Body3Text>
+      <Body3Text style={{color:theme.grayScale.gray1}}>
+        {String(rankingStep).length>3 ?
+        String(rankingStep).slice(0,String(rankingStep).length-3)
+        + "," + 
+        String(rankingStep).slice(String(rankingStep).length-3,String(rankingStep).length):rankingStep}
+        </Body3Text>
     </View>
   </RankContainer>
 );
@@ -41,7 +46,7 @@ const RankContainer = styled.View`
   justify-content: space-between;
   padding: 14px 20px;
   margin: 12px 0;
-  background-color: ${props=>props.myId ? props.coach === "부키" ? "#DCF2B6" : "#FCBFD1" : "transparent" };
+  background-color: ${props=>props.myId===props.userId ? props.coach === "부키" ? "#DCF2B6" : "#FCBFD1" : "transparent" };
 `;
 
 const UserProfile = styled.View`
@@ -107,8 +112,6 @@ const RankingMain = ({myId}) => {
   },[])
 
 
-
-
   // todo getChallenge query로 어제 step 가져와야함
   const renderItem = ({ item, index }) => {
     return (
@@ -123,6 +126,7 @@ const RankingMain = ({myId}) => {
             ? "#C67855"
             : theme.grayScale.black
         }
+        userId={item.member.id}
         myId={myId}
         name={item.member.name}
         coach={item.member.coach.name}

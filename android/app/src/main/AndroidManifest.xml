@@ -29,26 +29,22 @@
       android:name=".MainActivity"
       android:label="@string/app_name"
       android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
-      android:launchMode="singleTask"
       android:windowSoftInputMode="adjustResize"
       android:theme="@style/Theme.App.SplashScreen"
     >
-
       <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="yourSchemeHere" />
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
-    <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
-      <intent-filter>
+    <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+              android:launchMode="singleTask">
+      <intent-filter  android:label="filter_react_native">
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="app" android:host="open.my.app" />
         <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
         <data android:host="oauth" android:scheme="kakao526b6c2b9e557fa37f7a04ede96db3c0"/>
       </intent-filter>
