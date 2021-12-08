@@ -6,7 +6,7 @@ import { Body1Text, theme } from "../../styles/theme";
 import { coachColorVar, monthVar, stepVar, walkStatus } from "../../../apollo";
 import { gql, useMutation, useReactiveVar, useQuery } from "@apollo/client";
 import { KeyboardAvoidingView } from "react-native";
-import { getToday } from "../../common/getToday";
+import { getToday, getYesterday } from "../../common/getToday";
 import HeaderForm from "../../components/HeaderForm";
 import BackgroundService from 'react-native-background-actions';
 import { startCounter, stopCounter } from 'react-native-accurate-step-counter';
@@ -114,23 +114,22 @@ const ChallengeSetting = ({ navigation }) => {
         await BackgroundService.updateNotification({taskTitle: `걸음수: ${a}`})
         stepVar(a)
         const date = new Date()
-        if (date.getHours() === 0 && date.getMinutes===0 && date.getSeconds===0){
-          await BackgroundService.stop()
+        if (date.getHours() === 0 && date.getMinutes()===0 && date.getSeconds()===0){
           await putChallengeMutation({
             variables: {
               challenge: {
                 step: a,
                 stepGoal: inputWatch,
-                challengeDate: getToday(),
+                challengeDate: getYesterday(),
               },
             },
           });
+          await BackgroundService.stop()
         }
         await sleep(delay);
       }
     })
   };
-
 
   const handlePutChallenge = async () => {
     if (inputWatch < 200) {
