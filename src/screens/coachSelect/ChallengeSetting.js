@@ -124,6 +124,7 @@ const ChallengeSetting = ({ navigation }) => {
               },
             },
           });
+          walkStatus("home")
           await BackgroundService.stop()
         }
         await sleep(delay);

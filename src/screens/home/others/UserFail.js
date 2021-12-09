@@ -19,7 +19,6 @@ const UserFail = ({ handleFailModal, failModalOpen }) => {
       tokiImg={tokiFail}
       bukiImg={bukiFail}
       handleModal={handleFailModal}
-      handleOkayBtn={handleOkayBtn}
       okayText="그만하기"
     >
       <H2Text>정말 그만할거에요?</H2Text>

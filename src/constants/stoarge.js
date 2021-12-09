@@ -4,6 +4,7 @@ const STOARGE = {
   STATUS: "status",
   TIME: "time",
   STEP: "step",
+  ALARM_CHECK:"alarmCheck"
 };
 
 export default STOARGE;

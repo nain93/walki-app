@@ -60,6 +60,11 @@ export const Caption = styled.Text`
   font-family:"NanumBarunGothic";
 `;
 
+export const FontWeight = {
+	Bold: "NanumBarunGothicBold",
+	Regular: "NanumBarunGothic"
+};
+
 
 const grayScale = {
   black: "#000000",
