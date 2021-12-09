@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Image, TouchableOpacity,Platform } from "react-native";
 import styled from "styled-components";
 import { login } from "@react-native-seoul/kakao-login";
@@ -7,7 +7,7 @@ import appleAuth, {
 } from "@invertase/react-native-apple-authentication";
 import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
 import { Caption, H4Text, theme } from "../../styles/theme";
-import { gql, useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { logUserIn } from "../../../apollo";
 
 const KakaoLoginButton = ({ navigation }) => {
@@ -32,7 +32,7 @@ const KakaoLoginButton = ({ navigation }) => {
   };
 
   const [getAccessToken] = useLazyQuery(GET_ACCESS_TOKEN_QUERY, {
-    onCompleted,
+    onCompleted
   });
 
   // refreshToken?

@@ -7,8 +7,7 @@ import {
 import { Platform } from "react-native";
 import OnBoarding from "../screens/onBoarding";
 import { theme } from "../styles/theme";
-import { useReactiveVar } from "@apollo/client";
-import { isCoachVar, isLoggedInVar } from "../../apollo";
+
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,

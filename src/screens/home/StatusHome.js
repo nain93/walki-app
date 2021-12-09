@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { coachColorVar, statusVar, walkStatus } from "../../../apollo";
+import React, {  useEffect, useRef, useState } from "react";
+import { coachColorVar, statusVar, tokenVar } from "../../../apollo";
 import toki_hi from "../../../assets/images/character/toki_hi.png";
 import buki_hi from "../../../assets/images/character/buki.png";
 import { useReactiveVar, gql, useQuery } from "@apollo/client";
@@ -15,13 +15,12 @@ import Modal from "react-native-modal";
 import styled from "styled-components";
 import tokiAlarm from "../../../assets/images/character/toki_alarm.png"
 import bokiAlarm from "../../../assets/images/character/boki_alarm.png"
-import { Body1Text, FontWeight, H2Text, H4Text, theme } from "../../styles/theme";
+import { Body1Text, H2Text, H4Text, theme } from "../../styles/theme";
 
 
 const StatusHome = ({ navigation }) => {
 
   const status = useReactiveVar(statusVar);
-  const coachVar = useReactiveVar(coachColorVar)
   const fadetext = useRef(new Animated.Value(0)).current;
   const fadetextwalk = useRef(new Animated.Value(0)).current;
   const fadeimage = useRef(new Animated.Value(0.8)).current;
@@ -63,8 +62,10 @@ const StatusHome = ({ navigation }) => {
 
   const {} = useQuery(GET_REFRESH_TOKEN, {
     onCompleted: (data) => {
-      console.log(data.refreshToken.accessTokenr, "refreshToken");
-      AsyncStorage.setItem(STOARGE.TOKEN, data.refreshToken.accessToken);
+      if(data){
+        AsyncStorage.setItem(STOARGE.TOKEN, data.refreshToken.accessToken);
+        tokenVar(data.refreshToken.accessToken)
+      }
     },
   });
 
@@ -85,6 +86,7 @@ const StatusHome = ({ navigation }) => {
     await AsyncStorage.setItem(STOARGE.ALARM_CHECK, JSON.stringify(true))
     setOpenModal(false)
   }
+
 
   if (status === "home") {
     return (
@@ -122,18 +124,18 @@ const StatusHome = ({ navigation }) => {
             >
               <ModalContainer >
                   <Image
-                    source={coachVar === "toki" ? tokiAlarm : bokiAlarm}
+                    source={coachColorVar().coach === "toki" ? tokiAlarm : bokiAlarm}
                     style={{ width: 266, height: 166 }}
                   />
                 <TextView>
-                  <H2Text style={{textAlign:"center",marginTop:24}}>{coachVar==="toki" ? "토키" : "부키" }의 응원 알림을{"\n"}받아보세요!</H2Text>
+                  <H2Text style={{textAlign:"center",marginTop:24}}>{coachColorVar().coach==="toki" ? "토키" : "부키" }의 응원 알림을{"\n"}받아보세요!</H2Text>
                   <Body1Text style={{color:theme.grayScale.gray4,marginBottom:24,marginTop:8}}>메세지 수신을 위해 알림을 설정해주세요.</Body1Text>
                 </TextView>
                 <BtnWrap>
                   <CancelBtn onPress={handleAlarmCheck}>
                     <H4Text>나중에</H4Text>
                   </CancelBtn>
-                  <OkayBtn coachColorVar={coachVar} onPress={()=>{
+                  <OkayBtn coachColorVar={coachColorVar().coach} onPress={()=>{
                     handleAlarmCheck()
                     navigation.navigate("AlertSetting")
                   }}>

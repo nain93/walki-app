@@ -92,6 +92,9 @@ export default function App() {
       isLoggedInVar(true);
       tokenVar(token);
     }
+    else{
+      isLoggedInVar(false);
+    }
   };
 
   const getCoach = async () => {

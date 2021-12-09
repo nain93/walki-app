@@ -30,10 +30,33 @@ const TokiBookiSelect = ({ navigation }) => {
     }
   `;
 
+  const GET_MEMBER_QUERY = gql`
+  query getMember{
+    getMember{
+      coach{
+        name
+      }
+    }
+  }
+`
+
   const [putMemberMutation] = useMutation(PUT_MEMBER_MUTATION, {
     onCompleted: (data) => console.log(data, "data"),
   });
   const { data, loading } = useQuery(GET_COACHES_QUERY);
+
+  const {} = useQuery(GET_MEMBER_QUERY,{
+    onCompleted:(data)=>{
+      if(data.getMember.coach.name==="토키"){
+        coachSelect("toki")
+        navigation.reset({ routes: [{ name: "TabNavigator" }] });
+      }
+      else if(data.getMember.coach.name==="부키"){
+        coachSelect("booki")
+        navigation.reset({ routes: [{ name: "TabNavigator" }] });
+      }
+    }
+  })
 
   const handleTokiSelect = () => {
     setIsClick("toki");
