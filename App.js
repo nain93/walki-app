@@ -21,6 +21,7 @@ import { theme } from "./src/styles/theme";
 import LoggedOutNav from "./src/navigators/LoggedOutNav";
 import { getToday } from "./src/common/getToday";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import SuccessPopUp from "./src/components/SuccessPopUp";
 
 
 PushNotification.configure({

@@ -63,14 +63,6 @@ const StatusAndroid = ({
     },
   });
 
-  useEffect(()=>{
-    if(!loading){
-      if(step === data.getChallenge.stepGoal){
-        walkStatus("success")
-      }
-    }
-  },[step])
-
   if (loading) {
     return <Loading />;
   }

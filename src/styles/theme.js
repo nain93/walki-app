@@ -15,6 +15,7 @@ export const HomeText = styled.Text`
 export const H1Text = styled.Text`
   font-size: 30px;
   font-weight: 700;
+  line-height: 45px;
   font-family: "NanumBarunGothic";
 `;
 
@@ -39,6 +40,7 @@ export const H4Text = styled.Text`
 export const Body1Text = styled.Text`
   font-size: 16px;
   font-weight: 400;
+  line-height: 24px;
   font-family:"NanumBarunGothic";
 `;
 

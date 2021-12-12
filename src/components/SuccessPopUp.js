@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import fire from "../../assets/icons/fire.png";
+import { View,Animated,Easing } from "react-native";
 
 import LongButton from "./LongButton";
 import { Body1Text, theme, H1Text } from "../styles/theme";
 import { coachColorVar } from "../../apollo";
-import { KeyboardAvoidingView } from "react-native";
 
 const SuccessPopUp = ({ navigation }) => {
+  const [animaiton,setAnimation] = useState(new Animated.Value(0))
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  useEffect(()=>{
+    Animated.timing(animaiton,{
+      toValue:10,
+      duration:300,
+      easing:Easing.bezier(0.7, -0.4, 0.4, 1.4),
+      useNativeDriver:true
+    }).start()
+  },[])
+  
   return (
-    <KeyboardAvoidingView
-      style={{
-        flex: 1,
-      }}
-      behavior={"height"}
-      keyboardVerticalOffset={100}
-    >
-      <Container>
+    <Container>
         <TodayChallengeBox>
-          <Fire source={fire} resizeMode={"contain"}></Fire>
+        <Animated.Image 
+        style={{transform:[{translateY:animaiton}]}}
+        source={fire}/>
           <ChallengeText>오늘의 목표 달성!</ChallengeText>
           <WalkiText>일째 목표 달성 중</WalkiText>
         </TodayChallengeBox>
@@ -30,35 +36,29 @@ const SuccessPopUp = ({ navigation }) => {
             계속하기
           </LongButton>
         </LongBox>
-      </Container>
-    </KeyboardAvoidingView>
+    </Container>
   );
 };
 
 const Container = styled.SafeAreaView`
+  flex:1;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  margin-top: 150px;
 `;
 
 const LongBox = styled.View`
-  width: 80%;
-  height: 15%;
-  flex-direction: row;
-  margin-top: 250px;
+  width: 300px;
+  height: 54px;
+  margin-top: 141px;
 `;
 
 const TodayChallengeBox = styled.View`
-  width: 100%;
-  height: 20%;
-  flex-direction: column;
+  margin-top: 226px;
   align-items: center;
-  justify-content: center;
 `;
 
 const ChallengeText = styled(H1Text)`
   text-align: center;
+  margin-bottom: 8px;
   color: ${theme.grayScale.gray1};
 `;
 const WalkiText = styled(Body1Text)`
@@ -66,7 +66,7 @@ const WalkiText = styled(Body1Text)`
   color: ${theme.TextColor};
 `;
 const Fire = styled.Image`
-  width: 120px;
-  height: 192px;
+  width: 132px;
+  height: 168px;
 `;
 export default SuccessPopUp;

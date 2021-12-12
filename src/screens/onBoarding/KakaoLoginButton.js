@@ -9,6 +9,7 @@ import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
 import { Caption, H4Text, theme } from "../../styles/theme";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { logUserIn } from "../../../apollo";
+import { d2p } from "../../common/utils";
 
 const KakaoLoginButton = ({ navigation }) => {
   const GET_ACCESS_TOKEN_QUERY = gql`
@@ -175,7 +176,7 @@ const KakaoLoginButton = ({ navigation }) => {
         onPress={onAppleButtonPress}
       /> : <></>}
 
-      <DescWrap>
+      <DescWrap style={{marginTop:d2p(10)}}>
         <KakaoDesc>walki의 </KakaoDesc>
         <TouchableOpacity onPress={() => navigation.navigate("Service")}>
           <DescBtnText>이용약관</DescBtnText>
@@ -192,8 +193,7 @@ const KakaoLoginButton = ({ navigation }) => {
 };
 
 const Container = styled.View`
-  align-items: center;
-  padding: 30px;
+  padding:0 38px;
 `;
 
 const KakaoButton = styled.TouchableOpacity`
@@ -214,7 +214,6 @@ const DescWrap = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
 `;
 
 const KakaoDesc = styled(Caption)`
