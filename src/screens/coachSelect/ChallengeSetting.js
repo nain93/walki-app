@@ -113,7 +113,7 @@ const ChallengeSetting = ({ navigation }) => {
       for (let i = 0; BackgroundService.isRunning(); i++) {
         await BackgroundService.updateNotification({taskTitle: `걸음수: ${a}`})
         stepVar(a)
-        if(a === inputWatch){
+        if(a >= inputWatch){
           walkStatus("success")
         }
         const date = new Date()
@@ -152,6 +152,7 @@ const ChallengeSetting = ({ navigation }) => {
     walkStatus("walking");
     navigation.goBack();
   };
+  
 
   useEffect(() => {
     walkRef?.current?.focus();

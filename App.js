@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import {SafeAreaView} from "react-native"
 import AppLoading from "expo-app-loading";
 import GlobalNav from "./src/navigators/GlobalNav";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
-import { ApolloProvider, useQuery, useReactiveVar } from "@apollo/client";
+import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import client, {
   coachColorVar,
   isCoachVar,
   isLoggedInVar,
   statusVar,
-  stepVar,
   tokenVar,
-  walkStatus,
 } from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotification, { Importance } from "react-native-push-notification";
@@ -19,9 +16,8 @@ import * as SplashScreen from "expo-splash-screen";
 import STOARGE from "./src/constants/stoarge";
 import { theme } from "./src/styles/theme";
 import LoggedOutNav from "./src/navigators/LoggedOutNav";
-import { getToday } from "./src/common/getToday";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import SuccessPopUp from "./src/components/SuccessPopUp";
+import BackgroundService from 'react-native-background-actions';
 
 
 PushNotification.configure({
