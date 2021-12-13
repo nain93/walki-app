@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import LongButton from "../../components/LongButton";
 import { Body1Text, theme } from "../../styles/theme";
-import { coachColorVar, monthVar, stepVar, walkStatus } from "../../../apollo";
+import { coachColorVar, monthVar, stepGoalVar, stepVar, walkStatus } from "../../../apollo";
 import { gql, useMutation, useReactiveVar, useQuery } from "@apollo/client";
 import { KeyboardAvoidingView } from "react-native";
 import { getToday, getYesterday } from "../../common/getToday";
@@ -149,6 +149,7 @@ const ChallengeSetting = ({ navigation }) => {
       },
     });
     await BackgroundService.start(veryIntensiveTask, options);
+    stepGoalVar(inputWatch)
     walkStatus("walking");
     navigation.goBack();
   };

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
-import { coachColorVar, stepVar, walkStatus, statusVar } from "../../../apollo";
+import { coachColorVar, stepVar, statusVar, stepGoalVar } from "../../../apollo";
 import LongButton from "../../components/LongButton";
 
 import {
@@ -13,11 +13,9 @@ import UserFail from "../../screens/home/others/UserFail";
 import { Animated, View, Text } from "react-native";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import {  useReactiveVar } from "@apollo/client";
 import { Body1Text, H4Text, theme } from "../../styles/theme";
-import { getToday } from "../../common/getToday";
 import styled from "styled-components";
-import Loading from "../Loading";
 
 
 const StatusAndroid = ({
@@ -37,6 +35,7 @@ const StatusAndroid = ({
   },
 }) => {
   const step = useReactiveVar(stepVar);
+  const stepGoal = useReactiveVar(stepGoalVar)
   const status = useReactiveVar(statusVar);
 
   useEffect(() => {
@@ -46,26 +45,6 @@ const StatusAndroid = ({
       }
     });
   }, []);
-
-  const GET_CHALLENGE = gql`
-    query getChallenge($challengeDate: LocalDate) {
-      getChallenge(challengeDate: $challengeDate) {
-        step
-        stepGoal
-        challengeDate
-      }
-    }
-  `;
-
-  const { data, loading } = useQuery(GET_CHALLENGE, {
-    variables: {
-      challengeDate: getToday(),
-    },
-  });
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <>
@@ -77,9 +56,9 @@ const StatusAndroid = ({
                 ? 0
                 : step === 0
                 ? 0
-                : step > data?.getChallenge?.stepGoal
+                : step > stepGoal
                 ? 100
-                : (step / data?.getChallenge?.stepGoal) * 100
+                : (step / stepGoal) * 100
             }
             donutColor={coachColorVar().color.main}
             size={350}
@@ -132,7 +111,7 @@ const StatusAndroid = ({
                       목표
                     </Text>
                   </GoalTextBox>
-                  <Blurgoal2> {data?.getChallenge?.stepGoal} 걸음</Blurgoal2>
+                  <Blurgoal2> {stepGoal} 걸음</Blurgoal2>
                 </View>
               </View>
             </Animated.View>

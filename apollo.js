@@ -48,6 +48,8 @@ export const statusVar = makeVar("");
 
 export const stepVar = makeVar(0);
 
+export const stepGoalVar = makeVar(0)
+
 export const monthVar = makeVar([
   {
     year,
