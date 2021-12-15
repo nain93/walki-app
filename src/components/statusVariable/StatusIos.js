@@ -130,11 +130,11 @@ const majorVersionIOS = parseInt(Platform.Version, 15);
         <TouchableOpacity onPress={handleOpacity}>
           <CircularProgress
             percentage={
-              step.step === 0
+              step === 0
                 ? 0
-                : step.step > 100
+                : step> 100
                 ? 100
-                : (step.step / data?.getChallenge?.stepGoal) * 100
+                : (step / data?.getChallenge?.stepGoal) * 100
             }
             donutColor={coachColorVar().color.main}
             size={350}
@@ -165,7 +165,7 @@ const majorVersionIOS = parseInt(Platform.Version, 15);
             >
               <View style={{ alignItems: "center" }}>
                 <Blurgoal coachColorVar={coachColorVar().color.main}>
-                  {step.step}
+                  {step}
                 </Blurgoal>
 
                 <View
@@ -223,79 +223,3 @@ const GoalTextBox = styled.View`
 export default StatusIos;
 
 
-// AppleHealthKit.initHealthKit(permissions, (error: string) => {
-//   /* Called after we receive a response from the system */
-//   if (error) {
-//     console.log('[ERROR] Cannot grant permissions!');
-//   }
-//   /* Can now read or write to HealthKit */
-//   //   unit: settings.unit === 1 ? 'mgPerdL' : 'mmolPerL', // optional; default 'mmolPerL'
-//   let options = {
-//     startDate: fromDate, // required
-//     endDate: tillDate, // optional; default now
-//   };
-//   AppleHealthKit.getBloodGlucoseSamples(options, (callbackError, results) => {
-//     /* Samples are now collected from HealthKit */
-//     if (callbackError) {
-//       console.log(callbackError);
-//       return;
-//     }
-//     setCoordinates(
-//       results.map(coordinates => {
-//         console.log(coordinates.value);
-//         return {
-//           x: new Date(moment(coordinates.startDate).toISOString()),
-//           y: coordinates.value * (settings.unit === 1 ? MMOLPERL : MGPERDL),
-//         };
-//       }),
-//     );
-//   });
-
-//   AppleHealthKit.getCarbohydratesSamples(options, (callbackError, results) => {
-//     /* Samples are now collected from HealthKit */
-//     if (callbackError) {
-//       console.log(callbackError);
-//       return;
-//     }
-//     setCarbs(results.map(data => data.value));
-//     setCarbCoordinates(
-//       results.map(coordinates => {
-//         const kitCarbs = mapUnit(coordinates.value, settings);
-//         return {
-//           x: new Date(moment(coordinates.startDate).toISOString()),
-//           y: kitCarbs,
-//         };
-//       }),
-//     );
-//   });
-
-//   const majorVersionIOS = parseInt(Platform.Version, 10);
-//   if (majorVersionIOS >= 13) {
-//     console.log('ios >= 13');
-
-//     let optionsSteps = {
-//       date: new Date(foodDate).toISOString(), // optional; default now
-//       includeManuallyAdded: true, // optional: default true
-//     };
-//     AppleHealthKit.getStepCount(optionsSteps, (err, results) => {
-//       if (err) {
-//         console.log('err', err);
-//         return;
-//       }
-//       results ? setStepsPerDay(results.value) : setStepsPerDay(null);
-//     });
-//   }
-// });
-// setLoading(false);
-// } else if (userSettings && userSettings.glucoseSource === LIBRETWOAPP) {
-// const localCGMData = await database.getCgmData(id);
-// if (localCGMData && localCGMData.length > 0) {
-//   const jsonLocalCGMData = JSON.parse(localCGMData);
-//   const glucoseCoordinates = filterSVGDataByTime(jsonLocalCGMData);
-//   setCoordinates(glucoseCoordinates);
-// }
-// setLoading(false);
-// } else {
-// setLoading(false);
-// }
-// }
