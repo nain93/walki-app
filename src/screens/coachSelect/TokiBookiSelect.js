@@ -47,13 +47,15 @@ const TokiBookiSelect = ({ navigation }) => {
 
   const {} = useQuery(GET_MEMBER_QUERY,{
     onCompleted:(data)=>{
-      if(data?.getMember.coach.name==="토키"){
-        coachSelect("toki")
-        navigation.reset({ routes: [{ name: "TabNavigator" }] });
-      }
-      else if(data?.getMember.coach.name==="부키"){
-        coachSelect("booki")
-        navigation.reset({ routes: [{ name: "TabNavigator" }] });
+      if(data){
+        if(data.getMember.coach?.name==="토키"){
+          coachSelect("toki")
+          navigation.reset({ routes: [{ name: "TabNavigator" }] });
+        }
+        else if(data.getMember.coach?.name==="부키"){
+          coachSelect("booki")
+          navigation.reset({ routes: [{ name: "TabNavigator" }] });
+        }
       }
     }
   })
