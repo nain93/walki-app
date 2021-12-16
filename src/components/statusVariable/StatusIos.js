@@ -42,6 +42,7 @@ const StatusIos = ({
     totalSteps: 0,
     observeSteps: "",
   });
+  // const status = useReactiveVar(statusVar);
 
   const permissions = {
     permissions: {
@@ -130,11 +131,23 @@ const majorVersionIOS = parseInt(Platform.Version, 15);
         <TouchableOpacity onPress={handleOpacity}>
           <CircularProgress
             percentage={
+              // status === "home"
+              // ? 0
+              // : step === 0
+              // ? 0
+              // : step > stepGoal
+              // ? 100
+              // : (step / stepGoal) * 100       
               step === 0
-                ? 0
-                : step> 100
-                ? 100
-                : (step / data?.getChallenge?.stepGoal) * 100
+              ? 0
+              : step > data?.getChallenge?.stepGoal
+              ? 100
+              : (step / data?.getChallenge?.stepGoal) * 100    
+              // step === 0
+              //   ? 0
+              //   : step> 100
+              //   ? 100
+              //   : (step / data?.getChallenge?.stepGoal) * 100
             }
             donutColor={coachColorVar().color.main}
             size={350}
