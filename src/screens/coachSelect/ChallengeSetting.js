@@ -5,14 +5,13 @@ import LongButton from "../../components/LongButton";
 import { Body1Text, theme } from "../../styles/theme";
 import { coachColorVar, monthVar, stepGoalVar, stepVar, walkStatus } from "../../../apollo";
 import { gql, useMutation, useReactiveVar, useQuery } from "@apollo/client";
-import { KeyboardAvoidingView } from "react-native";
+import { KeyboardAvoidingView, Platform } from "react-native";
 import { getToday, getYesterday } from "../../common/getToday";
 import HeaderForm from "../../components/HeaderForm";
 import BackgroundService from 'react-native-background-actions';
 import { startCounter, stopCounter } from 'react-native-accurate-step-counter';
 
 const ChallengeSetting = ({ navigation }) => {
-  const step = useReactiveVar(stepVar);
   const walkRef = useRef();
   const coachColor = useReactiveVar(coachColorVar);
   const {
@@ -117,7 +116,7 @@ const ChallengeSetting = ({ navigation }) => {
           walkStatus("success")
         }
         const date = new Date()
-        if (date.getHours() === 0 && date.getMinutes()===0 && date.getSeconds()===0){
+        if (date.getHours() === 0 && date.getMinutes()=== 0 && date.getSeconds()===0){
           await putChallengeMutation({
             variables: {
               challenge: {
@@ -148,7 +147,9 @@ const ChallengeSetting = ({ navigation }) => {
         },
       },
     });
-    await BackgroundService.start(veryIntensiveTask, options);
+    if(Platform.OS==="android"){
+      await BackgroundService.start(veryIntensiveTask, options);
+    }
     stepGoalVar(inputWatch)
     walkStatus("walking");
     navigation.goBack();

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
-import { coachColorVar, stepVar, walkStatus } from "../../../apollo";
+import { coachColorVar, stepVar } from "../../../apollo";
 import LongButton from "../../components/LongButton";
 import {
   Blurgoal,
@@ -12,9 +12,8 @@ import {
 import UserFail from "../../screens/home/others/UserFail";
 import { Animated, View, Text, Platform } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { Body1Text, H4Text, theme } from "../../styles/theme";
-import { getToday } from "../../common/getToday";
 import styled from "styled-components";
 import AppleHealthKit, {
   HealthValue,
@@ -38,10 +37,10 @@ const StatusIos = ({
   },
 }) => {
   const step = useReactiveVar(stepVar);
-  const [steps, setSteps] = useState({
-    totalSteps: 0,
-    observeSteps: "",
-  });
+  const stepGoal = useReactiveVar(stepGoalVar)
+  const status = useReactiveVar(statusVar);
+
+ 
 
   const permissions = {
     permissions: {
@@ -59,6 +58,7 @@ const StatusIos = ({
     
 
 const majorVersionIOS = parseInt(Platform.Version, 15);
+
       if (majorVersionIOS >= 13) {
         // console.log('ios >= 13');
 
@@ -73,56 +73,11 @@ const majorVersionIOS = parseInt(Platform.Version, 15);
           }
           // results ? setSteps(results.value) : setSteps(null);
           // stepVar(results);
-          setSteps(results.value)
           stepVar(results.value)
-          console.log(steps, "걸음수")
         });
       }
     }
   )
-
-
-  const PUT_CHALLENGE = gql`
-    mutation putChallenge($challenge: ChallengeInput) {
-      putChallenge(challenge: $challenge) {
-        step
-      }
-    }
-  `;
-  const GET_CHALLENGE = gql`
-    query getChallenge($challengeDate: LocalDate) {
-      getChallenge(challengeDate: $challengeDate) {
-        step
-        stepGoal
-        challengeDate
-      }
-    }
-  `;
-  const { data, loading } = useQuery(GET_CHALLENGE, {
-    variables: {
-      challengeDate: getToday(),
-    },
-    onCompleted: (data) => {
-      if (data === undefined) {
-        walkStatus("home");
-      }
-    },
-  });
-  
-  const [putChallengeMutation, {}] = useMutation(PUT_CHALLENGE, {
-    onCompleted: (data) => {
-      console.log(data, "data");
-    },
-  });
-
-  
-  useEffect(() => {
-    if (!loading) {
-      if (data === undefined) {
-        walkStatus("home");
-      }
-    }
-  }, []);
 
   return (
     <>
@@ -130,11 +85,13 @@ const majorVersionIOS = parseInt(Platform.Version, 15);
         <TouchableOpacity onPress={handleOpacity}>
           <CircularProgress
             percentage={
-              step === 0
+              status === "home"
                 ? 0
-                : step> 100
+                : step === 0
+                ? 0
+                : step > stepGoal
                 ? 100
-                : (step / data?.getChallenge?.stepGoal) * 100
+                : (step / stepGoal) * 100
             }
             donutColor={coachColorVar().color.main}
             size={350}
@@ -186,8 +143,7 @@ const majorVersionIOS = parseInt(Platform.Version, 15);
                       목표
                     </Text>
                   </GoalTextBox>
-
-                  <Blurgoal2> {data?.getChallenge?.stepGoal} 걸음</Blurgoal2>
+                  <Blurgoal2> {stepGoal} 걸음</Blurgoal2>
                 </View>
               </View>
             </Animated.View>

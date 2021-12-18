@@ -27,6 +27,7 @@ const Item = ({ name, profile, rank, numberColor,rankingStep,coach,myId,userId }
         style={{ marginRight: 10 }}
       />
       <H4Text style={{ color: theme.grayScale.gray1 }}>{name}</H4Text>
+      {console.log(rankingStep,"rankingStep")}
     </UserProfile>
     <View style={{flexDirection:"row", alignItems:"center"}}>
       <Image style={{width:18,height:18,marginRight:4}} source={coach === "부키" ? bukiDefault: tokiDefault} />

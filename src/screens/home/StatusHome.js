@@ -16,6 +16,51 @@ import styled from "styled-components";
 import tokiAlarm from "../../../assets/images/character/toki_alarm.png"
 import bokiAlarm from "../../../assets/images/character/boki_alarm.png"
 import { Body1Text, H2Text, H4Text, theme } from "../../styles/theme";
+import PushNotification, { Importance } from "react-native-push-notification";
+
+PushNotification.configure({
+  onRegister: function (token) {
+    // console.log("TOKEN:", token);
+  },
+
+  onNotification: function (notification) {
+    console.log("NOTIFICATION:", notification);
+
+    // notification.finish(PushNotificationIOS.FetchResult.NoData);
+  },
+
+  onAction: function (notification) {
+    console.log("ACTION:", notification.action);
+    console.log("NOTIFICATION:", notification);
+  },
+
+  onRegistrationError: function (err) {
+    console.error(err.message, err);
+  },
+
+  permissions: {
+    alert: true,
+    badge: true,
+    sound: true,
+  },
+
+  popInitialNotification: true,
+
+  requestPermissions: true,
+});
+
+PushNotification.createChannel(
+  {
+    channelId: "default", // (required)
+    channelName: "My channel", // (required)
+    channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
+    playSound: false, // (optional) default: true
+    soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+    importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+    vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+  },
+  (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+);
 
 
 const StatusHome = ({ navigation }) => {
@@ -63,6 +108,7 @@ const StatusHome = ({ navigation }) => {
   const {} = useQuery(GET_REFRESH_TOKEN, {
     onCompleted: (data) => {
       if(data){
+        console.log(data.refreshToken.accessToken,"data.refreshToken.accessToken");
         AsyncStorage.setItem(STOARGE.TOKEN, data.refreshToken.accessToken);
         tokenVar(data.refreshToken.accessToken)
       }
