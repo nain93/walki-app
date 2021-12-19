@@ -1,5 +1,5 @@
-import React, {  useEffect, useRef, useState } from "react";
-import { Text, FlatList, Image, TouchableOpacity, View } from "react-native";
+import React, { useRef } from "react";
+import { FlatList, Image, TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
 import { Body3Text, H2Text, H4Text, theme } from "../../styles/theme";
 import info from "../../../assets/icons/info.png";
@@ -62,7 +62,6 @@ const ProfileImg = styled.Image`
 `;
 
 const RankingMain = ({myId}) => {
-  const [rankingStep,setRankingStep] = useState(0)
   const GET_TOP10_RANKINGS_QUERY = gql`
     query getTop10Rankings($date: LocalDate) {
       getTop10Rankings(date: $date) {
@@ -75,7 +74,11 @@ const RankingMain = ({myId}) => {
           }
         }
         number
-        challengeDate
+        challenge{
+          challengeDate
+          step
+          stepGoal
+        }
       }
     }
   `;
@@ -86,38 +89,10 @@ const RankingMain = ({myId}) => {
     },
   });
 
-  const GET_CHALLENGE_QUERY = gql`
-    query getChallenge($challengeDate: LocalDate) {
-      getChallenge(challengeDate: $challengeDate) {
-        step
-        stepGoal
-        challengeDate
-      }
-    }
-  `;
-
-  const {refetch} = useQuery(GET_CHALLENGE_QUERY,{
-    variables:{
-      challengeDate:getYesterday()
-    },
-    onCompleted:(data)=>{
-      if(data){
-        setRankingStep(data.getChallenge.step)
-      }
-     
-    }
-  })
-
-  useEffect(()=>{
-    refetch()
-  },[])
-
-
-  // todo getChallenge query로 어제 step 가져와야함
   const renderItem = ({ item, index }) => {
     return (
       <Item
-        rankingStep={rankingStep}
+        rankingStep={item.challenge.step}
         numberColor={
           index === 0
             ? "#FFA319"
