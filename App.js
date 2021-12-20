@@ -7,6 +7,7 @@ import client, {
   coachColorVar,
   isCoachVar,
   isLoggedInVar,
+  logUserIn,
   statusVar,
   tokenVar,
 } from "./apollo";
@@ -39,8 +40,7 @@ export default function App() {
     const token = await AsyncStorage.getItem(TOKEN);
     console.log(token, "token");
     if (token) {
-      isLoggedInVar(true);
-      tokenVar(token);
+      logUserIn(token)
     }
     else{
       isLoggedInVar(false);
@@ -96,6 +96,7 @@ export default function App() {
     <ApolloProvider client={client}>
       <AppearanceProvider>
         <SafeAreaProvider>
+          {console.log(isLoggedIn,"isLoggedIn")}
           {isLoggedIn ? <GlobalNav /> : <LoggedOutNav />}
         </SafeAreaProvider>
       </AppearanceProvider>
