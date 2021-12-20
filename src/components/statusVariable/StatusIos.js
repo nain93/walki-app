@@ -1,6 +1,6 @@
 import React from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
-import { coachColorVar, stepVar } from "../../../apollo";
+import { coachColorVar, stepVar, statusVar, stepGoalVar } from "../../../apollo";
 import LongButton from "../../components/LongButton";
 import {
   Blurgoal,
