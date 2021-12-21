@@ -7,6 +7,7 @@ import bookiImg from "../../../assets/images/booki_character.png";
 import LongButton from "../../components/LongButton";
 import { useMutation, gql, useQuery } from "@apollo/client";
 import { coachSelect } from "../../../apollo";
+import Loading from "../../components/Loading";
 
 const TokiBookiSelect = ({ navigation }) => {
   const [isClick, setIsClick] = useState("");
@@ -30,35 +31,10 @@ const TokiBookiSelect = ({ navigation }) => {
     }
   `;
 
-  const GET_MEMBER_QUERY = gql`
-  query getMember{
-    getMember{
-      coach{
-        name
-      }
-    }
-  }
-`
-
   const [putMemberMutation] = useMutation(PUT_MEMBER_MUTATION, {
     onCompleted: (data) => console.log(data, "data"),
   });
   const { data, loading } = useQuery(GET_COACHES_QUERY);
-
-  const {} = useQuery(GET_MEMBER_QUERY,{
-    onCompleted:(data)=>{
-      if(data){
-        if(data.getMember.coach?.name==="토키"){
-          coachSelect("toki")
-          navigation.reset({ routes: [{ name: "TabNavigator" }] });
-        }
-        else if(data.getMember.coach?.name==="부키"){
-          coachSelect("booki")
-          navigation.reset({ routes: [{ name: "TabNavigator" }] });
-        }
-      }
-    }
-  })
 
   const handleTokiSelect = () => {
     setIsClick("toki");
@@ -95,9 +71,10 @@ const TokiBookiSelect = ({ navigation }) => {
     navigation.navigate("BeforeStart");
   };
 
+
   return (
-    <Container>
-      <View>
+    <>
+      <Container>
         <TokiBox selected={isClick === "toki"} onPress={handleTokiSelect}>
           <Wrapper>
             <TokiBookiImg source={tokiImg} resizeMode="contain" />
@@ -116,19 +93,21 @@ const TokiBookiSelect = ({ navigation }) => {
             </TitleBox>
           </Wrapper>
         </BookiBox>
-      </View>
+      </Container>
       <LongButton
+        marginBottom={40}
         handleGoToNext={handleGoToNext}
         disabled={!isClick}
         btnBackColor={theme.grayScale.black}
       >
         선택 완료
       </LongButton>
-    </Container>
+    </>
   );
 };
 
-const Container = styled.View``;
+const Container = styled.View`
+`;
 
 const TokiBookiStyle = styled.TouchableOpacity`
   width: 100%;
@@ -147,7 +126,6 @@ const TokiBox = styled(TokiBookiStyle)`
 const BookiBox = styled(TokiBookiStyle)`
   border: ${(props) =>
     props.selected ? `2px solid ${theme.booki.color.main}` : "none"};
-  margin-bottom: 100px;
 `;
 
 const Wrapper = styled.View`

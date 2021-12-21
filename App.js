@@ -5,6 +5,7 @@ import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import client, {
   coachColorVar,
+  coachSelect,
   isCoachVar,
   isLoggedInVar,
   logUserIn,
@@ -42,7 +43,7 @@ export default function App() {
     if (token) {
       logUserIn(token)
     }
-    else{
+    else {
       isLoggedInVar(false);
     }
   };
@@ -51,11 +52,10 @@ export default function App() {
     const coach = await AsyncStorage.getItem(COACH);
     console.log(coach, "coach");
     if (coach) {
-      isCoachVar(true);
       if (coach === "toki") {
-        coachColorVar({ coach: "toki", ...theme.toki });
+        coachSelect("toki")
       } else if (coach === "booki") {
-        coachColorVar({ coach: "booki", ...theme.booki });
+        coachSelect("booki")
       }
     }
   };
@@ -66,7 +66,7 @@ export default function App() {
     if (status) {
       statusVar(status);
     }
-    else if(status === null){
+    else if (status === null) {
       statusVar("home")
     }
   };
@@ -96,7 +96,6 @@ export default function App() {
     <ApolloProvider client={client}>
       <AppearanceProvider>
         <SafeAreaProvider>
-          {console.log(isLoggedIn,"isLoggedIn")}
           {isLoggedIn ? <GlobalNav /> : <LoggedOutNav />}
         </SafeAreaProvider>
       </AppearanceProvider>

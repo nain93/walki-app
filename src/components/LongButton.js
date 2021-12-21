@@ -1,17 +1,21 @@
 import React from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Dimensions, } from "react-native";
 import styled from "styled-components";
 import { H4Text, theme } from "../styles/theme";
+import { d2p } from "../common/utils"
+import { getBottomSpace } from "react-native-iphone-x-helper";
 
 const LongButton = ({
   handleGoToNext,
   disabled,
   btnBackColor,
   children,
+  marginBottom,
   loading = false,
 }) => {
   return (
     <Container
+      marginBottom={marginBottom}
       disabled={disabled}
       onPress={handleGoToNext}
       btnBackColor={btnBackColor}
@@ -26,7 +30,10 @@ const LongButton = ({
 };
 
 const Container = styled.TouchableOpacity`
-  width: 100%;
+  align-self: center;
+  width: ${Dimensions.get("window").width - d2p(76)};
+  margin-top: auto;
+  margin-bottom: ${props => getBottomSpace() + d2p(props.marginBottom)};
   height: 54px;
   background-color: ${(props) => String(props.btnBackColor)};
   color: ${theme.grayScale.white};

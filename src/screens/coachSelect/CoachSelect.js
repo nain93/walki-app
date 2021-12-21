@@ -20,8 +20,7 @@ const CoachSelect = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  padding: 30px;
-  justify-content: space-around;
+  padding: 0 38px;
 `;
 
 export default CoachSelect;
