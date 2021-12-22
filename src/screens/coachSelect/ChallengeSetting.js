@@ -84,20 +84,20 @@ const ChallengeSetting = ({ navigation }) => {
     taskTitle: `걸음수: 0`,
     taskDesc: `목표 걸음수: ${inputWatch}`,
     taskIcon: {
-        name: 'ic_launcher',
-        type: 'mipmap',
+      name: 'ic_launcher',
+      type: 'mipmap',
     },
     color: '#ff00ff',
-    linkingURI: 'app://open.my.app', 
+    linkingURI: 'app://open.my.app',
     parameters: {
-        delay: 1000,
+      delay: 1000,
     },
-};
+  };
 
   const sleep = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
   const veryIntensiveTask = async (taskDataArguments) => {
-    const {delay} = taskDataArguments;
+    const { delay } = taskDataArguments;
 
     await new Promise(async (resolve) => {
       let a = 0;
@@ -105,18 +105,18 @@ const ChallengeSetting = ({ navigation }) => {
         default_threshold: 15.0,
         default_delay: 150000000,
         cheatInterval: 3000,
-        onStepCountChange: (stepCount) =>  a = stepCount ,
+        onStepCountChange: (stepCount) => a = stepCount,
         onCheat: () => { console.log("User is Cheating") }
       }
       startCounter(config);
       for (let i = 0; BackgroundService.isRunning(); i++) {
-        await BackgroundService.updateNotification({taskTitle: `걸음수: ${a}`})
+        await BackgroundService.updateNotification({ taskTitle: `걸음수: ${a}` })
         stepVar(a)
-        if(a >= inputWatch){
+        if (a >= inputWatch) {
           walkStatus("success")
         }
         const date = new Date()
-        if (date.getHours() === 0 && date.getMinutes()=== 0 && date.getSeconds()===0){
+        if (date.getHours() === 0 && date.getMinutes() === 0 && date.getSeconds() === 0) {
           await putChallengeMutation({
             variables: {
               challenge: {
@@ -147,14 +147,14 @@ const ChallengeSetting = ({ navigation }) => {
         },
       },
     });
-    if(Platform.OS==="android"){
+    if (Platform.OS === "android") {
       await BackgroundService.start(veryIntensiveTask, options);
     }
     stepGoalVar(inputWatch)
     walkStatus("walking");
     navigation.goBack();
   };
-  
+
 
   useEffect(() => {
     walkRef?.current?.focus();
@@ -195,6 +195,7 @@ const ChallengeSetting = ({ navigation }) => {
           <WalkiText>걸음</WalkiText>
         </InputBox>
         <LongButton
+          marginBottom={20}
           handleGoToNext={handleSubmit(handlePutChallenge)}
           disabled={inputWatch < 200}
           btnBackColor={coachColorVar()?.color?.main}
