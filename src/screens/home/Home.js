@@ -10,7 +10,8 @@ import Config from "react-native-config";
 import StatusHome from "./StatusHome";
 import * as Location from 'expo-location';
 import translate from 'translate-google-api';
- 
+import { d2p } from "../../common/utils";
+
 
 
 const Home = ({ navigation }) => {
@@ -79,11 +80,11 @@ const Home = ({ navigation }) => {
       const condition = result.data.weather[0].main;
       const city = result.data.name
       const coWeather = weather.condition
-   
-    const resultt = await translate([city, coWeather], {
-      from: "en",
-      to: "ko",
-    },console.log(resultt, '번역'));
+
+      const resultt = await translate([city, coWeather], {
+        from: "en",
+        to: "ko",
+      }, console.log(resultt, '번역'));
       // console.log(result, "결과");
       // console.log(temp, "1");
       // console.log(condition, "2");
@@ -100,7 +101,7 @@ const Home = ({ navigation }) => {
       setReady(false);
     }
   };
-  
+
   if (ready) {
     return (
       <Container style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
@@ -138,20 +139,24 @@ const Home = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  padding: 30px;
+  padding-left: ${d2p(31)};
+  padding-right: ${d2p(31)};
   background-color: #f3f3f3;
 `;
 
 const TopStatus = styled.View`
+  margin-top: ${d2p(34)};
+  margin-bottom: ${d2p(46)};
   flex-direction: row;
   justify-content: space-between;
+  max-height: 66;
 `;
 
 const WeatherStatus = styled.View`
   flex-direction: row;
 `;
 const LocationSpace = styled.View`
-  align-items: flex-end;
+align-items: flex-end;
   padding-bottom: 5px;
   justify-content: space-between;
 
@@ -160,7 +165,7 @@ const WeatherSpace = styled.View`
   align-items: center;
   justify-content: space-between;
   padding-bottom: 5px;
-  padding-top: 3px;
+  padding-top:5px;
 `;
 
 const BarSpace = styled.View`

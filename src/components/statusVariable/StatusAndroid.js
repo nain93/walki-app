@@ -1,4 +1,4 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
 import { coachColorVar, stepVar, statusVar, stepGoalVar } from "../../../apollo";
 import LongButton from "../../components/LongButton";
@@ -13,9 +13,10 @@ import UserFail from "../../screens/home/others/UserFail";
 import { Animated, View, Text } from "react-native";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import {  useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { Body1Text, H4Text, theme } from "../../styles/theme";
 import styled from "styled-components";
+import { d2p } from "../../common/utils";
 
 
 const StatusAndroid = ({
@@ -41,7 +42,7 @@ const StatusAndroid = ({
   useEffect(() => {
     request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
       if (granted) {
-        console.log(granted,"granted");
+        console.log(granted, "granted");
       }
     });
   }, []);
@@ -55,10 +56,10 @@ const StatusAndroid = ({
               status === "home"
                 ? 0
                 : step === 0
-                ? 0
-                : step > stepGoal
-                ? 100
-                : (step / stepGoal) * 100
+                  ? 0
+                  : step > stepGoal
+                    ? 100
+                    : (step / stepGoal) * 100
             }
             donutColor={coachColorVar().color.main}
             size={350}
@@ -117,11 +118,12 @@ const StatusAndroid = ({
             </Animated.View>
           </CircularProgress>
         </TouchableOpacity>
-        <Body1Text style={{ marginTop: 10, color: theme.grayScale.gray2 }}>
+        <Body1Text style={{ marginTop: d2p(14), color: theme.grayScale.gray2 }}>
           {cheerText}
         </Body1Text>
       </GoalBox>
       <LongButton
+        marginBottom={20}
         handleGoToNext={handleGoToNext}
         btnBackColor={buttonColor}
         disabled={disabled}

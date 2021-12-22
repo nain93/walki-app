@@ -3,7 +3,7 @@ import styled from "styled-components";
 import RankingHeader from "./RankingHeader";
 import RankingMain from "./RankingMain";
 import { gql, useQuery } from "@apollo/client";
-import { getToday, getYesterday } from "../../common/getToday";
+import { getBeforeYesterday, getToday, getYesterday } from "../../common/getToday";
 import Loading from "../../components/Loading";
 
 const Ranking = () => {
@@ -25,8 +25,8 @@ const Ranking = () => {
 
   const { data, loading } = useQuery(GET_MY_RANKINGS_QUERY, {
     variables: {
-      start: getYesterday(),
-      end: getToday(),
+      start: getBeforeYesterday(),
+      end: getYesterday(),
     },
     onCompleted: ({ getMyRankings }) => {
       if (getMyRankings.length !== 0) {
@@ -45,6 +45,7 @@ const Ranking = () => {
 
   return (
     <Container>
+      {console.log(data?.getMyRankings,"data?.getMyRankings")}
       <RankingHeader rankingData={data?.getMyRankings} />
       <RankingMain myId={data?.getMyRankings[0]?.member.id}/>
     </Container>

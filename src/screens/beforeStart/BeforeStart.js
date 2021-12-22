@@ -13,65 +13,64 @@ const BeforeStart = ({ navigation }) => {
     navigation.reset({ routes: [{ name: "TabNavigator" }] });
 
   return (
-    <Container>
-      <HeaderForm
-        headerChildren="시작하기 전에"
-        descChildren={
-          "더 나은 워키 이용을 위해 \n아래의 접근권한의 허용이 필요해요."
-        }
-        align="center"
-      />
-      <AlertSection>
-        <AlertBox>
-          <IconBox color={coachColorVar().color.primary.tap}>
-            <Icon source={notification} resizeMode="center" />
-          </IconBox>
-          <IconText>
-            <IconHeader>운동 응원 알람</IconHeader> 등을 {"\n"}받을 수 있어요.
-            (선택)
-          </IconText>
-        </AlertBox>
+    <>
+      <Container>
+        <HeaderForm
+          headerChildren="시작하기 전에"
+          descChildren={
+            "더 나은 워키 이용을 위해 \n아래의 접근권한의 허용이 필요해요."
+          }
+          align="center"
+        />
+        <AlertSection>
+          <AlertBox>
+            <IconBox color={coachColorVar().color.primary.tap}>
+              <Icon source={notification} resizeMode="center" />
+            </IconBox>
+            <IconText>
+              <IconHeader>운동 응원 알람</IconHeader> 등을 {"\n"}받을 수 있어요.
+              (선택)
+            </IconText>
+          </AlertBox>
 
-        <AlertBox>
-          <IconBox color={coachColorVar().color.primary.tap}>
-            <Icon source={location} resizeMode="center" />
-          </IconBox>
-          <IconText>
-            <IconHeader>날씨와 온도의 정확한 정보</IconHeader>를 {"\n"}제공받을
-            수 있어요. (필수)
-          </IconText>
-        </AlertBox>
-        <AlertBox>
-          <IconBox color={coachColorVar().color.primary.tap}>
-            <Icon source={heart} resizeMode="center" />
-          </IconBox>
-          <IconText>
-            <IconHeader>정확한 걸음 수</IconHeader>를 {"\n"}제공받을 수 있어요.
-            (필수)
-          </IconText>
-        </AlertBox>
-      </AlertSection>
+          <AlertBox>
+            <IconBox color={coachColorVar().color.primary.tap}>
+              <Icon source={location} resizeMode="center" />
+            </IconBox>
+            <IconText>
+              <IconHeader>날씨와 온도의 정확한 정보</IconHeader>를 {"\n"}제공받을
+              수 있어요. (필수)
+            </IconText>
+          </AlertBox>
+          <AlertBox>
+            <IconBox color={coachColorVar().color.primary.tap}>
+              <Icon source={heart} resizeMode="center" />
+            </IconBox>
+            <IconText>
+              <IconHeader>정확한 걸음 수</IconHeader>를 {"\n"}제공받을 수 있어요.
+              (필수)
+            </IconText>
+          </AlertBox>
+        </AlertSection>
+      </Container>
       <LongButton
+        marginBottom={40}
         handleGoToNext={handleGoToNext}
         disabled={false}
         btnBackColor={coachColorVar().color.main}
       >
         확인
       </LongButton>
-    </Container>
+    </>
   );
 };
 
 const Container = styled.View`
   flex: 1;
-  justify-content: space-around;
-  align-items: center;
-  padding: 30px;
+  padding:0 38px;
 `;
 
 const AlertSection = styled.View`
-  flex: 0.7;
-  justify-content: space-between;
 `;
 
 const AlertBox = styled.View`

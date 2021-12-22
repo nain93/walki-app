@@ -1,11 +1,11 @@
-import React, {  useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { coachColorVar, statusVar, tokenVar } from "../../../apollo";
 import toki_hi from "../../../assets/images/character/toki_hi.png";
 import buki_hi from "../../../assets/images/character/buki.png";
 import { useReactiveVar, gql, useQuery } from "@apollo/client";
 import HomeWalk from "./HomeWalk";
 import HomeAfterStop from "./HomeAfterStop";
-import { Animated,Image,Text,View } from "react-native";
+import { Animated, Image, Text, View } from "react-native";
 import HomeCompleted from "./HomeCompleted";
 import HomeFail from "./HomeFail";
 import StatusVariable from "../../components/statusVariable/StatusVariable";
@@ -70,7 +70,7 @@ const StatusHome = ({ navigation }) => {
   const fadetextwalk = useRef(new Animated.Value(0)).current;
   const fadeimage = useRef(new Animated.Value(0.8)).current;
   const [onOff, setOnOff] = useState(false);
-  const [modalOpen,setOpenModal] = useState(false)
+  const [modalOpen, setOpenModal] = useState(false)
 
   const handlepressup = () => {
     Animated.timing(fadetext, {
@@ -105,30 +105,30 @@ const StatusHome = ({ navigation }) => {
     }
   `;
 
-  const {} = useQuery(GET_REFRESH_TOKEN, {
+  const { } = useQuery(GET_REFRESH_TOKEN, {
     onCompleted: (data) => {
-      if(data){
-        console.log(data.refreshToken.accessToken,"data.refreshToken.accessToken");
+      if (data) {
+        console.log(data.refreshToken.accessToken, "data.refreshToken.accessToken");
         AsyncStorage.setItem(STOARGE.TOKEN, data.refreshToken.accessToken);
         tokenVar(data.refreshToken.accessToken)
       }
     },
   });
 
-  useEffect(()=>{
-    const alarmCheck = async () =>{
+  useEffect(() => {
+    const alarmCheck = async () => {
       const check = await AsyncStorage.getItem(STOARGE.ALARM_CHECK)
-     if(!check){
-       setOpenModal(true)
-     }
-     else{
-       setOpenModal(false)
-     }
+      if (!check) {
+        setOpenModal(true)
+      }
+      else {
+        setOpenModal(false)
+      }
     }
     alarmCheck()
-  },[])
+  }, [])
 
-  const handleAlarmCheck = async () =>{
+  const handleAlarmCheck = async () => {
     await AsyncStorage.setItem(STOARGE.ALARM_CHECK, JSON.stringify(true))
     setOpenModal(false)
   }
@@ -140,7 +140,7 @@ const StatusHome = ({ navigation }) => {
         <StatusVariable
           coachImg={coachColorVar()?.coach === "toki" ? toki_hi : buki_hi}
           goalText="목표를 설정해주세요"
-          cheerText="오늘도 함께 걸어요!"
+          cheerText={coachColorVar()?.coach === "toki" ? "오늘도 함께 달려봐요!" : "오늘도 함께 걸어요!"}
           buttonText="오늘의 목표를 세워보세요!"
           buttonColor={coachColorVar()?.color.main || "white"}
           handleGoToNext={() => navigation.navigate("ChallengeSetting")}
@@ -158,38 +158,38 @@ const StatusHome = ({ navigation }) => {
           fadetext={fadetext}
           fadetextwalk={fadetextwalk}
         />
-            <Modal
-              isVisible={modalOpen}
-              style={{ alignItems: "center" }}
-              hideModalContentWhileAnimating={true}
-              animationIn="fadeIn"
-              animationOut="fadeOut"
-              onBackdropPress={handleAlarmCheck}
-              backdropTransitionOutTiming={0}
-              onBackButtonPress={handleAlarmCheck}
-            >
-              <ModalContainer >
-                  <Image
-                    source={coachColorVar().coach === "toki" ? tokiAlarm : bokiAlarm}
-                    style={{ width: 266, height: 166 }}
-                  />
-                <TextView>
-                  <H2Text style={{textAlign:"center",marginTop:24}}>{coachColorVar().coach==="toki" ? "토키" : "부키" }의 응원 알림을{"\n"}받아보세요!</H2Text>
-                  <Body1Text style={{color:theme.grayScale.gray4,marginBottom:24,marginTop:8}}>메세지 수신을 위해 알림을 설정해주세요.</Body1Text>
-                </TextView>
-                <BtnWrap>
-                  <CancelBtn onPress={handleAlarmCheck}>
-                    <H4Text>나중에</H4Text>
-                  </CancelBtn>
-                  <OkayBtn coachColorVar={coachColorVar().coach} onPress={()=>{
-                    handleAlarmCheck()
-                    navigation.navigate("AlertSetting")
-                  }}>
-                    <OkayBtnText >알림 설정하기</OkayBtnText>
-                  </OkayBtn>
-                </BtnWrap>
-              </ModalContainer>
-            </Modal>
+        <Modal
+          isVisible={modalOpen}
+          style={{ alignItems: "center" }}
+          hideModalContentWhileAnimating={true}
+          animationIn="fadeIn"
+          animationOut="fadeOut"
+          onBackdropPress={handleAlarmCheck}
+          backdropTransitionOutTiming={0}
+          onBackButtonPress={handleAlarmCheck}
+        >
+          <ModalContainer >
+            <Image
+              source={coachColorVar().coach === "toki" ? tokiAlarm : bokiAlarm}
+              style={{ width: 266, height: 166 }}
+            />
+            <TextView>
+              <H2Text style={{ textAlign: "center", marginTop: 24 }}>{coachColorVar().coach === "toki" ? "토키" : "부키"}의 응원 알림을{"\n"}받아보세요!</H2Text>
+              <Body1Text style={{ color: theme.grayScale.gray4, marginBottom: 24, marginTop: 8 }}>메세지 수신을 위해 알림을 설정해주세요.</Body1Text>
+            </TextView>
+            <BtnWrap>
+              <CancelBtn onPress={handleAlarmCheck}>
+                <H4Text>나중에</H4Text>
+              </CancelBtn>
+              <OkayBtn coachColorVar={coachColorVar().coach} onPress={() => {
+                handleAlarmCheck()
+                navigation.navigate("AlertSetting")
+              }}>
+                <OkayBtnText >알림 설정하기</OkayBtnText>
+              </OkayBtn>
+            </BtnWrap>
+          </ModalContainer>
+        </Modal>
       </>
     );
   }
@@ -237,7 +237,7 @@ margin: 0 5px;
 
 const OkayBtn = styled.TouchableOpacity`
 border-radius: 8px;
-background-color: ${props=>props.coachColorVar ==="toki" ? theme.toki.color.main : theme.booki.color.main};
+background-color: ${props => props.coachColorVar === "toki" ? theme.toki.color.main : theme.booki.color.main};
 color: ${theme.grayScale.white};
 width: 135px;
 padding: 12px 0;

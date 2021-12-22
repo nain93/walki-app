@@ -41,24 +41,24 @@ const TabNavigator = () => {
       screenOptions={
         Platform.OS === "android"
           ? {
-              tabBarActiveTintColor: tabColor?.color?.main,
-              tabBarInactiveTintColor: theme.grayScale.gray3,
-              tabBarStyle: {
-                height: 68,
-                paddingTop: 10,
-                paddingBottom: 10,
-              },
-              tabBarLabelStyle: {
-                fontSize: 12,
-              },
-            }
+            tabBarActiveTintColor: tabColor?.color?.main,
+            tabBarInactiveTintColor: theme.grayScale.gray3,
+            tabBarStyle: {
+              height: 68,
+              paddingTop: 10,
+              paddingBottom: 10,
+            },
+            tabBarLabelStyle: {
+              fontSize: 12,
+            },
+          }
           : {
-              tabBarActiveTintColor: tabColor?.color?.main,
-              tabBarInactiveTintColor: theme.grayScale.gray3,
-              tabBarLabelStyle: {
-                fontSize: 12,
-              },
-            }
+            tabBarActiveTintColor: tabColor?.color?.main,
+            tabBarInactiveTintColor: theme.grayScale.gray3,
+            tabBarLabelStyle: {
+              fontSize: 12,
+            },
+          }
       }
     >
       <Tabs.Screen

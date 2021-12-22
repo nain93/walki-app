@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, TouchableOpacity,Platform } from "react-native";
+import { ActivityIndicator, Image, TouchableOpacity, Platform } from "react-native";
 import styled from "styled-components";
 import { login } from "@react-native-seoul/kakao-login";
 import appleAuth, {
@@ -10,6 +10,7 @@ import { Caption, H4Text, theme } from "../../styles/theme";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { logUserIn } from "../../../apollo";
 import { d2p } from "../../common/utils";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 
 const KakaoLoginButton = ({ navigation }) => {
   const GET_ACCESS_TOKEN_QUERY = gql`
@@ -22,10 +23,11 @@ const KakaoLoginButton = ({ navigation }) => {
   `;
 
   const [isLoading, setIsLoading] = useState(false);
-  const onCompleted = (data) => {
+
+  const onCompleted = (tokenData) => {
     const {
       getAccessToken: { accessToken },
-    } = data;
+    } = tokenData;
     if (accessToken) {
       logUserIn(accessToken);
     }
@@ -35,6 +37,7 @@ const KakaoLoginButton = ({ navigation }) => {
   const [getAccessToken] = useLazyQuery(GET_ACCESS_TOKEN_QUERY, {
     onCompleted
   });
+
 
   // refreshToken?
   const handleKakaoLogin = async () => {
@@ -74,14 +77,9 @@ const KakaoLoginButton = ({ navigation }) => {
             token: token,
           },
         });
-        navigation.reset({ routes: [{ name: "CoachSelect" }] });
       }
     } catch (error) {
-      if (error.code === appleAuth.Error.CANCELED) {
-        // login canceled
-      } else {
-        // login error
-      }
+      console.error(error)
     }
   };
 
@@ -107,7 +105,7 @@ const KakaoLoginButton = ({ navigation }) => {
         onPress={onAppleButtonPress}
       /> : <></>}
 
-      <DescWrap style={{marginTop:d2p(10)}}>
+      <DescWrap style={{ marginTop: d2p(10) }}>
         <KakaoDesc>walki의 </KakaoDesc>
         <TouchableOpacity onPress={() => navigation.navigate("Service")}>
           <DescBtnText>이용약관</DescBtnText>
@@ -150,6 +148,7 @@ const DescWrap = styled.View`
 const KakaoDesc = styled(Caption)`
   color: ${theme.grayScale.gray4};
   text-align: center;
+  margin-bottom: ${getBottomSpace()};
 `;
 
 const DescBtnText = styled(Caption)`

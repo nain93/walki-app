@@ -17,17 +17,18 @@ const RankingHeader = ({ rankingData }) => {
   const [upDown, setUpDown] = useState("");
 
   useEffect(() => {
+    console.log(rankingData,"rankingData");
     let rankData =
       (rankingData.length === 0
         ? 0
         : rankingData.length === 1 &&
-          rankingData[0].challengeDate === getYesterday()
+          rankingData[0].challenge.challengeDate === getYesterday()
         ? rankingData[0].number
         : 0) -
       (rankingData.length === 0
         ? 0
         : rankingData.length === 1 &&
-          rankingData[0].challengeDate === getYesterday()
+          rankingData[0].challenge.challengeDate === getYesterday()
         ? 0
         : rankingData[0].number);
     if (rankData < 0) {
@@ -78,7 +79,7 @@ const RankingHeader = ({ rankingData }) => {
                 {rankingData.length === 0
                   ? 0
                   : rankingData.length === 1 &&
-                    rankingData[0].challengeDate === getYesterday()
+                    rankingData[0].challenge.challengeDate === getYesterday()
                   ? 0
                   : rankingData[0].number}
               </H2Text>
@@ -94,7 +95,7 @@ const RankingHeader = ({ rankingData }) => {
                 {rankingData.length === 0
                   ? 0
                   : rankingData.length === 1 &&
-                    rankingData[0].challengeDate === getYesterday()
+                    rankingData[0].challenge.challengeDate === getYesterday()
                   ? rankingData[0].number
                   : 0}
               </H2Text>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -14,7 +14,7 @@ import AlertSetting from "../screens/setting/AlertSetting";
 import TabNavigator from "./TabNav";
 import LeftIcon from "react-native-vector-icons/AntDesign";
 import { useReactiveVar } from "@apollo/client";
-import { isCoachVar } from "../../apollo";
+import { coachSelect, isCoachVar } from "../../apollo";
 import ChallengeSetting from "../screens/coachSelect/ChallengeSetting";
 import AppSetting from "../screens/setting/AppSetting";
 import OpenSource from "../screens/setting/OpenSource";
@@ -23,6 +23,8 @@ import Info from "../screens/terms/Info";
 import TermsCheck from "../screens/terms/TermsCheck";
 import CloseIcon from "../components/CloseIcon";
 import SuccessPopUp from "../components/SuccessPopUp";
+import { gql, useQuery } from "@apollo/client";
+import Loading from "../components/Loading";
 
 const TransitionScreenOptions = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -30,7 +32,35 @@ const TransitionScreenOptions = {
 const Stack = createStackNavigator();
 
 const GlobalNav = () => {
-  const isCoach = useReactiveVar(isCoachVar);
+  const isCoach = useReactiveVar(isCoachVar)
+
+  const GET_MEMBER_QUERY = gql`
+query getMember{
+  getMember{
+    coach{
+      name
+    }
+  }
+}
+`
+  const { loading } = useQuery(GET_MEMBER_QUERY, {
+    onCompleted: (data) => {
+      if (data) {
+        if (data.getMember.coach?.name === "토키") {
+          coachSelect("toki")
+        }
+        else if (data.getMember.coach?.name === "부키") {
+          coachSelect("booki")
+        }
+      }
+      else {
+        isCoachVar(false)
+      }
+    }
+  })
+  if (loading) {
+    return <Loading />
+  }
 
   return (
     <NavigationContainer>
@@ -45,7 +75,12 @@ const GlobalNav = () => {
           <Stack.Screen
             name="CoachSelect"
             options={{
-              headerShown: false,
+              title: "",
+              headerStyle: {
+                backgroundColor: theme.grayScale.white,
+                elevation: 0, // android
+                shadowOpacity: 0, //ios
+              },
             }}
             component={CoachSelect}
           />
@@ -53,12 +88,19 @@ const GlobalNav = () => {
         <Stack.Screen
           name="TabNavigator"
           component={TabNavigator}
-          options={{ gestureEnabled: false, headerShown: false }}
+          options={{
+            gestureEnabled: false, headerShown: false
+          }}
         />
         <Stack.Screen
           name="BeforeStart"
           options={{
-            headerShown: false,
+            title: "",
+            headerStyle: {
+              backgroundColor: theme.grayScale.white,
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
           }}
           component={BeforeStart}
         />

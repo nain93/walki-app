@@ -12,7 +12,7 @@ import STOARGE from "./src/constants/stoarge";
 import { month, year } from "./src/common/getToday";
 
 export const isLoggedInVar = makeVar(false);
-export const isCoachVar = makeVar(false);
+export const isCoachVar = makeVar(true);
 export const tokenVar = makeVar("");
 export const coachColorVar = makeVar({
   coach: "",

@@ -39,6 +39,5 @@ allprojects {
         jcenter()
         maven { url 'https://www.jitpack.io' }
         maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
-
     }
 }
