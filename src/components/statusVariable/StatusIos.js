@@ -40,43 +40,43 @@ const StatusIos = ({
   const stepGoal = useReactiveVar(stepGoalVar)
   const status = useReactiveVar(statusVar);
 
- 
+
 
   const permissions = {
     permissions: {
       read: [AppleHealthKit.Constants.Permissions.Steps,
-        AppleHealthKit.Constants.Permissions.StepCount,],
+      AppleHealthKit.Constants.Permissions.StepCount,],
       write: [AppleHealthKit.Constants.Permissions.Steps],
     },
-  } 
- 
-    AppleHealthKit.initHealthKit(permissions, (error) => {
+  }
+
+  AppleHealthKit.initHealthKit(permissions, (error) => {
     if (error) {
-    console.log('[ERROR] Cannot grant permissions!');
+      console.log('[ERROR] Cannot grant permissions!');
     }
-  
-    
 
-const majorVersionIOS = parseInt(Platform.Version, 15);
 
-      if (majorVersionIOS >= 13) {
-        // console.log('ios >= 13');
 
-        let optionsSteps = {
-          date: new Date().toISOString(), // optional; default now
-          includeManuallyAdded: true, // optional: default true
-        };
-        AppleHealthKit.getStepCount(optionsSteps, (err, results) => {
-          if (err) {
-            console.log('err', err);
-            return;
-          }
-          // results ? setSteps(results.value) : setSteps(null);
-          // stepVar(results);
-          stepVar(results.value)
-        });
-      }
+    const majorVersionIOS = parseInt(Platform.Version, 15);
+
+    if (majorVersionIOS >= 13) {
+      // console.log('ios >= 13');
+
+      let optionsSteps = {
+        date: new Date().toISOString(), // optional; default now
+        includeManuallyAdded: true, // optional: default true
+      };
+      AppleHealthKit.getStepCount(optionsSteps, (err, results) => {
+        if (err) {
+          console.log('err', err);
+          return;
+        }
+        // results ? setSteps(results.value) : setSteps(null);
+        // stepVar(results);
+        stepVar(results.value)
+      });
     }
+  }
   )
 
   return (
@@ -88,10 +88,10 @@ const majorVersionIOS = parseInt(Platform.Version, 15);
               status === "home"
                 ? 0
                 : step === 0
-                ? 0
-                : step > stepGoal
-                ? 100
-                : (step / stepGoal) * 100
+                  ? 0
+                  : step > stepGoal
+                    ? 100
+                    : (step / stepGoal) * 100
             }
             donutColor={coachColorVar().color.main}
             size={350}
@@ -154,6 +154,7 @@ const majorVersionIOS = parseInt(Platform.Version, 15);
         </Body1Text>
       </GoalBox>
       <LongButton
+        marginBottom={20}
         handleGoToNext={handleGoToNext}
         btnBackColor={buttonColor}
         disabled={disabled}
@@ -166,7 +167,7 @@ const majorVersionIOS = parseInt(Platform.Version, 15);
       />
     </>
   );
-    
+
 };
 
 const GoalTextBox = styled.View`

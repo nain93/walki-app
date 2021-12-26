@@ -15,7 +15,6 @@ import client, {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SplashScreen from "expo-splash-screen";
 import STOARGE from "./src/constants/stoarge";
-import { theme } from "./src/styles/theme";
 import LoggedOutNav from "./src/navigators/LoggedOutNav";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 

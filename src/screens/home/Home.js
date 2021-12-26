@@ -51,16 +51,18 @@ const Home = ({ navigation }) => {
   const [currentTime, setcurrentTime] = useState("");
 
   useEffect(() => {
-    let date = new Date().getDate();
-    let month = new Date().getMonth() + 1;
-    let hours = new Date().getHours();
-    let minutes = new Date().getMinutes();
-    hours = hours % 12;
-    hours = hours < 10 ? "0" + hours : hours;
-    let ampm = hours >= 12 ? "시" : "PM";
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    setcurrentDate(month + "월" + " " + date + "일");
-    setcurrentTime(hours + ":" + minutes + ampm);
+    setInterval(() => {
+      let date = new Date().getDate();
+      let month = new Date().getMonth() + 1;
+      let hours = new Date().getHours();
+      let minutes = new Date().getMinutes();
+      hours = hours % 12;
+      hours = hours < 10 ? "0" + hours : hours;
+      let ampm = hours >= 12 ? "시" : "PM";
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      setcurrentDate(month + "월" + " " + date + "일");
+      setcurrentTime(hours + ":" + minutes + ampm);
+    }, 1000)
     getLocation();
     load();
   }, []);
@@ -111,8 +113,8 @@ const Home = ({ navigation }) => {
   }
 
   return (
-    <Container style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
-      <TopStatus>
+    <Container style={{ flex: 1, backgroundColor: "#f3f3f3", paddingHorizontal: d2p(31) }}>
+      <TopStatus style={{ marginTop: d2p(34), marginBottom: d2p(46) }}>
         <View>
           <CurrentDate>{currentDate}</CurrentDate>
           <CurrentTime>{currentTime}</CurrentTime>
@@ -139,14 +141,10 @@ const Home = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  padding-left: ${d2p(31)};
-  padding-right: ${d2p(31)};
   background-color: #f3f3f3;
 `;
 
 const TopStatus = styled.View`
-  margin-top: ${d2p(34)};
-  margin-bottom: ${d2p(46)};
   flex-direction: row;
   justify-content: space-between;
   max-height: 66;
