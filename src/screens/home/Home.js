@@ -11,6 +11,7 @@ import StatusHome from "./StatusHome";
 import * as Location from 'expo-location';
 import translate from 'translate-google-api';
 import { d2p } from "../../common/utils";
+import { wDescEngToKor } from "../../common/weatherTrans";
 
 
 
@@ -21,7 +22,6 @@ const Home = ({ navigation }) => {
     condition: '',
   });
   const [city, setCity] = useState("")
-  const [transCity, setTransCity] = useState("")
   const [weatherPic, setWeatherPic] = useState("");
 
   // const Location = "강남구";
@@ -75,30 +75,24 @@ const Home = ({ navigation }) => {
       const longitude = locationData["coords"]["longitude"];
 
       const API_KEY = Config.API_KEY;
-      // const result = await axios.get(Config.WEATHER_API);
       const result = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
 
       const temp = Math.round(result.data.main.temp);
-      const condition = result.data.weather[0].main;
       const city = result.data.name
       const coWeather = weather.condition
-
       const resultt = await translate([city, coWeather], {
         from: "en",
         to: "ko",
-      }, console.log(resultt, '번역'));
-      // console.log(result, "결과");
-      // console.log(temp, "1");
-      // console.log(condition, "2");
-      // console.log(city, "도시")
-      setCity(city)
+      });
+      const condition = wDescEngToKor(result.data.weather[0].id)
+
+      setCity(resultt[0])
       setWeather({
         temp,
         condition,
       });
-      console.log(weather.condition);
     } catch (error) {
-      // Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?")
+      console.error(error)
     } finally {
       setReady(false);
     }
@@ -188,7 +182,7 @@ const CurrentText = styled.Text`
   color: ${theme.grayScale.gray3};
 `;
 const CurrentCity = styled.Text`
-font-size: 8px;
+font-size: 12px;
 justify-content: center;
 color: ${theme.grayScale.gray3};
 `

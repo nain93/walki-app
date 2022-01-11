@@ -1,7 +1,6 @@
 import React from "react";
 import { View } from "react-native";
 import styled from "styled-components";
-import { d2p } from "../common/utils";
 import { Body1Text, H1Text, theme } from "../styles/theme";
 
 const HeaderForm = ({ headerChildren, descChildren, align }) => {
@@ -15,14 +14,14 @@ const HeaderForm = ({ headerChildren, descChildren, align }) => {
 
 const Header = styled(H1Text)`
   text-align: ${(props) => props.align};
-  margin-bottom: ${d2p(12)};
+  margin-bottom: 12px;
 `;
 
 const Desc = styled(Body1Text)`
   color: ${theme.TextColor};
   text-align: ${(props) => props.align};
-  margin-bottom: ${d2p(20)};
-  margin-left: ${d2p(3)};
+  margin-bottom: 20px;
+  margin-left: 3px;
 `;
 
 export default HeaderForm;

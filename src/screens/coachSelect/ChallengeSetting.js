@@ -109,14 +109,16 @@ const ChallengeSetting = ({ navigation }) => {
         onCheat: () => { console.log("User is Cheating") }
       }
       startCounter(config);
+
       for (let i = 0; BackgroundService.isRunning(); i++) {
         await BackgroundService.updateNotification({ taskTitle: `걸음수: ${a}` })
         stepVar(a)
         if (a >= inputWatch) {
           walkStatus("success")
         }
+
         const date = new Date()
-        if (date.getHours() === 0 && date.getMinutes() === 0 && date.getSeconds() === 0) {
+        if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
           await putChallengeMutation({
             variables: {
               challenge: {
