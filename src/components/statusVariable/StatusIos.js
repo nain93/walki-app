@@ -40,12 +40,12 @@ const StatusIos = ({
   const stepGoal = useReactiveVar(stepGoalVar)
   const status = useReactiveVar(statusVar);
 
- 
+
 
   const permissions = {
     permissions: {
       read: [AppleHealthKit.Constants.Permissions.Steps,
-        AppleHealthKit.Constants.Permissions.StepCount,],
+      AppleHealthKit.Constants.Permissions.StepCount,],
       write: [AppleHealthKit.Constants.Permissions.Steps],
     },
   } 
@@ -96,10 +96,10 @@ const StatusIos = ({
               status === "home"
                 ? 0
                 : step === 0
-                ? 0
-                : step > stepGoal
-                ? 100
-                : (step / stepGoal) * 100
+                  ? 0
+                  : step > stepGoal
+                    ? 100
+                    : (step / stepGoal) * 100
             }
             donutColor={coachColorVar().color.main}
             size={350}
@@ -162,6 +162,7 @@ const StatusIos = ({
         </Body1Text>
       </GoalBox>
       <LongButton
+        marginBottom={20}
         handleGoToNext={handleGoToNext}
         btnBackColor={buttonColor}
         disabled={disabled}
@@ -174,7 +175,7 @@ const StatusIos = ({
       />
     </>
   );
-    
+
 };
 
 const GoalTextBox = styled.View`

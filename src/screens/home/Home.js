@@ -11,6 +11,7 @@ import StatusHome from "./StatusHome";
 import * as Location from 'expo-location';
 import translate from 'translate-google-api';
 import { d2p } from "../../common/utils";
+import { wDescEngToKor } from "../../common/weatherTrans";
 
 
 
@@ -21,7 +22,6 @@ const Home = ({ navigation }) => {
     condition: '',
   });
   const [city, setCity] = useState("")
-  const [transCity, setTransCity] = useState("")
   const [weatherPic, setWeatherPic] = useState("");
 
   // const Location = "강남구";
@@ -51,16 +51,18 @@ const Home = ({ navigation }) => {
   const [currentTime, setcurrentTime] = useState("");
 
   useEffect(() => {
-    let date = new Date().getDate();
-    let month = new Date().getMonth() + 1;
-    let hours = new Date().getHours();
-    let minutes = new Date().getMinutes();
-    hours = hours % 12;
-    hours = hours < 10 ? "0" + hours : hours;
-    let ampm = hours >= 12 ? "시" : "PM";
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    setcurrentDate(month + "월" + " " + date + "일");
-    setcurrentTime(hours + ":" + minutes + ampm);
+    setInterval(() => {
+      let date = new Date().getDate();
+      let month = new Date().getMonth() + 1;
+      let hours = new Date().getHours();
+      let minutes = new Date().getMinutes();
+      hours = hours % 12;
+      hours = hours < 10 ? "0" + hours : hours;
+      let ampm = hours >= 12 ? "시" : "PM";
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      setcurrentDate(month + "월" + " " + date + "일");
+      setcurrentTime(hours + ":" + minutes + ampm);
+    }, 1000)
     getLocation();
     load();
   }, []);
@@ -73,30 +75,24 @@ const Home = ({ navigation }) => {
       const longitude = locationData["coords"]["longitude"];
 
       const API_KEY = Config.API_KEY;
-      // const result = await axios.get(Config.WEATHER_API);
       const result = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
 
       const temp = Math.round(result.data.main.temp);
-      const condition = result.data.weather[0].main;
       const city = result.data.name
       const coWeather = weather.condition
-
       const resultt = await translate([city, coWeather], {
         from: "en",
         to: "ko",
-      }, console.log(resultt, '번역'));
-      // console.log(result, "결과");
-      // console.log(temp, "1");
-      // console.log(condition, "2");
-      // console.log(city, "도시")
-      setCity(city)
+      });
+      const condition = wDescEngToKor(result.data.weather[0].id)
+
+      setCity(resultt[0])
       setWeather({
         temp,
         condition,
       });
-      console.log(weather.condition);
     } catch (error) {
-      // Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?")
+      console.error(error)
     } finally {
       setReady(false);
     }
@@ -111,8 +107,8 @@ const Home = ({ navigation }) => {
   }
 
   return (
-    <Container style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
-      <TopStatus>
+    <Container style={{ flex: 1, backgroundColor: "#f3f3f3", paddingHorizontal: d2p(31) }}>
+      <TopStatus style={{ marginTop: d2p(34), marginBottom: d2p(46) }}>
         <View>
           <CurrentDate>{currentDate}</CurrentDate>
           <CurrentTime>{currentTime}</CurrentTime>
@@ -139,14 +135,10 @@ const Home = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  padding-left: ${d2p(31)};
-  padding-right: ${d2p(31)};
   background-color: #f3f3f3;
 `;
 
 const TopStatus = styled.View`
-  margin-top: ${d2p(34)};
-  margin-bottom: ${d2p(46)};
   flex-direction: row;
   justify-content: space-between;
   max-height: 66;
@@ -190,7 +182,7 @@ const CurrentText = styled.Text`
   color: ${theme.grayScale.gray3};
 `;
 const CurrentCity = styled.Text`
-font-size: 8px;
+font-size: 12px;
 justify-content: center;
 color: ${theme.grayScale.gray3};
 `
