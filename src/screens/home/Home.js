@@ -24,7 +24,6 @@ const Home = ({ navigation }) => {
   const [city, setCity] = useState("")
   const [weatherPic, setWeatherPic] = useState("");
 
-  // const Location = "강남구";
 
   const load = async () => {
     const result = await getLocation();
@@ -33,7 +32,7 @@ const Home = ({ navigation }) => {
   const WeatherSetter = () => {
     if (weather.condition === "맑음") {
       setWeatherPic(require("../../../assets/icons/cloud.png"));
-    } else if (weather.condition === "clouds") {
+    } else if (weather.condition === "구름") {
       setWeatherPic(require("../../../assets/icons/cloud.png"));
     } else if (weather.condition === "비") {
       setWeatherPic(require("../../../assets/icons/rain.png"));
@@ -63,7 +62,7 @@ const Home = ({ navigation }) => {
       setcurrentDate(month + "월" + " " + date + "일");
       setcurrentTime(hours + ":" + minutes + ampm);
     }, 1000)
-    getLocation();
+    // getLocation();
     load();
   }, []);
 
@@ -123,7 +122,7 @@ const Home = ({ navigation }) => {
             <WeatherImage source={SpaceLogo} resizeMode={"contain"} />
           </BarSpace>
           <WeatherSpace>
-            <WeatherImage source={WeatherLogo} resizeMode={"contain"} />
+            <WeatherImage source={weatherPic} resizeMode={"contain"} />
             <CurrentText>{weather.condition}</CurrentText>
           </WeatherSpace>
         </WeatherStatus>

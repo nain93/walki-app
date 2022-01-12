@@ -101,6 +101,7 @@ const KakaoLoginButton = ({ navigation }) => {
         style={{
           width: 160, // You must specify a width
           height: 45, // You must specify a height
+          justifyContent: "center"
         }}
         onPress={onAppleButtonPress}
       /> : <></>}
