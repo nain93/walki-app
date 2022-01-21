@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { coachColorVar, statusVar, tokenVar } from "../../../apollo";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { authLink, coachColorVar, statusVar, tokenVar } from "../../../apollo";
 import toki_hi from "../../../assets/images/character/toki_hi.png";
 import buki_hi from "../../../assets/images/character/buki.png";
 import { useReactiveVar, gql, useQuery } from "@apollo/client";
@@ -17,6 +17,8 @@ import tokiAlarm from "../../../assets/images/character/toki_alarm.png"
 import bokiAlarm from "../../../assets/images/character/boki_alarm.png"
 import { Body1Text, H2Text, H4Text, theme } from "../../styles/theme";
 import PushNotification, { Importance } from "react-native-push-notification";
+import { d2p } from "../../common/utils";
+import { useFocusEffect } from "@react-navigation/native";
 
 PushNotification.configure({
   onRegister: function (token) {
@@ -105,7 +107,7 @@ const StatusHome = ({ navigation }) => {
     }
   `;
 
-  const { } = useQuery(GET_REFRESH_TOKEN, {
+  const { refetch } = useQuery(GET_REFRESH_TOKEN, {
     onCompleted: (data) => {
       if (data) {
         console.log(data.refreshToken.accessToken, "data.refreshToken.accessToken");
@@ -113,9 +115,11 @@ const StatusHome = ({ navigation }) => {
         tokenVar(data.refreshToken.accessToken)
       }
     },
+    fetchPolicy: "no-cache"
   });
 
   useEffect(() => {
+    refetch()
     const alarmCheck = async () => {
       const check = await AsyncStorage.getItem(STOARGE.ALARM_CHECK)
       if (!check) {
@@ -171,11 +175,11 @@ const StatusHome = ({ navigation }) => {
           <ModalContainer >
             <Image
               source={coachColorVar().coach === "toki" ? tokiAlarm : bokiAlarm}
-              style={{ width: 266, height: 166 }}
+              style={{ width: d2p(266), height: d2p(166) }}
             />
             <TextView>
-              <H2Text style={{ textAlign: "center", marginTop: 24 }}>{coachColorVar().coach === "toki" ? "토키" : "부키"}의 응원 알림을{"\n"}받아보세요!</H2Text>
-              <Body1Text style={{ color: theme.grayScale.gray4, marginBottom: 24, marginTop: 8 }}>메세지 수신을 위해 알림을 설정해주세요.</Body1Text>
+              <H2Text style={{ textAlign: "center", marginTop: d2p(24) }}>{coachColorVar().coach === "toki" ? "토키" : "부키"}의 응원 알림을{"\n"}받아보세요!</H2Text>
+              <Body1Text style={{ color: theme.grayScale.gray4, marginBottom: d2p(24), marginTop: d2p(8) }}>메세지 수신을 위해 알림을 설정해주세요.</Body1Text>
             </TextView>
             <BtnWrap>
               <CancelBtn onPress={handleAlarmCheck}>

@@ -22,6 +22,7 @@ import bookMark from "../../assets/icons/bookmark.png";
 import { theme } from "../styles/theme";
 import { month, year } from "../common/getToday";
 import BottomSheetPicker from "../components/BottomSheetPicker";
+import { d2p } from "../common/utils";
 
 const Tabs = createBottomTabNavigator();
 
@@ -44,9 +45,9 @@ const TabNavigator = () => {
             tabBarActiveTintColor: tabColor?.color?.main,
             tabBarInactiveTintColor: theme.grayScale.gray3,
             tabBarStyle: {
-              height: 68,
-              paddingTop: 10,
-              paddingBottom: 10,
+              height: d2p(68),
+              paddingTop: d2p(10),
+              paddingBottom: d2p(10),
             },
             tabBarLabelStyle: {
               fontSize: 12,
@@ -77,7 +78,7 @@ const TabNavigator = () => {
           tabBarLabel: "홈",
           tabBarIcon: ({ color, focused }) => (
             <Image
-              style={{ width: 30, tintColor: color }}
+              style={{ width: d2p(30), tintColor: color }}
               resizeMode="contain"
               source={focused ? activehome : inactivehome}
             />
@@ -117,7 +118,7 @@ const TabNavigator = () => {
           },
           tabBarIcon: ({ color, focused }) => (
             <Image
-              style={{ width: 30, tintColor: color }}
+              style={{ width: d2p(30), tintColor: color }}
               resizeMode="contain"
               source={focused ? activemessage : inactivemessage}
             />
@@ -146,7 +147,7 @@ const TabNavigator = () => {
           },
           tabBarIcon: ({ color, focused }) => (
             <Image
-              style={{ width: 30, tintColor: color }}
+              style={{ width: d2p(30), tintColor: color }}
               resizeMode="contain"
               source={focused ? activestar : inactivestar}
             />

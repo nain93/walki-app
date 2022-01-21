@@ -45,6 +45,7 @@ query getMember{
 `
   const { loading } = useQuery(GET_MEMBER_QUERY, {
     onCompleted: (data) => {
+      console.log(data, "data");
       if (data) {
         if (data.getMember.coach?.name === "토키") {
           coachSelect("toki")
@@ -56,7 +57,8 @@ query getMember{
       else {
         isCoachVar(false)
       }
-    }
+    },
+    fetchPolicy: "no-cache"
   })
   if (loading) {
     return <Loading />

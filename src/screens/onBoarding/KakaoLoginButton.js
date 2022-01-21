@@ -124,6 +124,7 @@ const KakaoLoginButton = ({ navigation }) => {
 
 const Container = styled.View`
   padding:0 38px;
+  padding-bottom: ${Platform.OS === "android" ? `${d2p(34)}px` : getBottomSpace()};
 `;
 
 const KakaoButton = styled.TouchableOpacity`
@@ -149,7 +150,6 @@ const DescWrap = styled.View`
 const KakaoDesc = styled(Caption)`
   color: ${theme.grayScale.gray4};
   text-align: center;
-  margin-bottom: ${getBottomSpace()};
 `;
 
 const DescBtnText = styled(Caption)`

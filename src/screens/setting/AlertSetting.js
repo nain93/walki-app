@@ -39,9 +39,8 @@ const AlertSetting = ({ navigation }) => {
   const handleChangeState = (nextHour) => {
     PushNotification.localNotificationSchedule({
       channelId: "default",
-      title: `오늘도 ${
-        coachColor.coach === "booki" ? "부키" : "토키"
-      }와 함께 동네 한 바퀴 어때요?`,
+      title: `오늘도 ${coachColor.coach === "booki" ? "부키" : "토키"
+        }와 함께 동네 한 바퀴 어때요?`,
       message: "",
       date: nextHour,
       allowWhileIdle: true,
@@ -49,7 +48,7 @@ const AlertSetting = ({ navigation }) => {
       ignoreInForeground: true,
       invokeApp: false,
     });
-    
+
     PushNotificationIOS.addNotificationRequest({
       id: "default",
       fireDate: nextHour,
@@ -78,9 +77,8 @@ const AlertSetting = ({ navigation }) => {
       <Container>
         <HeaderForm
           headerChildren={"응원 알림 설정"}
-          descChildren={`당신을 응원하기 위해 ${
-            coachColor.coach === "booki" ? "부키" : "토키"
-          }가 매일 알림을 \n보내드려요! 시간은 나중에 변경할 수 있어요.`}
+          descChildren={`당신을 응원하기 위해 ${coachColor.coach === "booki" ? "부키" : "토키"
+            }가 매일 알림을 \n보내드려요! 시간은 나중에 변경할 수 있어요.`}
           align="left"
         />
         <TimePickerWrap>

@@ -17,8 +17,8 @@ export const GoalBox = styled.View`
 `;
 
 export const CharacetrImage = styled.Image`
-  width:  ${d2p(120)};
-  height: ${d2p(192)};
+  width:  ${d2p(120)}px;
+  height: ${d2p(192)}px;
 `;
 
 export const Blurgoal2 = styled.Text`

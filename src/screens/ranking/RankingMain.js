@@ -10,7 +10,7 @@ import { getYesterday } from "../../common/getToday";
 import tokiDefault from "../../../assets/images//toki_default.png";
 import bukiDefault from "../../../assets/images/buki_default.png";
 
-const Item = ({ name, profile, rank, numberColor,rankingStep,coach,myId,userId }) => (
+const Item = ({ name, profile, rank, numberColor, rankingStep, coach, myId, userId }) => (
   <RankContainer myId={myId} userId={userId} coach={coach}>
     <UserProfile>
       <H2Text
@@ -28,14 +28,14 @@ const Item = ({ name, profile, rank, numberColor,rankingStep,coach,myId,userId }
       />
       <H4Text style={{ color: theme.grayScale.gray1 }}>{name}</H4Text>
     </UserProfile>
-    <View style={{flexDirection:"row", alignItems:"center"}}>
-      <Image style={{width:18,height:18,marginRight:4}} source={coach === "부키" ? bukiDefault: tokiDefault} />
-      <Body3Text style={{color:theme.grayScale.gray1}}>
-        {String(rankingStep).length>3 ?
-        String(rankingStep).slice(0,String(rankingStep).length-3)
-        + "," + 
-        String(rankingStep).slice(String(rankingStep).length-3,String(rankingStep).length):rankingStep}
-        </Body3Text>
+    <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <Image style={{ width: 18, height: 18, marginRight: 4 }} source={coach === "부키" ? bukiDefault : tokiDefault} />
+      <Body3Text style={{ color: theme.grayScale.gray1 }}>
+        {String(rankingStep).length > 3 ?
+          String(rankingStep).slice(0, String(rankingStep).length - 3)
+          + "," +
+          String(rankingStep).slice(String(rankingStep).length - 3, String(rankingStep).length) : rankingStep}
+      </Body3Text>
     </View>
   </RankContainer>
 );
@@ -46,7 +46,7 @@ const RankContainer = styled.View`
   justify-content: space-between;
   padding: 14px 20px;
   margin: 12px 0;
-  background-color: ${props=>props.myId===props.userId ? props.coach === "부키" ? "#DCF2B6" : "#FCBFD1" : "transparent" };
+  background-color: ${props => props.myId === props.userId ? props.coach === "부키" ? "#DCF2B6" : "#FCBFD1" : "transparent"};
 `;
 
 const UserProfile = styled.View`
@@ -60,7 +60,7 @@ const ProfileImg = styled.Image`
   border-radius: 20px;
 `;
 
-const RankingMain = ({myId}) => {
+const RankingMain = ({ myId }) => {
   const GET_TOP10_RANKINGS_QUERY = gql`
     query getTop10Rankings($date: LocalDate) {
       getTop10Rankings(date: $date) {
@@ -89,6 +89,7 @@ const RankingMain = ({myId}) => {
   });
 
   const renderItem = ({ item, index }) => {
+    console.log(item, "item");
     return (
       <Item
         rankingStep={item.challenge.step}
@@ -96,15 +97,15 @@ const RankingMain = ({myId}) => {
           index === 0
             ? "#FFA319"
             : index === 1
-            ? "#BDBDBD"
-            : index === 2
-            ? "#C67855"
-            : theme.grayScale.black
+              ? "#BDBDBD"
+              : index === 2
+                ? "#C67855"
+                : theme.grayScale.black
         }
         userId={item.member.id}
         myId={myId}
         name={item.member.name}
-        coach={item.member.coach.name}
+        coach={item.member.coach}
         profile={item.member.profileImage}
         rank={item.number}
       />
@@ -118,7 +119,7 @@ const RankingMain = ({myId}) => {
   return (
     <Container>
       <Title>
-        <H2Text style={{marginHorizontal:20}}>TOP 10</H2Text>
+        <H2Text style={{ marginHorizontal: 20 }}>TOP 10</H2Text>
         <TouchableOpacity
           onPress={() =>
             toastRef.current.show(
@@ -138,7 +139,7 @@ const RankingMain = ({myId}) => {
         data={data.getTop10Rankings}
         renderItem={renderItem}
         keyExtractor={(item) => String(item.member.id)}
-        // extraData={selectedId}
+      // extraData={selectedId}
       />
       <Toast
         ref={toastRef}

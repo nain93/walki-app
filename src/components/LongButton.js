@@ -15,7 +15,7 @@ const LongButton = ({
 }) => {
   return (
     <Container
-      style={{ marginBottom: getBottomSpace() + d2p(marginBottom), width: Dimensions.get("window").width - d2p(76) }}
+      style={{ width: Dimensions.get("window").width - d2p(76) }}
       disabled={disabled}
       onPress={handleGoToNext}
       btnBackColor={btnBackColor}
@@ -31,8 +31,8 @@ const LongButton = ({
 
 const Container = styled.TouchableOpacity`
   align-self: center;
-  margin-top: auto;
-  height: 54px;
+  margin-top: 20px;
+  height:${d2p(54)}px;
   background-color: ${(props) => String(props.btnBackColor)};
   color: ${theme.grayScale.white};
   border-radius: 8px;

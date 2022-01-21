@@ -7,7 +7,7 @@ import onboarding03 from "../../../assets/images/img03.png";
 import { theme } from "../../styles/theme";
 import HeaderForm from "../../components/HeaderForm";
 import { d2p } from "../../common/utils";
-import { SafeAreaView,Image, View } from "react-native";
+import { SafeAreaView, Image, View } from "react-native";
 
 const HomeSwiper = () => {
   return (
@@ -27,39 +27,39 @@ const HomeSwiper = () => {
           },
         }}
       >
-        <View style={{textAlign:"left", paddingHorizontal:d2p(38),marginTop:d2p(74)}}>
+        <View style={{ textAlign: "left", paddingHorizontal: d2p(38), marginTop: d2p(74) }}>
           <HeaderForm
-              headerChildren={"코치와 함께 \n러닝해보세요!"}
-              descChildren={"토키와 부키가 당신의 데일리 러닝을 \n도와줘요!"}
-              align="left"
-            />
-          <View style={{alignItems:"center",marginTop:d2p(16),marginBottom:d2p(48)}}>
-            <Image source={onboarding01} style={{width:d2p(330),height:d2p(332)}} />
+            headerChildren={"코치와 함께 \n러닝해보세요!"}
+            descChildren={"토키와 부키가 당신의 데일리 러닝을 \n도와줘요!"}
+            align="left"
+          />
+          <View style={{ alignItems: "center", marginTop: d2p(16), marginBottom: d2p(48) }}>
+            <Image source={onboarding01} style={{ width: d2p(330), height: d2p(332) }} />
           </View>
         </View>
-        <View style={{textAlign:"left", paddingHorizontal:d2p(38),marginTop:d2p(74)}}>
-            <HeaderForm
-              headerChildren={"챌린지를 생성하고 \n달성해보세요!"}
-              descChildren={
-                "매일 챌린지를 달성하다보면 \n어느새 러닝이 습관으로 자리잡아 있을거예요!"
-              }
-              align="left"
-            />
-            <View style={{alignItems:"center",marginTop:d2p(16),marginBottom:d2p(48)}}>    
-              <Image source={onboarding02} style={{width:d2p(330),height:d2p(332)}} />
-            </View>
+        <View style={{ textAlign: "left", paddingHorizontal: d2p(38), marginTop: d2p(74) }}>
+          <HeaderForm
+            headerChildren={"챌린지를 생성하고 \n달성해보세요!"}
+            descChildren={
+              "매일 챌린지를 달성하다보면 \n어느새 러닝이 습관으로 자리잡아 있을거예요!"
+            }
+            align="left"
+          />
+          <View style={{ alignItems: "center", marginTop: d2p(16), marginBottom: d2p(48) }}>
+            <Image source={onboarding02} style={{ width: d2p(330), height: d2p(332) }} />
           </View>
-        <View style={{textAlign:"left", paddingHorizontal:d2p(38),marginTop:d2p(74)}}>
-            <HeaderForm
-              headerChildren={"메달을 \n차지해보세요!"}
-              descChildren={
-                "오늘 메달을 차지하지 못해도 낙심하지마세요! \n매일 기회가 주어져요!"
-              }
-              align="left"
-            />
-            <View style={{alignItems:"center",marginTop:d2p(16),marginBottom:d2p(48)}}>
-              <Image source={onboarding03} style={{width:d2p(330),height:d2p(332)}} />
-            </View>
+        </View>
+        <View style={{ textAlign: "left", paddingHorizontal: d2p(38), marginTop: d2p(74) }}>
+          <HeaderForm
+            headerChildren={"메달을 \n차지해보세요!"}
+            descChildren={
+              "오늘 메달을 차지하지 못해도 낙심하지마세요! \n매일 기회가 주어져요!"
+            }
+            align="left"
+          />
+          <View style={{ alignItems: "center", marginTop: d2p(16), marginBottom: d2p(48) }}>
+            <Image source={onboarding03} style={{ width: d2p(330), height: d2p(332) }} />
+          </View>
         </View>
       </Swiper>
     </Container>

@@ -20,7 +20,7 @@ const Header = styled(H1Text)`
 const Desc = styled(Body1Text)`
   color: ${theme.TextColor};
   text-align: ${(props) => props.align};
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   margin-left: 3px;
 `;
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import styled from "styled-components";
 import axios from "axios";
 import Loading from "../../components/Loading";
@@ -22,7 +22,7 @@ const Home = ({ navigation }) => {
     condition: '',
   });
   const [city, setCity] = useState("")
-  const [weatherPic, setWeatherPic] = useState("");
+  const [weatherPic, setWeatherPic] = useState("")
 
 
   const load = async () => {
@@ -122,7 +122,8 @@ const Home = ({ navigation }) => {
             <WeatherImage source={SpaceLogo} resizeMode={"contain"} />
           </BarSpace>
           <WeatherSpace>
-            <WeatherImage source={weatherPic} resizeMode={"contain"} />
+            {!!weatherPic &&
+              <WeatherImage source={weatherPic} resizeMode={"contain"} />}
             <CurrentText>{weather.condition}</CurrentText>
           </WeatherSpace>
         </WeatherStatus>
@@ -140,7 +141,7 @@ const Container = styled.View`
 const TopStatus = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  max-height: 66;
+  max-height: ${d2p(66)}px;
 `;
 
 const WeatherStatus = styled.View`
@@ -148,15 +149,15 @@ const WeatherStatus = styled.View`
 `;
 const LocationSpace = styled.View`
 align-items: flex-end;
-  padding-bottom: 5px;
+  padding-bottom: ${d2p(5)}px;
   justify-content: space-between;
 
 `;
 const WeatherSpace = styled.View`
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 5px;
-  padding-top:5px;
+  padding-bottom: ${d2p(5)}px;
+  padding-top:${d2p(5)}px;
 `;
 
 const BarSpace = styled.View`
@@ -190,8 +191,8 @@ const CurrentTemperature = styled.Text`
 `;
 
 const WeatherImage = styled.Image`
-  width: 40px;
-  height: 40px;
+  width: ${d2p(40)}px;
+  height: ${d2p(40)}px;
 `;
 
 export default Home;
