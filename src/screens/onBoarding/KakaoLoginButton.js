@@ -9,7 +9,7 @@ import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
 import { Caption, H4Text, theme } from "../../styles/theme";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { logUserIn } from "../../../apollo";
-import { d2p } from "../../common/utils";
+import { d2p, h2p } from "../../common/utils";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 
 const KakaoLoginButton = ({ navigation }) => {
@@ -106,7 +106,7 @@ const KakaoLoginButton = ({ navigation }) => {
         onPress={onAppleButtonPress}
       /> : <></>}
 
-      <DescWrap style={{ marginTop: d2p(10) }}>
+      <DescWrap style={{ marginTop: h2p(10) }}>
         <KakaoDesc>walki의 </KakaoDesc>
         <TouchableOpacity onPress={() => navigation.navigate("Service")}>
           <DescBtnText>이용약관</DescBtnText>
@@ -124,7 +124,7 @@ const KakaoLoginButton = ({ navigation }) => {
 
 const Container = styled.View`
   padding:0 38px;
-  padding-bottom: ${Platform.OS === "android" ? `${d2p(34)}px` : getBottomSpace()};
+  padding-bottom: ${Platform.OS === "android" ? `${h2p(34)}px` : getBottomSpace()};
 `;
 
 const KakaoButton = styled.TouchableOpacity`
@@ -134,7 +134,7 @@ const KakaoButton = styled.TouchableOpacity`
   background-color: #ffe812;
   border-radius: 8px;
   width: 100%;
-  height: 54px;
+  height: ${d2p(54)}px;
 `;
 
 const KakaoText = styled(H4Text)`

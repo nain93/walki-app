@@ -16,7 +16,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useReactiveVar } from "@apollo/client";
 import { Body1Text, H4Text, theme } from "../../styles/theme";
 import styled from "styled-components";
-import { d2p } from "../../common/utils";
+import { d2p, h2p } from "../../common/utils";
 import Svg, { Path, Circle } from 'react-native-svg'
 
 
@@ -69,7 +69,7 @@ const StatusAndroid = ({
   }
 
 
-  const size = Dimensions.get("window").width - d2p(64)
+  const size = h2p(312)
   const half = size / 2
 
 
@@ -93,7 +93,7 @@ const StatusAndroid = ({
                   , half)} Z`}
                 fill={coachColorVar().color.main}
               />
-              {<Circle cx={half} cy={half} r={half - d2p(10)} fill={"white"} />}
+              {<Circle cx={half} cy={half} r={half - h2p(10)} fill={"white"} />}
             </Svg>
             <View style={styles.textView}>
               <Animated.View style={[{ opacity: fadeimage ? fadeimage : 1 }]}>
@@ -150,7 +150,7 @@ const StatusAndroid = ({
             </View>
           </View>
         </TouchableOpacity>
-        <Body1Text style={{ marginTop: d2p(14), color: theme.grayScale.gray2 }}>
+        <Body1Text style={{ marginTop: h2p(14), color: theme.grayScale.gray2, marginBottom: "auto" }}>
           {cheerText}
         </Body1Text>
         <LongButton

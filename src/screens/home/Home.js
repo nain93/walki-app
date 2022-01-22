@@ -10,7 +10,7 @@ import Config from "react-native-config";
 import StatusHome from "./StatusHome";
 import * as Location from 'expo-location';
 import translate from 'translate-google-api';
-import { d2p } from "../../common/utils";
+import { d2p, h2p } from "../../common/utils";
 import { wDescEngToKor } from "../../common/weatherTrans";
 
 
@@ -106,8 +106,8 @@ const Home = ({ navigation }) => {
   }
 
   return (
-    <Container style={{ flex: 1, backgroundColor: "#f3f3f3", paddingHorizontal: d2p(31) }}>
-      <TopStatus style={{ marginTop: d2p(34), marginBottom: d2p(46) }}>
+    <Container style={{ paddingHorizontal: d2p(31) }}>
+      <TopStatus style={{ marginTop: h2p(34), marginBottom: h2p(46) }}>
         <View>
           <CurrentDate>{currentDate}</CurrentDate>
           <CurrentTime>{currentTime}</CurrentTime>
@@ -141,7 +141,7 @@ const Container = styled.View`
 const TopStatus = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  max-height: ${d2p(66)}px;
+  max-height: ${h2p(66)}px;
 `;
 
 const WeatherStatus = styled.View`
@@ -149,15 +149,15 @@ const WeatherStatus = styled.View`
 `;
 const LocationSpace = styled.View`
 align-items: flex-end;
-  padding-bottom: ${d2p(5)}px;
+  padding-bottom: ${h2p(5)}px;
   justify-content: space-between;
 
 `;
 const WeatherSpace = styled.View`
   align-items: center;
   justify-content: space-between;
-  padding-bottom: ${d2p(5)}px;
-  padding-top:${d2p(5)}px;
+  padding-bottom: ${h2p(5)}px;
+  padding-top:${h2p(5)}px;
 `;
 
 const BarSpace = styled.View`
@@ -191,8 +191,8 @@ const CurrentTemperature = styled.Text`
 `;
 
 const WeatherImage = styled.Image`
-  width: ${d2p(40)}px;
-  height: ${d2p(40)}px;
+  width: ${h2p(40)}px;
+  height: ${h2p(40)}px;
 `;
 
 export default Home;

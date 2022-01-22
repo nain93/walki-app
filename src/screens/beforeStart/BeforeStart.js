@@ -7,6 +7,8 @@ import notification from "../../../assets/icons/notification.png";
 import { coachColorVar } from "../../../apollo";
 import { Body1Text, H4Text } from "../../styles/theme";
 import LongButton from "../../components/LongButton";
+import { getBottomSpace } from "react-native-iphone-x-helper";
+import { d2p, h2p } from "../../common/utils";
 
 const BeforeStart = ({ navigation }) => {
   const handleGoToNext = () =>
@@ -52,30 +54,33 @@ const BeforeStart = ({ navigation }) => {
             </IconText>
           </AlertBox>
         </AlertSection>
+        <LongButton
+          handleGoToNext={handleGoToNext}
+          disabled={false}
+          btnBackColor={coachColorVar().color.main}
+        >
+          확인
+        </LongButton>
       </Container>
-      <LongButton
-        marginBottom={40}
-        handleGoToNext={handleGoToNext}
-        disabled={false}
-        btnBackColor={coachColorVar().color.main}
-      >
-        확인
-      </LongButton>
     </>
   );
 };
 
 const Container = styled.View`
   flex: 1;
-  padding:0 38px;
+  padding:0 ${d2p(38)}px;
+  padding-top: ${h2p(14)}px;
+  padding-bottom: ${Platform.OS === "android" ? `${h2p(40)}px` : getBottomSpace() + `${h2p(40)}}px`};
 `;
 
 const AlertSection = styled.View`
+  margin-bottom: auto;
+  margin-top: ${h2p(8)}px;
 `;
 
 const AlertBox = styled.View`
   align-items: center;
-  margin: 10px 0;
+  margin-top: ${h2p(24)}px;
 `;
 
 const IconBox = styled.View`

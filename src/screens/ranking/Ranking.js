@@ -45,9 +45,8 @@ const Ranking = () => {
 
   return (
     <Container>
-      {console.log(data?.getMyRankings,"data?.getMyRankings")}
       <RankingHeader rankingData={data?.getMyRankings} />
-      <RankingMain myId={data?.getMyRankings[0]?.member.id}/>
+      <RankingMain myId={data?.getMyRankings[0]?.member.id} />
     </Container>
   );
 };

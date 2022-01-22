@@ -1,9 +1,10 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { Text, Image } from "react-native";
+import { Text, Image, Dimensions } from "react-native";
 import styled from "styled-components";
 import { coachColorVar } from "../../../../apollo";
 import AddIcon from "../../../../assets/images/report/add_challenge.png";
+import { d2p, h2p } from "../../../common/utils";
 
 const AddBtn = () => {
   const navigation = useNavigation();
@@ -41,9 +42,10 @@ const AddBtn = () => {
 
 const AddList = styled.TouchableOpacity`
   flex: 1;
-  max-width: 33.3%;
-  height: 110px;
-  margin: 5px;
+  max-width: ${(Dimensions.get("window").width - d2p(60)) / 3}px;
+  height: ${d2p(110)}px;
+  margin: ${d2p(5)}px;
+  margin-right: ${d2p(10)}px;
   border-radius: 16px;
   align-items: center;
   justify-content: space-around;

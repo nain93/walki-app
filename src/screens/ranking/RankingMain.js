@@ -9,6 +9,7 @@ import Loading from "../../components/Loading";
 import { getYesterday } from "../../common/getToday";
 import tokiDefault from "../../../assets/images//toki_default.png";
 import bukiDefault from "../../../assets/images/buki_default.png";
+import { d2p, h2p } from "../../common/utils";
 
 const Item = ({ name, profile, rank, numberColor, rankingStep, coach, myId, userId }) => (
   <RankContainer myId={myId} userId={userId} coach={coach}>
@@ -119,7 +120,7 @@ const RankingMain = ({ myId }) => {
   return (
     <Container>
       <Title>
-        <H2Text style={{ marginHorizontal: 20 }}>TOP 10</H2Text>
+        <H2Text style={{ marginLeft: d2p(20) }}>TOP 10</H2Text>
         <TouchableOpacity
           onPress={() =>
             toastRef.current.show(
@@ -131,7 +132,7 @@ const RankingMain = ({ myId }) => {
           <Image
             source={info}
             resizeMode="contain"
-            style={{ width: 18, marginLeft: 5 }}
+            style={{ width: d2p(16), marginLeft: d2p(5) }}
           />
         </TouchableOpacity>
       </Title>
@@ -162,7 +163,7 @@ const RankingMain = ({ myId }) => {
 
 const Container = styled.View`
   flex: 1;
-  padding-top: 30px;
+  padding-top: ${h2p(24)}px;
 `;
 
 const Title = styled.View`

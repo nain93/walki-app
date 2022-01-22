@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Dimensions } from "react-native";
 import { coachColorVar } from "../../../../apollo";
+import { d2p, h2p } from "../../../common/utils";
 import { ListItem } from "../../../styles/reportTheme";
 import { theme } from "../../../styles/theme";
 
-const Item = ({ day, step, stepGoal, onPress, opacity }) => {
+const Item = ({ index, day, step, stepGoal, onPress, opacity }) => {
   if (opacity) {
     return <ListItem />;
   }
@@ -12,6 +13,8 @@ const Item = ({ day, step, stepGoal, onPress, opacity }) => {
     <ListItem
       onPress={onPress}
       style={{
+        marginVertical: h2p(5),
+        marginRight: index % 3 === 2 ? 0 : d2p(10),
         backgroundColor:
           step >= stepGoal
             ? coachColorVar().color.report

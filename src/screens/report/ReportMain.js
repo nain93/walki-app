@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { FlatList, Image, Text, TouchableOpacity } from "react-native";
+import { Dimensions, FlatList, Image, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { coachColorVar, userNameVar } from "../../../apollo";
 import Item from "./reportItems/Item";
@@ -10,6 +10,7 @@ import info from "../../../assets/icons/info.png";
 import Toast from "react-native-easy-toast";
 import AddBtn from "./reportItems/AddBtn";
 import { getToday } from "../../common/getToday";
+import { d2p, h2p } from "../../common/utils";
 
 const ReportMain = ({ stepInfo, children }) => {
   const userName = useReactiveVar(userNameVar);
@@ -46,6 +47,7 @@ const ReportMain = ({ stepInfo, children }) => {
     }
     return (
       <Item
+        index={index}
         opacity={item.day === undefined}
         day={item.day}
         step={item.step}
@@ -61,7 +63,7 @@ const ReportMain = ({ stepInfo, children }) => {
         <Text style={{ color: coachColorVar().color.sub }}>
           {userName.name}
         </Text>
-        <Text style={{fontFamily:"NanumBarunGothic"}}> 님의 데일리 챌린지 히스토리</Text>
+        <Text style={{ fontFamily: "NanumBarunGothic" }}> 님의 데일리 챌린지 히스토리</Text>
         <TouchableOpacity
           onPress={() =>
             toastRef.current.show(
@@ -79,6 +81,7 @@ const ReportMain = ({ stepInfo, children }) => {
       </NameTitle>
 
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={stepInfo}
         renderItem={renderItem}
         keyExtractor={(item) => item.createdAt}
@@ -107,8 +110,8 @@ const ReportMain = ({ stepInfo, children }) => {
 
 const Container = styled.View`
   flex: 1;
-  padding: 0 30px;
-  padding-top: 30px;
+  padding: 0 ${d2p(20)}px;
+  padding-top: ${h2p(30)}px;
 `;
 
 const NameTitle = styled.View`

@@ -11,26 +11,27 @@ import bukiDefault from "../../../assets/images/buki_default.png";
 import bukiHappy from "../../../assets/images/ranking/buki_happy.png";
 import bukiFail from "../../../assets/images/buki_fail.png";
 import { day, getYesterday, month } from "../../common/getToday";
+import { d2p, h2p } from "../../common/utils";
 
 const RankingHeader = ({ rankingData }) => {
   const [rank, setRank] = useState(null);
   const [upDown, setUpDown] = useState("");
 
   useEffect(() => {
-    console.log(rankingData,"rankingData");
+    console.log(rankingData, "rankingData");
     let rankData =
       (rankingData.length === 0
         ? 0
         : rankingData.length === 1 &&
           rankingData[0].challenge.challengeDate === getYesterday()
-        ? rankingData[0].number
-        : 0) -
+          ? rankingData[0].number
+          : 0) -
       (rankingData.length === 0
         ? 0
         : rankingData.length === 1 &&
           rankingData[0].challenge.challengeDate === getYesterday()
-        ? 0
-        : rankingData[0].number);
+          ? 0
+          : rankingData[0].number);
     if (rankData < 0) {
       rankData = -rankData;
       setUpDown("down");
@@ -50,8 +51,8 @@ const RankingHeader = ({ rankingData }) => {
             source={chat}
             resizeMode="contain"
             style={{
-              width: 20,
-              height: 20,
+              width: d2p(20),
+              height: d2p(20),
               tintColor: "white",
               marginRight: 5,
             }}
@@ -65,12 +66,12 @@ const RankingHeader = ({ rankingData }) => {
             {upDown === "up"
               ? "했어요!"
               : upDown === "same"
-              ? "지난 랭킹이랑 같은 순위에요!"
-              : "했어요"}
+                ? "지난 랭킹이랑 같은 순위에요!"
+                : "했어요"}
           </H4Text>
         </TextWrap>
         <RankingWrap>
-          <RankingBox style={{ opacity: 0.6, marginRight: 8 }}>
+          <RankingBox style={{ opacity: 0.6, marginRight: d2p(8) }}>
             <Text>
               {month}/{day - 2}
             </Text>
@@ -80,8 +81,8 @@ const RankingHeader = ({ rankingData }) => {
                   ? 0
                   : rankingData.length === 1 &&
                     rankingData[0].challenge.challengeDate === getYesterday()
-                  ? 0
-                  : rankingData[0].number}
+                    ? 0
+                    : rankingData[0].number}
               </H2Text>
               <Text> 위</Text>
             </View>
@@ -96,8 +97,8 @@ const RankingHeader = ({ rankingData }) => {
                   ? 0
                   : rankingData.length === 1 &&
                     rankingData[0].challenge.challengeDate === getYesterday()
-                  ? rankingData[0].number
-                  : 0}
+                    ? rankingData[0].number
+                    : 0}
               </H2Text>
               <Text> 위</Text>
             </View>
@@ -110,11 +111,11 @@ const RankingHeader = ({ rankingData }) => {
             upDown === "up"
               ? tokiHappy
               : upDown === "same"
-              ? tokiDefault
-              : tokiFail
+                ? tokiDefault
+                : tokiFail
           }
           resizeMode="contain"
-          style={{ width: 90 }}
+          style={{ width: d2p(90) }}
         />
       ) : (
         <Image
@@ -122,11 +123,11 @@ const RankingHeader = ({ rankingData }) => {
             upDown === "up"
               ? bukiHappy
               : upDown === "same"
-              ? bukiDefault
-              : bukiFail
+                ? bukiDefault
+                : bukiFail
           }
           resizeMode="contain"
-          style={{ width: 90 }}
+          style={{ width: d2p(90) }}
         />
       )}
     </Conatiner>
@@ -134,18 +135,18 @@ const RankingHeader = ({ rankingData }) => {
 };
 
 const Conatiner = styled.View`
-  flex: 0.5;
+  height: ${h2p(152)}px;
   flex-direction: row;
-  align-items: center;
-  padding: 0 30px;
+  padding: 0 ${d2p(20)}px;
   justify-content: space-between;
+  align-items: center;
   background-color: ${(props) => props.coachColor};
 `;
 
 const TextWrap = styled.View`
   flex-direction: row;
   align-items: flex-end;
-  margin-bottom: 10px;
+  margin-bottom: ${h2p(8)}px;
 `;
 
 const RankingWrap = styled.View`
@@ -155,7 +156,7 @@ const RankingWrap = styled.View`
 const RankingBox = styled.View`
   flex: 1;
   align-items: center;
-  padding: 10px;
+  padding: ${d2p(10)}px;
   background-color: ${theme.grayScale.white};
   border-radius: 8px;
 `;

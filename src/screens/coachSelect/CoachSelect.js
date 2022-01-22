@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { d2p, h2p } from "../../common/utils";
 import HeaderForm from "../../components/HeaderForm";
 import TokiBookiSelect from "./TokiBookiSelect";
 
@@ -20,7 +21,9 @@ const CoachSelect = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  padding: 0 38px;
+  padding: 0 ${d2p(38)}px;
+  padding-top: ${h2p(14)}px;
+  padding-bottom: ${Platform.OS === "android" ? `${h2p(40)}px` : getBottomSpace() + `${h2p(40)}}px`};
 `;
 
 export default CoachSelect;

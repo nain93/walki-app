@@ -33,6 +33,7 @@ const Stack = createStackNavigator();
 
 const GlobalNav = () => {
   const isCoach = useReactiveVar(isCoachVar)
+  const [coachLoading, setCoachLoading] = useState(true)
 
   const GET_MEMBER_QUERY = gql`
 query getMember{
@@ -45,22 +46,24 @@ query getMember{
 `
   const { loading } = useQuery(GET_MEMBER_QUERY, {
     onCompleted: (data) => {
-      console.log(data, "data");
-      if (data) {
+      if (data.getMember.coach) {
         if (data.getMember.coach?.name === "토키") {
           coachSelect("toki")
         }
         else if (data.getMember.coach?.name === "부키") {
           coachSelect("booki")
         }
+        setCoachLoading(false)
       }
       else {
         isCoachVar(false)
+        setCoachLoading(false)
       }
     },
     fetchPolicy: "no-cache"
   })
-  if (loading) {
+
+  if (loading || coachLoading) {
     return <Loading />
   }
 
@@ -98,6 +101,7 @@ query getMember{
           name="BeforeStart"
           options={{
             title: "",
+            headerLeft: () => null,
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android

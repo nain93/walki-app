@@ -6,7 +6,7 @@ import onboarding02 from "../../../assets/images/img02.png";
 import onboarding03 from "../../../assets/images/img03.png";
 import { theme } from "../../styles/theme";
 import HeaderForm from "../../components/HeaderForm";
-import { d2p } from "../../common/utils";
+import { d2p, h2p } from "../../common/utils";
 import { SafeAreaView, Image, View } from "react-native";
 
 const HomeSwiper = () => {
@@ -20,24 +20,24 @@ const HomeSwiper = () => {
           nextTitleStyle: { display: "none" },
           prevTitleStyle: { display: "none" },
           dotsWrapperStyle: {
-            marginTop: d2p(30),
+            marginTop: h2p(30),
           },
           dotActiveStyle: {
             backgroundColor: theme.toki.color.main,
           },
         }}
       >
-        <View style={{ textAlign: "left", paddingHorizontal: d2p(38), marginTop: d2p(74) }}>
+        <View style={{ textAlign: "left", paddingHorizontal: h2p(38), marginTop: h2p(74) }}>
           <HeaderForm
             headerChildren={"코치와 함께 \n러닝해보세요!"}
             descChildren={"토키와 부키가 당신의 데일리 러닝을 \n도와줘요!"}
             align="left"
           />
-          <View style={{ alignItems: "center", marginTop: d2p(16), marginBottom: d2p(48) }}>
-            <Image source={onboarding01} style={{ width: d2p(330), height: d2p(332) }} />
+          <View style={{ alignItems: "center", marginTop: h2p(36), marginBottom: h2p(48) }}>
+            <Image source={onboarding01} style={{ width: h2p(330), height: h2p(332) }} />
           </View>
         </View>
-        <View style={{ textAlign: "left", paddingHorizontal: d2p(38), marginTop: d2p(74) }}>
+        <View style={{ textAlign: "left", paddingHorizontal: h2p(38), marginTop: h2p(74) }}>
           <HeaderForm
             headerChildren={"챌린지를 생성하고 \n달성해보세요!"}
             descChildren={
@@ -45,11 +45,11 @@ const HomeSwiper = () => {
             }
             align="left"
           />
-          <View style={{ alignItems: "center", marginTop: d2p(16), marginBottom: d2p(48) }}>
-            <Image source={onboarding02} style={{ width: d2p(330), height: d2p(332) }} />
+          <View style={{ alignItems: "center", marginTop: h2p(36), marginBottom: h2p(48) }}>
+            <Image source={onboarding02} style={{ width: h2p(330), height: h2p(332) }} />
           </View>
         </View>
-        <View style={{ textAlign: "left", paddingHorizontal: d2p(38), marginTop: d2p(74) }}>
+        <View style={{ textAlign: "left", paddingHorizontal: h2p(38), marginTop: h2p(74) }}>
           <HeaderForm
             headerChildren={"메달을 \n차지해보세요!"}
             descChildren={
@@ -57,8 +57,8 @@ const HomeSwiper = () => {
             }
             align="left"
           />
-          <View style={{ alignItems: "center", marginTop: d2p(16), marginBottom: d2p(48) }}>
-            <Image source={onboarding03} style={{ width: d2p(330), height: d2p(332) }} />
+          <View style={{ alignItems: "center", marginTop: h2p(36), marginBottom: h2p(48) }}>
+            <Image source={onboarding03} style={{ width: h2p(330), height: h2p(332) }} />
           </View>
         </View>
       </Swiper>

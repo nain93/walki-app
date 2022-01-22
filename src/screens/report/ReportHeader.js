@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { coachColorVar } from "../../../apollo";
 import { Body1Text, Caption, theme } from "../../styles/theme";
 import * as Progress from "react-native-progress";
+import { d2p, h2p } from "../../common/utils";
 
 const ReportHeader = ({ stepTotal }) => {
   const { stepGoal, stepAchievement, challengeGoal, challengeAchievement } =
@@ -11,7 +12,7 @@ const ReportHeader = ({ stepTotal }) => {
 
   return (
     <Container coachColor={coachColorVar().color.report}>
-      <Body1Text style={{ color: "white" }}>
+      <Body1Text style={{ color: "white", marginTop: h2p(18), marginBottom: h2p(26) }}>
         이번달도 {coachColorVar().coach === "toki" ? "토키" : "부키"}와 함께
         목표를 이뤄봐요!
       </Body1Text>
@@ -42,9 +43,9 @@ const ReportHeader = ({ stepTotal }) => {
                 {challengeAchievement === 0
                   ? 0
                   : (
-                      (challengeAchievement * 100) /
-                      challengeGoal
-                    ).toFixed()}{" "}
+                    (challengeAchievement * 100) /
+                    challengeGoal
+                  ).toFixed()}{" "}
                 / 100
               </ReportNum>
               <Caption> %</Caption>
@@ -83,9 +84,9 @@ const ReportHeader = ({ stepTotal }) => {
             style={{
               position: "absolute",
               right: 0,
-              width: 120,
+              width: d2p(120),
             }}
-            size={120}
+            size={d2p(120)}
             progress={
               stepAchievement === 0
                 ? 0
@@ -100,9 +101,9 @@ const ReportHeader = ({ stepTotal }) => {
             style={{
               position: "absolute",
               right: 0,
-              width: 105,
+              width: d2p(105),
             }}
-            size={90}
+            size={d2p(90)}
             progress={
               challengeAchievement === 0
                 ? 0
@@ -117,9 +118,9 @@ const ReportHeader = ({ stepTotal }) => {
             style={{
               position: "absolute",
               right: 0,
-              width: 90,
+              width: d2p(90,)
             }}
-            size={60}
+            size={d2p(60)}
             progress={
               challengeAchievement === 0
                 ? 0
@@ -141,13 +142,13 @@ const ReportHeader = ({ stepTotal }) => {
 };
 
 const Container = styled.View`
-  flex: 0.8;
-  padding: 0 30px;
-  justify-content: space-around;
+  height: ${h2p(246)}px;
+  padding: 0 ${d2p(20)}px;
   background-color: ${(props) => props.coachColor};
 `;
 
 const ReportInfoWrap = styled.View`
+  margin-bottom: ${h2p(36)}px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -163,7 +164,7 @@ const CationView = styled(Caption)`
 `;
 
 const ReportInfo = styled.View`
-  margin-bottom: 10px;
+  margin-bottom: ${h2p(8)}px;
 `;
 
 const ReportNum = styled.Text`

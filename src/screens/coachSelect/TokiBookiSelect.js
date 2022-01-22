@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Body3Text, H3Text, theme } from "../../styles/theme";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import tokiImg from "../../../assets/images/toki_character.png";
 import bookiImg from "../../../assets/images/booki_character.png";
 import LongButton from "../../components/LongButton";
 import { useMutation, gql, useQuery } from "@apollo/client";
 import { coachSelect } from "../../../apollo";
 import Loading from "../../components/Loading";
+import { d2p, h2p } from "../../common/utils";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 
 const TokiBookiSelect = ({ navigation }) => {
   const [isClick, setIsClick] = useState("");
@@ -74,7 +76,7 @@ const TokiBookiSelect = ({ navigation }) => {
 
   return (
     <>
-      <Container>
+      <Container >
         <TokiBox selected={isClick === "toki"} onPress={handleTokiSelect}>
           <Wrapper>
             <TokiBookiImg source={tokiImg} resizeMode="contain" />
@@ -95,7 +97,6 @@ const TokiBookiSelect = ({ navigation }) => {
         </BookiBox>
       </Container>
       <LongButton
-        marginBottom={40}
         handleGoToNext={handleGoToNext}
         disabled={!isClick}
         btnBackColor={theme.grayScale.black}
@@ -107,13 +108,15 @@ const TokiBookiSelect = ({ navigation }) => {
 };
 
 const Container = styled.View`
+  margin-top: ${d2p(20)}px;
+  margin-bottom: auto;
 `;
 
 const TokiBookiStyle = styled.TouchableOpacity`
   width: 100%;
-  height: 122px;
+  height: ${d2p(122)}px;
   background-color: ${theme.grayScale.gray7};
-  margin: 10px 0;
+  margin-bottom: ${d2p(10)}px;
   border-radius: 16px;
   padding: 10px 40px;
 `;

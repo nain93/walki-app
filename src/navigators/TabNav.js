@@ -22,7 +22,7 @@ import bookMark from "../../assets/icons/bookmark.png";
 import { theme } from "../styles/theme";
 import { month, year } from "../common/getToday";
 import BottomSheetPicker from "../components/BottomSheetPicker";
-import { d2p } from "../common/utils";
+import { d2p, h2p } from "../common/utils";
 
 const Tabs = createBottomTabNavigator();
 
