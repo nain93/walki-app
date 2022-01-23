@@ -8,6 +8,7 @@ import { useReactiveVar } from "@apollo/client";
 import LongButton from "../../components/LongButton";
 import PushNotification from "react-native-push-notification";
 import DatePicker from "react-native-date-picker";
+import { d2p } from "../../common/utils";
 
 const AlertSetting = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
@@ -66,10 +67,9 @@ const AlertSetting = ({ navigation }) => {
     <KeyboardAvoidingView
       style={{
         flex: 1,
-        paddingLeft: 30,
-        paddingBottom: 30,
-        paddingTop: 30,
-        paddingRight: 30,
+        paddingLeft: d2p(38),
+        paddingTop: d2p(16),
+        paddingRight: d2p(38),
       }}
       behavior={"height"}
       keyboardVerticalOffset={100}
@@ -110,12 +110,13 @@ const AlertSetting = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  justify-content: space-between;
 `;
 
 const TimePickerWrap = styled.View`
   flex-direction: row;
   justify-content: center;
+  margin-top: ${d2p(50)}px;
+  margin-bottom: ${d2p(12)}px;
 `;
 
 const TimeWrap = styled.View`

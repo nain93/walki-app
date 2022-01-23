@@ -5,5 +5,10 @@ export function d2p(size) {
 }
 
 export function h2p(size) {
-	return size / 812 * Dimensions.get("window").height
+	if (Dimensions.get("window").height > 600) {
+		return size / 375 * Dimensions.get("window").width;
+	}
+	else {
+		return size / 812 * Dimensions.get("window").height
+	}
 }

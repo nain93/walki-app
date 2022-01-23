@@ -10,6 +10,7 @@ import { getToday, getYesterday } from "../../common/getToday";
 import HeaderForm from "../../components/HeaderForm";
 import BackgroundService from 'react-native-background-actions';
 import { startCounter, stopCounter } from 'react-native-accurate-step-counter';
+import { d2p } from "../../common/utils";
 
 const ChallengeSetting = ({ navigation }) => {
   const walkRef = useRef();
@@ -175,15 +176,13 @@ const ChallengeSetting = ({ navigation }) => {
       keyboardVerticalOffset={100}
     >
       <Container>
-        <TodayChallengeBox>
-          <HeaderForm
-            headerChildren={"오늘의 챌린지 세우기"}
-            descChildren={
-              "우리 오늘은 얼마나 걸어볼까요? \n200걸음 이상 설정해보세요!"
-            }
-            align="left"
-          />
-        </TodayChallengeBox>
+        <HeaderForm
+          headerChildren={"오늘의 챌린지 세우기"}
+          descChildren={
+            "우리 오늘은 얼마나 걸어볼까요? \n200걸음 이상 설정해보세요!"
+          }
+          align="left"
+        />
         <InputBox>
           <WalkTextInput
             coachColor={coachColor}
@@ -197,7 +196,6 @@ const ChallengeSetting = ({ navigation }) => {
           <WalkiText>걸음</WalkiText>
         </InputBox>
         <LongButton
-          marginBottom={20}
           handleGoToNext={handleSubmit(handlePutChallenge)}
           disabled={inputWatch < 200}
           btnBackColor={coachColorVar()?.color?.main}
@@ -214,13 +212,10 @@ const InputBox = styled.View`
   justify-content: center;
   flex-direction: row;
   align-items: flex-end;
+  margin: ${d2p(40)}px 0;
 `;
 
-const TodayChallengeBox = styled.View`
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
+
 
 const WalkTextInput = styled.TextInput`
   font-size: 64px;
@@ -239,9 +234,9 @@ const WalkiText = styled(Body1Text)`
 
 const Container = styled.View`
   flex: 1;
-  padding: 30px;
-  justify-content: space-between;
-  align-items: center;
+  padding-top: ${d2p(13)}px;
+  padding-left: ${d2p(38)}px;
+  padding-right: ${d2p(38)}px;
 `;
 
 export default ChallengeSetting;

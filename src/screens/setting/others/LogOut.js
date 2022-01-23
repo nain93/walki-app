@@ -18,7 +18,7 @@ const LogOut = ({ handleLogOutModal, logOutModalOpen }) => {
       okayText={"로그아웃"}
     >
       <H3Text
-        style={{ color: theme.grayScale.gray1 }}
+        style={{ color: theme.grayScale.gray1, textAlign: "center" }}
       >{`로그아웃하면 목표 걸음 수 입력 \n푸쉬 알림을 받을 수 없어요`}</H3Text>
       <H3Text style={{ color: theme.grayScale.gray1 }}>
         그래도 로그아웃하시겠어요?

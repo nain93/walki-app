@@ -12,6 +12,7 @@ import {
 import { gql, useMutation } from "@apollo/client";
 import { coachColorVar, userNameVar } from "../../../apollo";
 import deleteIcon from "../../../assets/icons/delete.png";
+import { d2p } from "../../common/utils";
 
 const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
 
@@ -151,7 +152,9 @@ const EditName = ({
 
 const Container = styled.View`
   flex: 1;
-  padding: 30px;
+  padding-top: ${d2p(16)}px;
+  padding-left: ${d2p(38)}px;
+  padding-right: ${d2p(38)}px;
   align-items: center;
 `;
 

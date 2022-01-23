@@ -37,6 +37,7 @@ const ReportMain = ({ stepInfo, children }) => {
     if (item.selected) {
       return (
         <ClickedItem
+          index={index}
           opacity={item.day === undefined}
           day={item.day}
           step={item.step}

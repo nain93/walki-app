@@ -7,6 +7,7 @@ import { useMutation, gql } from "@apollo/client";
 import { isCoachVar, logUserOut, statusVar } from "../../../../apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import STOARGE from "../../../constants/stoarge";
+import { d2p } from "../../../common/utils";
 
 const DeleteUser = ({ handleDeleteModal, deleteModalOpen }) => {
   const DELETE_USER_MUTATION = gql`
@@ -38,7 +39,7 @@ const DeleteUser = ({ handleDeleteModal, deleteModalOpen }) => {
       okayText={"탈퇴하기"}
     >
       <H2Text>정말 탈퇴할거에요?</H2Text>
-      <Body1Text style={{ color: theme.TextColor }}>
+      <Body1Text style={{ color: theme.TextColor, textAlign: "center", marginTop: d2p(8), marginBottom: d2p(24) }}>
         쌓여왔던 운동 기록이 사라져요.
       </Body1Text>
     </CharacterModal>

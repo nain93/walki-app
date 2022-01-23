@@ -10,6 +10,7 @@ import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import STOARGE from "../../constants/stoarge";
 import { useFocusEffect } from "@react-navigation/core";
+import { d2p } from "../../common/utils";
 
 const Setting = ({ navigation }) => {
   const [time, setTime] = useState({
@@ -45,9 +46,8 @@ const Setting = ({ navigation }) => {
 
         <AlertSettingText coachColor={coachColor}>
           {ampm
-            ? `${ampm} ${hour < 10 ? `0${hour}` : hour}:${
-                minute < 10 ? `0${minute}` : minute
-              }`
+            ? `${ampm} ${hour < 10 ? `0${hour}` : hour}:${minute < 10 ? `0${minute}` : minute
+            }`
             : "설정"}
         </AlertSettingText>
       </SettingBox>
@@ -74,7 +74,7 @@ const Setting = ({ navigation }) => {
 const Container = styled.View`
   flex: 0.4;
   justify-content: space-around;
-  padding: 0 30px;
+  padding: 0 ${d2p(38)}px;
   border-bottom-color: ${theme.grayScale.gray7};
 `;
 

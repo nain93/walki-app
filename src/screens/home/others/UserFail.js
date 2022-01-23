@@ -5,6 +5,7 @@ import bukiFail from "../../../../assets/images/buki_fail.png";
 import { Body1Text, H2Text, theme } from "../../../styles/theme";
 import { walkStatus } from "../../../../apollo";
 import BackgroundService from 'react-native-background-actions';
+import { d2p } from "../../../common/utils";
 
 const UserFail = ({ handleFailModal, failModalOpen }) => {
   const handleOkayBtn = async () => {
@@ -22,7 +23,7 @@ const UserFail = ({ handleFailModal, failModalOpen }) => {
       okayText="그만하기"
     >
       <H2Text>정말 그만할거에요?</H2Text>
-      <Body1Text style={{ color: theme.TextColor }}>
+      <Body1Text style={{ color: theme.TextColor, textAlign: "center", marginTop: d2p(8), marginBottom: d2p(24) }}>
         그만하기를 선택하면{"\n"}오늘은 다시 운동할 수 없어요.
       </Body1Text>
     </CharacterModal>

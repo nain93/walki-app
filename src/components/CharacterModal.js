@@ -4,6 +4,7 @@ import Modal from "react-native-modal";
 import styled from "styled-components";
 import { theme } from "../styles/theme";
 import { coachColorVar } from "../../apollo";
+import { d2p, h2p } from "../common/utils";
 
 const CharacterModal = ({
   open,
@@ -31,7 +32,7 @@ const CharacterModal = ({
             <Image
               source={coachColorVar().coach === "toki" ? tokiImg : bukiImg}
               resizeMode="contain"
-              style={{ width: 100, height: 116 }}
+              style={{ width: d2p(100), height: d2p(100), marginBottom: d2p(24) }}
             />
           ) : (
             <></>
@@ -59,13 +60,12 @@ const Container = styled.View`
 `;
 
 const ModalContainer = styled.View`
-  flex: ${(props) => (props.tokiImg ? 0.4 : 0.3)};
   border-radius: 16px;
   background-color: ${theme.grayScale.white};
-  width: 326px;
+  width: ${d2p(326)}px;
   align-items: center;
   justify-content: space-around;
-  padding: 10px 0;
+  padding: ${d2p(24)}px;
 `;
 
 const BtnWrap = styled.TouchableOpacity`
@@ -77,9 +77,11 @@ const BtnWrap = styled.TouchableOpacity`
 const CancelBtn = styled.TouchableOpacity`
   border-radius: 8px;
   background-color: ${theme.grayScale.gray6};
-  width: 135px;
+  width: ${d2p(135)}px;
+  height: ${d2p(48)}px;
   padding: 12px 0;
   align-items: center;
+  justify-content: center;
   margin: 0 5px;
 `;
 
@@ -87,9 +89,11 @@ const OkayBtn = styled.TouchableOpacity`
   border-radius: 8px;
   background-color: ${theme.grayScale.gray1};
   color: ${theme.grayScale.white};
-  width: 135px;
+  width: ${d2p(135)}px;
+  height: ${d2p(48)}px;
   padding: 12px 0;
   align-items: center;
+  justify-content: center;
   margin: 0 5px;
 `;
 
