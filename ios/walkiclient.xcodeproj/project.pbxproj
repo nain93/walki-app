@@ -359,7 +359,7 @@
 			baseConfigurationReference = 9FCD13106C2D3C59305AB169 /* Pods-walkiclient.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				"ARCHS[sdk=*]" = arm64;
+				"ARCHS[sdk=*]" = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
@@ -403,12 +403,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F7CA89CD6CF0D6BB64A25ED3 /* Pods-walkiclient.release.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					Standard,
-					architectures,
-					"-",
-					"$(ARCHS_STANDARD)",
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;

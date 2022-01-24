@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { d2p, h2p } from "../../common/utils";
 import HeaderForm from "../../components/HeaderForm";
 import TokiBookiSelect from "./TokiBookiSelect";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 
 const CoachSelect = ({ navigation }) => {
   return (

@@ -31,7 +31,7 @@ const Home = ({ navigation }) => {
   };
   const WeatherSetter = () => {
     if (weather.condition === "맑음") {
-      setWeatherPic(require("../../../assets/icons/cloud.png"));
+      setWeatherPic(require("../../../assets/icons/sun.png"));
     } else if (weather.condition === "구름") {
       setWeatherPic(require("../../../assets/icons/cloud.png"));
     } else if (weather.condition === "비") {
