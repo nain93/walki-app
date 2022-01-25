@@ -10,7 +10,7 @@ const AddItem = ({ stepGoal }) => {
   const step = useReactiveVar(stepVar);
   return (
     <ListItem
-      style={{ marginRight: d2p(10) }}
+      style={{ marginRight: d2p(8) }}
     >
       <Text style={{ color: coachColorVar().color.report, fontWeight: "600" }}>
         Today

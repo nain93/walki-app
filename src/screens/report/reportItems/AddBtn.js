@@ -44,8 +44,7 @@ const AddList = styled.TouchableOpacity`
   flex: 1;
   max-width: ${(Dimensions.get("window").width - d2p(60)) / 3}px;
   height: ${d2p(110)}px;
-  margin: ${d2p(5)}px;
-  margin-right: ${d2p(10)}px;
+  margin-right: ${d2p(8)}px;
   border-radius: 16px;
   align-items: center;
   justify-content: space-around;

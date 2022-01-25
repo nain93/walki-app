@@ -2,7 +2,7 @@ import React from "react";
 import { Image, Text } from "react-native";
 import Modal from "react-native-modal";
 import styled from "styled-components";
-import { theme } from "../styles/theme";
+import { H4Text, theme } from "../styles/theme";
 import { coachColorVar } from "../../apollo";
 import { d2p, h2p } from "../common/utils";
 
@@ -40,10 +40,10 @@ const CharacterModal = ({
           {children}
           <BtnWrap>
             <CancelBtn onPress={handleModal}>
-              <Text>취소</Text>
+              <H4Text>취소</H4Text>
             </CancelBtn>
             <OkayBtn onPress={handleOkayBtn}>
-              <OkayBtnText>{okayText}</OkayBtnText>
+              <H4Text style={{ color: theme.grayScale.white }}>{okayText}</H4Text>
             </OkayBtn>
           </BtnWrap>
         </ModalContainer>
@@ -95,10 +95,6 @@ const OkayBtn = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   margin: 0 5px;
-`;
-
-const OkayBtnText = styled.Text`
-  color: ${theme.grayScale.white};
 `;
 
 export default CharacterModal;

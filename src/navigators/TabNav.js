@@ -19,10 +19,10 @@ import activemessage from "../../assets/icons/activemessage.png";
 import inactivemessage from "../../assets/icons/inactivemessage.png";
 import setting from "../../assets/icons/setting.png";
 import bookMark from "../../assets/icons/bookmark.png";
-import { theme } from "../styles/theme";
+import { theme, headerTitleStyle } from "../styles/theme";
 import { month, year } from "../common/getToday";
 import BottomSheetPicker from "../components/BottomSheetPicker";
-import { d2p, h2p } from "../common/utils";
+import { d2p } from "../common/utils";
 
 const Tabs = createBottomTabNavigator();
 
@@ -132,9 +132,8 @@ const TabNavigator = () => {
           headerTitleAlign: "center",
           headerTitle: "랭킹",
           headerTitleStyle: {
+            ...headerTitleStyle,
             color: theme.grayScale.white,
-            fontSize: 16,
-            fontWeight: "700",
           },
           headerLeft: () => null,
           headerRight: (props) => (

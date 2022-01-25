@@ -41,7 +41,7 @@ const Setting = ({ navigation }) => {
             resizeMode="contain"
             style={{ tintColor: theme.grayScale.gray4 }}
           />
-          <SettingText>응원 알림 설정</SettingText>
+          <Body1Text>응원 알림 설정</Body1Text>
         </View>
 
         <AlertSettingText coachColor={coachColor}>
@@ -55,7 +55,7 @@ const Setting = ({ navigation }) => {
         {/* ios, aos 따로? */}
         <View style={{ flexDirection: "row" }}>
           <SettingImg source={bookMark} resizeMode="contain" />
-          <SettingText>앱 설정</SettingText>
+          <Body1Text>앱 설정</Body1Text>
         </View>
       </SettingBox>
       <SettingBox
@@ -64,7 +64,7 @@ const Setting = ({ navigation }) => {
       >
         <View style={{ flexDirection: "row" }}>
           <SettingImg source={document} resizeMode="contain" />
-          <SettingText>약관확인</SettingText>
+          <Body1Text>약관확인</Body1Text>
         </View>
       </SettingBox>
     </Container>
@@ -86,8 +86,6 @@ const SettingBox = styled.TouchableOpacity`
   flex: 1;
   padding: 0 10px;
 `;
-
-const SettingText = styled(Body1Text)``;
 
 const SettingImg = styled.Image`
   width: 24px;
