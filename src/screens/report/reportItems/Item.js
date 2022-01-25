@@ -23,7 +23,6 @@ const Item = ({ index, day, step, stepGoal, onPress, opacity }) => {
     >
       <Text
         style={{
-          marginBottom: 5,
           color:
             step >= stepGoal ? theme.grayScale.gray6 : theme.grayScale.gray4,
           fontSize: 14,
@@ -31,7 +30,7 @@ const Item = ({ index, day, step, stepGoal, onPress, opacity }) => {
       >
         {day}
       </Text>
-      <View style={{ alignItems: "center" }}>
+      <View style={{ alignItems: "center", marginTop: d2p(8) }}>
         <Text
           style={{
             color:

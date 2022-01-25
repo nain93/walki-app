@@ -26,6 +26,11 @@ import { d2p } from "../common/utils";
 
 const Tabs = createBottomTabNavigator();
 
+export const tabBarLabelStyle = {
+  fontFamily: "NanumBarunGothic",
+  fontSize: 12
+}
+
 const TabNavigator = () => {
   const bottomSheetRef = useRef(null);
   const [selectedMonth, setSelectedMonth] = useState({
@@ -76,6 +81,7 @@ const TabNavigator = () => {
             shadowOpacity: 0, //ios
           },
           tabBarLabel: "홈",
+          tabBarLabelStyle,
           tabBarIcon: ({ color, focused }) => (
             <Image
               style={{ width: d2p(30), tintColor: color }}
@@ -99,6 +105,7 @@ const TabNavigator = () => {
         )}
         options={{
           headerTitleAlign: "center",
+          tabBarLabelStyle,
           headerTitle: () => (
             <BottomSheetPicker
               setStepInfo={setStepInfo}
@@ -130,6 +137,7 @@ const TabNavigator = () => {
         component={Ranking}
         options={{
           headerTitleAlign: "center",
+          tabBarLabelStyle,
           headerTitle: "랭킹",
           headerTitleStyle: {
             ...headerTitleStyle,

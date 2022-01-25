@@ -22,14 +22,13 @@ const AddBtn = () => {
           },
           shadowOpacity: 0.23,
           shadowRadius: 2.62,
-
           elevation: 2,
         }}
       >
         <Image
           style={{
-            width: 40,
-            height: 40,
+            width: d2p(32),
+            height: d2p(32),
             tintColor: coachColorVar().color.report,
           }}
           source={AddIcon}
@@ -42,18 +41,21 @@ const AddBtn = () => {
 
 const AddList = styled.TouchableOpacity`
   flex: 1;
-  max-width: ${(Dimensions.get("window").width - d2p(60)) / 3}px;
+  max-width: ${(Dimensions.get("window").width - d2p(56)) / 3}px;
   height: ${d2p(110)}px;
   margin-right: ${d2p(8)}px;
   border-radius: 16px;
   align-items: center;
-  justify-content: space-around;
-  padding: 5px 0px;
+  justify-content:center;
 `;
 
 const AddIconStyle = styled.View`
-  border-radius: 30px;
-  padding: 10px;
+  border-radius: 60px;
+  width: ${d2p(60)}px;
+  height: ${d2p(60)}px;
+  margin-top: ${d2p(8)}px;
+  justify-content: center;
+  align-items: center;
   background-color: white;
 `;
 

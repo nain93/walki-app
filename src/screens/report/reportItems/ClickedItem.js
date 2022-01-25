@@ -41,6 +41,7 @@ const ClickedItem = ({ index, step, stepGoal, onPress, opacity }) => {
       />
       <H4Text
         style={{
+          marginTop: d2p(4),
           color:
             step >= stepGoal ? theme.grayScale.white : theme.grayScale.gray3,
         }}

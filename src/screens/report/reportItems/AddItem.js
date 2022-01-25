@@ -15,7 +15,7 @@ const AddItem = ({ stepGoal }) => {
       <Text style={{ color: coachColorVar().color.report, fontWeight: "600" }}>
         Today
       </Text>
-      <View style={{ alignItems: "center" }}>
+      <View style={{ alignItems: "center", marginTop: d2p(8) }}>
         <Text
           style={{
             color: coachColorVar().color.report,
