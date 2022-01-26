@@ -3,6 +3,8 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <TSBackgroundFetch/TSBackgroundFetch.h>
+
 #import <React/RCTLinkingManager.h>
 #import <RNKakaoLogins.h>
 #import "RCTAppleHealthKit.h"
@@ -63,7 +65,9 @@ static void InitializeFlipper(UIApplication *application) {
   #endif
 
   [super application:application didFinishLaunchingWithOptions:launchOptions];
-
+  
+  [[TSBackgroundFetch sharedInstance] didFinishLaunching];
+  
   return YES;
 }
 

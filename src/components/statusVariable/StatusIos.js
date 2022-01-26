@@ -78,7 +78,7 @@ const StatusIos = ({
                 // stepVar(results);
                 stepVar(results.value)
               });
-              console.log(step, "stepTest");
+              // console.log(step, "stepTest");
 
             },1000)
           }

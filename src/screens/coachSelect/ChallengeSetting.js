@@ -9,8 +9,12 @@ import { KeyboardAvoidingView, Platform } from "react-native";
 import { getToday, getYesterday } from "../../common/getToday";
 import HeaderForm from "../../components/HeaderForm";
 import BackgroundService from 'react-native-background-actions';
+import BackgroundFetch from "react-native-background-fetch";
+
+
 import { startCounter, stopCounter } from 'react-native-accurate-step-counter';
 import { d2p } from "../../common/utils";
+
 
 const ChallengeSetting = ({ navigation }) => {
   const walkRef = useRef();
@@ -27,6 +31,9 @@ const ChallengeSetting = ({ navigation }) => {
       walkingNum: 200,
     },
   });
+
+  const stepstep = useReactiveVar(stepVar);
+  const stepGoal = useReactiveVar(stepGoalVar)
 
   const inputWatch = watch("walkingNum");
 
@@ -48,6 +55,105 @@ const ChallengeSetting = ({ navigation }) => {
     }
   `;
 
+  
+    const init = () => {
+      BackgroundFetch.configure(
+        {
+          minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
+          // Android options
+          forceAlarmManager: true, // <-- Set true to bypass JobScheduler.
+          stopOnTerminate: false,
+          startOnBoot: true,
+          requiredNetworkType: BackgroundFetch.NETWORK_TYPE_NONE, // Default
+          requiresCharging: false, // Default
+          requiresDeviceIdle: false, // Default
+          requiresBatteryNotLow: false, // Default
+          requiresStorageNotLow: false, // Default
+        },
+        async (taskId) => {
+          console.log('[js] Received background-fetch event: ', taskId);
+          console.log(stepstep);
+
+          // for(i=0; i++){
+          
+          // }
+          const date = new Date()
+        if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
+          await putChallengeMutation({
+            variables: {
+              challenge: {
+                step: stepstep,
+                stepGoal: inputWatch,
+                challengeDate: getYesterday(),
+              },
+            },
+          });
+          walkStatus("home")
+          BackgroundFetch.finish()
+        }
+
+          // Use a switch statement to route task-handling.
+          switch (taskId) {
+            case 'com.transistorsoft.fetch':
+              console.log('Received custom task');
+              try {
+                const result = "foo"
+                console.log('result: ', result);
+              } catch (err) {
+                console.log('fetch failed', err);
+              }
+              break;
+            default:
+              console.log('Default fetch task');
+          }
+          // Required: Signal completion of your task to native code
+          // If you fail to do this, the OS can terminate your app
+          // or assign battery-blame for consuming too much background-time
+          BackgroundFetch.finish(taskId);
+        },
+        (error) => {
+          console.log('[js] RNBackgroundFetch failed to start');
+        },
+      );
+
+      BackgroundFetch.scheduleTask({
+        taskId: "com.transistorsoft.fetch",
+        forceAlarmManager: true,
+        delay: 5000,
+      })
+  
+      // Optional: Query the authorization status.
+      BackgroundFetch.status((status) => {
+        switch (status) {
+          case BackgroundFetch.STATUS_RESTRICTED:
+            console.log('BackgroundFetch restricted');
+            break;
+          case BackgroundFetch.STATUS_DENIED:
+            console.log('BackgroundFetch denied');
+            break;
+          case BackgroundFetch.STATUS_AVAILABLE:
+            console.log('BackgroundFetch is enabled');
+            console.log("right?");
+            break;
+        }
+      });
+      
+    };
+
+    
+    useEffect(() => {
+      init();
+    }, []);
+  
+  
+ 
+  
+ 
+  
+
+
+
+
   const { refetch } = useQuery(GET_CHALLENGES_QUERY, {
     onCompleted: (data) => {
       const arr = [];
@@ -64,6 +170,8 @@ const ChallengeSetting = ({ navigation }) => {
     },
   });
 
+
+  
   const [putChallengeMutation, { loading }] = useMutation(
     PUT_CHALLENGE_MUTATION,
     {
@@ -152,6 +260,8 @@ const ChallengeSetting = ({ navigation }) => {
     });
     if (Platform.OS === "android") {
       await BackgroundService.start(veryIntensiveTask, options);
+    }else {
+      await BackgroundFetch.start(init, options)
     }
     stepGoalVar(inputWatch)
     walkStatus("walking");
@@ -161,9 +271,11 @@ const ChallengeSetting = ({ navigation }) => {
 
   useEffect(() => {
     walkRef?.current?.focus();
-  }, []);
+    
+}, []);
 
   useEffect(() => {
+    init();
     register("walkingNum", { required: true });
   }, []);
 
