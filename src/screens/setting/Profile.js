@@ -7,6 +7,8 @@ import { gql, useQuery, useReactiveVar } from "@apollo/client";
 import { coachColorVar, userNameVar } from "../../../apollo";
 import Loading from "../../components/Loading";
 import { useFocusEffect } from "@react-navigation/native";
+import { d2p, h2p } from "../../common/utils";
+import { View } from "react-native";
 
 const Profile = ({ navigation }) => {
   const GET_MEMBER = gql`
@@ -46,13 +48,14 @@ const Profile = ({ navigation }) => {
 
   return (
     <Container>
+      <View style={{ height: h2p(122) }}></View>
       <ProfileImg
         source={
           profileImage
             ? { uri: profileImage }
             : coachColorVar().coach === "toki"
-            ? noProfileTokiImg
-            : noProfileBookiImg
+              ? noProfileTokiImg
+              : noProfileBookiImg
         }
         resizeMode="cover"
       />
@@ -77,20 +80,21 @@ const Profile = ({ navigation }) => {
 };
 
 const Container = styled.View`
-  padding: 0 40px;
+  padding: 0 ${d2p(38)}px;
   align-items: center;
+  margin-bottom: ${h2p(27)}px;
 `;
 
 const ProfileImg = styled.Image`
-  width: 100px;
-  height: 100px;
-  margin: 10px 0;
-  border-radius: 50px;
+  position: absolute;
+  width: ${d2p(100)}px;
+  height: ${d2p(100)}px;
+  border-radius: 100px;
 `;
 
 const NameInputBox = styled.View`
   flex-direction: row;
-  align-items: center;
+  margin-top: ${h2p(4)}px;
 `;
 
 const Name = styled(Body3Text)`
@@ -101,18 +105,19 @@ const Name = styled(Body3Text)`
 
 const NameInput = styled.View`
   width: 100%;
-  height: 48px;
+  /* height: ${d2p(48)}px; */
   justify-content: center;
   background-color: ${theme.grayScale.gray7};
   border-radius: 8px;
-  margin: 5px 0;
+  
   border: 1px solid ${theme.grayScale.gray5};
-  padding: 0 10px;
+  padding: ${h2p(12)}px ${d2p(15)}px;
 `;
 
 const NameChange = styled.TouchableOpacity`
   position: absolute;
-  right: 10px;
+  right: ${d2p(10)}px;
+  top:${h2p(12)}px;
 `;
 
 const ChangeText = styled(Body1Text)`

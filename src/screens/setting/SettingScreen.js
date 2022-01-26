@@ -24,7 +24,6 @@ const SettingScreen = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  justify-content: space-around;
 `;
 
 const Line = styled.View`

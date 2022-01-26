@@ -117,9 +117,10 @@ const ChallengeSetting = ({ navigation }) => {
         if (a >= inputWatch) {
           walkStatus("success")
         }
-
         const date = new Date()
-        if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
+        console.log(date.getSeconds(), "getSeconds");
+        console.log(date.getMinutes(), "getMinutes");
+        if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() <= 5)) {
           await putChallengeMutation({
             variables: {
               challenge: {
