@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Dimensions, FlatList, Image, Text, TouchableOpacity } from "react-native";
+import { FlatList, Image, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { coachColorVar, userNameVar } from "../../../apollo";
 import Item from "./reportItems/Item";
@@ -11,6 +11,7 @@ import Toast from "react-native-easy-toast";
 import AddBtn from "./reportItems/AddBtn";
 import { getToday } from "../../common/getToday";
 import { d2p, h2p } from "../../common/utils";
+import { Body2Text, Body3Text } from "../../styles/theme"
 
 const ReportMain = ({ stepInfo, children }) => {
   const userName = useReactiveVar(userNameVar);
@@ -61,10 +62,10 @@ const ReportMain = ({ stepInfo, children }) => {
   return (
     <Container>
       <NameTitle>
-        <Text style={{ color: coachColorVar().color.sub }}>
+        <Body2Text style={{ color: coachColorVar().color.sub }}>
           {userName.name}
-        </Text>
-        <Text style={{ fontFamily: "NanumBarunGothic" }}> 님의 데일리 챌린지 히스토리</Text>
+        </Body2Text>
+        <Body3Text> 님의 데일리 챌린지 히스토리</Body3Text>
         <TouchableOpacity
           onPress={() =>
             toastRef.current.show(

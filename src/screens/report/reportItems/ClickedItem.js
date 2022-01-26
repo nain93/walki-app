@@ -19,7 +19,7 @@ const ClickedItem = ({ index, step, stepGoal, onPress, opacity }) => {
       onPress={onPress}
       style={{
         marginVertical: h2p(5),
-        marginRight: index % 3 === 2 ? 0 : d2p(10),
+        marginRight: index % 3 === 2 ? 0 : d2p(8),
         backgroundColor:
           step >= stepGoal
             ? coachColorVar().color.report
@@ -41,6 +41,7 @@ const ClickedItem = ({ index, step, stepGoal, onPress, opacity }) => {
       />
       <H4Text
         style={{
+          marginTop: d2p(4),
           color:
             step >= stepGoal ? theme.grayScale.white : theme.grayScale.gray3,
         }}

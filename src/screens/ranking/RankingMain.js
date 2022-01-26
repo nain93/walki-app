@@ -25,12 +25,11 @@ const Item = ({ name, profile, rank, numberColor, rankingStep, coach, myId, user
       <ProfileImg
         source={{ uri: profile }}
         resizeMode="cover"
-        style={{ marginRight: 10 }}
       />
       <H4Text style={{ color: theme.grayScale.gray1 }}>{name}</H4Text>
     </UserProfile>
     <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <Image style={{ width: 18, height: 18, marginRight: 4 }} source={coach === "부키" ? bukiDefault : tokiDefault} />
+      <Image style={{ width: d2p(24), height: d2p(24), marginRight: d2p(4) }} source={coach === "부키" ? bukiDefault : tokiDefault} />
       <Body3Text style={{ color: theme.grayScale.gray1 }}>
         {String(rankingStep).length > 3 ?
           String(rankingStep).slice(0, String(rankingStep).length - 3)
@@ -45,9 +44,9 @@ const RankContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px;
-  margin: 12px 0;
-  background-color: ${props => props.myId === props.userId ? props.coach === "부키" ? "#DCF2B6" : "#FCBFD1" : "transparent"};
+  padding: ${d2p(14)}px ${d2p(20)}px;
+  height: ${d2p(60)}px;
+  background-color: ${props => props.myId === props.userId ? (props.coach === "부키" ? "#DCF2B6" : "#FCBFD1") : "transparent"};
 `;
 
 const UserProfile = styled.View`
@@ -56,8 +55,9 @@ const UserProfile = styled.View`
 `;
 
 const ProfileImg = styled.Image`
-  width: 40px;
-  height: 40px;
+  width: ${d2p(32)}px;
+  height:  ${d2p(32)}px;
+  margin-right: ${d2p(8)}px;
   border-radius: 20px;
 `;
 
@@ -88,9 +88,7 @@ const RankingMain = ({ myId }) => {
       // date: "2021-10-24",
     },
   });
-
   const renderItem = ({ item, index }) => {
-    console.log(item, "item");
     return (
       <Item
         rankingStep={item.challenge.step}
@@ -106,7 +104,7 @@ const RankingMain = ({ myId }) => {
         userId={item.member.id}
         myId={myId}
         name={item.member.name}
-        coach={item.member.coach}
+        coach={item.member.coach.name}
         profile={item.member.profileImage}
         rank={item.number}
       />
@@ -169,6 +167,7 @@ const Container = styled.View`
 const Title = styled.View`
   flex-direction: row;
   align-items: center;
+  margin-bottom: ${d2p(12)}px;
 `;
 
 export default RankingMain;

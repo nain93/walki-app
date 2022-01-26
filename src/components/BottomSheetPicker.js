@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "react-native";
 import { monthVar } from "../../apollo";
 import { gql, useQuery } from "@apollo/client";
-import { theme } from "../styles/theme";
+import { headerTitleStyle, theme } from "../styles/theme";
 import DownIcon from "react-native-vector-icons/AntDesign";
 import styled from "styled-components";
 
@@ -15,7 +15,7 @@ const BottomSheetPicker = ({ selectedMonth, bottomSheetRef }) => {
     }
   `;
 
-  const {} = useQuery(GET_REPORT_MONTH, {
+  const { } = useQuery(GET_REPORT_MONTH, {
     onCompleted: (data) => {
       const months = [];
       data.getReportMonth.yearMonthList.map((item, idx) => {
@@ -34,7 +34,7 @@ const BottomSheetPicker = ({ selectedMonth, bottomSheetRef }) => {
 
   return (
     <MonthButton onPress={handleBottomSheet}>
-      <Text style={{ color: theme.grayScale.white, fontSize: 16 }}>
+      <Text style={[headerTitleStyle, { color: theme.grayScale.white }]}>
         {`${selectedMonth.year}년 ${selectedMonth.month}월 리포트`}
       </Text>
       <DownIcon

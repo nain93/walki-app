@@ -19,12 +19,17 @@ import activemessage from "../../assets/icons/activemessage.png";
 import inactivemessage from "../../assets/icons/inactivemessage.png";
 import setting from "../../assets/icons/setting.png";
 import bookMark from "../../assets/icons/bookmark.png";
-import { theme } from "../styles/theme";
+import { theme, headerTitleStyle } from "../styles/theme";
 import { month, year } from "../common/getToday";
 import BottomSheetPicker from "../components/BottomSheetPicker";
-import { d2p, h2p } from "../common/utils";
+import { d2p } from "../common/utils";
 
 const Tabs = createBottomTabNavigator();
+
+export const tabBarLabelStyle = {
+  fontFamily: "NanumBarunGothic",
+  fontSize: 12
+}
 
 const TabNavigator = () => {
   const bottomSheetRef = useRef(null);
@@ -76,6 +81,7 @@ const TabNavigator = () => {
             shadowOpacity: 0, //ios
           },
           tabBarLabel: "홈",
+          tabBarLabelStyle,
           tabBarIcon: ({ color, focused }) => (
             <Image
               style={{ width: d2p(30), tintColor: color }}
@@ -99,6 +105,7 @@ const TabNavigator = () => {
         )}
         options={{
           headerTitleAlign: "center",
+          tabBarLabelStyle,
           headerTitle: () => (
             <BottomSheetPicker
               setStepInfo={setStepInfo}
@@ -130,11 +137,11 @@ const TabNavigator = () => {
         component={Ranking}
         options={{
           headerTitleAlign: "center",
+          tabBarLabelStyle,
           headerTitle: "랭킹",
           headerTitleStyle: {
+            ...headerTitleStyle,
             color: theme.grayScale.white,
-            fontSize: 16,
-            fontWeight: "700",
           },
           headerLeft: () => null,
           headerRight: (props) => (

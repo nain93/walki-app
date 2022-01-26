@@ -10,7 +10,7 @@ import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import STOARGE from "../../constants/stoarge";
 import { useFocusEffect } from "@react-navigation/core";
-import { d2p } from "../../common/utils";
+import { d2p, h2p } from "../../common/utils";
 
 const Setting = ({ navigation }) => {
   const [time, setTime] = useState({
@@ -35,13 +35,13 @@ const Setting = ({ navigation }) => {
   return (
     <Container>
       <SettingBox onPress={() => navigation.navigate("AlertSetting")}>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <SettingImg
             source={notification}
             resizeMode="contain"
             style={{ tintColor: theme.grayScale.gray4 }}
           />
-          <SettingText>응원 알림 설정</SettingText>
+          <Body1Text>응원 알림 설정</Body1Text>
         </View>
 
         <AlertSettingText coachColor={coachColor}>
@@ -53,18 +53,18 @@ const Setting = ({ navigation }) => {
       </SettingBox>
       <SettingBox onPress={() => navigation.navigate("AppSetting")}>
         {/* ios, aos 따로? */}
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <SettingImg source={bookMark} resizeMode="contain" />
-          <SettingText>앱 설정</SettingText>
+          <Body1Text>앱 설정</Body1Text>
         </View>
       </SettingBox>
       <SettingBox
         style={{ borderBottomWidth: 0 }}
         onPress={() => navigation.navigate("TermsCheck")}
       >
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <SettingImg source={document} resizeMode="contain" />
-          <SettingText>약관확인</SettingText>
+          <Body1Text>약관확인</Body1Text>
         </View>
       </SettingBox>
     </Container>
@@ -72,34 +72,30 @@ const Setting = ({ navigation }) => {
 };
 
 const Container = styled.View`
-  flex: 0.4;
-  justify-content: space-around;
+  min-height: ${h2p(180)}px;
   padding: 0 ${d2p(38)}px;
+  margin-bottom: ${h2p(20)}px;
   border-bottom-color: ${theme.grayScale.gray7};
 `;
 
 const SettingBox = styled.TouchableOpacity`
-  flex-direction: row;
   border-bottom-width: 1px;
   border-bottom-color: ${theme.grayScale.gray7};
-  align-items: center;
-  flex: 1;
-  padding: 0 10px;
+  padding: ${h2p(18)}px 0;
 `;
 
-const SettingText = styled(Body1Text)``;
-
 const SettingImg = styled.Image`
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
+  width: ${d2p(24)}px;
+  height: ${d2p(24)}px;
+  margin-right: ${d2p(12)}px;
+
 `;
 
 const AlertSettingText = styled(Body1Text)`
   color: ${(props) => props.coachColor.color.main};
   position: absolute;
-  right: 10px;
-  align-items: center;
+  right: ${d2p(10)}px;
+  top:${h2p(18)}px
 `;
 
 export default Setting;

@@ -71,7 +71,6 @@ const StatusAndroid = ({
 
   const size = h2p(312)
   const half = size / 2
-  console.log(Dimensions.get("window").height, "height");
   return (
     <>
       <GoalBox>

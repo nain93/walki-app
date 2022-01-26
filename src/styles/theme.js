@@ -1,70 +1,68 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
+
+export const headerTitleStyle = {
+  fontFamily: "NanumBarunGothicBold",
+  fontSize: 16
+}
 
 export const Setting = styled.Text`
   font-size: 64px;
-  font-weight: 700;
-  font-family: "NanumBarunGothic";
+  font-family: "NanumBarunGothicBold";
 `;
 
 export const HomeText = styled.Text`
   font-size: 54px;
-  font-weight: 700;
-  font-family: "NanumBarunGothic";
+  font-family: "NanumBarunGothicBold";
 `;
 
 export const H1Text = styled.Text`
   font-size: 30px;
-  font-weight: 700;
   line-height: 45px;
-  font-family: "NanumBarunGothic";
+  font-family: "NanumBarunGothicBold";
 `;
 
 export const H2Text = styled.Text`
   font-size: 24px;
-  font-weight: 700;
-  font-family: "NanumBarunGothic";
+  font-family: "NanumBarunGothicBold";
 `;
 
 export const H3Text = styled.Text`
   font-size: 18px;
-  font-weight: 700;
-  font-family: "NanumBarunGothic";
+  line-height: 27px;
+  font-family: "NanumBarunGothicBold";
 `;
 
 export const H4Text = styled.Text`
   font-size: 16px;
-  font-weight: 700;
-  font-family:"NanumBarunGothic";
+  font-family:"NanumBarunGothicBold";
 `;
 
 export const Body1Text = styled.Text`
   font-size: 16px;
-  font-weight: 400;
   line-height: 24px;
   font-family:"NanumBarunGothic";
 `;
 
 export const Body2Text = styled.Text`
   font-size: 14px;
-  font-weight: 600;
-  font-family:"NanumBarunGothic";
+  line-height: 21px;
+  font-family:"NanumBarunGothicBold";
 `;
 
 export const Body3Text = styled.Text`
   font-size: 14px;
-  font-weight: 400;
+  line-height: 21px;
   font-family:"NanumBarunGothic";
 `;
 
 export const Caption = styled.Text`
   font-size: 12px;
-  font-weight: 400;
   font-family:"NanumBarunGothic";
 `;
 
 export const FontWeight = {
-	Bold: "NanumBarunGothicBold",
-	Regular: "NanumBarunGothic"
+  Bold: "NanumBarunGothicBold",
+  Regular: "NanumBarunGothic"
 };
 
 

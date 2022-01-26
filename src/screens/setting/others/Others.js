@@ -5,6 +5,7 @@ import { Body1Text, theme } from "../../../styles/theme";
 import DeleteUser from "./DeleteUser";
 import LogOut from "./LogOut";
 import Share from "react-native-share";
+import { d2p, h2p } from "../../../common/utils";
 
 const Others = () => {
   const [logOutModalOpen, setLogOutModalOpen] = useState(false);
@@ -38,17 +39,17 @@ const Others = () => {
           resizeMode="contain"
           style={{ tintColor: theme.grayScale.gray4 }}
         />
-        <SettingText>이 앱 공유하기</SettingText>
+        <Body1Text>이 앱 공유하기</Body1Text>
       </SettingBox>
       <SettingBox onPress={handleLogOutModal}>
-        <SettingText>로그아웃</SettingText>
+        <Body1Text>로그아웃</Body1Text>
       </SettingBox>
       <LogOut
         handleLogOutModal={handleLogOutModal}
         logOutModalOpen={logOutModalOpen}
       />
       <SettingBox style={{ borderBottomWidth: 0 }} onPress={handleDeleteModal}>
-        <SettingText>탈퇴하기</SettingText>
+        <Body1Text>탈퇴하기</Body1Text>
       </SettingBox>
       <DeleteUser
         handleDeleteModal={handleDeleteModal}
@@ -59,9 +60,9 @@ const Others = () => {
 };
 
 const Container = styled.View`
-  flex: 0.4;
-  justify-content: space-around;
-  padding: 0 30px;
+  min-height: ${h2p(180)}px;
+  padding: 0 ${d2p(38)}px;
+  margin-top: ${h2p(16)}px;
   border-bottom-color: ${theme.grayScale.gray7};
 `;
 
@@ -69,16 +70,13 @@ const SettingBox = styled.TouchableOpacity`
   flex-direction: row;
   border-bottom-width: 1px;
   border-bottom-color: ${theme.grayScale.gray7};
-  align-items: center;
-  padding: 20px 10px;
+  padding: ${h2p(18)}px 0;
 `;
 
-const SettingText = styled(Body1Text)``;
-
 const SettingImg = styled.Image`
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
+  width: ${d2p(24)}px;
+  height: ${d2p(24)}px;
+  margin-right: ${d2p(12)}px;
 `;
 
 export default Others;

@@ -7,7 +7,7 @@ import {
 import { Platform, TouchableOpacity } from "react-native";
 import CoachSelect from "../screens/coachSelect";
 import BeforeStart from "../screens/beforeStart";
-import { theme } from "../styles/theme";
+import { headerTitleStyle, theme } from "../styles/theme";
 import SettingScreen from "../screens/setting";
 import EditName from "../screens/setting/EditName";
 import AlertSetting from "../screens/setting/AlertSetting";
@@ -115,6 +115,7 @@ query getMember{
           name="SettingScreen"
           options={{
             title: "설정",
+            headerTitleStyle,
             headerTitleAlign: "center",
             headerTitleStyle: { fontSize: 16, fontWeight: "700" },
             headerLeft: () => null,
@@ -193,6 +194,7 @@ query getMember{
           name="OpenSource"
           options={({ navigation }) => ({
             title: "오픈소스 라이센스",
+            headerTitleStyle,
             headerLeft: () => {
               return (
                 <TouchableOpacity
@@ -217,17 +219,28 @@ query getMember{
         {/* 이용약관 */}
         <Stack.Screen
           name="TermsCheck"
-          options={{
+          options={({ navigation }) => ({
             headerTitleAlign: "center",
             title: "약관확인",
-            headerLeft: () => null,
-            headerRight: (props) => <CloseIcon {...props} />,
+            headerTitleStyle,
+            headerLeft: () => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                  style={{ marginLeft: 20 }}
+                >
+                  <LeftIcon name="left" size={24} />
+                </TouchableOpacity>
+              );
+            },
             headerStyle: {
               backgroundColor: theme.grayScale.white,
               elevation: 0, // android
               shadowOpacity: 0, //ios
             },
-          }}
+          })}
           component={TermsCheck}
         />
         <Stack.Screen
@@ -235,6 +248,7 @@ query getMember{
           options={{
             headerTitleAlign: "center",
             title: "서비스 이용약관",
+            headerTitleStyle,
             headerLeft: () => null,
             headerRight: (props) => <CloseIcon {...props} />,
             headerStyle: {
@@ -250,6 +264,7 @@ query getMember{
           options={{
             headerTitleAlign: "center",
             title: "개인정보 처리방침",
+            headerTitleStyle,
             headerLeft: () => null,
             headerRight: (props) => <CloseIcon {...props} />,
             headerStyle: {
