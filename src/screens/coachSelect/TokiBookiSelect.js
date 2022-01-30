@@ -44,7 +44,7 @@ const TokiBookiSelect = ({ navigation }) => {
       putMemberMutation({
         variables: {
           member: {
-            coachId: data?.getCoaches[0].id,
+            coachId: 1,
           },
         },
       });
@@ -57,7 +57,7 @@ const TokiBookiSelect = ({ navigation }) => {
       putMemberMutation({
         variables: {
           member: {
-            coachId: data?.getCoaches[1].id,
+            coachId: 2,
           },
         },
       });
@@ -109,6 +109,7 @@ const TokiBookiSelect = ({ navigation }) => {
 
 const Container = styled.View`
   margin-top: ${d2p(20)}px;
+  background-color: red;
   margin-bottom: auto;
 `;
 
