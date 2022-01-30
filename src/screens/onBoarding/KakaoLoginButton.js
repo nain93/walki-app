@@ -28,6 +28,10 @@ const KakaoLoginButton = ({ navigation }) => {
     const {
       getAccessToken: { accessToken },
     } = tokenData;
+    console.log(accessToken,"testestest1111");
+    console.log(tokenData,"test");
+
+
     if (accessToken) {
       logUserIn(accessToken);
     }
@@ -35,7 +39,11 @@ const KakaoLoginButton = ({ navigation }) => {
   };
 
   const [getAccessToken] = useLazyQuery(GET_ACCESS_TOKEN_QUERY, {
-    onCompleted
+    onCompleted,
+    
+    onError:(error)=>{
+      console.log(error,"error");
+    }
   });
 
 

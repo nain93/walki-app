@@ -72,26 +72,11 @@ const ChallengeSetting = ({ navigation }) => {
         },
         async (taskId) => {
           console.log('[js] Received background-fetch event: ', taskId);
-          console.log(stepstep);
 
-          // for(i=0; i++){
+         
           
-          // }
-          const date = new Date()
-        if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
-          await putChallengeMutation({
-            variables: {
-              challenge: {
-                step: stepstep,
-                stepGoal: inputWatch,
-                challengeDate: getYesterday(),
-              },
-            },
-          });
-          walkStatus("home")
-          BackgroundFetch.finish()
-        }
-
+        
+        console.log("gogo");
           // Use a switch statement to route task-handling.
           switch (taskId) {
             case 'com.transistorsoft.fetch':
@@ -106,14 +91,20 @@ const ChallengeSetting = ({ navigation }) => {
             default:
               console.log('Default fetch task');
           }
+          
+         
+          
           // Required: Signal completion of your task to native code
           // If you fail to do this, the OS can terminate your app
           // or assign battery-blame for consuming too much background-time
-          BackgroundFetch.finish(taskId);
+         
         },
+        
         (error) => {
           console.log('[js] RNBackgroundFetch failed to start');
         },
+
+        
       );
 
       BackgroundFetch.scheduleTask({
@@ -132,17 +123,38 @@ const ChallengeSetting = ({ navigation }) => {
             console.log('BackgroundFetch denied');
             break;
           case BackgroundFetch.STATUS_AVAILABLE:
+           
             console.log('BackgroundFetch is enabled');
             console.log("right?");
+            
             break;
         }
       });
-      
+      const date = new Date()
+          if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
+            console.log("test!!");
+             putChallengeMutation({
+              variables: {
+                challenge: {
+                  step: stepstep,
+                  stepGoal: inputWatch,
+                  challengeDate: getYesterday(),
+                },
+              },
+            });
+  
+            walkStatus("home")
+            BackgroundFetch.finish()
+          }
+     
     };
 
     
     useEffect(() => {
-      init();
+      const backGroundInterval = setInterval(() => {
+        init();
+      },1000)
+      return ()=>clearInterval()
     }, []);
   
   
@@ -276,7 +288,6 @@ const ChallengeSetting = ({ navigation }) => {
 }, []);
 
   useEffect(() => {
-    init();
     register("walkingNum", { required: true });
   }, []);
 
