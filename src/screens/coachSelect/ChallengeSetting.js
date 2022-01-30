@@ -55,29 +55,30 @@ const ChallengeSetting = ({ navigation }) => {
     }
   `;
 
-  
-    const init = () => {
-      BackgroundFetch.configure(
-        {
-          minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
-          // Android options
-          forceAlarmManager: true, // <-- Set true to bypass JobScheduler.
-          stopOnTerminate: false,
-          startOnBoot: true,
-          requiredNetworkType: BackgroundFetch.NETWORK_TYPE_NONE, // Default
-          requiresCharging: false, // Default
-          requiresDeviceIdle: false, // Default
-          requiresBatteryNotLow: false, // Default
-          requiresStorageNotLow: false, // Default
-        },
-        async (taskId) => {
-          console.log('[js] Received background-fetch event: ', taskId);
-          console.log(stepstep);
 
-          // for(i=0; i++){
-          
-          // }
-          const date = new Date()
+  const init = () => {
+    console.log("hoi");
+    BackgroundFetch.configure(
+      {
+        minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
+        // Android options
+        forceAlarmManager: true, // <-- Set true to bypass JobScheduler.
+        stopOnTerminate: false,
+        startOnBoot: true,
+        requiredNetworkType: BackgroundFetch.NETWORK_TYPE_NONE, // Default
+        requiresCharging: false, // Default
+        requiresDeviceIdle: false, // Default
+        requiresBatteryNotLow: false, // Default
+        requiresStorageNotLow: false, // Default
+      },
+      async (taskId) => {
+        console.log('[js] Received background-fetch event: ', taskId);
+        console.log(stepstep);
+
+        // for(i=0; i++){
+
+        // }
+        const date = new Date()
         if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
           await putChallengeMutation({
             variables: {
@@ -92,67 +93,53 @@ const ChallengeSetting = ({ navigation }) => {
           BackgroundFetch.finish()
         }
 
-          // Use a switch statement to route task-handling.
-          switch (taskId) {
-            case 'com.transistorsoft.fetch':
-              console.log('Received custom task');
-              try {
-                const result = "foo"
-                console.log('result: ', result);
-              } catch (err) {
-                console.log('fetch failed', err);
-              }
-              break;
-            default:
-              console.log('Default fetch task');
-          }
-          // Required: Signal completion of your task to native code
-          // If you fail to do this, the OS can terminate your app
-          // or assign battery-blame for consuming too much background-time
-          BackgroundFetch.finish(taskId);
-        },
-        (error) => {
-          console.log('[js] RNBackgroundFetch failed to start');
-        },
-      );
-
-      BackgroundFetch.scheduleTask({
-        taskId: "com.transistorsoft.fetch",
-        forceAlarmManager: true,
-        delay: 5000,
-      })
-  
-      // Optional: Query the authorization status.
-      BackgroundFetch.status((status) => {
-        switch (status) {
-          case BackgroundFetch.STATUS_RESTRICTED:
-            console.log('BackgroundFetch restricted');
+        // Use a switch statement to route task-handling.
+        switch (taskId) {
+          case 'com.transistorsoft.fetch':
+            console.log('Received custom task');
+            try {
+              const result = "foo"
+              console.log('result: ', result);
+            } catch (err) {
+              console.log('fetch failed', err);
+            }
             break;
-          case BackgroundFetch.STATUS_DENIED:
-            console.log('BackgroundFetch denied');
-            break;
-          case BackgroundFetch.STATUS_AVAILABLE:
-            console.log('BackgroundFetch is enabled');
-            console.log("right?");
-            break;
+          default:
+            console.log('Default fetch task');
         }
-      });
-      
-    };
+        // Required: Signal completion of your task to native code
+        // If you fail to do this, the OS can terminate your app
+        // or assign battery-blame for consuming too much background-time
+        BackgroundFetch.finish(taskId);
+      },
+      (error) => {
+        console.log('[js] RNBackgroundFetch failed to start');
+      },
+    );
 
-    
-    useEffect(() => {
-      init();
-    }, []);
-  
-  
- 
-  
- 
-  
+    BackgroundFetch.scheduleTask({
+      taskId: "com.transistorsoft.fetch",
+      forceAlarmManager: true,
+      delay: 5000,
+    })
 
+    // Optional: Query the authorization status.
+    BackgroundFetch.status((status) => {
+      switch (status) {
+        case BackgroundFetch.STATUS_RESTRICTED:
+          console.log('BackgroundFetch restricted');
+          break;
+        case BackgroundFetch.STATUS_DENIED:
+          console.log('BackgroundFetch denied');
+          break;
+        case BackgroundFetch.STATUS_AVAILABLE:
+          console.log('BackgroundFetch is enabled');
+          console.log("right?");
+          break;
+      }
+    });
 
-
+  };
 
   const { refetch } = useQuery(GET_CHALLENGES_QUERY, {
     onCompleted: (data) => {
@@ -171,7 +158,7 @@ const ChallengeSetting = ({ navigation }) => {
   });
 
 
-  
+
   const [putChallengeMutation, { loading }] = useMutation(
     PUT_CHALLENGE_MUTATION,
     {
@@ -261,7 +248,7 @@ const ChallengeSetting = ({ navigation }) => {
     });
     if (Platform.OS === "android") {
       await BackgroundService.start(veryIntensiveTask, options);
-    }else {
+    } else {
       await BackgroundFetch.start(init, options)
     }
     stepGoalVar(inputWatch)
@@ -271,12 +258,11 @@ const ChallengeSetting = ({ navigation }) => {
 
 
   useEffect(() => {
+    init()
     walkRef?.current?.focus();
-    
-}, []);
+  }, []);
 
   useEffect(() => {
-    init();
     register("walkingNum", { required: true });
   }, []);
 

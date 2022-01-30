@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, TouchableOpacity, Platform } from "react-native";
+import { ActivityIndicator, Image, TouchableOpacity, Platform, Text } from "react-native";
 import styled from "styled-components";
 import { login } from "@react-native-seoul/kakao-login";
-import appleAuth, {
-  AppleButton,
-} from "@invertase/react-native-apple-authentication";
+import appleAuth from "@invertase/react-native-apple-authentication";
 import kakaoLogo from "../../../assets/icons/kakaotalkLogo.png";
+import appleLogo from "../../../assets/icons/appleIcon.png";
 import { Caption, H4Text, theme } from "../../styles/theme";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { logUserIn } from "../../../apollo";
@@ -35,7 +34,7 @@ const KakaoLoginButton = ({ navigation }) => {
   };
 
   const [getAccessToken] = useLazyQuery(GET_ACCESS_TOKEN_QUERY, {
-    onCompleted
+    onCompleted,
   });
 
 
@@ -90,21 +89,22 @@ const KakaoLoginButton = ({ navigation }) => {
           <ActivityIndicator color="black" />
         ) : (
           <>
-            <Image source={kakaoLogo} />
+            <Image source={kakaoLogo} style={{ width: d2p(24), height: d2p(24) }} />
             <KakaoText>카카오로 시작하기</KakaoText>
           </>
         )}
       </KakaoButton>
-      {Platform.OS === "ios" ? <AppleButton
-        buttonStyle={AppleButton.Style.WHITE}
-        buttonType={AppleButton.Type.SIGN_IN}
-        style={{
-          width: 160, // You must specify a width
-          height: 45, // You must specify a height
-          justifyContent: "center"
-        }}
-        onPress={onAppleButtonPress}
-      /> : <></>}
+      {Platform.OS === "ios" ?
+        <AppleButton onPress={onAppleButtonPress}>
+          {isLoading ? (
+            <ActivityIndicator color="black" />
+          ) : (
+            <>
+              <Image source={appleLogo} style={{ width: d2p(24), height: d2p(24) }} />
+              <H4Text style={{ marginLeft: d2p(4), color: "white" }}>애플로 시작하기</H4Text>
+            </>
+          )}
+        </AppleButton> : <></>}
 
       <DescWrap style={{ marginTop: h2p(10) }}>
         <KakaoDesc>walki의 </KakaoDesc>
@@ -124,7 +124,7 @@ const KakaoLoginButton = ({ navigation }) => {
 
 const Container = styled.View`
   padding:0 38px;
-  padding-bottom: ${Platform.OS === "android" ? `${h2p(34)}px` : getBottomSpace()};
+  padding-bottom: ${Platform.OS === "android" ? `${h2p(34)}px` : `${getBottomSpace()}px`};
 `;
 
 const KakaoButton = styled.TouchableOpacity`
@@ -137,8 +137,19 @@ const KakaoButton = styled.TouchableOpacity`
   height: ${d2p(54)}px;
 `;
 
+const AppleButton = styled.TouchableOpacity`
+  margin-Top:${h2p(9)}px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: ${theme.grayScale.black};
+  border-radius: 8px;
+  width: 100%;
+  height: ${d2p(54)}px;
+`;
+
 const KakaoText = styled(H4Text)`
-  margin-left: 5px;
+  margin-left: ${d2p(4)}px;
 `;
 
 const DescWrap = styled.View`

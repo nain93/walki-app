@@ -17,6 +17,7 @@ import * as SplashScreen from "expo-splash-screen";
 import STOARGE from "./src/constants/stoarge";
 import LoggedOutNav from "./src/navigators/LoggedOutNav";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Text } from "react-native";
 
 export default function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
