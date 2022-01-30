@@ -72,11 +72,7 @@ const ChallengeSetting = ({ navigation }) => {
         },
         async (taskId) => {
           console.log('[js] Received background-fetch event: ', taskId);
-
-         
-          
-        
-        console.log("gogo");
+          console.log("gogo");
           // Use a switch statement to route task-handling.
           switch (taskId) {
             case 'com.transistorsoft.fetch':
@@ -128,6 +124,8 @@ const ChallengeSetting = ({ navigation }) => {
             console.log("right?");
             
             break;
+          default:
+            console.log('Default fetch task');
         }
       });
       const date = new Date()
@@ -156,15 +154,6 @@ const ChallengeSetting = ({ navigation }) => {
       },1000)
       return ()=>clearInterval()
     }, []);
-  
-  
- 
-  
- 
-  
-
-
-
 
   const { refetch } = useQuery(GET_CHALLENGES_QUERY, {
     onCompleted: (data) => {
@@ -183,7 +172,7 @@ const ChallengeSetting = ({ navigation }) => {
   });
 
 
-  
+
   const [putChallengeMutation, { loading }] = useMutation(
     PUT_CHALLENGE_MUTATION,
     {
@@ -273,7 +262,7 @@ const ChallengeSetting = ({ navigation }) => {
     });
     if (Platform.OS === "android") {
       await BackgroundService.start(veryIntensiveTask, options);
-    }else {
+    } else {
       await BackgroundFetch.start(init, options)
     }
     stepGoalVar(inputWatch)
@@ -283,9 +272,9 @@ const ChallengeSetting = ({ navigation }) => {
 
 
   useEffect(() => {
+    init()
     walkRef?.current?.focus();
-    
-}, []);
+  }, []);
 
   useEffect(() => {
     register("walkingNum", { required: true });

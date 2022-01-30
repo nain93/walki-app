@@ -70,7 +70,7 @@ const Container = styled.View`
   flex: 1;
   padding:0 ${d2p(38)}px;
   padding-top: ${h2p(14)}px;
-  padding-bottom: ${Platform.OS === "android" ? `${h2p(40)}px` : getBottomSpace() + `${h2p(40)}}px`};
+  padding-bottom: ${Platform.OS === "android" ? `${h2p(40)}px` : `${getBottomSpace()}px`};
 `;
 
 const AlertSection = styled.View`
