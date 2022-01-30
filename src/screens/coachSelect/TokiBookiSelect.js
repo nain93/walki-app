@@ -50,7 +50,7 @@ const TokiBookiSelect = ({ navigation }) => {
       });
     }
   };
-
+  // data?.getCoaches[0].id
   const handleBookiSelect = () => {
     setIsClick("booki");
     if (!loading) {
@@ -109,7 +109,6 @@ const TokiBookiSelect = ({ navigation }) => {
 
 const Container = styled.View`
   margin-top: ${d2p(20)}px;
-  background-color: red;
   margin-bottom: auto;
 `;
 

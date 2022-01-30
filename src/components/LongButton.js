@@ -31,7 +31,6 @@ const LongButton = ({
 const Container = styled.TouchableOpacity`
   align-self: center;
   margin-top: ${h2p(20)}px;
-  margin-bottom:${h2p(20)}px;
   height:${d2p(54)}px;
   background-color: ${(props) => String(props.btnBackColor)};
   color: ${theme.grayScale.white};
