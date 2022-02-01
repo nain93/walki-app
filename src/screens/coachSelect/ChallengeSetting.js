@@ -130,7 +130,6 @@ const ChallengeSetting = ({ navigation }) => {
       });
       const date = new Date()
           if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
-            console.log("test!!");
              putChallengeMutation({
               variables: {
                 challenge: {
