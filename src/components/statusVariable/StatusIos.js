@@ -1,4 +1,4 @@
-import React , {useEffect} from "react";
+import React, { useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
 import { coachColorVar, stepVar, statusVar, stepGoalVar } from "../../../apollo";
 import LongButton from "../../components/LongButton";
@@ -48,44 +48,44 @@ const StatusIos = ({
       AppleHealthKit.Constants.Permissions.StepCount,],
       write: [AppleHealthKit.Constants.Permissions.Steps],
     },
-  } 
-    useEffect(() => {
-      AppleHealthKit.initHealthKit(permissions, (error) => {
-        if (error) {
+  }
+  useEffect(() => {
+    AppleHealthKit.initHealthKit(permissions, (error) => {
+      if (error) {
         console.log('[ERROR] Cannot grant permissions!');
-        }
-      
-        
-        const majorVersionIOS = parseInt(Platform.Version, 15);
-    
-          if (majorVersionIOS >= 13) {
-            // console.log('ios >= 13');
-        
-        
-            let optionsSteps = {
+      }
 
-              date: new Date().toISOString(), // optional; default now
-              includeManuallyAdded: true, // optional: default true
-              
-            };
-            setInterval(() => {
-              AppleHealthKit.getStepCount(optionsSteps, (err, results) => {
-                if (err) {
-                  console.log('err', err);
-                  return;
-                }
-                // results ? setSteps(results.value) : setSteps(null);
-                // stepVar(results);
-                stepVar(results.value)
-              });
-              // console.log(step, "stepTest");
 
-            },1000)
-          }
-        }
-      )
-    }, [step])
-    
+      const majorVersionIOS = parseInt(Platform.Version, 15);
+
+      if (majorVersionIOS >= 13) {
+        // console.log('ios >= 13');
+
+
+        let optionsSteps = {
+
+          date: new Date().toISOString(), // optional; default now
+          includeManuallyAdded: true, // optional: default true
+
+        };
+        setInterval(() => {
+          AppleHealthKit.getStepCount(optionsSteps, (err, results) => {
+            if (err) {
+              console.log('err', err);
+              return;
+            }
+            // results ? setSteps(results.value) : setSteps(null);
+            // stepVar(results);
+            stepVar(results.value)
+          });
+          // console.log(step, "stepTest");
+
+        }, 1000)
+      }
+    }
+    )
+  }, [step])
+
 
   return (
     <>
@@ -162,7 +162,6 @@ const StatusIos = ({
         </Body1Text>
       </GoalBox>
       <LongButton
-        marginBottom={20}
         handleGoToNext={handleGoToNext}
         btnBackColor={buttonColor}
         disabled={disabled}

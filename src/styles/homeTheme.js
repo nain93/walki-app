@@ -14,6 +14,7 @@ export const Blurgoal = styled.Text`
 export const GoalBox = styled.View`
   flex: 1;
   align-items: center;
+  padding-bottom: ${h2p(20)}px;
 `;
 
 export const CharacetrImage = styled.Image`

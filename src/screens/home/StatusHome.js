@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { authLink, coachColorVar, statusVar, tokenVar } from "../../../apollo";
+import { authLink, coachColorVar, logUserIn, statusVar, tokenVar } from "../../../apollo";
 import toki_hi from "../../../assets/images/character/toki_hi.png";
 import buki_hi from "../../../assets/images/character/buki.png";
 import { useReactiveVar, gql, useQuery } from "@apollo/client";
@@ -111,8 +111,7 @@ const StatusHome = ({ navigation }) => {
     onCompleted: (data) => {
       if (data) {
         console.log(data.refreshToken.accessToken, "data.refreshToken.accessToken");
-        AsyncStorage.setItem(STOARGE.TOKEN, data.refreshToken.accessToken);
-        tokenVar(data.refreshToken.accessToken)
+        logUserIn(data.refreshToken.accessToken)
       }
     },
     fetchPolicy: "no-cache"

@@ -6,8 +6,8 @@ import onboarding02 from "../../../assets/images/img02.png";
 import onboarding03 from "../../../assets/images/img03.png";
 import { theme } from "../../styles/theme";
 import HeaderForm from "../../components/HeaderForm";
-import { d2p, h2p } from "../../common/utils";
-import { SafeAreaView, Image, View } from "react-native";
+import { h2p } from "../../common/utils";
+import { Image, View } from "react-native";
 
 const HomeSwiper = () => {
   return (
@@ -20,7 +20,7 @@ const HomeSwiper = () => {
           nextTitleStyle: { display: "none" },
           prevTitleStyle: { display: "none" },
           dotsWrapperStyle: {
-            marginTop: h2p(30),
+            marginTop: h2p(26),
           },
           dotActiveStyle: {
             backgroundColor: theme.toki.color.main,
@@ -33,7 +33,7 @@ const HomeSwiper = () => {
             descChildren={"토키와 부키가 당신의 데일리 러닝을 \n도와줘요!"}
             align="left"
           />
-          <View style={{ alignItems: "center", marginTop: h2p(36), marginBottom: h2p(48) }}>
+          <View style={{ alignItems: "center", marginTop: h2p(18), marginBottom: h2p(48) }}>
             <Image source={onboarding01} style={{ width: h2p(330), height: h2p(332) }} />
           </View>
         </View>
@@ -45,7 +45,7 @@ const HomeSwiper = () => {
             }
             align="left"
           />
-          <View style={{ alignItems: "center", marginTop: h2p(36), marginBottom: h2p(48) }}>
+          <View style={{ alignItems: "center", marginTop: h2p(18), marginBottom: h2p(48) }}>
             <Image source={onboarding02} style={{ width: h2p(330), height: h2p(332) }} />
           </View>
         </View>
@@ -57,7 +57,7 @@ const HomeSwiper = () => {
             }
             align="left"
           />
-          <View style={{ alignItems: "center", marginTop: h2p(36), marginBottom: h2p(48) }}>
+          <View style={{ alignItems: "center", marginTop: h2p(18), marginBottom: h2p(48) }}>
             <Image source={onboarding03} style={{ width: h2p(330), height: h2p(332) }} />
           </View>
         </View>

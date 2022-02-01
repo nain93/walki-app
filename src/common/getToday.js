@@ -8,21 +8,31 @@ export const getToday = () => {
 };
 
 export const getYesterday = () => {
-  let date = new Date();
-  let year = date.getFullYear();
-  let month = ("0" + (1 + date.getMonth())).slice(-2);
-  let day = ("0" + (date.getDate() - 1)).slice(-2);
+  let now = new Date()
+  let yesterday = new Date(now.setDate(now.getDate() - 1));
+  let year = yesterday.getFullYear();
+  let month = ("0" + (1 + yesterday.getMonth())).slice(-2);
+  let day = ("0" + (yesterday.getDate())).slice(-2);
 
-  return year + "-" + month + "-" + day;
+  return {
+    date: year + "-" + month + "-" + day,
+    day,
+    month
+  };
 };
 
 export const getBeforeYesterday = () => {
-  let date = new Date();
-  let year = date.getFullYear();
-  let month = ("0" + (1 + date.getMonth())).slice(-2);
-  let day = ("0" + (date.getDate() - 2)).slice(-2);
+  let now = new Date()
+  let beforeYesterday = new Date(now.setDate(now.getDate() - 2));
+  let year = beforeYesterday.getFullYear();
+  let month = ("0" + (1 + beforeYesterday.getMonth())).slice(-2);
+  let day = ("0" + (beforeYesterday.getDate())).slice(-2);
 
-  return year + "-" + month + "-" + day;
+  return {
+    date: year + "-" + month + "-" + day,
+    day,
+    month
+  };
 };
 
 const date = new Date();

@@ -99,7 +99,7 @@ const httpLink = createHttpLink({
   uri: Config.BACKEND_URL,
 });
 
-export const authLink = setContext((_, { headers }) => {
+export const authLink = setContext(({ headers }) => {
   return {
     headers: {
       ...headers,

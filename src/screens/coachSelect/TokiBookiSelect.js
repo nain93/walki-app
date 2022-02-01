@@ -27,8 +27,6 @@ const TokiBookiSelect = ({ navigation }) => {
     query getCoaches {
       getCoaches {
         id
-        name
-        description
       }
     }
   `;
@@ -38,37 +36,27 @@ const TokiBookiSelect = ({ navigation }) => {
   });
   const { data, loading } = useQuery(GET_COACHES_QUERY);
 
-  const handleTokiSelect = () => {
-    setIsClick("toki");
-    if (!loading) {
-      putMemberMutation({
-        variables: {
-          member: {
-            coachId: 1,
-          },
-        },
-      });
-    }
-  };
-  // data?.getCoaches[0].id
-  const handleBookiSelect = () => {
-    setIsClick("booki");
-    if (!loading) {
-      putMemberMutation({
-        variables: {
-          member: {
-            coachId: 2,
-          },
-        },
-      });
-    }
-  };
-
   const handleGoToNext = async () => {
-    if (isClick === "toki") {
-      await coachSelect("toki");
-    } else if (isClick === "booki") {
-      await coachSelect("booki");
+    if (!loading) {
+      if (isClick === "toki") {
+        await putMemberMutation({
+          variables: {
+            member: {
+              coachId: data.getCoaches[0].id,
+            },
+          },
+        });
+        await coachSelect("toki");
+      } else if (isClick === "booki") {
+        await putMemberMutation({
+          variables: {
+            member: {
+              coachId: data.getCoaches[1].id,
+            },
+          },
+        });
+        await coachSelect("booki");
+      }
     }
     navigation.navigate("BeforeStart");
   };
@@ -77,7 +65,7 @@ const TokiBookiSelect = ({ navigation }) => {
   return (
     <>
       <Container >
-        <TokiBox selected={isClick === "toki"} onPress={handleTokiSelect}>
+        <TokiBox selected={isClick === "toki"} onPress={() => setIsClick("toki")}>
           <Wrapper>
             <TokiBookiImg source={tokiImg} resizeMode="contain" />
             <TitleBox>
@@ -86,7 +74,7 @@ const TokiBookiSelect = ({ navigation }) => {
             </TitleBox>
           </Wrapper>
         </TokiBox>
-        <BookiBox selected={isClick === "booki"} onPress={handleBookiSelect}>
+        <BookiBox selected={isClick === "booki"} onPress={() => setIsClick("booki")}>
           <Wrapper>
             <TokiBookiImg source={bookiImg} resizeMode="contain" />
             <TitleBox>

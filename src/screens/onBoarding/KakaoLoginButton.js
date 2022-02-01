@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, Image, TouchableOpacity, Platform, Text } from "react-native";
 import styled from "styled-components";
 import { login } from "@react-native-seoul/kakao-login";
@@ -10,6 +10,7 @@ import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { logUserIn } from "../../../apollo";
 import { d2p, h2p } from "../../common/utils";
 import { getBottomSpace } from "react-native-iphone-x-helper";
+import Config from "react-native-config";
 
 const KakaoLoginButton = ({ navigation }) => {
   const GET_ACCESS_TOKEN_QUERY = gql`
@@ -27,10 +28,7 @@ const KakaoLoginButton = ({ navigation }) => {
     const {
       getAccessToken: { accessToken },
     } = tokenData;
-    console.log(accessToken,"testestest1111");
-    console.log(tokenData,"test");
-
-
+    console.log(accessToken, "accessToken");
     if (accessToken) {
       logUserIn(accessToken);
     }
@@ -38,13 +36,12 @@ const KakaoLoginButton = ({ navigation }) => {
   };
 
   const [getAccessToken] = useLazyQuery(GET_ACCESS_TOKEN_QUERY, {
-    onCompleted,    
-    onError:(error)=>{
-      console.log(error,"error");
+    onCompleted,
+    onError: (error) => {
+      console.error(error, "error");
+      setIsLoading(false);
     }
-
   });
-
 
   // refreshToken?
   const handleKakaoLogin = async () => {
@@ -131,7 +128,7 @@ const KakaoLoginButton = ({ navigation }) => {
 };
 
 const Container = styled.View`
-  padding:0 38px;
+  padding:0 ${d2p(38)}px;
   padding-bottom: ${Platform.OS === "android" ? `${h2p(34)}px` : `${getBottomSpace()}px`};
 `;
 
@@ -142,7 +139,8 @@ const KakaoButton = styled.TouchableOpacity`
   background-color: #ffe812;
   border-radius: 8px;
   width: 100%;
-  height: ${d2p(54)}px;
+  min-height: ${h2p(54)}px;
+  padding: ${h2p(15)}px 0;
 `;
 
 const AppleButton = styled.TouchableOpacity`

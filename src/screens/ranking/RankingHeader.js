@@ -10,7 +10,7 @@ import tokiDefault from "../../../assets/images/toki_default.png";
 import bukiDefault from "../../../assets/images/buki_default.png";
 import bukiHappy from "../../../assets/images/ranking/buki_happy.png";
 import bukiFail from "../../../assets/images/buki_fail.png";
-import { day, getYesterday, month } from "../../common/getToday";
+import { getBeforeYesterday, getYesterday } from "../../common/getToday";
 import { d2p, h2p } from "../../common/utils";
 
 const RankingHeader = ({ rankingData }) => {
@@ -22,14 +22,14 @@ const RankingHeader = ({ rankingData }) => {
     let rankData =
       (rankingData.length === 0
         ? 0
-        : rankingData.length === 1 &&
-          rankingData[0].challenge.challengeDate === getYesterday()
-          ? rankingData[0].number
-          : 0) -
+        : rankingData.length === 1 ?
+          (rankingData[0].challenge.challengeDate === getYesterday().date
+            ? rankingData[0].number
+            : 0) : rankingData[1].number) -
       (rankingData.length === 0
         ? 0
         : rankingData.length === 1 &&
-          rankingData[0].challenge.challengeDate === getYesterday()
+          rankingData[0].challenge.challengeDate === getYesterday().date
           ? 0
           : rankingData[0].number);
     if (rankData < 0) {
@@ -73,14 +73,14 @@ const RankingHeader = ({ rankingData }) => {
         <RankingWrap>
           <RankingBox style={{ opacity: 0.6, marginRight: d2p(8) }}>
             <Text>
-              {month}/{day - 2}
+              {getBeforeYesterday().month}/{getBeforeYesterday().day}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <H2Text style={{ color: coachColorVar().color.main }}>
                 {rankingData.length === 0
                   ? 0
                   : rankingData.length === 1 &&
-                    rankingData[0].challenge.challengeDate === getYesterday()
+                    rankingData[0].challenge.challengeDate === getYesterday().date
                     ? 0
                     : rankingData[0].number}
               </H2Text>
@@ -89,16 +89,16 @@ const RankingHeader = ({ rankingData }) => {
           </RankingBox>
           <RankingBox>
             <Text>
-              {month}/{day - 1}
+              {getYesterday().month}/{getYesterday().day}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <H2Text style={{ color: coachColorVar().color.main }}>
                 {rankingData.length === 0
                   ? 0
-                  : rankingData.length === 1 &&
-                    rankingData[0].challenge.challengeDate === getYesterday()
-                    ? rankingData[0].number
-                    : 0}
+                  : rankingData.length === 1 ?
+                    (rankingData[0].challenge.challengeDate === getYesterday().date
+                      ? rankingData[0].number
+                      : 0) : rankingData[1].number}
               </H2Text>
               <Text> 위</Text>
             </View>

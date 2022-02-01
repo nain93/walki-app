@@ -9,7 +9,6 @@ const LongButton = ({
   disabled,
   btnBackColor,
   children,
-  marginBottom,
   loading = false,
 }) => {
   return (

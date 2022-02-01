@@ -6,7 +6,10 @@ import {
 } from "@react-navigation/stack";
 import { Platform } from "react-native";
 import OnBoarding from "../screens/onBoarding";
-import { theme } from "../styles/theme";
+import { theme, headerTitleStyle } from "../styles/theme";
+import Service from "../screens/terms/Service";
+import Info from "../screens/terms/Info";
+import CloseIcon from "../components/CloseIcon";
 
 
 const TransitionScreenOptions = {
@@ -30,6 +33,38 @@ const LoggedOutNav = () => {
             headerShown: false,
           }}
           component={OnBoarding}
+        />
+        <Stack.Screen
+          name="Service"
+          options={{
+            headerTitleAlign: "center",
+            title: "서비스 이용약관",
+            headerTitleStyle,
+            headerLeft: () => null,
+            headerRight: (props) => <CloseIcon {...props} />,
+            headerStyle: {
+              backgroundColor: theme.grayScale.white,
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          }}
+          component={Service}
+        />
+        <Stack.Screen
+          name="Info"
+          options={{
+            headerTitleAlign: "center",
+            title: "개인정보 처리방침",
+            headerTitleStyle,
+            headerLeft: () => null,
+            headerRight: (props) => <CloseIcon {...props} />,
+            headerStyle: {
+              backgroundColor: theme.grayScale.white,
+              elevation: 0, // android
+              shadowOpacity: 0, //ios
+            },
+          }}
+          component={Info}
         />
       </Stack.Navigator>
     </NavigationContainer>

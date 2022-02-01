@@ -25,8 +25,8 @@ const Ranking = () => {
 
   const { data, loading } = useQuery(GET_MY_RANKINGS_QUERY, {
     variables: {
-      start: getBeforeYesterday(),
-      end: getYesterday(),
+      start: getYesterday().date,
+      end: getBeforeYesterday().date,
     },
     onCompleted: ({ getMyRankings }) => {
       if (getMyRankings.length !== 0) {

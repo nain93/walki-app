@@ -15,6 +15,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { Text, TouchableWithoutFeedback } from "react-native";
 import { getToday, month } from "../../common/getToday";
+import { FlatList } from "react-native-gesture-handler";
 
 const Report = ({
   selectedMonth,
@@ -120,7 +121,7 @@ const Report = ({
     setIsLoading(false);
   };
 
-  const {} = useQuery(GET_MEMBER, {
+  const { } = useQuery(GET_MEMBER, {
     onCompleted,
     onError: (e) => {
       console.log(e);
@@ -172,11 +173,16 @@ const Report = ({
                   alignItems: "center",
                 }}
               >
-                {monthV.map((item, idx) => (
-                  <MonthItem key={idx} onPress={() => handleMonthClick(item)}>
-                    <Text>{`${item.year}년 ${item.month}월 리포트`}</Text>
-                  </MonthItem>
-                ))}
+                <FlatList
+                  style={{ width: "100%" }}
+                  data={monthV}
+                  keyExtractor={() => Math.random()}
+                  renderItem={({ item }) =>
+                    <MonthItem onPress={() => handleMonthClick(item)}>
+                      <Text>{`${item.year}년 ${item.month}월 리포트`}</Text>
+                    </MonthItem>
+                  }
+                />
               </BottomSheetScrollView>
             </BottomSheetModal>
           </BottomSheetModalProvider>
