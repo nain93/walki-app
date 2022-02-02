@@ -2,6 +2,7 @@ import React from "react";
 import { ActivityIndicator } from "react-native";
 import styled from "styled-components";
 import { coachColorVar } from "../../../../apollo";
+import { d2p, h2p } from "../../../common/utils";
 import { theme } from "../../../styles/theme";
 
 const ReportLoading = () => {
@@ -20,18 +21,13 @@ const Container = styled.View`
 `;
 
 const Header = styled.View`
-  flex: 0.8;
-  padding: 0 30px;
-  justify-content: space-around;
+  height: ${h2p(246)}px;
   background-color: ${(props) => props.coachColor};
 `;
 
 const Main = styled.View`
   flex: 1;
-  padding: 0 30px;
-  padding-top: 30px;
-  justify-content: center;
-  align-items: center;
+  padding-top: ${h2p(30)}px;;
   background-color: ${theme.grayScale.white};
 `;
 

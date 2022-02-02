@@ -25,8 +25,8 @@ const Ranking = () => {
 
   const { data, loading } = useQuery(GET_MY_RANKINGS_QUERY, {
     variables: {
-      start: getYesterday().date,
-      end: getBeforeYesterday().date,
+      start: getBeforeYesterday().date,
+      end: getYesterday().date,
     },
     onCompleted: ({ getMyRankings }) => {
       if (getMyRankings.length !== 0) {
@@ -39,6 +39,7 @@ const Ranking = () => {
     },
   });
 
+  console.log(data?.getMyRankings, "data?.getMyRankings");
   if (loading) {
     return <Loading />;
   }
