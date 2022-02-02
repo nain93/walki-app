@@ -14,6 +14,8 @@ import BackgroundFetch from "react-native-background-fetch";
 
 import { startCounter, stopCounter } from 'react-native-accurate-step-counter';
 import { d2p } from "../../common/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import STOARGE from "../../constants/stoarge";
 
 
 const ChallengeSetting = ({ navigation }) => {
@@ -228,17 +230,21 @@ const ChallengeSetting = ({ navigation }) => {
         }
         const date = new Date()
         if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() <= 5)) {
-          await putChallengeMutation({
-            variables: {
-              challenge: {
-                step: a,
-                stepGoal: inputWatch,
-                challengeDate: getYesterday().date,
+          const challengeDate = await AsyncStorage.getItem(STOARGE.TODAY)
+          if (challengeDate) {
+            await putChallengeMutation({
+              variables: {
+                challenge: {
+                  step: a,
+                  stepGoal: inputWatch,
+                  challengeDate,
+                },
               },
-            },
-          });
-          walkStatus("home")
-          await BackgroundService.stop()
+            });
+            walkStatus("home")
+            await AsyncStorage.removeItem(STOARGE.TODAY)
+            await BackgroundService.stop()
+          }
         }
         await sleep(delay);
       }
@@ -258,6 +264,7 @@ const ChallengeSetting = ({ navigation }) => {
       },
     });
     if (Platform.OS === "android") {
+      await AsyncStorage.setItem(STOARGE.TODAY, getToday())
       await BackgroundService.start(veryIntensiveTask, options);
     } else {
       await BackgroundFetch.start(init, options)
@@ -268,12 +275,32 @@ const ChallengeSetting = ({ navigation }) => {
   };
 
   useEffect(() => {
-    init()
-    walkRef?.current?.focus();
+    const todayCheck = async () => {
+      const check = await AsyncStorage.getItem(STOARGE.TODAY)
+      if (check) {
+        if (check !== getToday()) {
+          await putChallengeMutation({
+            variables: {
+              challenge: {
+                step: a,
+                stepGoal: inputWatch,
+                challengeDate: check,
+              },
+            },
+          });
+          walkStatus("home")
+          await AsyncStorage.removeItem(STOARGE.TODAY)
+          await BackgroundService.stop()
+        }
+      }
+    }
+    todayCheck()
   }, []);
 
   useEffect(() => {
+    init()
     register("walkingNum", { required: true });
+    walkRef?.current?.focus();
   }, []);
 
   return (
