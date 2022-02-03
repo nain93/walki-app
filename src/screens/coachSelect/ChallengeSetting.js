@@ -224,7 +224,7 @@ const ChallengeSetting = ({ navigation }) => {
       for (let i = 0; BackgroundService.isRunning(); i++) {
         await BackgroundService.updateNotification({ taskTitle: `걸음수: ${androidStep}` })
         stepVar(androidStep)
-        if (androidStep >= stepGoal) {
+        if (androidStep >= inputWatch) {
           walkStatus("success")
         }
         const date = new Date()
@@ -235,7 +235,7 @@ const ChallengeSetting = ({ navigation }) => {
               variables: {
                 challenge: {
                   step: androidStep,
-                  stepGoal,
+                  inputWatch,
                   challengeDate,
                 },
               },
