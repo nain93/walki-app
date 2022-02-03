@@ -5,6 +5,7 @@ const STOARGE = {
   TIME: "time",
   STEP: "step",
   ALARM_CHECK: "alarmCheck",
+  TODAY_CHECK: "todayCheck",
   TODAY: "today"
 };
 

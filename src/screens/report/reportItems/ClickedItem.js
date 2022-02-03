@@ -18,7 +18,7 @@ const ClickedItem = ({ index, step, stepGoal, onPress, opacity }) => {
     <ListItem
       onPress={onPress}
       style={{
-        marginVertical: h2p(5),
+        paddingBottom: h2p(4),
         marginRight: index % 3 === 2 ? 0 : d2p(8),
         backgroundColor:
           step >= stepGoal
@@ -41,7 +41,7 @@ const ClickedItem = ({ index, step, stepGoal, onPress, opacity }) => {
       />
       <H4Text
         style={{
-          marginTop: d2p(4),
+          marginTop: h2p(4),
           color:
             step >= stepGoal ? theme.grayScale.white : theme.grayScale.gray3,
         }}

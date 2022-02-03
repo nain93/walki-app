@@ -13,9 +13,11 @@ import {
   BottomSheetModalProvider,
   BottomSheetModal,
 } from "@gorhom/bottom-sheet";
-import { Text, TouchableWithoutFeedback } from "react-native";
+import { Button, Text, TouchableWithoutFeedback } from "react-native";
 import { getToday, month } from "../../common/getToday";
 import { FlatList } from "react-native-gesture-handler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import STOARGE from "../../constants/stoarge";
 
 const Report = ({
   selectedMonth,
@@ -100,10 +102,11 @@ const Report = ({
         setStepInfo([...res]);
       }
     },
-    fetchPolicy: "cache-and-network",
+    // fetchPolicy: "cache-and-network",
     onError: (e) => {
       console.log(e);
     },
+    notifyOnNetworkStatusChange: true
   });
   const GET_MEMBER = gql`
     query getMember {
@@ -130,9 +133,19 @@ const Report = ({
 
   useFocusEffect(
     useCallback(() => {
-      refetch();
-    }, [data])
+      const refetchCheck = async () => {
+        const todayCheck = await AsyncStorage.getItem(STOARGE.TODAY)
+        if (todayCheck) {
+          if (todayCheck !== getToday()) {
+            refetch()
+            AsyncStorage.removeItem(STOARGE.TODAY)
+          }
+        }
+      }
+      refetchCheck()
+    }, [])
   );
+
 
   useEffect(() => {
     bottomSheetRef?.current?.close();

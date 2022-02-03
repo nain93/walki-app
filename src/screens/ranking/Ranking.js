@@ -5,6 +5,8 @@ import RankingMain from "./RankingMain";
 import { gql, useQuery } from "@apollo/client";
 import { getBeforeYesterday, getToday, getYesterday } from "../../common/getToday";
 import Loading from "../../components/Loading";
+import ReportLoading from "../report/reportItems/ReportLoading";
+import RankingLoading from "./RankingLoading";
 
 const Ranking = () => {
   const GET_MY_RANKINGS_QUERY = gql`
@@ -39,9 +41,8 @@ const Ranking = () => {
     },
   });
 
-  console.log(data?.getMyRankings, "data?.getMyRankings");
   if (loading) {
-    return <Loading />;
+    return <Loading children={<RankingLoading />} />;
   }
 
   return (

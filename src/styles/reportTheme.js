@@ -5,7 +5,7 @@ import { d2p, h2p } from "../common/utils";
 export const ListItem = styled.TouchableOpacity`
   flex: 1;
   max-width: ${(Dimensions.get("window").width - d2p(56)) / 3}px;
-  height: ${d2p(110)}px;
+  aspect-ratio: 1;
   justify-content: center;
   align-items: center;
   border-radius: 16px;

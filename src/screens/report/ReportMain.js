@@ -119,6 +119,7 @@ const Container = styled.View`
 const NameTitle = styled.View`
   flex-direction: row;
   align-items: center;
+  margin-bottom: ${h2p(15)}px;
 `;
 
 export default ReportMain;

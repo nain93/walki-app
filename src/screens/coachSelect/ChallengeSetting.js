@@ -34,9 +34,8 @@ const ChallengeSetting = ({ navigation }) => {
     },
   });
 
-  const stepstep = useReactiveVar(stepVar);
+  const nowStep = useReactiveVar(stepVar);
   const stepGoal = useReactiveVar(stepGoalVar)
-
   const inputWatch = watch("walkingNum");
 
   const PUT_CHALLENGE_MUTATION = gql`
@@ -136,7 +135,7 @@ const ChallengeSetting = ({ navigation }) => {
       putChallengeMutation({
         variables: {
           challenge: {
-            step: stepstep,
+            step: nowStep,
             stepGoal: inputWatch,
             challengeDate: getYesterday().date,
           },
@@ -150,12 +149,12 @@ const ChallengeSetting = ({ navigation }) => {
   };
 
 
-  useEffect(() => {
-    const backGroundInterval = setInterval(() => {
-      init();
-    }, 1000)
-    return () => clearInterval()
-  }, []);
+  // useEffect(() => {
+  //   const backGroundInterval = setInterval(() => {
+  //     init();
+  //   }, 1000)
+  //   return () => clearInterval(backGroundInterval)
+  // }, []);
 
   const { refetch } = useQuery(GET_CHALLENGES_QUERY, {
     onCompleted: (data) => {
@@ -209,40 +208,40 @@ const ChallengeSetting = ({ navigation }) => {
   const sleep = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
   const veryIntensiveTask = async (taskDataArguments) => {
+    let androidStep = 0;
     const { delay } = taskDataArguments;
 
     await new Promise(async (resolve) => {
-      let a = 0;
       const config = {
         default_threshold: 80.0,
         default_delay: 800000000,
         cheatInterval: 3000,
-        onStepCountChange: (stepCount) => a = stepCount,
+        onStepCountChange: (stepCount) => androidStep = stepCount,
         onCheat: () => { console.log("User is Cheating") }
       }
       startCounter(config);
 
       for (let i = 0; BackgroundService.isRunning(); i++) {
-        await BackgroundService.updateNotification({ taskTitle: `걸음수: ${a}` })
-        stepVar(a)
-        if (a >= inputWatch) {
+        await BackgroundService.updateNotification({ taskTitle: `걸음수: ${androidStep}` })
+        stepVar(androidStep)
+        if (androidStep >= stepGoal) {
           walkStatus("success")
         }
         const date = new Date()
         if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() <= 5)) {
-          const challengeDate = await AsyncStorage.getItem(STOARGE.TODAY)
+          const challengeDate = await AsyncStorage.getItem(STOARGE.TODAY_CHECK)
           if (challengeDate) {
             await putChallengeMutation({
               variables: {
                 challenge: {
-                  step: a,
-                  stepGoal: inputWatch,
+                  step: androidStep,
+                  stepGoal,
                   challengeDate,
                 },
               },
             });
             walkStatus("home")
-            await AsyncStorage.removeItem(STOARGE.TODAY)
+            await AsyncStorage.removeItem(STOARGE.TODAY_CHECK)
             await BackgroundService.stop()
           }
         }
@@ -250,6 +249,7 @@ const ChallengeSetting = ({ navigation }) => {
       }
     })
   };
+
   const handlePutChallenge = async () => {
     if (inputWatch < 200) {
       return;
@@ -264,9 +264,10 @@ const ChallengeSetting = ({ navigation }) => {
       },
     });
     if (Platform.OS === "android") {
+      await AsyncStorage.setItem(STOARGE.TODAY_CHECK, getToday())
       await AsyncStorage.setItem(STOARGE.TODAY, getToday())
       await BackgroundService.start(veryIntensiveTask, options);
-    } else {
+    } else if (Platform.OS === "ios") {
       await BackgroundFetch.start(init, options)
     }
     stepGoalVar(inputWatch)
@@ -276,20 +277,20 @@ const ChallengeSetting = ({ navigation }) => {
 
   useEffect(() => {
     const todayCheck = async () => {
-      const check = await AsyncStorage.getItem(STOARGE.TODAY)
+      const check = await AsyncStorage.getItem(STOARGE.TODAY_CHECK)
       if (check) {
         if (check !== getToday()) {
           await putChallengeMutation({
             variables: {
               challenge: {
-                step: a,
-                stepGoal: inputWatch,
+                step: nowStep,
+                stepGoal,
                 challengeDate: check,
               },
             },
           });
           walkStatus("home")
-          await AsyncStorage.removeItem(STOARGE.TODAY)
+          await AsyncStorage.removeItem(STOARGE.TODAY_CHECK)
           await BackgroundService.stop()
         }
       }
@@ -298,7 +299,6 @@ const ChallengeSetting = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    init()
     register("walkingNum", { required: true });
     walkRef?.current?.focus();
   }, []);

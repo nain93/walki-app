@@ -17,13 +17,13 @@ const RankingHeader = ({ rankingData }) => {
   const [rank, setRank] = useState(null);
   const [upDown, setUpDown] = useState("");
 
-  const [todayRanking] = useState(rankingData.length === 0
+  const [yesterdayRanking] = useState(rankingData.length === 0
     ? 0
     : rankingData.length === 1 &&
       rankingData[0].challenge.challengeDate === getYesterday().date
       ? 0
       : rankingData[0].number)
-  const [yesterdayRanking] = useState(rankingData.length === 0
+  const [beforeYesterdayRanking] = useState(rankingData.length === 0
     ? 0
     : rankingData.length === 1 ?
       (rankingData[0].challenge.challengeDate === getYesterday().date
@@ -97,7 +97,7 @@ const RankingHeader = ({ rankingData }) => {
                 </>
               } */}
               <H2Text style={{ padding: 0, color: coachColorVar().color.main }}>
-                {todayRanking}
+                {beforeYesterdayRanking}
               </H2Text>
               <Caption style={{ color: theme.grayScale.gray3 }}> 위</Caption>
             </View>
