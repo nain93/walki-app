@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import RankingHeader from "./RankingHeader";
 import RankingMain from "./RankingMain";
@@ -8,6 +8,8 @@ import Loading from "../../components/Loading";
 import ReportLoading from "../report/reportItems/ReportLoading";
 import RankingLoading from "./RankingLoading";
 import STOARGE from "../../constants/stoarge";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Ranking = () => {
   const GET_MY_RANKINGS_QUERY = gql`
