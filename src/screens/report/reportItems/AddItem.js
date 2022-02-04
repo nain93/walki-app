@@ -1,12 +1,13 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { coachColorVar, stepVar } from "../../../../apollo";
+import { coachColorVar, stepGoalVar, stepVar } from "../../../../apollo";
 import { theme } from "../../../styles/theme";
 import { ListItem } from "../../../styles/reportTheme";
 import { useReactiveVar } from "@apollo/client";
 import { d2p, h2p } from "../../../common/utils";
 
-const AddItem = ({ stepGoal }) => {
+const AddItem = ({ }) => {
+  const stepGoal = useReactiveVar(stepGoalVar)
   const step = useReactiveVar(stepVar);
   return (
     <ListItem

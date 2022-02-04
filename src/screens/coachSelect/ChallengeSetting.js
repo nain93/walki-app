@@ -213,8 +213,8 @@ const ChallengeSetting = ({ navigation }) => {
 
     await new Promise(async (resolve) => {
       const config = {
-        default_threshold: 80.0,
-        default_delay: 800000000,
+        default_threshold: 30.0,
+        default_delay: 400000000,
         cheatInterval: 3000,
         onStepCountChange: (stepCount) => androidStep = stepCount,
         onCheat: () => { console.log("User is Cheating") }
