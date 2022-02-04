@@ -31,7 +31,6 @@ const RankingHeader = ({ rankingData }) => {
         : 0) : rankingData[1].number)
 
   useEffect(() => {
-    console.log(rankingData, "rankingData");
     let rankData =
       (rankingData.length === 0
         ? 0

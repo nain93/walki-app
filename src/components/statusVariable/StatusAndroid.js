@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { CircularProgress } from "react-native-svg-circular-progress";
-import { coachColorVar, stepVar, statusVar, stepGoalVar } from "../../../apollo";
+import { coachColorVar, stepVar, statusVar, stepGoalVar, walkStatus } from "../../../apollo";
 import LongButton from "../../components/LongButton";
 
 import {
@@ -13,11 +13,16 @@ import UserFail from "../../screens/home/others/UserFail";
 import { Animated, View, Text, Dimensions, StyleSheet } from "react-native";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useReactiveVar } from "@apollo/client";
+import { gql, useMutation, useReactiveVar } from "@apollo/client";
 import { Body1Text, H4Text, theme } from "../../styles/theme";
 import styled from "styled-components";
 import { d2p, h2p } from "../../common/utils";
 import Svg, { Path, Circle } from 'react-native-svg'
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import STOARGE from "../../constants/stoarge";
+import BackgroundService from 'react-native-background-actions';
+import { getToday } from "../../common/getToday";
 
 
 const StatusAndroid = ({
@@ -39,6 +44,18 @@ const StatusAndroid = ({
   const step = useReactiveVar(stepVar);
   const stepGoal = useReactiveVar(stepGoalVar)
   const status = useReactiveVar(statusVar);
+
+  const PUT_CHALLENGE_MUTATION = gql`
+    mutation putChallenge($challenge: ChallengeInput) {
+      putChallenge(challenge: $challenge) {
+        step
+        stepGoal
+        challengeDate
+      }
+    }
+  `;
+
+  const [putChallengeMutation, { loading }] = useMutation(PUT_CHALLENGE_MUTATION);
 
   useEffect(() => {
     request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((granted) => {
@@ -67,6 +84,31 @@ const StatusAndroid = ({
 
     return `A${rx} ${ry} ${xAxisRotation} ${largeArcFlag} ${sweepFlag} ${x} ${y}`
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      const todayCheck = async () => {
+        const check = await AsyncStorage.getItem(STOARGE.TODAY_CHECK)
+        if (check) {
+          if (check !== getToday()) {
+            await putChallengeMutation({
+              variables: {
+                challenge: {
+                  step,
+                  stepGoal,
+                  challengeDate: getToday(),
+                },
+              },
+            });
+            walkStatus("home")
+            await AsyncStorage.removeItem(STOARGE.TODAY_CHECK)
+            await BackgroundService.stop()
+          }
+        }
+      }
+      todayCheck()
+    }, [])
+  );
 
 
   const size = h2p(312)

@@ -3,10 +3,12 @@ import { logUserOut } from "../../../../apollo";
 import { d2p } from "../../../common/utils";
 import CharacterModal from "../../../components/CharacterModal";
 import { H3Text, theme } from "../../../styles/theme";
+import BackgroundService from 'react-native-background-actions';
 
 const LogOut = ({ handleLogOutModal, logOutModalOpen }) => {
   const handleOkayBtn = async () => {
     await logUserOut();
+    await BackgroundService.stop()
     handleLogOutModal();
   };
 

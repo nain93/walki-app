@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import LongButton from "../../components/LongButton";
@@ -16,6 +16,7 @@ import { startCounter, stopCounter } from 'react-native-accurate-step-counter';
 import { d2p } from "../../common/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import STOARGE from "../../constants/stoarge";
+import { useFocusEffect } from "@react-navigation/native";
 
 
 const ChallengeSetting = ({ navigation }) => {
@@ -227,23 +228,22 @@ const ChallengeSetting = ({ navigation }) => {
         if (androidStep >= inputWatch) {
           walkStatus("success")
         }
-        const date = new Date()
-        if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() <= 5)) {
-          const challengeDate = await AsyncStorage.getItem(STOARGE.TODAY_CHECK)
-          if (challengeDate) {
-            await putChallengeMutation({
-              variables: {
-                challenge: {
-                  step: androidStep,
-                  inputWatch,
-                  challengeDate,
-                },
+        // const date = new Date()
+        // date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() <= 5)
+        const challengeDate = await AsyncStorage.getItem(STOARGE.TODAY_CHECK)
+        if (challengeDate !== getToday()) {
+          await putChallengeMutation({
+            variables: {
+              challenge: {
+                step: androidStep,
+                stepGoal: inputWatch,
+                challengeDate,
               },
-            });
-            walkStatus("home")
-            await AsyncStorage.removeItem(STOARGE.TODAY_CHECK)
-            await BackgroundService.stop()
-          }
+            },
+          });
+          walkStatus("home")
+          await AsyncStorage.removeItem(STOARGE.TODAY_CHECK)
+          await BackgroundService.stop()
         }
         await sleep(delay);
       }
@@ -275,28 +275,6 @@ const ChallengeSetting = ({ navigation }) => {
     navigation.goBack();
   };
 
-  useEffect(() => {
-    const todayCheck = async () => {
-      const check = await AsyncStorage.getItem(STOARGE.TODAY_CHECK)
-      if (check) {
-        if (check !== getToday()) {
-          await putChallengeMutation({
-            variables: {
-              challenge: {
-                step: nowStep,
-                stepGoal,
-                challengeDate: check,
-              },
-            },
-          });
-          walkStatus("home")
-          await AsyncStorage.removeItem(STOARGE.TODAY_CHECK)
-          await BackgroundService.stop()
-        }
-      }
-    }
-    todayCheck()
-  }, []);
 
   useEffect(() => {
     register("walkingNum", { required: true });

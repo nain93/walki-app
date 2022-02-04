@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { View, Text, AppState, Platform } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, AppState, Platform, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { H1Text, theme, Body1Text, Body3Text } from "../../styles/theme";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import AndroidOpenSettings from "react-native-android-open-settings";
 import { check, PERMISSIONS } from "react-native-permissions";
 import PushNotification from "react-native-push-notification";
@@ -11,6 +10,22 @@ import { coachColorVar } from "../../../apollo";
 const AppSetting = ({ navigation }) => {
   const [notiCheck, setNotiCheck] = useState(true);
   const [detailCheck, setDetailCheck] = useState(true);
+
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      PushNotification.checkPermissions((permissions) => {
+        setNotiCheck(permissions.alert);
+      });
+      check(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION).then((check) => {
+        if (check === "granted") {
+          setDetailCheck(true);
+        } else if (check === "blocked") {
+          setDetailCheck(false);
+        }
+      });
+    }
+  }, [])
+
   const handleOnOfPush = () => {
     if (Platform.OS === "android") {
       openDroidSetting(AndroidOpenSettings.appNotificationSettings).then(() => {
@@ -38,15 +53,15 @@ const AppSetting = ({ navigation }) => {
     return new Promise((resolve, reject) => {
       const listener = (state) => {
         if (state === "active") {
-          AppState.removeEventListener("change", listener);
+          changeListener?.remove()
           resolve();
         }
       };
-      AppState.addEventListener("change", listener);
+      const changeListener = AppState.addEventListener("change", listener);
       try {
         settingFunc();
       } catch (e) {
-        AppState.removeEventListener("change", listener);
+        changeListener?.remove()
         reject(e);
       }
     });

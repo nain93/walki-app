@@ -57,7 +57,7 @@ export const monthVar = makeVar([
   },
 ]);
 
-const { TOKEN, COACH, STATUS, TIME } = STOARGE;
+const { TOKEN, COACH, STATUS, TIME, ALARM_CHECK, TODAY_CHECK, TODAY, CHALLENGE_START_CHECK } = STOARGE;
 
 export const logUserIn = async (token) => {
   await AsyncStorage.setItem(TOKEN, token);
@@ -68,9 +68,17 @@ export const logUserIn = async (token) => {
 export const logUserOut = async () => {
   await AsyncStorage.removeItem(TOKEN);
   await AsyncStorage.removeItem(TIME);
+  await AsyncStorage.removeItem(STATUS);
+  await AsyncStorage.removeItem(ALARM_CHECK);
+  await AsyncStorage.removeItem(TODAY_CHECK);
+  await AsyncStorage.removeItem(TODAY);
+  await AsyncStorage.removeItem(CHALLENGE_START_CHECK);
   isLoggedInVar(false);
   userNameVar({});
   tokenVar("");
+  stepVar(0)
+  stepGoalVar(0)
+  statusVar("home")
 };
 
 export const coachSelect = async (coach) => {

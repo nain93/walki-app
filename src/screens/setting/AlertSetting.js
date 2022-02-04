@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
-import { View, KeyboardAvoidingView } from "react-native";
+import { View, KeyboardAvoidingView, Platform } from "react-native";
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import styled from "styled-components";
 import HeaderForm from "../../components/HeaderForm";
 import { theme } from "../../styles/theme";
@@ -38,29 +39,33 @@ const AlertSetting = ({ navigation }) => {
   };
 
   const handleChangeState = (nextHour) => {
-    PushNotification.localNotificationSchedule({
-      channelId: "default",
-      title: `오늘도 ${coachColor.coach === "booki" ? "부키" : "토키"
-        }와 함께 동네 한 바퀴 어때요?`,
-      message: "",
-      date: nextHour,
-      allowWhileIdle: true,
-      repeatType: "day",
-      ignoreInForeground: true,
-      invokeApp: false,
-    });
+    if (Platform.OS === "android") {
 
-    PushNotificationIOS.addNotificationRequest({
-      id: "default",
-      fireDate: nextHour,
-      title: "IOS TEST",
-      body: "please IOS work",
-      repeats: true,
-      repeatsComponent: {
-        hour: true,
-        minute: true,
-      }
-    })
+      PushNotification.localNotificationSchedule({
+        channelId: "default",
+        title: `오늘도 ${coachColor.coach === "booki" ? "부키" : "토키"
+          }와 함께 동네 한 바퀴 어때요?`,
+        message: "",
+        date: nextHour,
+        allowWhileIdle: true,
+        repeatType: "day",
+        ignoreInForeground: true,
+        invokeApp: false,
+      });
+    }
+    else if (Platform.OS === "ios") {
+      PushNotificationIOS.addNotificationRequest({
+        id: "default",
+        fireDate: nextHour,
+        title: "IOS TEST",
+        body: "please IOS work",
+        repeats: true,
+        repeatsComponent: {
+          hour: true,
+          minute: true,
+        }
+      })
+    }
   };
 
   return (

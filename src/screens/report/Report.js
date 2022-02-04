@@ -5,7 +5,7 @@ import ReportMain from "./ReportMain";
 import { useQuery, gql, useReactiveVar } from "@apollo/client";
 import Loading from "../../components/Loading";
 import ReportLoading from "./reportItems/ReportLoading";
-import { monthVar, userNameVar } from "../../../apollo";
+import { monthVar, statusVar, stepGoalVar, userNameVar, walkStatus } from "../../../apollo";
 import { useFocusEffect } from "@react-navigation/native";
 import {
   BottomSheetBackdrop,
@@ -27,6 +27,8 @@ const Report = ({
   bottomSheetRef,
 }) => {
   const monthV = useReactiveVar(monthVar);
+  const stepGoal = useReactiveVar(stepGoalVar)
+  const status = useReactiveVar(statusVar);
   const [isLoading, setIsLoading] = useState(true);
   const [stepTotal, setStepTotal] = useState({
     stepGoal: 0,
@@ -131,6 +133,7 @@ const Report = ({
     },
   });
 
+  // * 다음날 되면 리패치
   useFocusEffect(
     useCallback(() => {
       const refetchCheck = async () => {
@@ -138,6 +141,7 @@ const Report = ({
         if (todayCheck) {
           if (todayCheck !== getToday()) {
             refetch()
+            stepGoalVar(0)
             AsyncStorage.removeItem(STOARGE.TODAY)
           }
         }
@@ -146,6 +150,26 @@ const Report = ({
     }, [])
   );
 
+  // * 챌린지 설정하면 리패치 
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     const refetchCheck = async () => {
+  //       if (stepGoal !== 0) {
+  //         const challengeCheck = await AsyncStorage.getItem(STOARGE.CHALLENGE_START_CHECK)
+  //         console.log(challengeCheck, "challengeCheck");
+  //         if (challengeCheck === null || challengeCheck !== "done") {
+  //           console.log("dd");
+  //           refetch()
+  //           AsyncStorage.setItem(STOARGE.CHALLENGE_START_CHECK, "done")
+  //         }
+  //       }
+  //       else if (stepGoal === 0 || status === "home") {
+  //         AsyncStorage.removeItem(STOARGE.CHALLENGE_START_CHECK)
+  //       }
+  //     }
+  //     refetchCheck()
+  //   }, [])
+  // );
 
   useEffect(() => {
     bottomSheetRef?.current?.close();

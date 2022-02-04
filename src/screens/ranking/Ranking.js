@@ -7,6 +7,7 @@ import { getBeforeYesterday, getToday, getYesterday } from "../../common/getToda
 import Loading from "../../components/Loading";
 import ReportLoading from "../report/reportItems/ReportLoading";
 import RankingLoading from "./RankingLoading";
+import STOARGE from "../../constants/stoarge";
 
 const Ranking = () => {
   const GET_MY_RANKINGS_QUERY = gql`
@@ -25,7 +26,7 @@ const Ranking = () => {
     }
   `;
 
-  const { data, loading } = useQuery(GET_MY_RANKINGS_QUERY, {
+  const { data, loading, refetch } = useQuery(GET_MY_RANKINGS_QUERY, {
     variables: {
       start: getBeforeYesterday().date,
       end: getYesterday().date,
@@ -40,6 +41,22 @@ const Ranking = () => {
       }
     },
   });
+
+  // * 다음날 되면 리패치
+  useFocusEffect(
+    useCallback(() => {
+      const refetchCheck = async () => {
+        const todayCheck = await AsyncStorage.getItem(STOARGE.RANKING_CHECK)
+        if (todayCheck) {
+          if (todayCheck !== getToday()) {
+            refetch()
+            AsyncStorage.removeItem(STOARGE.RANKING_CHECK)
+          }
+        }
+      }
+      refetchCheck()
+    }, [])
+  );
 
   if (loading) {
     return <Loading children={<RankingLoading />} />;

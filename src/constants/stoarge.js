@@ -6,7 +6,9 @@ const STOARGE = {
   STEP: "step",
   ALARM_CHECK: "alarmCheck",
   TODAY_CHECK: "todayCheck",
-  TODAY: "today"
+  RANKING_CHECK: "rankingCheck",
+  TODAY: "today",
+  CHALLENGE_START_CHECK: "challengeCheck"
 };
 
 export default STOARGE;

@@ -10,7 +10,10 @@ const AddBtn = () => {
   const navigation = useNavigation();
   return (
     <AddList onPress={() => navigation.navigate("ChallengeSetting")}>
-      <Text style={{ color: coachColorVar().color.report, fontWeight: "600" }}>
+      <Text style={{
+        color: coachColorVar().color.report, fontFamily: "Montserrat-SemiBold", fontSize: 14,
+        lineHeight: 21,
+      }}>
         Today
       </Text>
       <AddIconStyle
@@ -44,6 +47,7 @@ const AddList = styled.TouchableOpacity`
   max-width: ${(Dimensions.get("window").width - d2p(56)) / 3}px;
   height: ${d2p(110)}px;
   margin-right: ${d2p(8)}px;
+  margin-bottom:${h2p(12)}px;
   border-radius: 16px;
   align-items: center;
   justify-content:center;
@@ -53,7 +57,7 @@ const AddIconStyle = styled.View`
   border-radius: 60px;
   width: ${d2p(60)}px;
   height: ${d2p(60)}px;
-  margin-top: ${d2p(8)}px;
+  margin-top: ${h2p(8)}px;
   justify-content: center;
   align-items: center;
   background-color: white;
