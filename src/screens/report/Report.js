@@ -210,16 +210,10 @@ const Report = ({
                   alignItems: "center",
                 }}
               >
-                <FlatList
-                  style={{ width: "100%" }}
-                  data={monthV}
-                  keyExtractor={() => Math.random()}
-                  renderItem={({ item }) =>
-                    <MonthItem onPress={() => handleMonthClick(item)}>
-                      <Text>{`${item.year}년 ${item.month}월 리포트`}</Text>
-                    </MonthItem>
-                  }
-                />
+                {React.Children.toArray(monthV.map(item =>
+                  <MonthItem onPress={() => handleMonthClick(item)}>
+                    <Text>{`${item.year}년 ${item.month}월 리포트`}</Text>
+                  </MonthItem>))}
               </BottomSheetScrollView>
             </BottomSheetModal>
           </BottomSheetModalProvider>

@@ -84,7 +84,6 @@ const ReportMain = ({ stepInfo, children }) => {
       </NameTitle>
 
       <FlatList
-        showsVerticalScrollIndicator={false}
         data={stepInfo}
         renderItem={renderItem}
         keyExtractor={(item) => item.createdAt}

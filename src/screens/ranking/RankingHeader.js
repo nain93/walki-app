@@ -16,14 +16,13 @@ import { d2p, h2p } from "../../common/utils";
 const RankingHeader = ({ rankingData }) => {
   const [rank, setRank] = useState(null);
   const [upDown, setUpDown] = useState("");
-
-  const [yesterdayRanking] = useState(rankingData.length === 0
+  const [beforeYesterdayRanking] = useState(rankingData.length === 0
     ? 0
     : rankingData.length === 1 &&
       rankingData[0].challenge.challengeDate === getYesterday().date
       ? 0
       : rankingData[0].number)
-  const [beforeYesterdayRanking] = useState(rankingData.length === 0
+  const [yesterdayRanking] = useState(rankingData.length === 0
     ? 0
     : rankingData.length === 1 ?
       (rankingData[0].challenge.challengeDate === getYesterday().date
@@ -46,14 +45,16 @@ const RankingHeader = ({ rankingData }) => {
           : rankingData[0].number);
     if (rankData < 0) {
       rankData = -rankData;
-      setUpDown("down");
+      setUpDown("up");
     } else if (rankData === 0) {
       setUpDown("same");
     } else if (rankData > 0) {
-      setUpDown("up");
+      setUpDown("down");
     }
     setRank(rankData);
   }, []);
+
+  console.log(upDown, "upDown");
   return (
     <Conatiner coachColor={coachColorVar().color.report}>
       <View>

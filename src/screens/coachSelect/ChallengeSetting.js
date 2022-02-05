@@ -157,39 +157,9 @@ const ChallengeSetting = ({ navigation }) => {
   //   return () => clearInterval(backGroundInterval)
   // }, []);
 
-  const { refetch } = useQuery(GET_CHALLENGES_QUERY, {
-    onCompleted: (data) => {
-      const arr = [];
-      data.getChallenges.map((item, idx) => {
-        if (arr[idx - 1]?.month === Number(item.challengeDate.slice(5, 7))) {
-          return;
-        }
-        arr.push({
-          year: Number(item.challengeDate.slice(0, 4)),
-          month: Number(item.challengeDate.slice(5, 7)),
-        });
-      });
-      monthVar([...arr]);
-    },
-  });
 
 
-
-  const [putChallengeMutation, { loading }] = useMutation(
-    PUT_CHALLENGE_MUTATION,
-    {
-      onCompleted: (data) => {
-        refetch();
-      },
-      refetchQueries: [
-        {
-          query: GET_CHALLENGES_QUERY,
-        },
-      ],
-      awaitRefetchQueries: true,
-      // ! refetchQueries
-    }
-  );
+  const [putChallengeMutation, { loading }] = useMutation(PUT_CHALLENGE_MUTATION);
 
   const options = {
     taskName: 'Example',
