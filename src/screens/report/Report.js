@@ -27,7 +27,7 @@ const Report = ({
   bottomSheetRef,
 }) => {
   const monthV = useReactiveVar(monthVar);
-  const stepGoal = useReactiveVar(stepGoalVar)
+  const globalStepGoal = useReactiveVar(stepGoalVar)
   const status = useReactiveVar(statusVar);
   const [isLoading, setIsLoading] = useState(true);
   const [stepTotal, setStepTotal] = useState({
@@ -151,25 +151,23 @@ const Report = ({
   );
 
   // * 챌린지 설정하면 리패치 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     const refetchCheck = async () => {
-  //       if (stepGoal !== 0) {
-  //         const challengeCheck = await AsyncStorage.getItem(STOARGE.CHALLENGE_START_CHECK)
-  //         console.log(challengeCheck, "challengeCheck");
-  //         if (challengeCheck === null || challengeCheck !== "done") {
-  //           console.log("dd");
-  //           refetch()
-  //           AsyncStorage.setItem(STOARGE.CHALLENGE_START_CHECK, "done")
-  //         }
-  //       }
-  //       else if (stepGoal === 0 || status === "home") {
-  //         AsyncStorage.removeItem(STOARGE.CHALLENGE_START_CHECK)
-  //       }
-  //     }
-  //     refetchCheck()
-  //   }, [])
-  // );
+  useFocusEffect(
+    useCallback(() => {
+      const refetchCheck = async () => {
+        if (globalStepGoal !== 0) {
+          const challengeCheck = await AsyncStorage.getItem(STOARGE.CHALLENGE_START_CHECK)
+          if (challengeCheck === null || challengeCheck !== "done") {
+            refetch()
+            AsyncStorage.setItem(STOARGE.CHALLENGE_START_CHECK, "done")
+          }
+        }
+        else if (globalStepGoal === 0 || status === "home") {
+          AsyncStorage.removeItem(STOARGE.CHALLENGE_START_CHECK)
+        }
+      }
+      refetchCheck()
+    }, [globalStepGoal])
+  );
 
   useEffect(() => {
     bottomSheetRef?.current?.close();
