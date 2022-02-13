@@ -74,6 +74,10 @@
 	<array>
 		<string>NanumBarunGothic.ttf</string>
 		<string>NanumBarunGothicBold.ttf</string>
+		<string>Montserrat-Medium.ttf</string>
+		<string>Montserrat-SemiBold.ttf</string>
+		<string>NanumBarunGothic.otf</string>
+		<string>NanumBarunGothicBold.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

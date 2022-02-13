@@ -20,26 +20,26 @@ import { useFocusEffect } from "@react-navigation/native";
 
 
 const ChallengeSetting = ({ navigation }) => {
-  const walkRef = useRef();
-  const coachColor = useReactiveVar(coachColorVar);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    getValues,
-    watch,
-  } = useForm({
-    defaultValues: {
-      walkingNum: 200,
-    },
-  });
+	const walkRef = useRef();
+	const coachColor = useReactiveVar(coachColorVar);
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		setValue,
+		getValues,
+		watch,
+	} = useForm({
+		defaultValues: {
+			walkingNum: 200,
+		},
+	});
 
-  const nowStep = useReactiveVar(stepVar);
-  const stepGoal = useReactiveVar(stepGoalVar)
-  const inputWatch = watch("walkingNum");
+	const nowStep = useReactiveVar(stepVar);
+	const stepGoal = useReactiveVar(stepGoalVar)
+	const inputWatch = watch("walkingNum");
 
-  const PUT_CHALLENGE_MUTATION = gql`
+	const PUT_CHALLENGE_MUTATION = gql`
     mutation putChallenge($challenge: ChallengeInput) {
       putChallenge(challenge: $challenge) {
         step
@@ -49,7 +49,7 @@ const ChallengeSetting = ({ navigation }) => {
     }
   `;
 
-  const GET_CHALLENGES_QUERY = gql`
+	const GET_CHALLENGES_QUERY = gql`
     query getChallenges {
       getChallenges {
         challengeDate
@@ -58,238 +58,238 @@ const ChallengeSetting = ({ navigation }) => {
   `;
 
 
-  const init = () => {
-    BackgroundFetch.configure(
-      {
-        minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
-        // Android options
-        forceAlarmManager: true, // <-- Set true to bypass JobScheduler.
-        stopOnTerminate: false,
-        startOnBoot: true,
-        requiredNetworkType: BackgroundFetch.NETWORK_TYPE_NONE, // Default
-        requiresCharging: false, // Default
-        requiresDeviceIdle: false, // Default
-        requiresBatteryNotLow: false, // Default
-        requiresStorageNotLow: false, // Default
-      },
-      async (taskId) => {
-        console.log('[js] Received background-fetch event: ', taskId);
-        console.log("gogo");
-        // Use a switch statement to route task-handling.
-        switch (taskId) {
-          case 'com.transistorsoft.fetch':
-            console.log('Received custom task');
-            try {
-              const result = "foo"
-              console.log('result: ', result);
-            } catch (err) {
-              console.log('fetch failed', err);
-            }
-            break;
-          default:
-            console.log('Default fetch task');
-        }
+	const init = async () => {
+		BackgroundFetch.configure(
+			{
+				minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
+				// Android options
+				forceAlarmManager: true, // <-- Set true to bypass JobScheduler.
+				stopOnTerminate: false,
+				startOnBoot: true,
+				requiredNetworkType: BackgroundFetch.NETWORK_TYPE_NONE, // Default
+				requiresCharging: false, // Default
+				requiresDeviceIdle: false, // Default
+				requiresBatteryNotLow: false, // Default
+				requiresStorageNotLow: false, // Default
+			},
+			async (taskId) => {
+				console.log('[js] Received background-fetch event: ', taskId);
+				console.log("gogo");
+				// Use a switch statement to route task-handling.
+				switch (taskId) {
+					case 'com.transistorsoft.fetch':
+						console.log('Received custom task');
+						try {
+							const result = "foo"
+							console.log('result: ', result);
+						} catch (err) {
+							console.log('fetch failed', err);
+						}
+						break;
+					default:
+						console.log('Default fetch task');
+				}
 
 
 
-        // Required: Signal completion of your task to native code
-        // If you fail to do this, the OS can terminate your app
-        // or assign battery-blame for consuming too much background-time
+				// Required: Signal completion of your task to native code
+				// If you fail to do this, the OS can terminate your app
+				// or assign battery-blame for consuming too much background-time
 
-      },
+			},
 
-      (error) => {
-        console.log('[js] RNBackgroundFetch failed to start');
-      },
-
-
-    );
-
-    BackgroundFetch.scheduleTask({
-      taskId: "com.transistorsoft.fetch",
-      forceAlarmManager: true,
-      delay: 5000,
-    })
-
-    // Optional: Query the authorization status.
-    BackgroundFetch.status((status) => {
-      switch (status) {
-        case BackgroundFetch.STATUS_RESTRICTED:
-          console.log('BackgroundFetch restricted');
-          break;
-        case BackgroundFetch.STATUS_DENIED:
-          console.log('BackgroundFetch denied');
-          break;
-        case BackgroundFetch.STATUS_AVAILABLE:
-
-          console.log('BackgroundFetch is enabled');
-          console.log("right?");
-
-          break;
-        default:
-          console.log('Default fetch task');
-      }
-    });
-    const date = new Date()
-    if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
-      console.log("test!!");
-      putChallengeMutation({
-        variables: {
-          challenge: {
-            step: nowStep,
-            stepGoal: inputWatch,
-            challengeDate: getYesterday().date,
-          },
-        },
-      });
-
-      walkStatus("home")
-      BackgroundFetch.finish()
-    }
-
-  };
+			(error) => {
+				console.log('[js] RNBackgroundFetch failed to start');
+			},
 
 
-  // useEffect(() => {
-  //   const backGroundInterval = setInterval(() => {
-  //     init();
-  //   }, 1000)
-  //   return () => clearInterval(backGroundInterval)
-  // }, []);
+		);
+
+		BackgroundFetch.scheduleTask({
+			taskId: "com.transistorsoft.fetch",
+			forceAlarmManager: true,
+			delay: 5000,
+		})
+
+		// Optional: Query the authorization status.
+		BackgroundFetch.status((status) => {
+			switch (status) {
+				case BackgroundFetch.STATUS_RESTRICTED:
+					console.log('BackgroundFetch restricted');
+					break;
+				case BackgroundFetch.STATUS_DENIED:
+					console.log('BackgroundFetch denied');
+					break;
+				case BackgroundFetch.STATUS_AVAILABLE:
+
+					console.log('BackgroundFetch is enabled');
+					console.log("right?");
+
+					break;
+				default:
+					console.log('Default fetch task');
+			}
+		});
+		console.log("DDDD");
+		const challengeDate = await AsyncStorage.getItem(STOARGE.TODAY_CHECK)
+		if (challengeDate !== getToday()) {
+			await putChallengeMutation({
+				variables: {
+					challenge: {
+						step: nowStep,
+						stepGoal: inputWatch,
+						challengeDate: getYesterday().date,
+					},
+				},
+			});
+			walkStatus("home")
+			await AsyncStorage.removeItem(STOARGE.TODAY_CHECK)
+			BackgroundFetch.finish()
+		}
+	};
+
+
+	// useEffect(() => {
+	//   const backGroundInterval = setInterval(() => {
+	//     init();
+	//   }, 1000)
+	//   return () => clearInterval(backGroundInterval)
+	// }, []);
 
 
 
-  const [putChallengeMutation, { loading }] = useMutation(PUT_CHALLENGE_MUTATION);
+	const [putChallengeMutation, { loading }] = useMutation(PUT_CHALLENGE_MUTATION);
 
-  const options = {
-    taskName: 'Example',
-    taskTitle: `걸음수: 0`,
-    taskDesc: `목표 걸음수: ${inputWatch}`,
-    taskIcon: {
-      name: 'ic_launcher',
-      type: 'mipmap',
-    },
-    color: '#ff00ff',
-    linkingURI: 'app://open.my.app',
-    parameters: {
-      delay: 1000,
-    },
-  };
+	const options = {
+		taskName: 'Example',
+		taskTitle: `걸음수: 0`,
+		taskDesc: `목표 걸음수: ${inputWatch}`,
+		taskIcon: {
+			name: 'ic_launcher',
+			type: 'mipmap',
+		},
+		color: '#ff00ff',
+		linkingURI: 'app://open.my.app',
+		parameters: {
+			delay: 1000,
+		},
+	};
 
-  const sleep = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+	const sleep = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
-  const veryIntensiveTask = async (taskDataArguments) => {
-    let androidStep = 0;
-    const { delay } = taskDataArguments;
+	const veryIntensiveTask = async (taskDataArguments) => {
+		let androidStep = 0;
+		const { delay } = taskDataArguments;
 
-    await new Promise(async (resolve) => {
-      const config = {
-        default_threshold: 30.0,
-        default_delay: 400000000,
-        cheatInterval: 3000,
-        onStepCountChange: (stepCount) => androidStep = stepCount,
-        onCheat: () => { console.log("User is Cheating") }
-      }
-      startCounter(config);
+		await new Promise(async (resolve) => {
+			const config = {
+				default_threshold: 30.0,
+				default_delay: 400000000,
+				cheatInterval: 3000,
+				onStepCountChange: (stepCount) => androidStep = stepCount,
+				onCheat: () => { console.log("User is Cheating") }
+			}
+			startCounter(config);
 
-      for (let i = 0; BackgroundService.isRunning(); i++) {
-        await BackgroundService.updateNotification({ taskTitle: `걸음수: ${androidStep}` })
-        stepVar(androidStep)
-        if (androidStep >= inputWatch) {
-          walkStatus("success")
-        }
-        // const date = new Date()
-        // date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() <= 5)
-        const challengeDate = await AsyncStorage.getItem(STOARGE.TODAY_CHECK)
-        if (challengeDate !== getToday()) {
-          await putChallengeMutation({
-            variables: {
-              challenge: {
-                step: androidStep,
-                stepGoal: inputWatch,
-                challengeDate,
-              },
-            },
-          });
-          walkStatus("home")
-          await AsyncStorage.removeItem(STOARGE.TODAY_CHECK)
-          await BackgroundService.stop()
-        }
-        await sleep(delay);
-      }
-    })
-  };
+			for (let i = 0; BackgroundService.isRunning(); i++) {
+				await BackgroundService.updateNotification({ taskTitle: `걸음수: ${androidStep}` })
+				stepVar(androidStep)
+				if (androidStep >= inputWatch) {
+					walkStatus("success")
+				}
+				// const date = new Date()
+				// date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() <= 5)
+				const challengeDate = await AsyncStorage.getItem(STOARGE.TODAY_CHECK)
+				if (challengeDate !== getToday()) {
+					await putChallengeMutation({
+						variables: {
+							challenge: {
+								step: androidStep,
+								stepGoal: inputWatch,
+								challengeDate,
+							},
+						},
+					});
+					walkStatus("home")
+					await AsyncStorage.removeItem(STOARGE.TODAY_CHECK)
+					await BackgroundService.stop()
+				}
+				await sleep(delay);
+			}
+		})
+	};
 
-  const handlePutChallenge = async () => {
-    if (inputWatch < 200) {
-      return;
-    }
-    await putChallengeMutation({
-      variables: {
-        challenge: {
-          step: 0,
-          stepGoal: inputWatch,
-          challengeDate: getToday(),
-        },
-      },
-    });
-    if (Platform.OS === "android") {
-      await AsyncStorage.setItem(STOARGE.TODAY_CHECK, getToday())
-      await AsyncStorage.setItem(STOARGE.TODAY, getToday())
-      await BackgroundService.start(veryIntensiveTask, options);
-    } else if (Platform.OS === "ios") {
-      await BackgroundFetch.start(init, options)
-    }
-    stepGoalVar(inputWatch)
-    walkStatus("walking");
-    navigation.goBack();
-  };
+	const handlePutChallenge = async () => {
+		if (inputWatch < 200) {
+			return;
+		}
+		await putChallengeMutation({
+			variables: {
+				challenge: {
+					step: 0,
+					stepGoal: inputWatch,
+					challengeDate: getToday(),
+				},
+			},
+		});
+		if (Platform.OS === "android") {
+			await AsyncStorage.setItem(STOARGE.TODAY_CHECK, getToday())
+			await AsyncStorage.setItem(STOARGE.TODAY, getToday())
+			await BackgroundService.start(veryIntensiveTask, options);
+		} else if (Platform.OS === "ios") {
+			await AsyncStorage.setItem(STOARGE.TODAY_CHECK, getToday())
+			init()
+		}
+		stepGoalVar(inputWatch)
+		walkStatus("walking");
+		navigation.goBack();
+	};
 
 
-  useEffect(() => {
-    register("walkingNum", { required: true });
-    walkRef?.current?.focus();
-  }, []);
+	useEffect(() => {
+		register("walkingNum", { required: true });
+		walkRef?.current?.focus();
+	}, []);
 
-  return (
-    <KeyboardAvoidingView
-      style={{
-        flex: 1,
-      }}
-      behavior={"height"}
-      keyboardVerticalOffset={100}
-    >
-      <Container>
-        <HeaderForm
-          headerChildren={"오늘의 챌린지 세우기"}
-          descChildren={
-            "우리 오늘은 얼마나 걸어볼까요? \n200걸음 이상 설정해보세요!"
-          }
-          align="left"
-        />
-        <InputBox>
-          <WalkTextInput
-            coachColor={coachColor}
-            ref={walkRef}
-            keyboardType="number-pad"
-            defaultValue="200"
-            onChangeText={(text) => setValue("walkingNum", text)}
-            onSubmitEditing={handleSubmit(handlePutChallenge)}
-            returnKeyType="next"
-          />
-          <WalkiText>걸음</WalkiText>
-        </InputBox>
-        <LongButton
-          handleGoToNext={handleSubmit(handlePutChallenge)}
-          disabled={inputWatch < 200}
-          btnBackColor={coachColorVar()?.color?.main}
-          loading={loading}
-        >
-          저장
-        </LongButton>
-      </Container>
-    </KeyboardAvoidingView>
-  );
+	return (
+		<KeyboardAvoidingView
+			style={{
+				flex: 1,
+			}}
+			behavior={"height"}
+			keyboardVerticalOffset={100}
+		>
+			<Container>
+				<HeaderForm
+					headerChildren={"오늘의 챌린지 세우기"}
+					descChildren={
+						"우리 오늘은 얼마나 걸어볼까요? \n200걸음 이상 설정해보세요!"
+					}
+					align="left"
+				/>
+				<InputBox>
+					<WalkTextInput
+						coachColor={coachColor}
+						ref={walkRef}
+						keyboardType="number-pad"
+						defaultValue="200"
+						onChangeText={(text) => setValue("walkingNum", text)}
+						onSubmitEditing={handleSubmit(handlePutChallenge)}
+						returnKeyType="next"
+					/>
+					<WalkiText>걸음</WalkiText>
+				</InputBox>
+				<LongButton
+					handleGoToNext={handleSubmit(handlePutChallenge)}
+					disabled={inputWatch < 200}
+					btnBackColor={coachColorVar()?.color?.main}
+					loading={loading}
+				>
+					저장
+				</LongButton>
+			</Container>
+		</KeyboardAvoidingView>
+	);
 };
 
 const InputBox = styled.View`

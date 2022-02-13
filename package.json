@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.4",
+    "@babel/traverse": "^7.17.0",
     "@gorhom/bottom-sheet": "^4",
     "@hookform/error-message": "^2.0.0",
     "@invertase/react-native-apple-authentication": "^2.1.5",
@@ -30,6 +31,7 @@
     "expo-updates": "~0.8.2",
     "global": "^4.4.0",
     "graphql": "^15.5.1",
+    "latest": "^0.2.0",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
