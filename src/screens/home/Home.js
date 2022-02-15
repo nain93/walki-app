@@ -28,6 +28,7 @@ const Home = ({ navigation }) => {
   const load = async () => {
     const result = await getLocation();
     WeatherSetter(result);
+    console.log(weather.condition, "weatherTest");
   };
   const WeatherSetter = () => {
     if (weather.condition === "맑음") {
@@ -42,7 +43,9 @@ const Home = ({ navigation }) => {
       setWeatherPic(require("../../../assets/icons/snow.png"));
     } else {
       weather.condition === "안개";
-      setWeatherPic(require("../../../assets/icons/mist.png"));
+      // setWeatherPic(require("../../../assets/icons/mist.png"));
+      setWeatherPic(require("../../../assets/icons/sun.png"));
+
     }
   };
 
@@ -114,10 +117,10 @@ const Home = ({ navigation }) => {
         </View>
         <WeatherStatus>
           <LocationSpace>
-            <CurrentTemperature>{weather.temp}</CurrentTemperature>
+            <CurrentTemperature>{weather.temp}°</CurrentTemperature>
             <CurrentCity>{city}</CurrentCity>
           </LocationSpace>
-          <Text style={{ fontSize: 36 }}>°</Text>
+          {/* <Text style={{ fontSize: 36 }}>°</Text> */}
           <BarSpace>
             <WeatherImage source={SpaceLogo} resizeMode={"contain"} />
           </BarSpace>
@@ -142,15 +145,18 @@ const TopStatus = styled.View`
   flex-direction: row;
   justify-content: space-between;
   max-height: ${h2p(66)}px;
+  margin-bottom: ${d2p(24)}px;
 `;
 
 const WeatherStatus = styled.View`
   flex-direction: row;
 `;
 const LocationSpace = styled.View`
-align-items: flex-end;
+align-items: center;
   padding-bottom: ${h2p(5)}px;
   justify-content: space-between;
+  padding-top:${h2p(5)}px;
+
 
 `;
 const WeatherSpace = styled.View`
@@ -179,15 +185,16 @@ const CurrentTime = styled.Text`
 
 const CurrentText = styled.Text`
   font-size: 12px;
+
   color: ${theme.grayScale.gray3};
 `;
 const CurrentCity = styled.Text`
 font-size: 12px;
-justify-content: center;
 color: ${theme.grayScale.gray3};
 `
 const CurrentTemperature = styled.Text`
   font-size: 36px;
+
 `;
 
 const WeatherImage = styled.Image`

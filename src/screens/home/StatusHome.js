@@ -160,7 +160,9 @@ const StatusHome = ({ navigation }) => {
           fadeimage={fadeimage}
           fadetext={fadetext}
           fadetextwalk={fadetextwalk}
-        />
+          style = {{ marginBottom: 15}}
+        >
+        </StatusVariable>
         <Modal
           isVisible={modalOpen}
           style={{ alignItems: "center" }}

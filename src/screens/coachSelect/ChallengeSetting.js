@@ -32,7 +32,7 @@ const ChallengeSetting = ({ navigation }) => {
     },
   });
 
-  const stepstep = useReactiveVar(stepVar);
+  const stepIos = useReactiveVar(stepVar);
   const stepGoal = useReactiveVar(stepGoalVar)
 
   const inputWatch = watch("walkingNum");
@@ -128,13 +128,17 @@ const ChallengeSetting = ({ navigation }) => {
           console.log('Default fetch task');
       }
     });
+
+    if (stepIos >= 4500) {
+      walkStatus("success")
+    }
     const date = new Date()
     if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
       console.log("test!!");
       putChallengeMutation({
         variables: {
           challenge: {
-            step: stepstep,
+            step: 0,
             stepGoal: inputWatch,
             challengeDate: getYesterday().date,
           },
@@ -151,10 +155,34 @@ const ChallengeSetting = ({ navigation }) => {
   useEffect(() => {
     const backGroundInterval = setInterval(() => {
       init();
-    }, 1000)
+    }, 20000)
     return () => clearInterval()
   }, []);
+  const refreshScreen = () => {
+    const date = new Date()
+    if (date.getHours() === 23 && date.getMinutes() === 25 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
+      console.log("test!!");
+      putChallengeMutation({
+        variables: {
+          challenge: {
+            step: 0,
+            stepGoal: inputWatch,
+            challengeDate: getYesterday().date,
+          },
+        },
+      });
 
+      walkStatus("home")
+    }
+  } 
+  // useEffect(() => {
+  //   const backGroundInterval = setInterval(() => {
+  //     refreshScreen();
+  //     console.log("refresh!!");
+  //   },3000)
+  //   return () => clearInterval()
+    
+  // }, []);
   const { refetch } = useQuery(GET_CHALLENGES_QUERY, {
     onCompleted: (data) => {
       const arr = [];
@@ -268,7 +296,7 @@ const ChallengeSetting = ({ navigation }) => {
   };
 
   useEffect(() => {
-    init()
+    // init()
     walkRef?.current?.focus();
   }, []);
 
