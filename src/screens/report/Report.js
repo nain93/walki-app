@@ -5,7 +5,7 @@ import ReportMain from "./ReportMain";
 import { useQuery, gql, useReactiveVar } from "@apollo/client";
 import Loading from "../../components/Loading";
 import ReportLoading from "./reportItems/ReportLoading";
-import { monthVar, userNameVar } from "../../../apollo";
+import { monthVar, statusVar, stepGoalVar, userNameVar, walkStatus } from "../../../apollo";
 import { useFocusEffect } from "@react-navigation/native";
 import {
   BottomSheetBackdrop,
@@ -13,9 +13,11 @@ import {
   BottomSheetModalProvider,
   BottomSheetModal,
 } from "@gorhom/bottom-sheet";
-import { Text, TouchableWithoutFeedback } from "react-native";
+import { Button, Text, TouchableWithoutFeedback } from "react-native";
 import { getToday, month } from "../../common/getToday";
 import { FlatList } from "react-native-gesture-handler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import STOARGE from "../../constants/stoarge";
 
 const Report = ({
   selectedMonth,
@@ -25,6 +27,8 @@ const Report = ({
   bottomSheetRef,
 }) => {
   const monthV = useReactiveVar(monthVar);
+  const globalStepGoal = useReactiveVar(stepGoalVar)
+  const status = useReactiveVar(statusVar);
   const [isLoading, setIsLoading] = useState(true);
   const [stepTotal, setStepTotal] = useState({
     stepGoal: 0,
@@ -100,10 +104,11 @@ const Report = ({
         setStepInfo([...res]);
       }
     },
-    fetchPolicy: "cache-and-network",
+    // fetchPolicy: "cache-and-network",
     onError: (e) => {
       console.log(e);
     },
+    notifyOnNetworkStatusChange: true
   });
   const GET_MEMBER = gql`
     query getMember {
@@ -128,10 +133,40 @@ const Report = ({
     },
   });
 
+  // * 다음날 되면 리패치
   useFocusEffect(
     useCallback(() => {
-      refetch();
-    }, [data])
+      const refetchCheck = async () => {
+        const todayCheck = await AsyncStorage.getItem(STOARGE.TODAY)
+        if (todayCheck) {
+          if (todayCheck !== getToday()) {
+            refetch()
+            stepGoalVar(0)
+            AsyncStorage.removeItem(STOARGE.TODAY)
+          }
+        }
+      }
+      refetchCheck()
+    }, [])
+  );
+
+  // * 챌린지 설정하면 리패치 
+  useFocusEffect(
+    useCallback(() => {
+      const refetchCheck = async () => {
+        if (globalStepGoal !== 0) {
+          const challengeCheck = await AsyncStorage.getItem(STOARGE.CHALLENGE_START_CHECK)
+          if (challengeCheck === null || challengeCheck !== "done") {
+            refetch()
+            AsyncStorage.setItem(STOARGE.CHALLENGE_START_CHECK, "done")
+          }
+        }
+        else if (globalStepGoal === 0 || status === "home") {
+          AsyncStorage.removeItem(STOARGE.CHALLENGE_START_CHECK)
+        }
+      }
+      refetchCheck()
+    }, [globalStepGoal])
   );
 
   useEffect(() => {
@@ -173,16 +208,10 @@ const Report = ({
                   alignItems: "center",
                 }}
               >
-                <FlatList
-                  style={{ width: "100%" }}
-                  data={monthV}
-                  keyExtractor={() => Math.random()}
-                  renderItem={({ item }) =>
-                    <MonthItem onPress={() => handleMonthClick(item)}>
-                      <Text>{`${item.year}년 ${item.month}월 리포트`}</Text>
-                    </MonthItem>
-                  }
-                />
+                {React.Children.toArray(monthV.map(item =>
+                  <MonthItem onPress={() => handleMonthClick(item)}>
+                    <Text>{`${item.year}년 ${item.month}월 리포트`}</Text>
+                  </MonthItem>))}
               </BottomSheetScrollView>
             </BottomSheetModal>
           </BottomSheetModalProvider>

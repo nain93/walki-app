@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import RankingHeader from "./RankingHeader";
 import RankingMain from "./RankingMain";
 import { gql, useQuery } from "@apollo/client";
 import { getBeforeYesterday, getToday, getYesterday } from "../../common/getToday";
 import Loading from "../../components/Loading";
+import ReportLoading from "../report/reportItems/ReportLoading";
+import RankingLoading from "./RankingLoading";
+import STOARGE from "../../constants/stoarge";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Ranking = () => {
   const GET_MY_RANKINGS_QUERY = gql`
@@ -23,10 +28,10 @@ const Ranking = () => {
     }
   `;
 
-  const { data, loading } = useQuery(GET_MY_RANKINGS_QUERY, {
+  const { data, loading, refetch } = useQuery(GET_MY_RANKINGS_QUERY, {
     variables: {
-      start: getYesterday().date,
-      end: getBeforeYesterday().date,
+      start: getBeforeYesterday().date,
+      end: getYesterday().date,
     },
     onCompleted: ({ getMyRankings }) => {
       if (getMyRankings.length !== 0) {
@@ -39,8 +44,24 @@ const Ranking = () => {
     },
   });
 
+  // * 다음날 되면 리패치
+  useFocusEffect(
+    useCallback(() => {
+      const refetchCheck = async () => {
+        const todayCheck = await AsyncStorage.getItem(STOARGE.RANKING_CHECK)
+        if (todayCheck) {
+          if (todayCheck !== getToday()) {
+            refetch()
+            AsyncStorage.removeItem(STOARGE.RANKING_CHECK)
+          }
+        }
+      }
+      refetchCheck()
+    }, [])
+  );
+
   if (loading) {
-    return <Loading />;
+    return <Loading children={<RankingLoading />} />;
   }
 
   return (

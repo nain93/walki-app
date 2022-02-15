@@ -17,6 +17,7 @@ const BottomSheetPicker = ({ selectedMonth, bottomSheetRef }) => {
 
   const { } = useQuery(GET_REPORT_MONTH, {
     onCompleted: (data) => {
+      console.log(data.getReportMonth.yearMonthList, "data.getReportMonth.yearMonthList");
       const months = [];
       data.getReportMonth.yearMonthList.map((item, idx) => {
         months.push({
@@ -24,8 +25,9 @@ const BottomSheetPicker = ({ selectedMonth, bottomSheetRef }) => {
           month: Number(item.slice(5, 7)),
         });
       });
-      monthVar([...months]);
+      monthVar(months);
     },
+    fetchPolicy: "no-cache"
   });
 
   const handleBottomSheet = () => {

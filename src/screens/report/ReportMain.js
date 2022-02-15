@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { FlatList, Image, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
-import { coachColorVar, userNameVar } from "../../../apollo";
+import { coachColorVar, stepGoalVar, userNameVar } from "../../../apollo";
 import Item from "./reportItems/Item";
 import ClickedItem from "./reportItems/ClickedItem";
 import AddItem from "./reportItems/AddItem";
@@ -18,6 +18,7 @@ const ReportMain = ({ stepInfo, children }) => {
   const [selectedId, setSelectedId] = useState([]);
 
   const toastRef = useRef();
+  const stepGoal = useReactiveVar(stepGoalVar)
 
   const handleItemClick = (index) => {
     const data = [...stepInfo];
@@ -27,7 +28,7 @@ const ReportMain = ({ stepInfo, children }) => {
 
   const renderItem = ({ item, index }) => {
     if (index === 0) {
-      if (item.challengeDate === undefined) {
+      if (item.challengeDate === undefined || stepGoal === 0) {
         return <AddBtn />;
       }
       if (item.challengeDate === getToday()) {
@@ -119,6 +120,7 @@ const Container = styled.View`
 const NameTitle = styled.View`
   flex-direction: row;
   align-items: center;
+  margin-bottom: ${h2p(15)}px;
 `;
 
 export default ReportMain;

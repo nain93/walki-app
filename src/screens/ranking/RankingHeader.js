@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Image } from "react-native";
 import styled from "styled-components";
 import { coachColorVar } from "../../../apollo";
-import { H2Text, H4Text, theme } from "../../styles/theme";
+import { Caption, H2Text, H4Text, theme } from "../../styles/theme";
 import chat from "../../../assets/icons/chat.png";
 import tokiHappy from "../../../assets/images/ranking/toki_happy.png";
 import tokiFail from "../../../assets/images/toki_fail.png";
@@ -16,9 +16,20 @@ import { d2p, h2p } from "../../common/utils";
 const RankingHeader = ({ rankingData }) => {
   const [rank, setRank] = useState(null);
   const [upDown, setUpDown] = useState("");
+  const [beforeYesterdayRanking] = useState(rankingData.length === 0
+    ? 0
+    : rankingData.length === 1 &&
+      rankingData[0].challenge.challengeDate === getYesterday().date
+      ? 0
+      : rankingData[0].number)
+  const [yesterdayRanking] = useState(rankingData.length === 0
+    ? 0
+    : rankingData.length === 1 ?
+      (rankingData[0].challenge.challengeDate === getYesterday().date
+        ? rankingData[0].number
+        : 0) : rankingData[1].number)
 
   useEffect(() => {
-    console.log(rankingData, "rankingData");
     let rankData =
       (rankingData.length === 0
         ? 0
@@ -34,15 +45,16 @@ const RankingHeader = ({ rankingData }) => {
           : rankingData[0].number);
     if (rankData < 0) {
       rankData = -rankData;
-      setUpDown("down");
+      setUpDown("up");
     } else if (rankData === 0) {
       setUpDown("same");
     } else if (rankData > 0) {
-      setUpDown("up");
+      setUpDown("down");
     }
     setRank(rankData);
   }, []);
 
+  console.log(upDown, "upDown");
   return (
     <Conatiner coachColor={coachColorVar().color.report}>
       <View>
@@ -72,35 +84,41 @@ const RankingHeader = ({ rankingData }) => {
         </TextWrap>
         <RankingWrap>
           <RankingBox style={{ opacity: 0.6, marginRight: d2p(8) }}>
-            <Text>
+            <Caption style={{ color: theme.grayScale.gray3 }}>
               {getBeforeYesterday().month}/{getBeforeYesterday().day}
-            </Text>
+            </Caption>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <H2Text style={{ color: coachColorVar().color.main }}>
-                {rankingData.length === 0
-                  ? 0
-                  : rankingData.length === 1 &&
-                    rankingData[0].challenge.challengeDate === getYesterday().date
-                    ? 0
-                    : rankingData[0].number}
+              {/* {todayRanking === 0 ? <Caption style={{ marginTop: d2p(5) }}>순위 없음</Caption> :
+                <>
+                  <H2Text style={{ padding: 0, color: coachColorVar().color.main }}>
+                    {todayRanking}
+                  </H2Text>
+                  <Caption style={{ color: theme.grayScale.gray3 }}> 위</Caption>
+                </>
+              } */}
+              <H2Text style={{ padding: 0, color: coachColorVar().color.main }}>
+                {beforeYesterdayRanking}
               </H2Text>
-              <Text> 위</Text>
+              <Caption style={{ color: theme.grayScale.gray3 }}> 위</Caption>
             </View>
           </RankingBox>
           <RankingBox>
-            <Text>
+            <Caption style={{ color: theme.grayScale.gray3 }}>
               {getYesterday().month}/{getYesterday().day}
-            </Text>
+            </Caption>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
+              {/* {yesterdayRanking === 0 ? <Caption style={{ marginTop: d2p(5) }}>순위 없음</Caption> :
+                <>
+                  <H2Text style={{ color: coachColorVar().color.main }}>
+                    {yesterdayRanking}
+                  </H2Text>
+                  <Caption style={{ color: theme.grayScale.gray3 }}> 위</Caption>
+                </>
+              } */}
               <H2Text style={{ color: coachColorVar().color.main }}>
-                {rankingData.length === 0
-                  ? 0
-                  : rankingData.length === 1 ?
-                    (rankingData[0].challenge.challengeDate === getYesterday().date
-                      ? rankingData[0].number
-                      : 0) : rankingData[1].number}
+                {yesterdayRanking}
               </H2Text>
-              <Text> 위</Text>
+              <Caption style={{ color: theme.grayScale.gray3 }}> 위</Caption>
             </View>
           </RankingBox>
         </RankingWrap>
@@ -156,7 +174,8 @@ const RankingWrap = styled.View`
 const RankingBox = styled.View`
   flex: 1;
   align-items: center;
-  padding: ${d2p(10)}px;
+  padding-top :${d2p(12)}px;
+  padding-bottom: ${d2p(10)}px;
   background-color: ${theme.grayScale.white};
   border-radius: 8px;
 `;

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import LongButton from "../../components/LongButton";
@@ -14,30 +14,32 @@ import BackgroundFetch from "react-native-background-fetch";
 
 import { startCounter, stopCounter } from 'react-native-accurate-step-counter';
 import { d2p } from "../../common/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import STOARGE from "../../constants/stoarge";
+import { useFocusEffect } from "@react-navigation/native";
 
 
 const ChallengeSetting = ({ navigation }) => {
-  const walkRef = useRef();
-  const coachColor = useReactiveVar(coachColorVar);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    getValues,
-    watch,
-  } = useForm({
-    defaultValues: {
-      walkingNum: 200,
-    },
-  });
+	const walkRef = useRef();
+	const coachColor = useReactiveVar(coachColorVar);
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		setValue,
+		getValues,
+		watch,
+	} = useForm({
+		defaultValues: {
+			walkingNum: 200,
+		},
+	});
 
-  const stepIos = useReactiveVar(stepVar);
-  const stepGoal = useReactiveVar(stepGoalVar)
+	const nowStep = useReactiveVar(stepVar);
+	const stepGoal = useReactiveVar(stepGoalVar)
+	const inputWatch = watch("walkingNum");
 
-  const inputWatch = watch("walkingNum");
-
-  const PUT_CHALLENGE_MUTATION = gql`
+	const PUT_CHALLENGE_MUTATION = gql`
     mutation putChallenge($challenge: ChallengeInput) {
       putChallenge(challenge: $challenge) {
         step
@@ -47,7 +49,7 @@ const ChallengeSetting = ({ navigation }) => {
     }
   `;
 
-  const GET_CHALLENGES_QUERY = gql`
+	const GET_CHALLENGES_QUERY = gql`
     query getChallenges {
       getChallenges {
         challengeDate

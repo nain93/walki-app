@@ -18,7 +18,7 @@ export const GoalBox = styled.View`
 `;
 
 export const CharacetrImage = styled.Image`
-  width:  ${h2p(120)}px;
+  width:  ${h2p(189)}px;
   height: ${h2p(192)}px;
 `;
 

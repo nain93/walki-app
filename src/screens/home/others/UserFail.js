@@ -3,12 +3,39 @@ import CharacterModal from "../../../components/CharacterModal";
 import tokiFail from "../../../../assets/images/toki_fail.png";
 import bukiFail from "../../../../assets/images/buki_fail.png";
 import { Body1Text, H2Text, theme } from "../../../styles/theme";
-import { walkStatus } from "../../../../apollo";
+import { stepGoalVar, stepVar, walkStatus } from "../../../../apollo";
 import BackgroundService from 'react-native-background-actions';
 import { d2p } from "../../../common/utils";
+import { gql, useMutation, useReactiveVar } from "@apollo/client";
+import { getToday } from "../../../common/getToday";
 
 const UserFail = ({ handleFailModal, failModalOpen }) => {
+
+  const PUT_CHALLENGE_MUTATION = gql`
+    mutation putChallenge($challenge: ChallengeInput) {
+      putChallenge(challenge: $challenge) {
+        step
+        stepGoal
+        challengeDate
+      }
+    }
+  `;
+
+  const [putChallengeMutation, { loading }] = useMutation(PUT_CHALLENGE_MUTATION);
+
+  const step = useReactiveVar(stepVar);
+  const stepGoal = useReactiveVar(stepGoalVar)
+
   const handleOkayBtn = async () => {
+    await putChallengeMutation({
+      variables: {
+        challenge: {
+          step,
+          stepGoal,
+          challengeDate: getToday(),
+        },
+      },
+    });
     await BackgroundService.stop()
     walkStatus("afterStop");
     handleFailModal();

@@ -7,8 +7,10 @@ import Toast from "react-native-easy-toast";
 import { gql, useQuery } from "@apollo/client";
 import Loading from "../../components/Loading";
 import { getYesterday } from "../../common/getToday";
-import tokiDefault from "../../../assets/images//toki_default.png";
-import bukiDefault from "../../../assets/images/buki_default.png";
+import tokiDefault from "../../../assets/images/ranking/rankingToki.png";
+import bukiDefault from "../../../assets/images/ranking/rankingBuki.png";
+import noProfilebuki from "../../../assets/images/noprofile_booki.png";
+import noProfileToki from "../../../assets/images/noprofile_toki.png";
 import { d2p, h2p } from "../../common/utils";
 
 const Item = ({ name, profile, rank, numberColor, rankingStep, coach, myId, userId }) => (
@@ -17,18 +19,18 @@ const Item = ({ name, profile, rank, numberColor, rankingStep, coach, myId, user
       <H2Text
         style={{
           color: numberColor ? `${numberColor}` : theme.grayScale.black,
-          width: 30,
+          width: d2p(30),
         }}
       >
         {rank}
       </H2Text>
       <ProfileImg
-        source={{ uri: profile }}
+        source={profile ? { uri: profile } : (coach === "부키" ? noProfilebuki : noProfileToki)}
         resizeMode="cover"
       />
       <H4Text style={{ color: theme.grayScale.gray1 }}>{name}</H4Text>
     </UserProfile>
-    <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <View style={{ flexDirection: "row", alignItems: "center", border: 1 }}>
       <Image style={{ width: d2p(24), height: d2p(24), marginRight: d2p(4) }} source={coach === "부키" ? bukiDefault : tokiDefault} />
       <Body3Text style={{ color: theme.grayScale.gray1 }}>
         {String(rankingStep).length > 3 ?
