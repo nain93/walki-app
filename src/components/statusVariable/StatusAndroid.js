@@ -43,6 +43,7 @@ const StatusAndroid = ({
 	const step = useReactiveVar(stepVar);
 	const stepGoal = useReactiveVar(stepGoalVar)
 	const status = useReactiveVar(statusVar);
+	const coachColor = useReactiveVar(coachColorVar)
 
 	const PUT_CHALLENGE_MUTATION = gql`
     mutation putChallenge($challenge: ChallengeInput) {
@@ -130,13 +131,13 @@ const StatusAndroid = ({
 												? 100
 												: (step / stepGoal) * 100
 									, half)} Z`}
-								fill={coachColorVar().color.main}
+								fill={coachColor.color.main}
 							/>
 							{<Circle cx={half} cy={half} r={half - h2p(10)} fill={"white"} />}
 						</Svg>
 						<View style={styles.textView}>
 							<Animated.View style={[{ opacity: fadeimage ? fadeimage : 1 }]}>
-								<CharacetrImage source={coachImg} resizeMode={status === "fail" && coachColorVar().coach === "buki" ? "cover" : "contain"} />
+								<CharacetrImage source={coachImg} resizeMode={status === "fail" && coachColor.coach === "buki" ? "cover" : "contain"} />
 							</Animated.View>
 							<Animated.View
 								style={[
@@ -144,7 +145,7 @@ const StatusAndroid = ({
 								]}
 							>
 								<View style={{ alignItems: "center" }}>
-									<Blurgoal coachColorVar={coachColorVar().color.main}>
+									<Blurgoal coachColorVar={coachColor.color.main}>
 										0
 									</Blurgoal>
 
@@ -160,7 +161,7 @@ const StatusAndroid = ({
 								]}
 							>
 								<View style={{ alignItems: "center" }}>
-									<Blurgoal coachColorVar={coachColorVar().color.main}>
+									<Blurgoal coachColorVar={coachColor.color.main}>
 										{step}
 									</Blurgoal>
 
@@ -172,7 +173,7 @@ const StatusAndroid = ({
 											flexDirection: "row",
 										}}
 									>
-										<GoalTextBox coachColorVar={coachColorVar().color.main}>
+										<GoalTextBox coachColorVar={coachColor.color.main}>
 											<Text
 												style={{
 													color: "white",

@@ -80,7 +80,7 @@ const Profile = ({ navigation }) => {
 };
 
 const Container = styled.View`
-  padding: 0 ${d2p(38)}px;
+  padding: 0 ${d2p(30)}px;
   align-items: center;
   margin-bottom: ${h2p(27)}px;
 `;

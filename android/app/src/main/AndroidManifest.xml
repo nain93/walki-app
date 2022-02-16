@@ -22,6 +22,7 @@
     android:usesCleartextTraffic="true"
     android:allowBackup="true"
     android:fullBackupContent="@xml/my_backup_rules"
+    android:screenOrientation="portrait"
   >
     <meta-data android:name="expo.modules.updates.EXPO_UPDATE_URL" android:value="https://exp.host/@nain93/walki"/>
     <meta-data android:name="expo.modules.updates.EXPO_SDK_VERSION" android:value="42.0.0"/>

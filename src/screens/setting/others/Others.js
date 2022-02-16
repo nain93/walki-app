@@ -61,7 +61,7 @@ const Others = () => {
 
 const Container = styled.View`
   min-height: ${h2p(180)}px;
-  padding: 0 ${d2p(38)}px;
+  padding: 0 ${d2p(30)}px;
   margin-top: ${h2p(16)}px;
   border-bottom-color: ${theme.grayScale.gray7};
 `;
