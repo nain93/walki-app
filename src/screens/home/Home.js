@@ -65,7 +65,6 @@ const Home = ({ navigation }) => {
       setcurrentDate(month + "월" + " " + date + "일");
       setcurrentTime(hours + ":" + minutes + ampm);
     }, 1000)
-    // getLocation();
     load();
   }, []);
 
@@ -100,37 +99,35 @@ const Home = ({ navigation }) => {
     }
   };
 
-  if (ready) {
-    return (
-      <Container style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
-        <Loading />
-      </Container>
-    );
-  }
 
   return (
     <Container style={{ paddingHorizontal: d2p(31) }}>
-      <TopStatus style={{ marginTop: h2p(34), marginBottom: h2p(46) }}>
-        <View>
-          <CurrentDate>{currentDate}</CurrentDate>
-          <CurrentTime>{currentTime}</CurrentTime>
+      {(ready || !currentTime || !currentDate) ?
+        <View style={{ height: h2p(66), marginBottom: h2p(46), marginTop: h2p(34) }}>
+          <Loading />
         </View>
-        <WeatherStatus>
-          <LocationSpace>
-            <CurrentTemperature>{weather.temp}°</CurrentTemperature>
-            <CurrentCity>{city}</CurrentCity>
-          </LocationSpace>
-          {/* <Text style={{ fontSize: 36 }}>°</Text> */}
-          <BarSpace>
-            <WeatherImage source={SpaceLogo} resizeMode={"contain"} />
-          </BarSpace>
-          <WeatherSpace>
-            {!!weatherPic &&
-              <WeatherImage source={weatherPic} resizeMode={"contain"} />}
-            <CurrentText>{weather.condition}</CurrentText>
-          </WeatherSpace>
-        </WeatherStatus>
-      </TopStatus>
+        :
+        <TopStatus style={{ marginTop: h2p(34), marginBottom: h2p(46) }}>
+          <View>
+            <CurrentDate>{currentDate}</CurrentDate>
+            <CurrentTime>{currentTime}</CurrentTime>
+          </View>
+          <WeatherStatus>
+            <LocationSpace>
+              <CurrentTemperature>{weather.temp}°</CurrentTemperature>
+              <CurrentCity>{city}</CurrentCity>
+            </LocationSpace>
+            {/* <Text style={{ fontSize: 36 }}>°</Text> */}
+            <BarSpace>
+              <WeatherImage source={SpaceLogo} resizeMode={"contain"} />
+            </BarSpace>
+            <WeatherSpace>
+              {!!weatherPic &&
+                <WeatherImage source={weatherPic} resizeMode={"contain"} />}
+              <CurrentText>{weather.condition}</CurrentText>
+            </WeatherSpace>
+          </WeatherStatus>
+        </TopStatus>}
       <StatusHome navigation={navigation} />
     </Container>
   );
@@ -144,8 +141,7 @@ const Container = styled.View`
 const TopStatus = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  max-height: ${h2p(66)}px;
-  margin-bottom: ${d2p(24)}px;
+  height: ${h2p(66)}px;
 `;
 
 const WeatherStatus = styled.View`
