@@ -73,7 +73,7 @@ const Setting = ({ navigation }) => {
 
 const Container = styled.View`
   min-height: ${h2p(180)}px;
-  padding: 0 ${d2p(38)}px;
+  padding: 0 ${d2p(30)}px;
   margin-bottom: ${h2p(20)}px;
   border-bottom-color: ${theme.grayScale.gray7};
 `;
