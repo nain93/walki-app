@@ -157,17 +157,19 @@ const StatusIos = ({
             </Animated.View>
           </CircularProgress>
         </TouchableOpacity>
-        <Body1Text style={{ marginTop: 10, color: theme.grayScale.gray2 }}>
+        <Body1Text style={{ marginBottom: "auto", marginTop: 10, color: theme.grayScale.gray2 }}>
           {cheerText}
         </Body1Text>
-      </GoalBox>
-      <LongButton
+        <LongButton
         handleGoToNext={handleGoToNext}
         btnBackColor={buttonColor}
         disabled={disabled}
+        
       >
         {buttonText}
       </LongButton>
+      </GoalBox>
+      
       <UserFail
         handleFailModal={handleGoToNext}
         failModalOpen={failModalOpen}

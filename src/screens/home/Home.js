@@ -43,8 +43,8 @@ const Home = ({ navigation }) => {
       setWeatherPic(require("../../../assets/icons/snow.png"));
     } else {
       weather.condition === "안개";
-      // setWeatherPic(require("../../../assets/icons/mist.png"));
-      setWeatherPic(require("../../../assets/icons/sun.png"));
+      setWeatherPic(require("../../../assets/icons/mist.png"));
+      // setWeatherPic(require("../../../assets/icons/sun.png"));
 
     }
   };
@@ -61,6 +61,7 @@ const Home = ({ navigation }) => {
       hours = hours % 12;
       hours = hours < 10 ? "0" + hours : hours;
       let ampm = hours >= 12 ? "시" : "PM";
+      // AM 없음
       minutes = minutes < 10 ? "0" + minutes : minutes;
       setcurrentDate(month + "월" + " " + date + "일");
       setcurrentTime(hours + ":" + minutes + ampm);
