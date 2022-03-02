@@ -53,16 +53,19 @@ query getMember{
         else if (data.getMember.coach?.name === "부키") {
           coachSelect("booki")
         }
-        setCoachLoading(false)
+        setTimeout(() => {
+          setCoachLoading(false)
+        }, 800)
       }
       else {
         isCoachVar(false)
-        setCoachLoading(false)
+        setTimeout(() => {
+          setCoachLoading(false)
+        }, 800)
       }
     },
     fetchPolicy: "no-cache"
   })
-
   if (loading || coachLoading) {
     return <Loading />
   }
