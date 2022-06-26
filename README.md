@@ -1,4 +1,6 @@
-[Walki App](https://play.google.com/store/apps/details?id=com.walkiclient)
+[Walki App] 스토어 링크
+AOS (https://play.google.com/store/apps/details?id=com.walkiclient)
+IOS 
 
 ## Getting started
 
