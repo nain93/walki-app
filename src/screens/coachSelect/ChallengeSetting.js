@@ -66,6 +66,7 @@ const ChallengeSetting = ({ navigation }) => {
         forceAlarmManager: true, // <-- Set true to bypass JobScheduler.
         stopOnTerminate: false,
         startOnBoot: true,
+        enableHeadless:true,
         requiredNetworkType: BackgroundFetch.NETWORK_TYPE_NONE, // Default
         requiresCharging: false, // Default
         requiresDeviceIdle: false, // Default
@@ -77,7 +78,7 @@ const ChallengeSetting = ({ navigation }) => {
         console.log("gogo");
         // Use a switch statement to route task-handling.
         switch (taskId) {
-          case 'com.transistorsoft.fetch':
+          case 'com.transistorsoft.customtask':
             console.log('Received custom task');
             try {
               const result = "foo"
@@ -106,7 +107,7 @@ const ChallengeSetting = ({ navigation }) => {
     );
 
     BackgroundFetch.scheduleTask({
-      taskId: "com.transistorsoft.fetch",
+      taskId: "com.transistorsoft.customtask",
       forceAlarmManager: true,
       delay: 5000,
     })
@@ -124,6 +125,21 @@ const ChallengeSetting = ({ navigation }) => {
 
           console.log('BackgroundFetch is enabled');
           console.log("right?");
+            console.log("start")
+            // 12시에 보내주는 조건문 추가해야함
+            putChallengeMutation({
+              variables: {
+                challenge: {
+                  step: 100,
+                  stepGoal: 2000,
+                  challengeDate: getYesterday().date,
+                },
+              },
+            });
+            console.log("1")
+            walkStatus("success")
+            console.log("2")
+            BackgroundFetch.finish()
 
           break;
         default:
@@ -131,25 +147,11 @@ const ChallengeSetting = ({ navigation }) => {
       }
     });
 
-    if (stepIos >= 4500) {
-      walkStatus("success")
-    }
-    const date = new Date()
-    if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
-      console.log("test!!");
-      putChallengeMutation({
-        variables: {
-          challenge: {
-            step: 0,
-            stepGoal: inputWatch,
-            challengeDate: getYesterday().date,
-          },
-        },
-      });
-
-      walkStatus("home")
-      BackgroundFetch.finish()
-    }
+    // if (stepIos >= 4500) {
+    //   walkStatus("success")
+    // }
+    
+   
 
   };
 
@@ -160,6 +162,10 @@ const ChallengeSetting = ({ navigation }) => {
     }, 20000)
     return () => clearInterval()
   }, []);
+
+  useEffect(() => {
+    init()
+  })
   const refreshScreen = () => {
     const date = new Date()
     if (date.getHours() === 23 && date.getMinutes() === 25 && (date.getSeconds() >= 0 || date.getSeconds() < 5)) {
@@ -168,7 +174,7 @@ const ChallengeSetting = ({ navigation }) => {
         variables: {
           challenge: {
             step: 0,
-            stepGoal: inputWatch,
+            stepGoal: 2000,
             challengeDate: getYesterday().date,
           },
         },

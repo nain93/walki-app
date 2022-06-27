@@ -14,16 +14,16 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1FED1408BE124875B3C47644 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8C1AED0B6A7411D82AA1647 /* Montserrat-Medium.ttf */; };
 		39F6BF82CB8E0873E4F6D836 /* libPods-walkiclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7026E56DFB02E394EF9409D /* libPods-walkiclient.a */; };
+		3BB770ADD56B44C4AD306F4C /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4B5509F03E44B6D9385F5CE /* Montserrat-SemiBold.ttf */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		445827C7246445399CAE8CD0 /* NanumBarunGothicBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 553166CD0C0440A881BCEB81 /* NanumBarunGothicBold.otf */; };
 		4874B057C4AB4FA983AC9D44 /* NanumBarunGothicBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B25E81284F7041D48F930A16 /* NanumBarunGothicBold.ttf */; };
 		6D1BEE5E27A680F700040A60 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 6D1BEE5D27A680F700040A60 /* main.jsbundle */; };
 		6D244EED273F8E03007F0A9F /* splashscreen_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D244EEC273F8E03007F0A9F /* splashscreen_image.png */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		1FED1408BE124875B3C47644 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8C1AED0B6A7411D82AA1647 /* Montserrat-Medium.ttf */; };
-		3BB770ADD56B44C4AD306F4C /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4B5509F03E44B6D9385F5CE /* Montserrat-SemiBold.ttf */; };
 		EF01F71F80294C708270B8D1 /* NanumBarunGothic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F65CA266BAF454E9B8A8B20 /* NanumBarunGothic.otf */; };
-		445827C7246445399CAE8CD0 /* NanumBarunGothicBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 553166CD0C0440A881BCEB81 /* NanumBarunGothicBold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +34,7 @@
 		03CFEC7226E49A2F00E9EC23 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		0B49712577534B299FE344DD /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		0DFAFCC7F38D4AEBBAF97CF1 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		0F65CA266BAF454E9B8A8B20 /* NanumBarunGothic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NanumBarunGothic.otf; path = ../assets/fonts/NanumBarunGothic.otf; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* walkiclient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = walkiclient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = walkiclient/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = walkiclient/AppDelegate.m; sourceTree = "<group>"; };
@@ -48,6 +49,7 @@
 		4791D69A3EDA418D8BE3575A /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		508F7F3DA9164867944EAC61 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		519D7FABDDC84799989CAE7D /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		553166CD0C0440A881BCEB81 /* NanumBarunGothicBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NanumBarunGothicBold.otf; path = ../assets/fonts/NanumBarunGothicBold.otf; sourceTree = "<group>"; };
 		5847E609AA044DFA897CDD83 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		6D1BEE5D27A680F700040A60 /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		6D244EEC273F8E03007F0A9F /* splashscreen_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashscreen_image.png; sourceTree = "<group>"; };
@@ -60,17 +62,15 @@
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = walkiclient/SplashScreen.storyboard; sourceTree = "<group>"; };
 		AD0CA1D3F066414082B6A95C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		B25E81284F7041D48F930A16 /* NanumBarunGothicBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NanumBarunGothicBold.ttf; path = ../assets/fonts/NanumBarunGothicBold.ttf; sourceTree = "<group>"; };
+		B8C1AED0B6A7411D82AA1647 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		C4B5509F03E44B6D9385F5CE /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		C7026E56DFB02E394EF9409D /* libPods-walkiclient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-walkiclient.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EDA429C3124F44FA8A299CF8 /* NanumBarunGothic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NanumBarunGothic.ttf; path = ../assets/fonts/NanumBarunGothic.ttf; sourceTree = "<group>"; };
 		F7CA89CD6CF0D6BB64A25ED3 /* Pods-walkiclient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-walkiclient.release.xcconfig"; path = "Target Support Files/Pods-walkiclient/Pods-walkiclient.release.xcconfig"; sourceTree = "<group>"; };
 		FC0E4F3B354F4A16920114F7 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		FE153E8D3DEC4E4DA61DCBEE /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		B8C1AED0B6A7411D82AA1647 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; name = "Montserrat-Medium.ttf"; path = "../assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C4B5509F03E44B6D9385F5CE /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; name = "Montserrat-SemiBold.ttf"; path = "../assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0F65CA266BAF454E9B8A8B20 /* NanumBarunGothic.otf */ = {isa = PBXFileReference; name = "NanumBarunGothic.otf"; path = "../assets/fonts/NanumBarunGothic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		553166CD0C0440A881BCEB81 /* NanumBarunGothicBold.otf */ = {isa = PBXFileReference; name = "NanumBarunGothicBold.otf"; path = "../assets/fonts/NanumBarunGothicBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
