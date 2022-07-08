@@ -124,22 +124,23 @@ const ChallengeSetting = ({ navigation }) => {
         case BackgroundFetch.STATUS_AVAILABLE:
 
           console.log('BackgroundFetch is enabled');
-          console.log("right?");
-            console.log("start")
             // 12시에 보내주는 조건문 추가해야함
-            putChallengeMutation({
-              variables: {
-                challenge: {
-                  step: 100,
-                  stepGoal: 2000,
-                  challengeDate: getYesterday().date,
+            const date = new Date()
+            if (date.getHours() === 0 && date.getMinutes() === 0 && (date.getSeconds() >= 0 || date.getSeconds() <= 5)){
+
+              putChallengeMutation({
+                variables: {
+                  challenge: {
+                    step: a,
+                    stepGoal: 2000,
+                    challengeDate: getYesterday().date,
+                  },
                 },
-              },
-            });
-            console.log("1")
-            walkStatus("success")
-            console.log("2")
-            BackgroundFetch.finish()
+              });
+              walkStatus("home")
+              console.log("back work")
+              BackgroundFetch.finish()
+            }
 
           break;
         default:
@@ -274,6 +275,7 @@ const ChallengeSetting = ({ navigation }) => {
             },
           });
           walkStatus("home")
+          console.log("back work")
           await BackgroundService.stop()
         }
         await sleep(delay);
