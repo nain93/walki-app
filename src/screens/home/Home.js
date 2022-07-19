@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { View, Text, Image } from "react-native";
 import styled from "styled-components";
 import axios from "axios";
@@ -15,7 +15,7 @@ import { wDescEngToKor } from "../../common/weatherTrans";
 
 
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation,route }) => {
   const [ready, setReady] = useState(true);
   const [weather, setWeather] = useState({
     temp: 0,
@@ -53,7 +53,6 @@ const Home = ({ navigation }) => {
   const [currentTime, setcurrentTime] = useState("");
 
   useEffect(() => {
-    setInterval(() => {
       let date = new Date().getDate();
       let month = new Date().getMonth() + 1;
       let hours = new Date().getHours();
@@ -61,13 +60,16 @@ const Home = ({ navigation }) => {
       hours = hours % 12;
       hours = hours < 10 ? "0" + hours : hours;
       let ampm = hours >= 12 ? "시" : "PM";
-      // AM 없음
       minutes = minutes < 10 ? "0" + minutes : minutes;
       setcurrentDate(month + "월" + " " + date + "일");
       setcurrentTime(hours + ":" + minutes + ampm);
-    }, 1000)
-    load();
   }, []);
+
+  useEffect(()=> {
+    setTimeout(()=> {
+      load()
+    }, 4000)   
+  },[])
 
   const getLocation = async () => {
     try {
